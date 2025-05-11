@@ -52,7 +52,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
     // Convert string to number
     const numValue = parseFloat(value);
     if (!isNaN(numValue)) {
-      this.value.set(numValue);
+      this.value.apply(numValue);
       this.inputChange.emit(event);
       this.onModelChange(numValue);
     }
@@ -64,7 +64,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
     // Convert string to number
     const numValue = parseFloat(value);
     if (!isNaN(numValue)) {
-      this.value.set(numValue);
+      this.value.apply(numValue);
       this.inputChange.emit(event);
       this.onModelChange(numValue);
     }
@@ -83,7 +83,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
 
   writeValue(value: number): void {
     if (value !== undefined && value !== null) {
-      this.value.set(value);
+      this.value.apply(value);
     }
   }
 

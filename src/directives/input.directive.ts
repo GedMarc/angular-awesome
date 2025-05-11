@@ -68,7 +68,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
   @HostListener('input', ['$event'])
   onInput(event: any) {
     const value = event.target.value;
-    this.value.set(value);
+    this.value.apply(value);
     this.inputChange.emit(event);
     this.onModelChange(value);
   }
@@ -81,7 +81,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
   // Method to clear input if clearable is true
   clear() {
     if (this.isClearableEnabled()) {
-      this.value.set('');
+      this.value.apply('');
       this.inputChange.emit({ target: { value: '' } });
     }
   }
@@ -100,7 +100,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   writeValue(value: string | number): void {
     if (value !== undefined && value !== null) {
-      this.value.set(value);
+      this.value.apply(value);
     }
   }
 

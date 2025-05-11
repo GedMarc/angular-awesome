@@ -39,7 +39,16 @@ This project is built for Angular 19 and must use the latest Angular 19 syntax a
    });
    ```
 
-5. **Constructor Injection**: Use constructor injection for dependencies and subscribe to value changes.
+5. **Use .apply() for model inputs**: When updating model inputs, use the `.apply()` method instead of `.set()`.
+   ```typescript
+   // Incorrect
+   this.value.set(newValue);
+
+   // Correct
+   this.value.apply(newValue);
+   ```
+
+6. **Constructor Injection**: Use constructor injection for dependencies and subscribe to value changes.
 
    For directives with model() values, subscribe to the model value changes in the constructor to ensure ngModel binding works correctly:
    ```typescript
@@ -97,7 +106,7 @@ The most important rule for this project is to ensure proper data binding betwee
 
      writeValue(value: any): void {
        if (value !== undefined && value !== null) {
-         this.value.set(value);
+         this.value.apply(value);
        }
      }
 
@@ -120,7 +129,7 @@ The most important rule for this project is to ensure proper data binding betwee
    @HostListener('input', ['$event'])
    onInput(event: any) {
      const value = event.target.value;
-     this.value.set(value);
+     this.value.apply(value);
      this.valueChange.emit(event);
      this.onModelChange(value);
    }

@@ -39,6 +39,15 @@ This project is built for Angular 19 and must use the latest Angular 19 syntax a
    });
    ```
 
+5. **Use .apply() for model inputs**: When updating model inputs, use the `.apply()` method instead of `.set()`.
+   ```typescript
+   // Incorrect
+   this.value.set(newValue);
+
+   // Correct
+   this.value.apply(newValue);
+   ```
+
 ## Data Binding and Angular Integration
 
 The most important rule for this project is to ensure proper data binding between Angular and the web awesome framework. The web awesome framework handles the core functionality, but the Angular wrapper must handle the Angular integration, including two-way data binding and form validation.

@@ -43,7 +43,7 @@ export class WaFormatDateDirective implements ControlValueAccessor, Validator {
   @HostListener('input', ['$event'])
   onInput(event: any) {
     const value = event.target.value;
-    this.date.set(value);
+    this.date.apply(value);
     this.dateChange.emit(event);
     this.onModelChange(value);
   }
@@ -51,7 +51,7 @@ export class WaFormatDateDirective implements ControlValueAccessor, Validator {
   @HostListener('change', ['$event'])
   onChange(event: any) {
     const value = event.target.value;
-    this.date.set(value);
+    this.date.apply(value);
     this.dateChange.emit(event);
     this.onModelChange(value);
   }
@@ -62,7 +62,7 @@ export class WaFormatDateDirective implements ControlValueAccessor, Validator {
 
   writeValue(value: Date | string): void {
     if (value !== undefined && value !== null) {
-      this.date.set(value);
+      this.date.apply(value);
     }
   }
 
