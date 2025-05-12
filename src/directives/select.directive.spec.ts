@@ -52,7 +52,7 @@ class TestComponent {
 class TestComponentWithNgModel {
   placeholder: string = 'Select an option';
   isMultiple: boolean = false;
-  selectSignal = signal('option-1');
+  selectSignal = signal<string|string[]>('option-1');
 }
 
 // Test component with standalone attributes
@@ -384,6 +384,35 @@ describe('WaSelectDirective', () => {
     expect(directive.value()).toEqual([]);
   });
 
+  it('should render multiple selections as space-delimited values in the value attribute', () => {
+    // Set multiple to true
+    component.isMultiple = true;
+    fixture.detectChanges();
+    expect(directive.isMultiple()).toBeTrue();
+
+    // Set multiple values
+    directive.value.set(['option-1', 'option-2']);
+    fixture.detectChanges();
+
+    // Check that the value attribute is set correctly
+    const selectElement = selectEl.nativeElement;
+    expect(selectElement.getAttribute('value')).toBe('option-1 option-2');
+
+    // Add another option
+    directive.value.set(['option-1', 'option-2', 'option-3']);
+    fixture.detectChanges();
+
+    // Check that the value attribute is updated correctly
+    expect(selectElement.getAttribute('value')).toBe('option-1 option-2 option-3');
+
+    // Clear the values
+    directive.clear();
+    fixture.detectChanges();
+
+    // Check that the value attribute is cleared
+    expect(selectElement.getAttribute('value')).toBe('');
+  });
+
   // Tests for ngModel binding
   describe('ngModel binding', () => {
     it('should initialize with the correct values from ngModel', () => {
@@ -406,6 +435,36 @@ describe('WaSelectDirective', () => {
       ngModelFixture.detectChanges();
 
       expect(ngModelDirective.value()).toBe('option-3');
+    });
+
+    it('should render multiple selections as space-delimited values with ngModel', () => {
+      // Set multiple to true
+      ngModelComponent.isMultiple = true;
+      ngModelFixture.detectChanges();
+      expect(ngModelDirective.isMultiple()).toBeTrue();
+
+      // Set multiple values
+      ngModelComponent.selectSignal.set(['option-1', 'option-2']);
+      ngModelFixture.detectChanges();
+
+      // Check that the value attribute is set correctly
+      const selectElement = ngModelSelectEl.nativeElement;
+      expect(selectElement.getAttribute('value')).toBe('option-1 option-2');
+
+      // Update the values
+      ngModelComponent.selectSignal.set(['option-2', 'option-3']);
+      ngModelFixture.detectChanges();
+
+      // Check that the value attribute is updated correctly
+      expect(selectElement.getAttribute('value')).toBe('option-2 option-3');
+
+      // Clear the values
+      ngModelDirective.clear();
+      ngModelFixture.detectChanges();
+
+      // Check that the value attribute is cleared
+      expect(selectElement.getAttribute('value')).toBe('');
+      expect(ngModelComponent.selectSignal()).toEqual([]);
     });
   });
 
@@ -464,6 +523,10 @@ describe('WaSelectDirective', () => {
 
       // Check array value
       expect(bindingDirective.value()).toEqual(['option-1', 'option-2']);
+
+      // Check that the value attribute is set correctly
+      const selectElement = bindingSelectEl.nativeElement;
+      expect(selectElement.getAttribute('value')).toBe('option-1 option-2');
     });
 
     it('should update when property binding changes', () => {
@@ -494,12 +557,37 @@ describe('WaSelectDirective', () => {
 
       expect(bindingDirective.value()).toEqual(['option-2', 'option-3']);
 
+      // Check that the value attribute is updated correctly
+      const selectElement = bindingSelectEl.nativeElement;
+      expect(selectElement.getAttribute('value')).toBe('option-2 option-3');
+
       // Clear the values
       bindingDirective.clear();
       bindingFixture.detectChanges();
 
       expect(bindingDirective.value()).toEqual([]);
       expect(bindingComponent.selectSignal()).toEqual([]);
+      expect(selectElement.getAttribute('value')).toBe('');
+    });
+
+    it('should render multiple selections as space-delimited values with property binding', () => {
+      // Check initial state
+      const selectElement = bindingSelectEl.nativeElement;
+      expect(selectElement.getAttribute('value')).toBe('option-1 option-2');
+
+      // Update with more values
+      bindingComponent.selectSignal.set(['option-1', 'option-2', 'option-3']);
+      bindingFixture.detectChanges();
+
+      // Check that the value attribute is updated correctly
+      expect(selectElement.getAttribute('value')).toBe('option-1 option-2 option-3');
+
+      // Update with fewer values
+      bindingComponent.selectSignal.set(['option-3']);
+      bindingFixture.detectChanges();
+
+      // Check that the value attribute is updated correctly
+      expect(selectElement.getAttribute('value')).toBe('option-3');
     });
   });
 

@@ -138,6 +138,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
       const newValue = this.isMultiple() ? [] : '';
       this.value.apply(newValue);
       this.onModelChange(newValue);
+      this.updateValueAttribute(newValue);
       this.clearEvent.emit(undefined);
     }
   }
@@ -185,6 +186,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   writeValue(value: string | string[]): void {
     if (value !== undefined && value !== null) {
       this.value.apply(value);
+      this.updateValueAttribute(value);
     }
   }
 
@@ -204,7 +206,19 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
     this.value.subscribe((value) => {
       this.onModelChange(value);
       this.changeEvent.emit(value);
+      this.updateValueAttribute(value);
     });
+  }
+
+  // Update the value attribute in the DOM
+  private updateValueAttribute(value: string | string[]): void {
+    if (this.isMultiple() && Array.isArray(value)) {
+      // For multiple selections, join the array values with spaces
+      this.el.nativeElement.setAttribute('value', value.join(' '));
+    } else {
+      // For single selection or empty value
+      this.el.nativeElement.setAttribute('value', value || '');
+    }
   }
 
   // Validator implementation
