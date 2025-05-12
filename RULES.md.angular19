@@ -188,23 +188,17 @@ For non-hyphenated attributes (e.g., "clearable"):
 
 ```typescript
 // Regular input for property binding
-attributeName = input<boolean>(false);
-
-// Separate input for the standalone attribute
-attributeNameAttr = input<string | boolean>('', { alias: 'attributeName' });
+attributeName = input<boolean | string>(false);
 ```
 
 For hyphenated attributes (e.g., "password-toggle"):
 
 ```typescript
 // Regular input for property binding
-attributeName = input<boolean>(false);
+attributeName = input<boolean|string>(false);
 
 // Separate input for the kebab-case standalone attribute
 attributeNameAttr = input<string | boolean>('', { alias: 'attribute-name' });
-
-// Separate input for the camelCase standalone attribute
-attributeNameAttrCamel = input<string | boolean>('', { alias: 'attributeName' });
 ```
 
 ### 2. Create a Helper Method
@@ -227,9 +221,7 @@ For hyphenated attributes:
 isAttributeNameEnabled(): boolean {
   return this.attributeName() ||
          this.attributeNameAttr() === '' ||
-         this.attributeNameAttr() === 'true' ||
-         this.attributeNameAttrCamel() === '' ||
-         this.attributeNameAttrCamel() === 'true';
+         this.attributeNameAttr() === 'true';
 }
 ```
 
@@ -277,16 +269,11 @@ passwordToggle = input<boolean>(false);
 // Separate input for the kebab-case standalone attribute
 passwordToggleAttr = input<string | boolean>('', { alias: 'password-toggle' });
 
-// Separate input for the camelCase standalone attribute
-passwordToggleAttrCamel = input<string | boolean>('', { alias: 'passwordToggle' });
-
 // Helper method to determine if password toggle is enabled
 isPasswordToggleEnabled(): boolean {
   return this.passwordToggle() ||
          this.passwordToggleAttr() === '' ||
-         this.passwordToggleAttr() === 'true' ||
-         this.passwordToggleAttrCamel() === '' ||
-         this.passwordToggleAttrCamel() === 'true';
+         this.passwordToggleAttr() === 'true';
 }
 ```
 
@@ -294,16 +281,11 @@ isPasswordToggleEnabled(): boolean {
 
 ```typescript
 // Regular input for property binding
-clearable = input<boolean>(false);
-
-// Separate input for the standalone attribute
-clearableAttr = input<string | boolean>('', { alias: 'clearable' });
+clearable = input<boolean|string>(false);
 
 // Helper method to determine if clearable is enabled
 isClearableEnabled(): boolean {
-  return this.clearable() ||
-         this.clearableAttr() === '' ||
-         this.clearableAttr() === 'true';
+  return this.clearable() ;
 }
 ```
 

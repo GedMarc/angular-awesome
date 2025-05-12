@@ -70,7 +70,7 @@ describe('WaOptionDirective', () => {
     selectedFixture.detectChanges();
 
     // Check that selected is enabled
-    expect(selectedDirective.selectedAttr()).toBe('');
+    expect(selectedDirective.selected()).toBe('');
     expect(selectedDirective.isSelected()).toBeTrue();
   });
 
@@ -90,7 +90,7 @@ describe('WaOptionDirective', () => {
     trueFixture.detectChanges();
 
     // Check that selected is enabled
-    expect(trueDirective.selectedAttr()).toBe('true');
+    expect(trueDirective.selected()).toBe('true');
     expect(trueDirective.isSelected()).toBeTrue();
   });
 
@@ -110,7 +110,7 @@ describe('WaOptionDirective', () => {
     falseFixture.detectChanges();
 
     // Check that selected is disabled
-    expect(falseDirective.selectedAttr()).toBe('false');
+    expect(falseDirective.selected()).toBe('false');
     expect(falseDirective.isSelected()).toBeFalse();
   });
 
@@ -130,7 +130,7 @@ describe('WaOptionDirective', () => {
     disabledFixture.detectChanges();
 
     // Check that disabled is enabled
-    expect(disabledDirective.disabledAttr()).toBe('');
+    expect(disabledDirective.disabled()).toBe('');
     expect(disabledDirective.isDisabled()).toBeTrue();
   });
 
@@ -150,7 +150,7 @@ describe('WaOptionDirective', () => {
     trueFixture.detectChanges();
 
     // Check that disabled is enabled
-    expect(trueDirective.disabledAttr()).toBe('true');
+    expect(trueDirective.disabled()).toBe('true');
     expect(trueDirective.isDisabled()).toBeTrue();
   });
 
@@ -170,11 +170,11 @@ describe('WaOptionDirective', () => {
     falseFixture.detectChanges();
 
     // Check that disabled is disabled
-    expect(falseDirective.disabledAttr()).toBe('false');
+    expect(falseDirective.disabled()).toBe('false');
     expect(falseDirective.isDisabled()).toBeFalse();
   });
 
   it('should get the label from the element content', () => {
-    expect(directive.getLabel()).toBe('Option 1');
+    expect(directive.label).toBe('Option 1');
   });
 });

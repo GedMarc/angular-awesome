@@ -33,20 +33,15 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   placement = input<'top' | 'bottom'>('bottom');
 
   // Boolean properties
-  multiple = input<boolean>(false);
-  multipleAttr = input<string | boolean>('', { alias: 'multiple' });
+  multiple = input<boolean | string>(false);
 
-  disabled = input<boolean>(false);
-  disabledAttr = input<string | boolean>('', { alias: 'disabled' });
+  disabled = input<boolean | string>(false);
 
-  clearable = input<boolean>(false);
-  clearableAttr = input<string | boolean>('', { alias: 'clearable' });
+  clearable = input<boolean | string>(false);
 
-  pill = input<boolean>(false);
-  pillAttr = input<string | boolean>('', { alias: 'pill' });
+  pill = input<boolean | string>(false);
 
-  required = input<boolean>(false);
-  requiredAttr = input<string | boolean>('', { alias: 'required' });
+  required = input<boolean | string>(false);
 
   // Numeric properties
   maxOptionsVisible = input<number>(3);
@@ -71,33 +66,38 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
 
   // Helper methods for boolean attributes
   isMultiple(): boolean {
-    return this.multiple() ||
-           this.multipleAttr() === '' ||
-           this.multipleAttr() === 'true';
+    const multipleValue = this.multiple();
+    return multipleValue === true ||
+           multipleValue === '' ||
+           multipleValue === 'true';
   }
 
   isDisabled(): boolean {
-    return this.disabled() ||
-           this.disabledAttr() === '' ||
-           this.disabledAttr() === 'true';
+    const disabledValue = this.disabled();
+    return disabledValue === true ||
+           disabledValue === '' ||
+           disabledValue === 'true';
   }
 
   isClearable(): boolean {
-    return this.clearable() ||
-           this.clearableAttr() === '' ||
-           this.clearableAttr() === 'true';
+    const clearableValue = this.clearable();
+    return clearableValue === true ||
+           clearableValue === '' ||
+           clearableValue === 'true';
   }
 
   isPill(): boolean {
-    return this.pill() ||
-           this.pillAttr() === '' ||
-           this.pillAttr() === 'true';
+    const pillValue = this.pill();
+    return pillValue === true ||
+           pillValue === '' ||
+           pillValue === 'true';
   }
 
   isRequired(): boolean {
-    return this.required() ||
-           this.requiredAttr() === '' ||
-           this.requiredAttr() === 'true';
+    const requiredValue = this.required();
+    return requiredValue === true ||
+           requiredValue === '' ||
+           requiredValue === 'true';
   }
 
   // Methods

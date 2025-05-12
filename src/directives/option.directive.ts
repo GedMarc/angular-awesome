@@ -9,26 +9,26 @@ export class WaOptionDirective {
   value = input<string>('');
 
   // Boolean properties
-  disabled = input<boolean>(false);
-  disabledAttr = input<string | boolean>('', { alias: 'disabled' });
+  disabled = input<boolean | string>(false);
 
-  selected = input<boolean>(false);
-  selectedAttr = input<string | boolean>('', { alias: 'selected' });
+  selected = input<boolean | string>(false);
 
   // Output events
   selectEvent = output<any>();
 
   // Helper methods for boolean attributes
   isDisabled(): boolean {
-    return this.disabled() ||
-           this.disabledAttr() === '' ||
-           this.disabledAttr() === 'true';
+    const disabledValue = this.disabled();
+    return disabledValue === true ||
+           disabledValue === '' ||
+           disabledValue === 'true';
   }
 
   isSelected(): boolean {
-    return this.selected() ||
-           this.selectedAttr() === '' ||
-           this.selectedAttr() === 'true';
+    const selectedValue = this.selected();
+    return selectedValue === true ||
+           selectedValue === '' ||
+           selectedValue === 'true';
   }
 
   // Get the text content of the option (label)
