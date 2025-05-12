@@ -1,5 +1,5 @@
 /*
- * Public API Surface of AngularAwesome
+ * Public API Surface of angular-awesome
  */
 
 export * from './directives/format-date.directive';

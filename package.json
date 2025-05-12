@@ -16,11 +16,11 @@
     "type": "git",
     "url": ""
   },
-  "main": "dist/AngularAwesome/bundles/AngularAwesome.umd.js",
-  "module": "dist/AngularAwesome/fesm2022/AngularAwesome.js",
-  "es2022": "dist/AngularAwesome/fesm2022/AngularAwesome.js",
-  "esm2022": "dist/AngularAwesome/esm2022/AngularAwesome.js",
-  "typings": "dist/AngularAwesome/index.d.ts",
+  "main": "dist/angular-awesome/bundles/angular-awesome.umd.js",
+  "module": "dist/angular-awesome/fesm2022/angular-awesome.js",
+  "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
+  "esm2022": "dist/angular-awesome/esm2022/angular-awesome.js",
+  "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0",

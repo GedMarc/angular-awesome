@@ -74,29 +74,40 @@ The most important rule for this project is to ensure proper data binding betwee
 
 When implementing directives that need to support standalone attributes (attributes without values), follow these guidelines:
 
-### 1. Use Two or Three Inputs for Each Attribute
+### 1. Default Values for Standalone Attributes
+
+Some attributes should have specific default values when used as standalone attributes:
+
+- **autocapitalize**: When used as a standalone attribute, autocapitalize should default to 'words'.
+  ```typescript
+  effect(() => {
+    const autocapitalize = this.autocapitalize();
+    if (autocapitalize === '') {
+      // Default to 'words' when used as a standalone attribute
+      inputEl.autocapitalize = 'words';
+    } else if (autocapitalize !== undefined) {
+      inputEl.autocapitalize = autocapitalize;
+    }
+  });
+  ```
+
+### 2. Use Two or Three Inputs for Each Attribute
 
 For non-hyphenated attributes (e.g., "clearable"):
 
 ```typescript
 // Regular input for property binding
-attributeName = input<any>(false);
-
-// Separate input for the standalone attribute
-attributeNameAttr = input<string | boolean>('', { alias: 'attributeName' });
+attributeName = input<boolean | string>(false);
 ```
 
 For hyphenated attributes (e.g., "password-toggle"):
 
 ```typescript
 // Regular input for property binding
-attributeName = input<any>(false);
-
+attributeName = input<boolean | string>(false);
 // Separate input for the kebab-case standalone attribute
 attributeNameAttr = input<string | boolean>('', { alias: 'attribute-name' });
 
-// Separate input for the camelCase standalone attribute
-attributeNameAttrCamel = input<string | boolean>('', { alias: 'attributeName' });
 ```
 
 ### 2. Create a Helper Method
@@ -119,9 +130,7 @@ For hyphenated attributes:
 isAttributeNameEnabled(): boolean {
   return this.attributeName() || 
          this.attributeNameAttr() === '' || 
-         this.attributeNameAttr() === 'true' ||
-         this.attributeNameAttrCamel() === '' || 
-         this.attributeNameAttrCamel() === 'true';
+         this.attributeNameAttr() === 'true';
 }
 ```
 

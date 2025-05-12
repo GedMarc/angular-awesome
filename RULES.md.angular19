@@ -28,18 +28,27 @@ This project is built for Angular 19 and must use the latest Angular 19 syntax a
    valueChange = output<any>();
    ```
 
-4. **Use signals for reactive state**: Access input values using function call syntax and subscribe to value changes.
+4. **Use signals for reactive state**: Access input values using function call syntax.
    ```typescript
    // Access input value
    const type = this.type();
+   ```
 
-   // Subscribe to value changes
-   this.value.valueChanged.subscribe((value) => {
+5. **Use effect() for tracking signal changes**: Use the effect() function instead of subscribe() to track changes to signals.
+   ```typescript
+   // Old way (pre-Angular 19.1)
+   this.value.subscribe((value) => {
+     // Handle value change
+   });
+
+   // New way (Angular 19.1+)
+   effect(() => {
+     const value = this.value(); // Reading the signal inside effect() tracks it
      // Handle value change
    });
    ```
 
-5. **Use .apply() for model inputs**: When updating model inputs, use the `.apply()` method instead of `.set()`.
+6. **Use .apply() for model inputs**: When updating model inputs, use the `.apply()` method instead of `.set()`.
    ```typescript
    // Incorrect
    this.value.set(newValue);
@@ -48,27 +57,27 @@ This project is built for Angular 19 and must use the latest Angular 19 syntax a
    this.value.apply(newValue);
    ```
 
-6. **Constructor Injection**: Use constructor injection for dependencies and subscribe to value changes.
+7. **Constructor Injection**: Use constructor injection for dependencies and track value changes using effect().
 
-   For directives with model() values, subscribe to the model value changes in the constructor to ensure ngModel binding works correctly:
+   For directives with model() values, use effect() to track model value changes in the constructor to ensure ngModel binding works correctly:
    ```typescript
    constructor(private el: ElementRef) {
-     this.value.subscribe((value) => {
-       this.onModelChange(value);
+     effect(() => {
+       this.onModelChange(this.value());
      });
    }
    ```
 
-   For directives with output() events, subscribe to the output event in the constructor:
+   For directives with output() events, use effect() to track output event changes in the constructor:
    ```typescript
    constructor(private el: ElementRef) {
-     this.dateChange.subscribe((value) => {
-       this.onModelChange(value);
+     effect(() => {
+       this.onModelChange(this.dateChange());
      });
    }
    ```
 
-   This subscription is essential for ngModel binding to work correctly. It ensures that when the value changes internally (through the model or output), the change is propagated to the Angular form control.
+   This effect is essential for ngModel binding to work correctly. It ensures that when the value changes internally (through the model or output), the change is propagated to the Angular form control.
 
 ## Data Binding and Angular Integration
 
@@ -235,6 +244,27 @@ expect(directive.isAttributeNameEnabled()).toBe(true);
 // In templates
 <div *ngIf="isAttributeNameEnabled()">...</div>
 ```
+
+### 4. Using Standalone Attributes in Angular Templates
+
+When using standalone attributes in Angular templates, you have several options:
+
+1. **Property Binding (Recommended)**: Use property binding with a boolean value.
+   ```html
+   <wa-input [required]="true"></wa-input>
+   ```
+
+2. **Attribute with Value**: Use the attribute with a value.
+   ```html
+   <wa-input required="true"></wa-input>
+   ```
+
+3. **Attribute with Empty String**: Use the attribute with an empty string.
+   ```html
+   <wa-input required=""></wa-input>
+   ```
+
+Using a standalone attribute without a value (e.g., `<wa-input required></wa-input>`) may cause type errors in Angular because it's interpreted as a string, not a boolean. Always use one of the above approaches to ensure type safety.
 
 ## Examples
 

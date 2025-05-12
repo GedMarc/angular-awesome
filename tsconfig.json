@@ -22,8 +22,8 @@
     "sourceMap": true,
     "inlineSources": true,
     "paths": {
-      "AngularAwesome": ["./dist/AngularAwesome"],
-      "AngularAwesome/*": ["./dist/AngularAwesome/*"]
+      "angular-awesome": ["./dist/angular-awesome"],
+      "angular-awesome/*": ["./dist/angular-awesome/*"]
     }
   },
   "angularCompilerOptions": {

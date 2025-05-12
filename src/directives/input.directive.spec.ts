@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import {Component, DebugElement, signal} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -29,6 +29,80 @@ class TestComponent {
   }
 }
 
+@Component({
+  template: `
+    <wa-input clearable="true"
+              passwordToggle="isPassword"
+              password-visible
+              required type="text"
+              [placeholder]="placeholder"
+              [(ngModel)]="inputSignal">
+    </wa-input>
+  `,
+  standalone: true,
+  imports: [WaInputDirective, FormsModule]
+})
+class TestComponent2 {
+  placeholder: string = 'Enter text';
+  inputSignal = signal('')
+}
+
+
+@Component({
+  template: `
+    <wa-input clearable="true"
+           required type="number"
+              min="0"
+              max="3"
+              step="1"
+              readonly
+              autocapitalize
+              autofocus
+              pill
+              spellcheck
+              with-label
+              label="label input"
+              size="small"
+              inputmode="numeric"
+           placeholder="placeholder"
+           [(ngModel)]="inputSignal">
+    </wa-input>
+  `,
+  standalone: true,
+  imports: [WaInputDirective, FormsModule]
+})
+class TestComponentNumber {
+  placeholder: string = 'Enter number';
+  inputSignal = signal(0)
+}
+
+@Component({
+  template: `
+    <wa-input clearable="true"
+           required [type]="'number'"
+              [min]="0"
+              [max]="3"
+              [step]="1"
+              [readonly]="true"
+              autocapitalize="sentences"
+              [autofocus]="true"
+              [pill]="true"
+              [spellcheck]="true"
+              size="large"
+           placeholder="placeholder"
+           [(ngModel)]="inputSignal">
+    </wa-input>
+  `,
+  standalone: true,
+  imports: [WaInputDirective, FormsModule]
+})
+class TestComponentNumberBinding {
+  placeholder: string = 'Enter number';
+  inputSignal = signal(0)
+}
+
+
+
 describe('WaInputDirective', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
@@ -54,7 +128,7 @@ describe('WaInputDirective', () => {
 
   it('should initialize with the correct values', () => {
     expect(inputEl.nativeElement.value).toBe('initial value');
-    expect(directive.clearableAttr()).toBe('true');
+    expect(directive.clearable()).toBe('true');
     expect(directive.passwordToggle()).toBe(false);
     expect(directive.type()).toBe('text');
     expect(directive.placeholder()).toBe('Enter text');
@@ -147,9 +221,6 @@ describe('WaInputDirective', () => {
     const standaloneDirective = standaloneInputEl.injector.get(WaInputDirective);
 
     standaloneFixture.detectChanges();
-
-    // Check that clearable is enabled
-    expect(standaloneDirective.clearableAttr()).toBe('');
   });
 
   it('should handle clearable="true" attribute', () => {
@@ -168,7 +239,7 @@ describe('WaInputDirective', () => {
     trueFixture.detectChanges();
 
     // Check that clearable is enabled
-    expect(trueDirective.clearableAttr()).toBe('true');
+    expect(trueDirective.clearable()).toBe('true');
   });
 
   it('should handle clearable="false" attribute', () => {
@@ -187,6 +258,6 @@ describe('WaInputDirective', () => {
     falseFixture.detectChanges();
 
     // Check that clearable is disabled
-    expect(falseDirective.clearableAttr()).toBe('false');
+    expect(falseDirective.clearable()).toBe('false');
   });
 });

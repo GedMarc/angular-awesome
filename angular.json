@@ -3,12 +3,12 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngularAwesome": {
+    "angular-awesome": {
       "projectType": "library",
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "ng-awesome",
+      "prefix": "wa",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -28,10 +28,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "AngularAwesome:build:production"
+              "buildTarget": "angular-awesome:build:production"
             },
             "development": {
-              "buildTarget": "AngularAwesome:build:development"
+              "buildTarget": "angular-awesome:build:development"
             }
           },
           "defaultConfiguration": "development"
