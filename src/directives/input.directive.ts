@@ -23,6 +23,8 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
   hint = input<string>('');
   placeholder = input<string>('');
   size = input<'medium' | 'large'>('medium');
+  // Separate input for the size attribute
+  sizeAttr = input<string>('', { alias: 'size' });
   type = input<'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'>('text');
 
   // Two-way bindable value using model()
@@ -63,6 +65,15 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
            this.passwordToggleAttr() === 'true' ||
            this.passwordToggleAttrCamel() === '' ||
            this.passwordToggleAttrCamel() === 'true';
+  }
+
+  // Helper method to get the effective size
+  getEffectiveSize(): 'medium' | 'large' {
+    // If sizeAttr is set, use it, otherwise use the size input
+    if (this.sizeAttr() === 'large') {
+      return 'large';
+    }
+    return this.size();
   }
 
   @HostListener('input', ['$event'])
