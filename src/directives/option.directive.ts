@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, input, output } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
 
 @Directive({
   selector: 'wa-option',
@@ -6,26 +6,26 @@ import { Directive, ElementRef, HostListener, input, output } from '@angular/cor
 })
 export class WaOptionDirective {
   // Option properties
-  value = input<string>('');
+  @Input() value: string = '';
 
   // Boolean properties
-  disabled = input<boolean | string>(false);
+  @Input() disabled: boolean | string = false;
 
-  selected = input<boolean | string>(false);
+  @Input() selected: boolean | string = false;
 
   // Output events
-  selectEvent = output<any>();
+  @Output() selectEvent = new EventEmitter<any>();
 
   // Helper methods for boolean attributes
   isDisabled(): boolean {
-    const disabledValue = this.disabled();
+    const disabledValue = this.disabled;
     return disabledValue === true ||
            disabledValue === '' ||
            disabledValue === 'true';
   }
 
   isSelected(): boolean {
-    const selectedValue = this.selected();
+    const selectedValue = this.selected;
     return selectedValue === true ||
            selectedValue === '' ||
            selectedValue === 'true';
@@ -41,7 +41,7 @@ export class WaOptionDirective {
   onClick(event: MouseEvent) {
     if (!this.isDisabled()) {
       this.selectEvent.emit({
-        value: this.value(),
+        value: this.value,
         label: this.label
       });
 
@@ -56,7 +56,7 @@ export class WaOptionDirective {
     if (!this.isDisabled()) {
       event.preventDefault();
       this.selectEvent.emit({
-        value: this.value(),
+        value: this.value,
         label: this.label
       });
     }

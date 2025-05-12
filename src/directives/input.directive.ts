@@ -1,89 +1,88 @@
-import { Directive, ElementRef, HostListener, effect, input, model, output } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+import { Directive, ElementRef, HostListener, effect, Input, Output, EventEmitter, forwardRef, Provider } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+
+// Define validator provider
+/*export const WA_INPUT_VALIDATOR: Provider = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => WaInputDirective),
+  multi: true
+};*/
 
 @Directive({
   selector: 'wa-input',
   standalone: true,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: WaInputDirective
-    },
-    {
-      provide: NG_VALIDATORS,
-      multi: true,
-      useExisting: WaInputDirective
-    }
-  ]
+  providers: []
 })
-export class WaInputDirective implements ControlValueAccessor, Validator {
+export class WaInputDirective{
   // Basic input properties
-  label = input<string>('');
-  hint = input<string>('');
-  placeholder = input<string>('');
-  size = input<'small' | 'medium' | 'large' | 'inherit'>('inherit');
-  type = input<'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'>('text');
+  @Input() label: string = '';
+  @Input() hint: string = '';
+  @Input() placeholder: string = '';
+  @Input() size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
+  @Input() type: 'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url' = 'text';
 
-  // Two-way bindable value using model()
-  value = model<string | number>('');
+  // Input value property
+  @Input() value: string | number | undefined = '';
+
+  // Output for value changes
+  @Output() valueChange = new EventEmitter<string | number>();
 
   // Input properties with both property binding and attribute support
-  clearable = input<boolean | string>('');
-  required = input<boolean | string>(false);
-  passwordToggle = input<boolean | string>(false);
+  @Input() clearable: boolean | string = '';
+  @Input() required: boolean | string = false;
+  @Input() passwordToggle: boolean | string = false;
 
   // Separate input for the standalone attribute (kebab-case)
-  passwordToggleAttr = input<string | boolean>('', { alias: 'password-toggle' });
+  @Input('password-toggle') passwordToggleAttr: string | boolean = '';
 
 
   // Additional input properties
-  defaultValue = input<string | null>(null);
-  appearance = input<'filled' | 'outlined'>('outlined');
-  pill = input<boolean | string>(false);
-  readonly = input<boolean | string>(false);
-  passwordVisible = input<boolean | string>(false);
-  passwordVisibleAttr = input<string | boolean>('', { alias: 'password-visible' });
-  noSpinButtons = input<boolean | string>(false);
-  noSpinButtonsAttr = input<string | boolean>('', { alias: 'no-spin-buttons' });
-  form = input<string | null>(null);
+  @Input() defaultValue: string | null = null;
+  @Input() appearance: 'filled' | 'outlined' = 'outlined';
+  @Input() pill: boolean | string = false;
+  @Input() readonly: boolean | string = false;
+  @Input() passwordVisible: boolean | string = false;
+  @Input('password-visible') passwordVisibleAttr: string | boolean = '';
+  @Input() noSpinButtons: boolean | string = false;
+  @Input('no-spin-buttons') noSpinButtonsAttr: string | boolean = '';
+  @Input() form: string | null = null;
 
-  pattern = input<string>('');
-  minlength = input<number | undefined>(undefined);
-  maxlength = input<number | undefined>(undefined);
-  min = input<number | string | undefined>(undefined);
-  max = input<number | string | undefined>(undefined);
-  step = input<number | string | undefined>(undefined);
-  autocapitalize = input<''|'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters' | undefined>(undefined);
-  autocorrect = input<'off' | 'on' | undefined>(undefined);
-  autocomplete = input<string | undefined>(undefined);
-  autofocus = input<boolean | string>(false);
-  enterkeyhint = input<'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' | undefined>(undefined);
-  spellcheck = input<boolean | string>(true);
-  inputmode = input<'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | undefined>(undefined);
-  withLabel = input<boolean | string>(false);
-  withLabelAttr = input<string | boolean>('', { alias: 'with-label' });
-  withHint = input<boolean | string>(false);
-  withHintAttr = input<string | boolean>('', { alias: 'with-hint' });
+  @Input() pattern: string = '';
+  @Input() minlength: number | undefined = undefined;
+  @Input() maxlength: number | undefined = undefined;
+  @Input() min: number | string | undefined = undefined;
+  @Input() max: number | string | undefined = undefined;
+  @Input() step: number | string | undefined = undefined;
+  @Input() autocapitalize: ''|'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters' | undefined = undefined;
+  @Input() autocorrect: 'off' | 'on' | undefined = undefined;
+  @Input() autocomplete: string | undefined = undefined;
+  @Input() autofocus: boolean | string = false;
+  @Input() enterkeyhint: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' | undefined = undefined;
+  @Input() spellcheck: boolean | string = true;
+  @Input() inputmode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | undefined = undefined;
+  @Input() withLabel: boolean | string = false;
+  @Input('with-label') withLabelAttr: string | boolean = '';
+  @Input() withHint: boolean | string = false;
+  @Input('with-hint') withHintAttr: string | boolean = '';
 
   // Output events
-  inputChange = output<any>();
-  change = output<any>();
-  blur = output<any>();
-  focus = output<any>();
-  waClear = output<any>();
-  waInvalid = output<any>();
+  @Output() inputChange = new EventEmitter<any>();
+  @Output() change = new EventEmitter<any>();
+  @Output() blur = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<any>();
+  @Output() waClear = new EventEmitter<any>();
+  @Output() waInvalid = new EventEmitter<any>();
 
   // Helper method to determine if clearable is enabled
   isClearableEnabled(): boolean {
-    const clearableValue = this.clearable();
+    const clearableValue = this.clearable;
     return clearableValue === true || clearableValue === '' || clearableValue === 'true';
   }
 
   // Helper method to determine if password toggle is enabled
   isPasswordToggleEnabled(): boolean {
-    const passwordToggleValue = this.passwordToggle();
-    const passwordToggleAttrValue = this.passwordToggleAttr();
+    const passwordToggleValue = this.passwordToggle;
+    const passwordToggleAttrValue = this.passwordToggleAttr;
 
     return passwordToggleValue === true ||
            passwordToggleValue === '' ||
@@ -95,29 +94,31 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to get the effective size
   getEffectiveSize(): 'small' | 'medium' | 'large' | 'inherit' {
-    const sizeValue = this.size();
+    const sizeValue = this.size;
     if (sizeValue === 'small' || sizeValue === 'medium' || sizeValue === 'large' || sizeValue === 'inherit') {
       return sizeValue as 'small' | 'medium' | 'large' | 'inherit';
     }
     return 'inherit';
   }
 
+
+
   // Helper method to determine if pill is enabled
   isPillEnabled(): boolean {
-    const pillValue = this.pill();
+    const pillValue = this.pill;
     return pillValue === true || pillValue === '' || pillValue === 'true';
   }
 
   // Helper method to determine if readonly is enabled
   isReadonlyEnabled(): boolean {
-    const readonlyValue = this.readonly();
+    const readonlyValue = this.readonly;
     return readonlyValue === true || readonlyValue === '' || readonlyValue === 'true';
   }
 
   // Helper method to determine if password is visible
   isPasswordVisible(): boolean {
-    const passwordVisibleValue = this.passwordVisible();
-    const passwordVisibleAttrValue = this.passwordVisibleAttr();
+    const passwordVisibleValue = this.passwordVisible;
+    const passwordVisibleAttrValue = this.passwordVisibleAttr;
 
     return passwordVisibleValue === true ||
            passwordVisibleValue === '' ||
@@ -129,8 +130,8 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if no-spin-buttons is enabled
   isNoSpinButtonsEnabled(): boolean {
-    const noSpinButtonsValue = this.noSpinButtons();
-    const noSpinButtonsAttrValue = this.noSpinButtonsAttr();
+    const noSpinButtonsValue = this.noSpinButtons;
+    const noSpinButtonsAttrValue = this.noSpinButtonsAttr;
 
     return noSpinButtonsValue === true ||
            noSpinButtonsValue === '' ||
@@ -142,7 +143,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if required is enabled
   isRequiredEnabled(): boolean {
-    const requiredValue = this.required();
+    const requiredValue = this.required;
     return requiredValue === true ||
            requiredValue === '' ||
            requiredValue === 'true';
@@ -150,7 +151,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if autofocus is enabled
   isAutofocusEnabled(): boolean {
-    const autofocusValue = this.autofocus();
+    const autofocusValue = this.autofocus;
     return autofocusValue === true ||
            autofocusValue === '' ||
            autofocusValue === 'true';
@@ -158,7 +159,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if spellcheck is enabled
   isSpellcheckEnabled(): boolean {
-    const spellcheckValue = this.spellcheck();
+    const spellcheckValue = this.spellcheck;
     return spellcheckValue === true ||
            spellcheckValue === '' ||
            spellcheckValue === 'true';
@@ -166,8 +167,8 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if withLabel is enabled
   isWithLabelEnabled(): boolean {
-    const withLabelValue = this.withLabel();
-    const withLabelAttrValue = this.withLabelAttr();
+    const withLabelValue = this.withLabel;
+    const withLabelAttrValue = this.withLabelAttr;
 
     return withLabelValue === true ||
            withLabelValue === '' ||
@@ -179,8 +180,8 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to determine if withHint is enabled
   isWithHintEnabled(): boolean {
-    const withHintValue = this.withHint();
-    const withHintAttrValue = this.withHintAttr();
+    const withHintValue = this.withHint;
+    const withHintAttrValue = this.withHintAttr;
 
     return withHintValue === true ||
            withHintValue === '' ||
@@ -192,7 +193,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to get the effective min value
   getEffectiveMin(): number | string | undefined {
-    const minValue = this.min();
+    const minValue = this.min;
     if (minValue === '' || minValue === 'true') {
       return '0'; // Default to 0 if min is used as a standalone attribute
     } else if (typeof minValue === 'string' && minValue !== 'false') {
@@ -203,7 +204,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to get the effective max value
   getEffectiveMax(): number | string | undefined {
-    const maxValue = this.max();
+    const maxValue = this.max;
     if (maxValue === '' || maxValue === 'true') {
       return ''; // Default to empty if max is used as a standalone attribute
     } else if (typeof maxValue === 'string' && maxValue !== 'false') {
@@ -214,7 +215,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   // Helper method to get the effective step value
   getEffectiveStep(): number | string | undefined {
-    const stepValue = this.step();
+    const stepValue = this.step;
     if (stepValue === '' || stepValue === 'true') {
       return '1'; // Default to 1 if step is used as a standalone attribute
     } else if (typeof stepValue === 'string' && stepValue !== 'false') {
@@ -225,10 +226,12 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
   @HostListener('input', ['$event'])
   onInput(event: any) {
-    const value = event.target.value;
-    this.value.apply(value);
+    // Get the value from the native input element in the shadow DOM
+    const nativeInput = this.getNativeInputElement();
+    const value = nativeInput.value;
+    this.value = value;
+    this.valueChange.emit(value);
     this.inputChange.emit(event);
-    this.onModelChange(value);
   }
 
   @HostListener('change', ['$event'])
@@ -249,7 +252,8 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
   // Method to clear input if clearable is true
   clear() {
     if (this.isClearableEnabled()) {
-      this.value.apply('');
+      this.value = '';
+      this.valueChange.emit('');
       this.inputChange.emit({ target: { value: '' } });
       this.waClear.emit(true);
     }
@@ -283,13 +287,13 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
   }
 
   stepUp(n?: number) {
-    if (this.type() === 'number') {
+    if (this.type === 'number') {
       this.el.nativeElement.stepUp(n);
     }
   }
 
   stepDown(n?: number) {
-    if (this.type() === 'number') {
+    if (this.type === 'number') {
       this.el.nativeElement.stepDown(n);
     }
   }
@@ -300,44 +304,38 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
       const inputEl = this.el.nativeElement;
       const newVisibility = !this.isPasswordVisible();
       inputEl.type = newVisibility ? 'text' : 'password';
-      this.passwordVisible.apply(newVisibility);
+      this.passwordVisible = newVisibility;
     }
-  }
-
-  // ControlValueAccessor implementation
-  private onModelChange: (value: string | number) => void = () => {};
-  private onTouched: () => void = () => {};
-
-  writeValue(value: string | number): void {
-    if (value !== undefined && value !== null) {
-      this.value.apply(value);
-    } else if (this.defaultValue() !== null) {
-      // Use defaultValue if provided and no value is set
-      this.value.apply(this.defaultValue()!);
-    }
-  }
-
-  registerOnChange(fn: (value: string | number) => void): void {
-    this.onModelChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.el.nativeElement.disabled = isDisabled;
   }
 
   @HostListener('blur', ['$event'])
   onBlur(event: any) {
-    this.onTouched();
     this.blur.emit(event);
   }
 
+  // Helper method to get the native input element from the shadow DOM
+  private getNativeInputElement(): HTMLInputElement {
+    const host = this.el.nativeElement;
+    if (host.shadowRoot) {
+      // Find the div with part="input" in the shadow root
+      const inputContainer = host.shadowRoot.querySelector('div[part="input"]');
+      if (inputContainer) {
+        // Find the element with part="base" inside the input container
+        const nativeInput = inputContainer.querySelector('[part="base"]');
+        if (nativeInput) {
+          return nativeInput as HTMLInputElement;
+        }
+      }
+    }
+    // Fallback to the host element if shadow DOM structure is not found
+    return host as HTMLInputElement;
+  }
+
+
   constructor(private el: ElementRef) {
-    effect(() => {
-      this.onModelChange(this.value());
+    /*effect(() => {
+      const nativeInput = this.getNativeInputElement();
+      nativeInput.value = String(this.value || '');
     });
 
     // Initialize input element based on attributes
@@ -345,49 +343,49 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
 
     // Set up attribute watchers
     effect(() => {
-      inputEl.type = this.type();
+      inputEl.type = this.type;
     });
 
     effect(() => {
-      const defaultValue = this.defaultValue();
+      const defaultValue = this.defaultValue;
       if (defaultValue !== null) {
         inputEl.defaultValue = defaultValue;
       }
     });
 
     effect(() => {
-      this.readonly(); // Read the signal to track changes
+      this.readonly; // Read the signal to track changes
       inputEl.readOnly = this.isReadonlyEnabled();
     });
 
     effect(() => {
-      this.required(); // Read the signal to track changes
+      this.required; // Read the signal to track changes
       inputEl.required = this.isRequiredEnabled();
     });
 
     effect(() => {
-      const pattern = this.pattern();
+      const pattern = this.pattern;
       if (pattern) {
         inputEl.pattern = pattern;
       }
     });
 
     effect(() => {
-      const minlength = this.minlength();
+      const minlength = this.minlength;
       if (minlength !== undefined) {
         inputEl.minLength = minlength;
       }
     });
 
     effect(() => {
-      const maxlength = this.maxlength();
+      const maxlength = this.maxlength;
       if (maxlength !== undefined) {
         inputEl.maxLength = maxlength;
       }
     });
 
     effect(() => {
-      this.min(); // Read the signal to track changes
+      this.min; // Read the signal to track changes
       const effectiveMin = this.getEffectiveMin();
       if (effectiveMin !== undefined) {
         inputEl.min = effectiveMin;
@@ -395,7 +393,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
     });
 
     effect(() => {
-      this.max(); // Read the signal to track changes
+      this.max; // Read the signal to track changes
       const effectiveMax = this.getEffectiveMax();
       if (effectiveMax !== undefined) {
         inputEl.max = effectiveMax;
@@ -403,7 +401,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
     });
 
     effect(() => {
-      this.step(); // Read the signal to track changes
+      this.step; // Read the signal to track changes
       const effectiveStep = this.getEffectiveStep();
       if (effectiveStep !== undefined) {
         inputEl.step = effectiveStep;
@@ -411,7 +409,7 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
     });
 
     effect(() => {
-      const autocapitalize = this.autocapitalize();
+      const autocapitalize = this.autocapitalize;
       if (autocapitalize === '') {
         // Default to 'words' when used as a standalone attribute
         inputEl.autocapitalize = 'words';
@@ -421,93 +419,93 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
     });
 
     effect(() => {
-      const autocorrect = this.autocorrect();
+      const autocorrect = this.autocorrect;
       if (autocorrect !== undefined) {
         inputEl.autocorrect = autocorrect;
       }
     });
 
     effect(() => {
-      const autocomplete = this.autocomplete();
+      const autocomplete = this.autocomplete;
       if (autocomplete !== undefined) {
         inputEl.autocomplete = autocomplete;
       }
     });
 
     effect(() => {
-      this.autofocus(); // Read the signal to track changes
+      this.autofocus; // Read the signal to track changes
       inputEl.autofocus = this.isAutofocusEnabled();
     });
 
     effect(() => {
-      const enterkeyhint = this.enterkeyhint();
+      const enterkeyhint = this.enterkeyhint;
       if (enterkeyhint !== undefined) {
         inputEl.enterKeyHint = enterkeyhint;
       }
     });
 
     effect(() => {
-      this.spellcheck(); // Read the signal to track changes
+      this.spellcheck; // Read the signal to track changes
       inputEl.spellcheck = this.isSpellcheckEnabled();
     });
 
     effect(() => {
-      const inputmode = this.inputmode();
+      const inputmode = this.inputmode;
       if (inputmode !== undefined) {
         inputEl.inputMode = inputmode;
       }
     });
 
     effect(() => {
-      const form = this.form();
+      const form = this.form;
       if (form !== null) {
         inputEl.form = form;
       }
     });
 
     effect(() => {
-      this.passwordVisible(); // Read the signal to track changes
-      this.passwordVisibleAttr(); // Read the signal to track changes
-      if (this.type() === 'password' && this.isPasswordToggleEnabled()) {
+      this.passwordVisible; // Read the signal to track changes
+      this.passwordVisibleAttr; // Read the signal to track changes
+      if (this.type === 'password' && this.isPasswordToggleEnabled()) {
         inputEl.type = this.isPasswordVisible() ? 'text' : 'password';
       }
     });
 
     effect(() => {
-      this.noSpinButtons(); // Read the signal to track changes
-      this.noSpinButtonsAttr(); // Read the signal to track changes
-      if (this.type() === 'number') {
+      this.noSpinButtons; // Read the signal to track changes
+      this.noSpinButtonsAttr; // Read the signal to track changes
+      if (this.type === 'number') {
         inputEl.classList.toggle('no-spin-buttons', this.isNoSpinButtonsEnabled());
       }
     });
 
     // Apply appearance
     effect(() => {
-      const appearance = this.appearance();
+      const appearance = this.appearance;
       inputEl.classList.remove('filled', 'outlined');
       inputEl.classList.add(appearance);
     });
 
     // Apply pill style
     effect(() => {
-      this.pill(); // Read the signal to track changes
+      this.pill; // Read the signal to track changes
       inputEl.classList.toggle('pill', this.isPillEnabled());
     });
 
     // Apply size class
     effect(() => {
-      const size = this.size();
+      const size = this.size;
       inputEl.classList.remove('small', 'medium', 'large', 'inherit');
       if (size !== 'inherit') {
         inputEl.classList.add(size);
       }
-    });
+    });*/
   }
 
   // Validator implementation
   validate(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    const type = this.type();
+    const type = this.type;
     let errors: ValidationErrors = {};
 
     // Check required
@@ -595,19 +593,19 @@ export class WaInputDirective implements ControlValueAccessor, Validator {
     }
 
     // Pattern validation
-    if (this.pattern() && !new RegExp(this.pattern()).test(String(value))) {
-      errors = { ...errors, 'pattern': { requiredPattern: this.pattern(), actualValue: value } };
+    if (this.pattern && !new RegExp(this.pattern).test(String(value))) {
+      errors = { ...errors, 'pattern': { requiredPattern: this.pattern, actualValue: value } };
       this.waInvalid.emit({ error: 'pattern', control });
     }
 
     // Length validations
     const strValue = String(value);
-    if (this.minlength() !== undefined && strValue.length < this.minlength()!) {
-      errors = { ...errors, 'minlength': { requiredLength: this.minlength(), actualLength: strValue.length } };
+    if (this.minlength !== undefined && strValue.length < this.minlength!) {
+      errors = { ...errors, 'minlength': { requiredLength: this.minlength, actualLength: strValue.length } };
       this.waInvalid.emit({ error: 'minlength', control });
     }
-    if (this.maxlength() !== undefined && strValue.length > this.maxlength()!) {
-      errors = { ...errors, 'maxlength': { requiredLength: this.maxlength(), actualLength: strValue.length } };
+    if (this.maxlength !== undefined && strValue.length > this.maxlength!) {
+      errors = { ...errors, 'maxlength': { requiredLength: this.maxlength, actualLength: strValue.length } };
       this.waInvalid.emit({ error: 'maxlength', control });
     }
 

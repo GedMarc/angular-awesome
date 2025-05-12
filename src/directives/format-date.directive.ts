@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, input, model, output } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 
 @Directive({
@@ -8,42 +8,48 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: WaFormatDateDirective
+      useExisting: forwardRef(() => WaFormatDateDirective)
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: WaFormatDateDirective
+      useExisting: forwardRef(() => WaFormatDateDirective)
     }
   ]
 })
 export class WaFormatDateDirective implements ControlValueAccessor, Validator {
-  // Two-way bindable date using model()
-  date = model<Date | string>(new Date());
+  // Two-way bindable date
+  private _date: Date | string = new Date();
+  @Input()
+  get date(): Date | string {
+    return this._date;
+  }
+  set date(value: Date | string) {
+    this._date = value;
+    this.dateChange.emit(value);
+  }
+  @Output() dateChange = new EventEmitter<any>();
 
   // Formatting options
-  weekday = input<'narrow' | 'short' | 'long' | undefined>(undefined);
-  era = input<'narrow' | 'short' | 'long' | undefined>(undefined);
-  year = input<'numeric' | '2-digit' | undefined>(undefined);
-  month = input<'numeric' | '2-digit' | 'narrow' | 'short' | 'long' | undefined>(undefined);
-  day = input<'numeric' | '2-digit' | undefined>(undefined);
-  hour = input<'numeric' | '2-digit' | undefined>(undefined);
-  minute = input<'numeric' | '2-digit' | undefined>(undefined);
-  second = input<'numeric' | '2-digit' | undefined>(undefined);
-  timeZoneName = input<'short' | 'long' | undefined>(undefined);
-  timeZone = input<string | undefined>(undefined);
-  lang = input<string>('en');
+  @Input() weekday: 'narrow' | 'short' | 'long' | undefined = undefined;
+  @Input() era: 'narrow' | 'short' | 'long' | undefined = undefined;
+  @Input() year: 'numeric' | '2-digit' | undefined = undefined;
+  @Input() month: 'numeric' | '2-digit' | 'narrow' | 'short' | 'long' | undefined = undefined;
+  @Input() day: 'numeric' | '2-digit' | undefined = undefined;
+  @Input() hour: 'numeric' | '2-digit' | undefined = undefined;
+  @Input() minute: 'numeric' | '2-digit' | undefined = undefined;
+  @Input() second: 'numeric' | '2-digit' | undefined = undefined;
+  @Input() timeZoneName: 'short' | 'long' | undefined = undefined;
+  @Input() timeZone: string | undefined = undefined;
+  @Input() lang: string = 'en';
 
   // Hour format
-  hourFormat = input<'12' | '24' | 'auto'>('auto');
-
-  // Output event
-  dateChange = output<any>();
+  @Input() hourFormat: '12' | '24' | 'auto' = 'auto';
 
   @HostListener('input', ['$event'])
   onInput(event: any) {
     const value = event.target.value;
-    this.date.apply(value);
+    this.date = value;
     this.dateChange.emit(event);
     this.onModelChange(value);
   }
@@ -51,7 +57,7 @@ export class WaFormatDateDirective implements ControlValueAccessor, Validator {
   @HostListener('change', ['$event'])
   onChange(event: any) {
     const value = event.target.value;
-    this.date.apply(value);
+    this.date = value;
     this.dateChange.emit(event);
     this.onModelChange(value);
   }
@@ -62,7 +68,7 @@ export class WaFormatDateDirective implements ControlValueAccessor, Validator {
 
   writeValue(value: Date | string): void {
     if (value !== undefined && value !== null) {
-      this.date.apply(value);
+      this.date = value;
     }
   }
 

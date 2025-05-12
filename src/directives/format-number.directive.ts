@@ -1,4 +1,4 @@
-import { Directive, ElementRef, input, model, output, HostListener } from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter, HostListener, forwardRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 
 @Directive({
@@ -8,43 +8,51 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: WaFormatNumberDirective
+      useExisting: forwardRef(() => WaFormatNumberDirective)
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: WaFormatNumberDirective
+      useExisting: forwardRef(() => WaFormatNumberDirective)
     }
   ]
 })
 export class WaFormatNumberDirective implements ControlValueAccessor, Validator {
-  // Two-way bindable value using model()
-  value = model<number>(0);
+  // Two-way bindable value
+  private _value: number = 0;
+  @Input()
+  get value(): number {
+    return this._value;
+  }
+  set value(val: number) {
+    this._value = val;
+    this.inputChange.emit(val);
+  }
 
-  // Input properties using input()
-  type = input<'currency' | 'decimal' | 'percent'>('decimal');
+  // Input properties
+  @Input() type: 'currency' | 'decimal' | 'percent' = 'decimal';
 
   // No grouping option
-  noGrouping = input<boolean>(false);
+  @Input() noGrouping: boolean = false;
 
   // Currency code
-  currency = input<string>('ZAR');
+  @Input() currency: string = 'ZAR';
 
   // Currency display format
-  currencyDisplay = input<'symbol' | 'narrowSymbol' | 'code' | 'name'>('symbol');
+  @Input() currencyDisplay: 'symbol' | 'narrowSymbol' | 'code' | 'name' = 'symbol';
 
   // Digit configuration
-  minimumIntegerDigits = input<number | undefined>(undefined);
-  minimumFractionDigits = input<number | undefined>(undefined);
-  maximumFractionDigits = input<number | undefined>(undefined);
-  minimumSignificantDigits = input<number | undefined>(undefined);
-  maximumSignificantDigits = input<number | undefined>(undefined);
+  @Input() minimumIntegerDigits: number | undefined = undefined;
+  @Input() minimumFractionDigits: number | undefined = undefined;
+  @Input() maximumFractionDigits: number | undefined = undefined;
+  @Input() minimumSignificantDigits: number | undefined = undefined;
+  @Input() maximumSignificantDigits: number | undefined = undefined;
 
   // Language
-  lang = input<string>('en');
+  @Input() lang: string = 'en';
 
   // Output event
-  inputChange = output<any>();
+  @Output() inputChange = new EventEmitter<any>();
 
   @HostListener('input', ['$event'])
   onInput(event: any) {
@@ -52,7 +60,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
     // Convert string to number
     const numValue = parseFloat(value);
     if (!isNaN(numValue)) {
-      this.value.apply(numValue);
+      this.value = numValue;
       this.inputChange.emit(event);
       this.onModelChange(numValue);
     }
@@ -64,7 +72,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
     // Convert string to number
     const numValue = parseFloat(value);
     if (!isNaN(numValue)) {
-      this.value.apply(numValue);
+      this.value = numValue;
       this.inputChange.emit(event);
       this.onModelChange(numValue);
     }
@@ -83,7 +91,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
 
   writeValue(value: number): void {
     if (value !== undefined && value !== null) {
-      this.value.apply(value);
+      this.value = value;
     }
   }
 
@@ -100,9 +108,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
   }
 
   constructor(private el: ElementRef) {
-    this.value.subscribe((value) => {
-      this.onModelChange(value);
-    });
+    // No need for subscription as we're using getter/setter
   }
 
   // Validator implementation
@@ -118,7 +124,7 @@ export class WaFormatNumberDirective implements ControlValueAccessor, Validator 
     }
 
     // Additional validation based on type
-    if (this.type() === 'percent' && (value < 0 || value > 1)) {
+    if (this.type === 'percent' && (value < 0 || value > 1)) {
       return { 'percent': true };
     }
 

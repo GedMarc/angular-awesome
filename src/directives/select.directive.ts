@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, input, model, output } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 
 @Directive({
@@ -8,93 +8,102 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: WaSelectDirective
+      useExisting: forwardRef(() => WaSelectDirective)
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: WaSelectDirective
+      useExisting: forwardRef(() => WaSelectDirective)
     }
   ]
 })
 export class WaSelectDirective implements ControlValueAccessor, Validator {
   // Basic select properties
-  name = input<string>('');
-  label = input<string>('');
-  hint = input<string>('');
-  placeholder = input<string>('');
-  size = input<'small' | 'medium' | 'large' | 'inherit'>('inherit');
+  @Input() name: string = '';
+  @Input() label: string = '';
+  @Input() hint: string = '';
+  @Input() placeholder: string = '';
+  @Input() size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
 
-  // Two-way bindable value using model()
-  value = model<string | string[]>('');
+  // Two-way bindable value
+  private _value: string | string[] = '';
+  @Input()
+  get value(): string | string[] {
+    return this._value;
+  }
+  set value(val: string | string[]) {
+    this._value = val;
+    this.changeEvent.emit(val);
+    this.updateValueAttribute(val);
+  }
 
   // Appearance and style properties
-  appearance = input<'filled' | 'outlined'>('outlined');
-  placement = input<'top' | 'bottom'>('bottom');
+  @Input() appearance: 'filled' | 'outlined' = 'outlined';
+  @Input() placement: 'top' | 'bottom' = 'bottom';
 
   // Boolean properties
-  multiple = input<boolean | string>(false);
+  @Input() multiple: boolean | string = false;
 
-  disabled = input<boolean | string>(false);
+  @Input() disabled: boolean | string = false;
 
-  clearable = input<boolean | string>(false);
+  @Input() clearable: boolean | string = false;
 
-  pill = input<boolean | string>(false);
+  @Input() pill: boolean | string = false;
 
-  required = input<boolean | string>(false);
+  @Input() required: boolean | string = false;
 
   // Numeric properties
-  maxOptionsVisible = input<number>(3);
+  @Input() maxOptionsVisible: number = 3;
 
   // Open state
-  open = input<boolean>(false);
+  @Input() open: boolean = false;
 
   // Form association
-  form = input<string | null>(null);
+  @Input() form: string | null = null;
 
   // Output events
-  inputEvent = output<undefined>();
-  changeEvent = output<string|string[]>();
-  focusEvent = output<undefined>();
-  blurEvent = output<undefined>();
-  clearEvent = output<undefined>();
-  showEvent = output<undefined>();
-  afterShowEvent = output<undefined>();
-  hideEvent = output<undefined>();
-  afterHideEvent = output<undefined>();
-  invalidEvent = output<undefined>();
+  @Output() inputEvent = new EventEmitter<undefined>();
+  @Output() changeEvent = new EventEmitter<string|string[]>();
+  @Output() focusEvent = new EventEmitter<undefined>();
+  @Output() blurEvent = new EventEmitter<undefined>();
+  @Output() clearEvent = new EventEmitter<undefined>();
+  @Output() showEvent = new EventEmitter<undefined>();
+  @Output() afterShowEvent = new EventEmitter<undefined>();
+  @Output() hideEvent = new EventEmitter<undefined>();
+  @Output() afterHideEvent = new EventEmitter<undefined>();
+  @Output() invalidEvent = new EventEmitter<undefined>();
 
   // Helper methods for boolean attributes
   isMultiple(): boolean {
-    const multipleValue = this.multiple();
+    const multipleValue = this.multiple;
     return multipleValue === true ||
            multipleValue === '' ||
            multipleValue === 'true';
   }
 
   isDisabled(): boolean {
-    const disabledValue = this.disabled();
+    const disabledValue = this.disabled;
     return disabledValue === true ||
            disabledValue === '' ||
            disabledValue === 'true';
   }
 
   isClearable(): boolean {
-    const clearableValue = this.clearable();
+    const clearableValue = this.clearable;
     return clearableValue === true ||
            clearableValue === '' ||
            clearableValue === 'true';
   }
 
   isPill(): boolean {
-    const pillValue = this.pill();
+    const pillValue = this.pill;
     return pillValue === true ||
            pillValue === '' ||
            pillValue === 'true';
   }
 
   isRequired(): boolean {
-    const requiredValue = this.required();
+    const requiredValue = this.required;
     return requiredValue === true ||
            requiredValue === '' ||
            requiredValue === 'true';
@@ -103,7 +112,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   // Methods
   show(): void {
     if (!this.isDisabled()) {
-      this.open.apply(true);
+      this.open = true;
       this.showEvent.emit(undefined);
       // After animation would complete
       setTimeout(() => {
@@ -113,7 +122,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   }
 
   hide(): void {
-    this.open.apply(false);
+    this.open = false;
     this.hideEvent.emit(undefined);
     // After animation would complete
     setTimeout(() => {
@@ -136,7 +145,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   clear(): void {
     if (this.isClearable() && !this.isDisabled()) {
       const newValue = this.isMultiple() ? [] : '';
-      this.value.apply(newValue);
+      this.value = newValue;
       this.onModelChange(newValue);
       this.updateValueAttribute(newValue);
       this.clearEvent.emit(undefined);
@@ -147,7 +156,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   @HostListener('click')
   onClick() {
     if (!this.isDisabled()) {
-      this.open() ? this.hide() : this.show();
+      this.open ? this.hide() : this.show();
     }
   }
 
@@ -156,13 +165,13 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   onKeyDown(event: KeyboardEvent) {
     if (!this.isDisabled()) {
       event.preventDefault();
-      this.open() ? this.hide() : this.show();
+      this.open ? this.hide() : this.show();
     }
   }
 
   @HostListener('keydown.escape')
   onEscape() {
-    if (this.open()) {
+    if (this.open) {
       this.hide();
     }
   }
@@ -185,7 +194,7 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
 
   writeValue(value: string | string[]): void {
     if (value !== undefined && value !== null) {
-      this.value.apply(value);
+      this.value = value;
       this.updateValueAttribute(value);
     }
   }
@@ -199,15 +208,11 @@ export class WaSelectDirective implements ControlValueAccessor, Validator {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled.apply(isDisabled);
+    this.disabled = isDisabled;
   }
 
   constructor(private el: ElementRef) {
-    this.value.subscribe((value) => {
-      this.onModelChange(value);
-      this.changeEvent.emit(value);
-      this.updateValueAttribute(value);
-    });
+    // No need for subscription as we're using getter/setter
   }
 
   // Update the value attribute in the DOM
