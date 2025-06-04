@@ -1,6 +1,6 @@
 {
   "name": "angular-awesome",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "private": false,
   "description": "Angular wrapper for the web awesome framework",
   "keywords": [
