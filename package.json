@@ -1,6 +1,6 @@
 {
   "name": "angular-awesome",
-  "version": "0.0.1",
+  "version": "1.0.0-rc.1",
   "private": false,
   "description": "Angular wrapper for the web awesome framework",
   "keywords": [
@@ -10,21 +10,20 @@
     "components",
     "directives"
   ],
-  "author": "",
+  "author": "Marc Magon <marc.magon@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/GedMarc/angular-awesome.git"
   },
   "scripts": {
     "build": "ng build",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless"
   },
-  "main": "dist/angular-awesome/bundles/angular-awesome.umd.js",
+  "main": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "module": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
-  "esm2022": "dist/angular-awesome/esm2022/angular-awesome.js",
   "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
     "@angular/common": "^19.2.0",

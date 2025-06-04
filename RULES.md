@@ -1,6 +1,6 @@
 ### 📘 `webawesome.base.rules.md`
 
-**Angular 19 Library Wrapping Rules for the Web Awesome (**\`\`**) Component Kit**
+**Angular 19 Library Wrapping Rules for the Web Awesome (`wa-*`) Component Kit**
 
 ---
 
@@ -177,7 +177,7 @@ All tokens include theme-aware variables like:
 * Use native Web Component tag selectors (`wa-*`) as Angular directive selectors
 * Wrap UI components like badges, icons, buttons using `@Directive()` (not `@Component()`)
 * Use `@Input()` for properties; bind via `Renderer2` in `ngOnInit`
-* Output event bindings for animation lifecycle
+* Output event bindings for animation lifecycle and other custom web component events
 * Boolean inputs: render `attr.name=""` if true, omit otherwise
 * Avoid using Signals inside libraries
 * Avoid TemplateRef or `<ng-template>` unless required by slotting patterns
@@ -186,6 +186,25 @@ All tokens include theme-aware variables like:
 
 ---
 
+### ⚠️ Attribute Coercion Rules
+
+To support template usage without `[]` bindings:
+
+* All `@Input()`s should accept `string` or the native type (`number | string`, `boolean | string`) to ensure Angular doesn’t reject unbound literal inputs.
+* Boolean inputs must render as `attr.name=""` only when the value is truthy — this includes the string `"true"`.
+* Number inputs passed as strings (e.g., `duration="300"`) should be converted to numbers in the directive/component logic before assigning to properties or attributes.
+* Avoid relying on native type inference — always normalize input types manually.
+
+---
+
+### ⚛️ Custom Event Support
+
+* Angular wrappers must allow users to bind to custom events emitted by Web Awesome components (e.g. `(wa-start)`, `(wa-finish)`, etc.).
+* For components that emit events, document all event names and map them in the directive/component.
+* Events can be passed through natively using `(eventName)="handler()"`, or explicitly exposed via `@Output()` as needed for type safety.
+
+---
+
 📌 These global rules are inherited by all component-specific `.rules.md` files in this library ecosystem.
 
-✅ Updated with support for native tag selectors, boolean attribute handling, and directive-based render control for stable Angular 19 integration.
+👌 Updated with support for native tag selectors, event bindings, boolean and number coercion, and directive-based render control for stable Angular 19 integration.

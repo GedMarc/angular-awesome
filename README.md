@@ -1,59 +1,121 @@
-# angular-awesome
+# Angular Awesome
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://webawesome.dev) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
 
-## Development server
+📦 Version: `1.0.0-rc.1`
+🔗 [Web Awesome Component Docs](https://webawesome.dev)
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 📌 About
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+This library makes it easy to use Web Awesome's rich set of components in Angular projects. It preserves native performance and design fidelity while enabling Angular-style development patterns:
 
-## Code scaffolding
+* Angular `@Input()`s and `@Output()`s for binding
+* Full support for `ngModel`
+* Scoped styling via Angular-style inputs mapped to CSS custom properties
+* Web component slot and attribute integration
+* Standalone component packaging (no module needed)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🚀 Getting Started
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### 1. Install the package
 
 ```bash
-ng build
+npm install angular-awesome
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Make sure you’ve installed `@angular/core`, `@angular/forms`, and `@angular/common` version 19.2 or later.
 
-## Running unit tests
+### 2. Import a component
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Each component is standalone and can be imported individually.
+
+```ts
+import { WaInputComponent } from 'angular-awesome/input';
+
+@Component({
+  standalone: true,
+  imports: [WaInputComponent, FormsModule],
+  template: `<wa-input [(ngModel)]="value" hint="Enter text"></wa-input>`
+})
+export class MyComponent {
+  value = '';
+}
+```
+
+---
+
+## 📚 Components
+
+All components and directives mirror the structure of the Web Awesome library. Check out the component-specific README files under:
+
+```
+projects/angular-awesome/src/lib/<component>/README.md
+```
+
+Each contains:
+
+* Angular usage examples
+* Available inputs and outputs
+* Styling customizations
+* Link to general [Web Awesome Angular Rules](./RULES.md)
+
+---
+
+## 🎨 Styling
+
+Angular-style input bindings automatically set the corresponding Web Awesome CSS custom properties. For example:
+
+```html
+<wa-spinner [trackWidth]="'6px'" [indicatorColor]="'deeppink'"></wa-spinner>
+```
+
+These map directly to:
+
+```css
+--track-width: 6px;
+--indicator-color: deeppink;
+```
+
+---
+
+## 🧪 Testing
+
+To run tests:
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+For CI or headless testing:
 
 ```bash
-ng e2e
+npm run test:headless
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📦 Build
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+To produce the production bundle:
+
+```bash
+npm run build
+```
+
+This uses `ng-packagr` and outputs all formats in the `dist/angular-awesome` directory.
+
+---
+
+## 🛠️ Contributing
+
+Contributions are welcome through issues and PR's!
+
+---
+
+## 🧾 License
+
+MIT © 2025 Web Awesome Team

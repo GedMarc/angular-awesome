@@ -22,14 +22,19 @@
     "sourceMap": true,
     "inlineSources": true,
     "paths": {
-      "angular-awesome": ["./dist/angular-awesome"],
-      "angular-awesome/*": ["./dist/angular-awesome/*"]
+      "angular-awesome": [
+        "./dist/angular-awesome"
+      ],
+      "angular-awesome/*": [
+        "./dist/angular-awesome/*"
+      ]
     }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "compilationMode": "partial"
   }
 }
