@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Tooltip Directive</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        h3 {
+            margin-top: 1.5rem;
+            color: #0066cc;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .nav {
+            margin-bottom: 2rem;
+        }
+        .example {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .example h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tooltip Directive</h1>
+        <p>Popup that displays information when hovering over an element</p>
+        <div class="nav">
+            <a href="../index.html">Home</a> |
+            <a href="../components.html">Components</a> |
+            <a href="../rules.html">Rules & Guidelines</a> |
+            <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Overview</h2>
+            <p>
+                The Tooltip directive provides a popup that displays additional information when a user hovers over or focuses on an element.
+                It supports various placement options, customizable styling, and different trigger methods.
+            </p>
+        </section>
+
+        <section>
+            <h2>Import</h2>
+            <p>Import the tooltip directive from the angular-awesome package:</p>
+            <pre>// Import the tooltip directive
+import WaTooltipDirective from 'angular-awesome';</pre>
+        </section>
+
+        <section>
+            <h2>API Reference</h2>
+
+            <h3>WaTooltipDirective</h3>
+            <table>
+                <tr>
+                    <th>Input</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>for</td>
+                    <td>string</td>
+                    <td>required</td>
+                    <td>ID of the element the tooltip is for</td>
+                </tr>
+                <tr>
+                    <td>placement</td>
+                    <td>string</td>
+                    <td>'top'</td>
+                    <td>Placement of the tooltip: 'top', 'top-start', 'top-end', 'right', 'right-start', 'right-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end'</td>
+                </tr>
+                <tr>
+                    <td>disabled</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>Whether the tooltip is disabled</td>
+                </tr>
+                <tr>
+                    <td>distance</td>
+                    <td>number</td>
+                    <td>8</td>
+                    <td>Distance in pixels from the target element</td>
+                </tr>
+                <tr>
+                    <td>skidding</td>
+                    <td>number</td>
+                    <td>0</td>
+                    <td>Offset in pixels along the target element</td>
+                </tr>
+                <tr>
+                    <td>open</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>Whether the tooltip is open</td>
+                </tr>
+                <tr>
+                    <td>showDelay</td>
+                    <td>number</td>
+                    <td>150</td>
+                    <td>Delay in milliseconds before showing the tooltip</td>
+                </tr>
+                <tr>
+                    <td>hideDelay</td>
+                    <td>number</td>
+                    <td>0</td>
+                    <td>Delay in milliseconds before hiding the tooltip</td>
+                </tr>
+                <tr>
+                    <td>trigger</td>
+                    <td>string</td>
+                    <td>'hover focus'</td>
+                    <td>Space-separated list of events that trigger the tooltip: 'hover', 'focus', 'click', 'manual'</td>
+                </tr>
+            </table>
+
+            <h4>Styling Inputs</h4>
+            <table>
+                <tr>
+                    <th>Input</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>backgroundColor</td>
+                    <td>string</td>
+                    <td>Background color of the tooltip</td>
+                </tr>
+                <tr>
+                    <td>borderRadius</td>
+                    <td>string</td>
+                    <td>Border radius of the tooltip</td>
+                </tr>
+                <tr>
+                    <td>maxWidth</td>
+                    <td>string</td>
+                    <td>Maximum width of the tooltip</td>
+                </tr>
+                <tr>
+                    <td>padding</td>
+                    <td>string</td>
+                    <td>Padding inside the tooltip</td>
+                </tr>
+                <tr>
+                    <td>arrowSize</td>
+                    <td>string</td>
+                    <td>Size of the tooltip arrow</td>
+                </tr>
+            </table>
+
+            <h4>Events</h4>
+            <table>
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>waShow</td>
+                    <td>Emitted when the tooltip begins to show</td>
+                </tr>
+                <tr>
+                    <td>waAfterShow</td>
+                    <td>Emitted after the tooltip has fully shown</td>
+                </tr>
+                <tr>
+                    <td>waHide</td>
+                    <td>Emitted when the tooltip begins to hide</td>
+                </tr>
+                <tr>
+                    <td>waAfterHide</td>
+                    <td>Emitted after the tooltip has fully hidden</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Examples</h2>
+
+            <div class="example">
+                <h3>Basic Usage</h3>
+                <pre>&lt;button id="tooltip-target"&gt;Hover Me&lt;/button&gt;
+&lt;wa-tooltip for="tooltip-target"&gt;This is a tooltip&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Different Placements</h3>
+                <pre>&lt;button id="top-tooltip"&gt;Top Tooltip&lt;/button&gt;
+&lt;wa-tooltip for="top-tooltip" placement="top"&gt;Appears on top&lt;/wa-tooltip&gt;
+
+&lt;button id="right-tooltip"&gt;Right Tooltip&lt;/button&gt;
+&lt;wa-tooltip for="right-tooltip" placement="right"&gt;Appears on the right&lt;/wa-tooltip&gt;
+
+&lt;button id="bottom-tooltip"&gt;Bottom Tooltip&lt;/button&gt;
+&lt;wa-tooltip for="bottom-tooltip" placement="bottom"&gt;Appears on the bottom&lt;/wa-tooltip&gt;
+
+&lt;button id="left-tooltip"&gt;Left Tooltip&lt;/button&gt;
+&lt;wa-tooltip for="left-tooltip" placement="left"&gt;Appears on the left&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Custom Styling</h3>
+                <pre>&lt;button id="custom-tooltip"&gt;Custom Styled Tooltip&lt;/button&gt;
+&lt;wa-tooltip
+  for="custom-tooltip"
+  backgroundColor="#3f51b5"
+  borderRadius="8px"
+  maxWidth="300px"
+  padding="12px"
+  arrowSize="10px"
+&gt;
+  This tooltip has custom styling
+&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Different Triggers</h3>
+                <pre>&lt;button id="hover-tooltip"&gt;Hover Trigger&lt;/button&gt;
+&lt;wa-tooltip for="hover-tooltip" trigger="hover"&gt;Triggered by hover&lt;/wa-tooltip&gt;
+
+&lt;button id="focus-tooltip"&gt;Focus Trigger&lt;/button&gt;
+&lt;wa-tooltip for="focus-tooltip" trigger="focus"&gt;Triggered by focus&lt;/wa-tooltip&gt;
+
+&lt;button id="click-tooltip"&gt;Click Trigger&lt;/button&gt;
+&lt;wa-tooltip for="click-tooltip" trigger="click"&gt;Triggered by click&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Controlling Delays</h3>
+                <pre>&lt;button id="delay-tooltip"&gt;Delayed Tooltip&lt;/button&gt;
+&lt;wa-tooltip
+  for="delay-tooltip"
+  showDelay="500"
+  hideDelay="200"
+&gt;
+  This tooltip has custom show/hide delays
+&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Programmatically Controlled</h3>
+                <pre>&lt;button id="controlled-tooltip"&gt;Controlled Tooltip&lt;/button&gt;
+&lt;wa-tooltip
+  for="controlled-tooltip"
+  trigger="manual"
+  [open]="isTooltipOpen"
+&gt;
+  This tooltip is programmatically controlled
+&lt;/wa-tooltip&gt;
+
+&lt;button (click)="isTooltipOpen = !isTooltipOpen"&gt;
+  Toggle Tooltip
+&lt;/button&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>With Event Handling</h3>
+                <pre>&lt;button id="event-tooltip"&gt;Event Tooltip&lt;/button&gt;
+&lt;wa-tooltip
+  for="event-tooltip"
+  (waShow)="onShow()"
+  (waAfterShow)="onAfterShow()"
+  (waHide)="onHide()"
+  (waAfterHide)="onAfterHide()"
+&gt;
+  This tooltip emits events
+&lt;/wa-tooltip&gt;</pre>
+            </div>
+
+            <div class="example">
+                <h3>Rich Content</h3>
+                <pre>&lt;button id="rich-tooltip"&gt;Rich Content Tooltip&lt;/button&gt;
+&lt;wa-tooltip for="rich-tooltip"&gt;
+  &lt;div&gt;
+    &lt;h4&gt;Rich Tooltip Content&lt;/h4&gt;
+    &lt;p&gt;Tooltips can contain rich HTML content including:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Formatted text&lt;/li&gt;
+      &lt;li&gt;Images&lt;/li&gt;
+      &lt;li&gt;Links&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/wa-tooltip&gt;</pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>2025 GedMarc</p>
+        <p><a href="../index.html">Back to Home</a></p>
+    </footer>
+</body>
+</html>

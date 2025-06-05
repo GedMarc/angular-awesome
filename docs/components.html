@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Components</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        main {
+            flex: 1;
+        }
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .nav-tabs li {
+            margin-right: 10px;
+        }
+        .nav-tabs a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-tabs a:hover, .nav-tabs a.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .component-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .category-button {
+            padding: 8px 16px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .category-button:hover, .category-button.active {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        .component-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .component-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .component-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .component-card h3 {
+            margin-top: 0;
+            color: #0066cc;
+            display: flex;
+            align-items: center;
+        }
+        .component-card h3 .tag {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            background-color: #e6f7ff;
+            color: #0066cc;
+        }
+        .component-card p {
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .component-card .links {
+            display: flex;
+            justify-content: space-between;
+        }
+        .component-card .links a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .component-card .links a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .component-list {
+                grid-template-columns: 1fr;
+            }
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Angular Awesome Components</h1>
+        <p class="subtitle">Complete list of components and directives</p>
+        <p>
+            <a href="index.html">Home</a> |
+            <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a> |
+            <a href="rules.html">Rules & Guidelines</a>
+        </p>
+    </header>
+
+    <main>
+        <ul class="nav-tabs">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="getting-started.html">Getting Started</a></li>
+            <li><a href="#" class="active">Components</a></li>
+            <li><a href="rules.html">Rules & Guidelines</a></li>
+        </ul>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search components..." id="componentSearch">
+        </div>
+
+        <div class="component-categories">
+            <button class="category-button active" data-category="all">All</button>
+            <button class="category-button" data-category="input">Input</button>
+            <button class="category-button" data-category="navigation">Navigation</button>
+            <button class="category-button" data-category="layout">Layout</button>
+            <button class="category-button" data-category="feedback">Feedback</button>
+            <button class="category-button" data-category="data">Data Display</button>
+            <button class="category-button" data-category="utility">Utility</button>
+        </div>
+
+        <div class="component-list">
+            
+            <div class="component-card" data-category="utility">
+                <h3>AnimatedImage <span class="tag">Utility</span></h3>
+                <p><wa-animated-image> provides animated image functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/animated-image.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/animated-image" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Animation <span class="tag">Utility</span></h3>
+                <p><wa-animation> provides animation functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/animation.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/animation" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="data">
+                <h3>Avatar <span class="tag">Data</span></h3>
+                <p><wa-avatar> provides avatar functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/avatar.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/avatar" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="data">
+                <h3>Badge <span class="tag">Data</span></h3>
+                <p><wa-badge> provides badge functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/badge.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/badge" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Breadcrumbs <span class="tag">Utility</span></h3>
+                <p><wa-breadcrumbs> provides breadcrumbs functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/breadcrumbs.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/breadcrumbs" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Button <span class="tag">Input</span></h3>
+                <p><wa-button> is an interactive element that represents an action. It supports multiple variants, appearances, and sizes. It can also render as a link when href is provided.</p>
+                <div class="links">
+                    <a href="components/button.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/button" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Callout <span class="tag">Utility</span></h3>
+                <p><wa-callout> displays inline messages or alerts. It supports color variants, size and appearance options, and an optional icon via slot.</p>
+                <div class="links">
+                    <a href="components/callout.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/callout" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="layout">
+                <h3>Card <span class="tag">Layout</span></h3>
+                <p><wa-card> provides card functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/card.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/card" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Carousel <span class="tag">Utility</span></h3>
+                <p><wa-carousel> provides carousel functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/carousel.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/carousel" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Checkbox <span class="tag">Input</span></h3>
+                <p><wa-checkbox> provides checkbox functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/checkbox.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/checkbox" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>ColorPicker <span class="tag">Utility</span></h3>
+                <p><wa-color-picker> provides color picker functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/color-picker.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/color-picker" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Comparison <span class="tag">Utility</span></h3>
+                <p><wa-comparison> provides comparison functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/comparison.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/comparison" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>CopyButton <span class="tag">Utility</span></h3>
+                <p><wa-copy-button> provides copy button functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/copy-button.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/copy-button" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Details <span class="tag">Utility</span></h3>
+                <p><wa-details> provides details functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/details.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/details" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="feedback">
+                <h3>Dialog <span class="tag">Feedback</span></h3>
+                <p><wa-dialog> provides dialog functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/dialog.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/dialog" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="layout">
+                <h3>Divider <span class="tag">Layout</span></h3>
+                <p><wa-divider> provides divider functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/divider.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/divider" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="feedback">
+                <h3>Drawer <span class="tag">Feedback</span></h3>
+                <p><wa-drawer> provides drawer functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/drawer.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/drawer" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Dropdown <span class="tag">Utility</span></h3>
+                <p><wa-dropdown> provides dropdown functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/dropdown.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/dropdown" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>FormatBytes <span class="tag">Utility</span></h3>
+                <p><wa-format-bytes> provides format bytes functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/format-bytes.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/format-bytes" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>FormatDate <span class="tag">Utility</span></h3>
+                <p><wa-format-date> provides format date functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/format-date.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/format-date" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>FormatNumber <span class="tag">Utility</span></h3>
+                <p><wa-format-number> provides format number functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/format-number.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/format-number" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Icon <span class="tag">Utility</span></h3>
+                <p><wa-icon> provides icon functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/icon.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/icon" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>IconButton <span class="tag">Utility</span></h3>
+                <p><wa-icon-button> provides icon button functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/icon-button.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/icon-button" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Include <span class="tag">Utility</span></h3>
+                <p><wa-include> provides include functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/include.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/include" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Input <span class="tag">Input</span></h3>
+                <p><wa-input> provides input functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/input.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/input" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="navigation">
+                <h3>Menu <span class="tag">Navigation</span></h3>
+                <p><wa-menu> provides menu functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/menu.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/menu" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="layout">
+                <h3>Page <span class="tag">Layout</span></h3>
+                <p>The <wa-page> component is a comprehensive layout container that structures web pages with rich support for slots and responsive navigation. The Angular wrapper must support full slot projection, input bindings for layout control, and imperative methods for toggling the navigation drawer.</p>
+                <div class="links">
+                    <a href="components/page.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/page" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>ProgressBar <span class="tag">Utility</span></h3>
+                <p><wa-progress-bar> provides progress bar functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/progress-bar.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/progress-bar" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>ProgressRing <span class="tag">Utility</span></h3>
+                <p><wa-progress-ring> provides progress ring functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/progress-ring.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/progress-ring" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>QrCode <span class="tag">Utility</span></h3>
+                <p><wa-qr-code> provides qr code functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/qr-code.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/qr-code" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Radio <span class="tag">Input</span></h3>
+                <p><wa-radio> provides radio functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/radio.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/radio" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Rating <span class="tag">Utility</span></h3>
+                <p><wa-rating> provides rating functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/rating.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/rating" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>RelativeTime <span class="tag">Utility</span></h3>
+                <p>The wa-relative-time component displays a localized phrase indicating the relative time from a given date to now. It supports automatic updates, multiple formatting styles, and localization.</p>
+                <div class="links">
+                    <a href="components/relative-time.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/relative-time" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Scroller <span class="tag">Utility</span></h3>
+                <p><wa-scroller> provides scroller functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/scroller.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/scroller" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Select <span class="tag">Input</span></h3>
+                <p><wa-select> provides select functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/select.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/select" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Skeleton <span class="tag">Utility</span></h3>
+                <p><wa-skeleton> provides skeleton functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/skeleton.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/skeleton" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Slider <span class="tag">Input</span></h3>
+                <p><wa-slider> is an range input component that supports labeling, hints, min/max values, tooltips, and custom styling.</p>
+                <div class="links">
+                    <a href="components/slider.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/slider" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="feedback">
+                <h3>Spinner <span class="tag">Feedback</span></h3>
+                <p>This Angular wrapper corresponds to the <wa-spinner> Web Awesome component.</p>
+                <div class="links">
+                    <a href="components/spinner.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/spinner" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>SplitPanel <span class="tag">Utility</span></h3>
+                <p><wa-split-panel> provides split panel functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/split-panel.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/split-panel" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="input">
+                <h3>Switch <span class="tag">Input</span></h3>
+                <p><wa-switch> provides switch functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/switch.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/switch" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>TabGroup <span class="tag">Utility</span></h3>
+                <p><wa-tab-group> provides tab group functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/tab-group.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/tab-group" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="data">
+                <h3>Tag <span class="tag">Data</span></h3>
+                <p><wa-tag> provides tag functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/tag.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/tag" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="navigation">
+                <h3>Tree <span class="tag">Navigation</span></h3>
+                <p><wa-tree> provides tree functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/tree.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/tree" target="_blank">Source</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Awesome Team. Licensed under MIT.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('componentSearch');
+            const categoryButtons = document.querySelectorAll('.category-button');
+            const componentCards = document.querySelectorAll('.component-card');
+
+            // Search functionality
+            searchInput.addEventListener('input', filterComponents);
+
+            // Category filtering
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    filterComponents();
+                });
+            });
+
+            function filterComponents() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeCategory = document.querySelector('.category-button.active').dataset.category;
+
+                componentCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    const cardCategory = card.dataset.category;
+
+                    const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                    const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+
+                    if (matchesSearch && matchesCategory) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

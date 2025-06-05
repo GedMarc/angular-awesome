@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - FormatNumber Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>FormatNumber Component <span class="version-badge">v1.0.1</span></h1>
+                <p class="subtitle"><wa-format-number> provides format number functionality for Angular applications.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the formatNumber directive from the angular-awesome package:</p>
+        <pre>// Import the formatNumber directive
+import { WaFormatNumberDirective } from 'angular-awesome/format-number';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Format Number Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-format-number [value]=&quot;1234.56&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>With Two-Way Binding</h2>
+<pre><code class="language-html">&lt;wa-format-number [(ngModel)]=&quot;amount&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatNumberExampleComponent {
+  amount = 1234.56;
+}
+</code></pre>
+<h2>Different Formatting Types</h2>
+<pre><code class="language-html">&lt;!-- Default is &#39;decimal&#39; --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Currency format --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;USD&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Percentage format --&gt;
+&lt;wa-format-number [value]=&quot;0.75&quot; type=&quot;percent&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Currency Options</h2>
+<pre><code class="language-html">&lt;!-- Default currency symbol --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;USD&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Currency code --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;USD&quot; currencyDisplay=&quot;code&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Currency name --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;USD&quot; currencyDisplay=&quot;name&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Different currencies --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;EUR&quot;&gt;&lt;/wa-format-number&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;GBP&quot;&gt;&lt;/wa-format-number&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;JPY&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Fraction Digits Control</h2>
+<pre><code class="language-html">&lt;!-- Minimum 2 fraction digits --&gt;
+&lt;wa-format-number [value]=&quot;1234.5&quot; [minimumFractionDigits]=&quot;2&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Maximum 2 fraction digits --&gt;
+&lt;wa-format-number [value]=&quot;1234.567&quot; [maximumFractionDigits]=&quot;2&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Fixed 2 fraction digits --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.5&quot; 
+  [minimumFractionDigits]=&quot;2&quot; 
+  [maximumFractionDigits]=&quot;2&quot;&gt;
+&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Integer Digits Control</h2>
+<pre><code class="language-html">&lt;!-- Minimum 5 integer digits (e.g., 01,234.56) --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; [minimumIntegerDigits]=&quot;5&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Significant Digits Control</h2>
+<pre><code class="language-html">&lt;!-- Minimum 3 significant digits --&gt;
+&lt;wa-format-number [value]=&quot;1.2&quot; [minimumSignificantDigits]=&quot;3&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Maximum 3 significant digits --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; [maximumSignificantDigits]=&quot;3&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Between 2 and 4 significant digits --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  [minimumSignificantDigits]=&quot;2&quot; 
+  [maximumSignificantDigits]=&quot;4&quot;&gt;
+&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Grouping Control</h2>
+<pre><code class="language-html">&lt;!-- With grouping (default) --&gt;
+&lt;wa-format-number [value]=&quot;1234567.89&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Without grouping --&gt;
+&lt;wa-format-number [value]=&quot;1234567.89&quot; [noGrouping]=&quot;true&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Localization</h2>
+<pre><code class="language-html">&lt;!-- Default uses browser locale --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;USD&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- German locale --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;EUR&quot; lang=&quot;de&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- French locale --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;EUR&quot; lang=&quot;fr&quot;&gt;&lt;/wa-format-number&gt;
+
+&lt;!-- Japanese locale --&gt;
+&lt;wa-format-number [value]=&quot;1234.56&quot; type=&quot;currency&quot; currency=&quot;JPY&quot; lang=&quot;ja&quot;&gt;&lt;/wa-format-number&gt;
+</code></pre>
+<h2>Styling Examples</h2>
+<pre><code class="language-html">&lt;!-- Custom color --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
+  color=&quot;#3f51b5&quot;&gt;
+&lt;/wa-format-number&gt;
+
+&lt;!-- Custom font size --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
+  fontSize=&quot;1.5rem&quot;&gt;
+&lt;/wa-format-number&gt;
+
+&lt;!-- Bold text --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
+  fontWeight=&quot;bold&quot;&gt;
+&lt;/wa-format-number&gt;
+
+&lt;!-- Right-aligned text --&gt;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
+  textAlign=&quot;right&quot;&gt;
+&lt;/wa-format-number&gt;
+
+&lt;!-- Inline display --&gt;
+&lt;p&gt;
+  The total is 
+  &lt;wa-format-number 
+    [value]=&quot;1234.56&quot; 
+    type=&quot;currency&quot; 
+    currency=&quot;USD&quot; 
+    display=&quot;inline&quot;&gt;
+  &lt;/wa-format-number&gt;
+  including tax.
+&lt;/p&gt;
+</code></pre>
+<h2>In a Form</h2>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;amount&quot;&gt;Amount:&lt;/label&gt;
+    &lt;input 
+      type=&quot;number&quot; 
+      id=&quot;amount&quot; 
+      [(ngModel)]=&quot;amount&quot; 
+      name=&quot;amount&quot;
+      step=&quot;0.01&quot;&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label&gt;Formatted Amount:&lt;/label&gt;
+    &lt;wa-format-number 
+      [value]=&quot;amount&quot;
+      type=&quot;currency&quot;
+      currency=&quot;USD&quot;&gt;
+    &lt;/wa-format-number&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>In a Table</h2>
+<pre><code class="language-html">&lt;!-- Example of using format-number in a table --&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Product&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+      &lt;th&gt;Quantity&lt;/th&gt;
+      &lt;th&gt;Total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;!-- Using ngFor to iterate through products --&gt;
+    &lt;tr *ngFor=&quot;let product of products&quot;&gt;
+      &lt;td&gt;{{ product.name }}&lt;/td&gt;
+      &lt;td&gt;
+        &lt;wa-format-number 
+          [value]=&quot;product.price&quot;
+          type=&quot;currency&quot;
+          currency=&quot;USD&quot;&gt;
+        &lt;/wa-format-number&gt;
+      &lt;/td&gt;
+      &lt;td&gt;{{ product.quantity }}&lt;/td&gt;
+      &lt;td&gt;
+        &lt;wa-format-number 
+          [value]=&quot;product.price * product.quantity&quot;
+          type=&quot;currency&quot;
+          currency=&quot;USD&quot;&gt;
+        &lt;/wa-format-number&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td colspan=&quot;3&quot;&gt;Total&lt;/td&gt;
+      &lt;td&gt;
+        &lt;wa-format-number 
+          [value]=&quot;calculateTotal()&quot;
+          type=&quot;currency&quot;
+          currency=&quot;USD&quot;
+          fontWeight=&quot;bold&quot;&gt;
+        &lt;/wa-format-number&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatNumberExampleComponent {
+  products = [
+    { name: &#39;Product A&#39;, price: 19.99, quantity: 2 },
+    { name: &#39;Product B&#39;, price: 29.99, quantity: 1 },
+    { name: &#39;Product C&#39;, price: 9.99, quantity: 3 }
+  ];
+  
+  calculateTotal(): number {
+    return this.products.reduce((sum, product) =&gt; sum + (product.price * product.quantity), 0);
+  }
+}
+</code></pre>
+<h2>With Dynamic Values</h2>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;input 
+    type=&quot;range&quot; 
+    [(ngModel)]=&quot;value&quot; 
+    min=&quot;0&quot; 
+    max=&quot;1000&quot; 
+    step=&quot;10&quot;&gt;
+  
+  &lt;p&gt;
+    Raw value: {{ value }}
+  &lt;/p&gt;
+  
+  &lt;p&gt;
+    Decimal: &lt;wa-format-number [value]=&quot;value&quot;&gt;&lt;/wa-format-number&gt;
+  &lt;/p&gt;
+  
+  &lt;p&gt;
+    Currency: &lt;wa-format-number [value]=&quot;value&quot; type=&quot;currency&quot; currency=&quot;USD&quot;&gt;&lt;/wa-format-number&gt;
+  &lt;/p&gt;
+  
+  &lt;p&gt;
+    Percentage: &lt;wa-format-number [value]=&quot;value / 1000&quot; type=&quot;percent&quot;&gt;&lt;/wa-format-number&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Conditional Formatting</h2>
+<pre><code class="language-html">&lt;!-- Format based on value --&gt;
+&lt;div *ngFor=&quot;let transaction of transactions&quot;&gt;
+  &lt;span&gt;{{ transaction.description }}&lt;/span&gt;
+  &lt;wa-format-number 
+    [value]=&quot;transaction.amount&quot;
+    type=&quot;currency&quot;
+    currency=&quot;USD&quot;
+    [color]=&quot;transaction.amount &gt;= 0 ? &#39;green&#39; : &#39;red&#39;&quot;&gt;
+  &lt;/wa-format-number&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatNumberExampleComponent {
+  transactions = [
+    { description: &#39;Deposit&#39;, amount: 500 },
+    { description: &#39;Withdrawal&#39;, amount: -200 },
+    { description: &#39;Interest&#39;, amount: 5.25 },
+    { description: &#39;Fee&#39;, amount: -15 }
+  ];
+}
+</code></pre>
+<h2>Budget Progress Example</h2>
+<pre><code class="language-html">&lt;div class=&quot;budget-item&quot; *ngFor=&quot;let category of budget&quot;&gt;
+  &lt;div class=&quot;category-name&quot;&gt;{{ category.name }}&lt;/div&gt;
+  &lt;div class=&quot;amounts&quot;&gt;
+    &lt;div class=&quot;spent&quot;&gt;
+      Spent: 
+      &lt;wa-format-number 
+        [value]=&quot;category.spent&quot;
+        type=&quot;currency&quot;
+        currency=&quot;USD&quot;&gt;
+      &lt;/wa-format-number&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;budget&quot;&gt;
+      Budget: 
+      &lt;wa-format-number 
+        [value]=&quot;category.budget&quot;
+        type=&quot;currency&quot;
+        currency=&quot;USD&quot;&gt;
+      &lt;/wa-format-number&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;percentage&quot;&gt;
+    &lt;wa-format-number 
+      [value]=&quot;category.spent / category.budget&quot;
+      type=&quot;percent&quot;
+      [maximumFractionDigits]=&quot;0&quot;&gt;
+    &lt;/wa-format-number&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatNumberExampleComponent {
+  budget = [
+    { name: &#39;Housing&#39;, spent: 1200, budget: 1500 },
+    { name: &#39;Food&#39;, spent: 450, budget: 500 },
+    { name: &#39;Transportation&#39;, spent: 350, budget: 300 },
+    { name: &#39;Entertainment&#39;, spent: 120, budget: 200 }
+  ];
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

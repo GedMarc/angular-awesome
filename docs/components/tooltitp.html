@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Tooltitp Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Tooltitp Component <span class="version-badge">v1.0.1</span></h1>
+                <p class="subtitle"><wa-tooltitp> provides tooltitp functionality for Angular applications.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the tooltitp directive from the angular-awesome package:</p>
+        <pre>// Import the tooltitp directive
+import { WaTooltitpDirective } from 'angular-awesome/tooltitp';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Tooltip Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;button id=&quot;tooltip-target&quot;&gt;Hover me&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-target&quot;&gt;This is a tooltip&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Different Placements</h2>
+<pre><code class="language-html">&lt;!-- Top placement (default) --&gt;
+&lt;button id=&quot;tooltip-top&quot;&gt;Top&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-top&quot; placement=&quot;top&quot;&gt;Tooltip on top&lt;/wa-tooltip&gt;
+
+&lt;!-- Right placement --&gt;
+&lt;button id=&quot;tooltip-right&quot;&gt;Right&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-right&quot; placement=&quot;right&quot;&gt;Tooltip on right&lt;/wa-tooltip&gt;
+
+&lt;!-- Bottom placement --&gt;
+&lt;button id=&quot;tooltip-bottom&quot;&gt;Bottom&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-bottom&quot; placement=&quot;bottom&quot;&gt;Tooltip on bottom&lt;/wa-tooltip&gt;
+
+&lt;!-- Left placement --&gt;
+&lt;button id=&quot;tooltip-left&quot;&gt;Left&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-left&quot; placement=&quot;left&quot;&gt;Tooltip on left&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Custom Distance and Skidding</h2>
+<pre><code class="language-html">&lt;!-- Custom distance from target --&gt;
+&lt;button id=&quot;tooltip-distance&quot;&gt;Distance&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-distance&quot; [distance]=&quot;16&quot;&gt;16px away from target&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom skidding (offset along the target) --&gt;
+&lt;button id=&quot;tooltip-skidding&quot;&gt;Skidding&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-skidding&quot; [skidding]=&quot;10&quot;&gt;Offset 10px along the target&lt;/wa-tooltip&gt;
+
+&lt;!-- Combined distance and skidding --&gt;
+&lt;button id=&quot;tooltip-combined&quot;&gt;Combined&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-combined&quot; [distance]=&quot;20&quot; [skidding]=&quot;-15&quot;&gt;Custom positioning&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Disabled Tooltip</h2>
+<pre><code class="language-html">&lt;button id=&quot;tooltip-disabled&quot;&gt;No tooltip&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-disabled&quot; [disabled]=&quot;true&quot;&gt;This tooltip won&#39;t show&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Open State Control</h2>
+<pre><code class="language-html">&lt;!-- Programmatically controlled tooltip --&gt;
+&lt;button id=&quot;tooltip-open&quot;&gt;Always visible&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-open&quot; [open]=&quot;true&quot;&gt;This tooltip is always visible&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Custom Delays</h2>
+<pre><code class="language-html">&lt;!-- Custom show delay --&gt;
+&lt;button id=&quot;tooltip-show-delay&quot;&gt;Slow to appear&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-show-delay&quot; [showDelay]=&quot;500&quot;&gt;Appears after 500ms&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom hide delay --&gt;
+&lt;button id=&quot;tooltip-hide-delay&quot;&gt;Slow to disappear&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-hide-delay&quot; [hideDelay]=&quot;1000&quot;&gt;Disappears after 1000ms&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Custom Triggers</h2>
+<pre><code class="language-html">&lt;!-- Hover trigger only --&gt;
+&lt;button id=&quot;tooltip-hover&quot;&gt;Hover only&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-hover&quot; trigger=&quot;hover&quot;&gt;Shows on hover only&lt;/wa-tooltip&gt;
+
+&lt;!-- Focus trigger only --&gt;
+&lt;button id=&quot;tooltip-focus&quot; tabindex=&quot;0&quot;&gt;Focus only&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-focus&quot; trigger=&quot;focus&quot;&gt;Shows on focus only&lt;/wa-tooltip&gt;
+
+&lt;!-- Click trigger --&gt;
+&lt;button id=&quot;tooltip-click&quot;&gt;Click me&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-click&quot; trigger=&quot;click&quot;&gt;Shows on click&lt;/wa-tooltip&gt;
+
+&lt;!-- Manual trigger --&gt;
+&lt;button id=&quot;tooltip-manual&quot;&gt;Manual&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-manual&quot; trigger=&quot;manual&quot; [open]=&quot;isTooltipOpen&quot;&gt;Manually controlled&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Custom background color --&gt;
+&lt;button id=&quot;tooltip-bg&quot;&gt;Custom background&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-bg&quot; [backgroundColor]=&quot;&#39;#3f51b5&#39;&quot;&gt;Blue background&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom border radius --&gt;
+&lt;button id=&quot;tooltip-radius&quot;&gt;Custom radius&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-radius&quot; [borderRadius]=&quot;&#39;0&#39;&quot;&gt;Square tooltip&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom max width --&gt;
+&lt;button id=&quot;tooltip-width&quot;&gt;Custom width&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-width&quot; [maxWidth]=&quot;&#39;300px&#39;&quot;&gt;This tooltip can be up to 300px wide, which is useful for longer content that would otherwise be truncated.&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom padding --&gt;
+&lt;button id=&quot;tooltip-padding&quot;&gt;Custom padding&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-padding&quot; [padding]=&quot;&#39;16px&#39;&quot;&gt;More spacious tooltip&lt;/wa-tooltip&gt;
+
+&lt;!-- Custom arrow size --&gt;
+&lt;button id=&quot;tooltip-arrow&quot;&gt;Custom arrow&lt;/button&gt;
+&lt;wa-tooltip for=&quot;tooltip-arrow&quot; [arrowSize]=&quot;&#39;12px&#39;&quot;&gt;Tooltip with larger arrow&lt;/wa-tooltip&gt;
+
+&lt;!-- Combined custom styling --&gt;
+&lt;button id=&quot;tooltip-custom&quot;&gt;Fully customized&lt;/button&gt;
+&lt;wa-tooltip 
+  for=&quot;tooltip-custom&quot; 
+  [backgroundColor]=&quot;&#39;#212121&#39;&quot; 
+  [borderRadius]=&quot;&#39;8px&#39;&quot; 
+  [maxWidth]=&quot;&#39;250px&#39;&quot; 
+  [padding]=&quot;&#39;12px&#39;&quot; 
+  [arrowSize]=&quot;&#39;8px&#39;&quot;
+&gt;
+  A fully customized tooltip with dark background, rounded corners, custom width, padding, and arrow size.
+&lt;/wa-tooltip&gt;
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;;
+
+@Component({
+  selector: &#39;app-tooltip-events-demo&#39;,
+  template: `
+    &lt;button id=&quot;tooltip-events&quot;&gt;Hover for events&lt;/button&gt;
+    &lt;wa-tooltip 
+      for=&quot;tooltip-events&quot;
+      (waShow)=&quot;onShow($event)&quot;
+      (waAfterShow)=&quot;onAfterShow($event)&quot;
+      (waHide)=&quot;onHide($event)&quot;
+      (waAfterHide)=&quot;onAfterHide($event)&quot;
+    &gt;
+      This tooltip triggers events
+    &lt;/wa-tooltip&gt;
+    
+    &lt;div class=&quot;event-log&quot;&gt;
+      &lt;p&gt;Last event: {{ lastEvent }}&lt;/p&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaTooltipDirective]
+})
+export class TooltipEventsDemoComponent {
+  lastEvent = &#39;None&#39;;
+  
+  onShow(event: CustomEvent) {
+    this.lastEvent = &#39;Show started&#39;;
+    console.log(&#39;Tooltip show started&#39;);
+  }
+  
+  onAfterShow(event: CustomEvent) {
+    this.lastEvent = &#39;Show completed&#39;;
+    console.log(&#39;Tooltip show completed&#39;);
+  }
+  
+  onHide(event: CustomEvent) {
+    this.lastEvent = &#39;Hide started&#39;;
+    console.log(&#39;Tooltip hide started&#39;);
+  }
+  
+  onAfterHide(event: CustomEvent) {
+    this.lastEvent = &#39;Hide completed&#39;;
+    console.log(&#39;Tooltip hide completed&#39;);
+  }
+}
+</code></pre>
+<h2>Dynamic Content</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;;
+
+@Component({
+  selector: &#39;app-dynamic-tooltip-demo&#39;,
+  template: `
+    &lt;div class=&quot;user-list&quot;&gt;
+      &lt;div 
+        *ngFor=&quot;let user of users; let i = index&quot; 
+        class=&quot;user-item&quot;
+        [id]=&quot;&#39;user-&#39; + i&quot;
+      &gt;
+        {{ user.name }}
+      &lt;/div&gt;
+      
+      &lt;wa-tooltip 
+        *ngFor=&quot;let user of users; let i = index&quot;
+        [for]=&quot;&#39;user-&#39; + i&quot;
+      &gt;
+        &lt;div class=&quot;user-tooltip&quot;&gt;
+          &lt;h3&gt;{{ user.name }}&lt;/h3&gt;
+          &lt;p&gt;Email: {{ user.email }}&lt;/p&gt;
+          &lt;p&gt;Role: {{ user.role }}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/wa-tooltip&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaTooltipDirective]
+})
+export class DynamicTooltipDemoComponent {
+  users = [
+    { name: &#39;John Doe&#39;, email: &#39;john@example.com&#39;, role: &#39;Admin&#39; },
+    { name: &#39;Jane Smith&#39;, email: &#39;jane@example.com&#39;, role: &#39;Editor&#39; },
+    { name: &#39;Bob Johnson&#39;, email: &#39;bob@example.com&#39;, role: &#39;Viewer&#39; }
+  ];
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

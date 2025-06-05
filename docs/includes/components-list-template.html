@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Components</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        main {
+            flex: 1;
+        }
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .nav-tabs li {
+            margin-right: 10px;
+        }
+        .nav-tabs a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-tabs a:hover, .nav-tabs a.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .component-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .category-button {
+            padding: 8px 16px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .category-button:hover, .category-button.active {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        .component-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .component-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .component-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .component-card h3 {
+            margin-top: 0;
+            color: #0066cc;
+            display: flex;
+            align-items: center;
+        }
+        .component-card h3 .tag {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            background-color: #e6f7ff;
+            color: #0066cc;
+        }
+        .component-card p {
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .component-card .links {
+            display: flex;
+            justify-content: space-between;
+        }
+        .component-card .links a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .component-card .links a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .component-list {
+                grid-template-columns: 1fr;
+            }
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Angular Awesome Components</h1>
+        <p class="subtitle">Complete list of components and directives</p>
+        <p>
+            <a href="index.html">Home</a> |
+            <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a> |
+            <a href="rules.html">Rules & Guidelines</a>
+        </p>
+    </header>
+
+    <main>
+        <ul class="nav-tabs">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="getting-started.html">Getting Started</a></li>
+            <li><a href="#" class="active">Components</a></li>
+            <li><a href="rules.html">Rules & Guidelines</a></li>
+        </ul>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search components..." id="componentSearch">
+        </div>
+
+        <div class="component-categories">
+            <button class="category-button active" data-category="all">All</button>
+            <button class="category-button" data-category="input">Input</button>
+            <button class="category-button" data-category="navigation">Navigation</button>
+            <button class="category-button" data-category="layout">Layout</button>
+            <button class="category-button" data-category="feedback">Feedback</button>
+            <button class="category-button" data-category="data">Data Display</button>
+            <button class="category-button" data-category="utility">Utility</button>
+        </div>
+
+        <div class="component-list">
+            {{COMPONENT_CARDS}}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Awesome Team. Licensed under MIT.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('componentSearch');
+            const categoryButtons = document.querySelectorAll('.category-button');
+            const componentCards = document.querySelectorAll('.component-card');
+
+            // Search functionality
+            searchInput.addEventListener('input', filterComponents);
+
+            // Category filtering
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    filterComponents();
+                });
+            });
+
+            function filterComponents() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeCategory = document.querySelector('.category-button.active').dataset.category;
+
+                componentCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    const cardCategory = card.dataset.category;
+
+                    const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                    const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+
+                    if (matchesSearch && matchesCategory) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

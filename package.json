@@ -1,6 +1,6 @@
 {
   "name": "angular-awesome",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Angular wrapper for the web awesome framework",
   "keywords": [
@@ -19,7 +19,10 @@
   "scripts": {
     "build": "ng build",
     "test": "ng test",
-    "test:headless": "ng test --watch=false --browsers=ChromeHeadless"
+    "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "docs:generate": "node docs/generate-docs.js",
+    "docs:build": "npm run docs:generate && npx @angular/cli build --output-path docs --base-href /angular-awesome/",
+    "docs:deploy": "npm run docs:build && npx gh-pages -d docs"
   },
   "main": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "module": "dist/angular-awesome/fesm2022/angular-awesome.js",
@@ -31,20 +34,22 @@
     "@angular/forms": "^19.2.0"
   },
   "devDependencies": {
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0",
     "@angular-devkit/build-angular": "^19.2.11",
     "@angular/cli": "^19.2.11",
     "@angular/compiler-cli": "^19.2.0",
-    "ng-packagr": "^19.2.0",
     "@types/jasmine": "~5.1.0",
+    "gh-pages": "^6.1.1",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "marked": "^9.1.6",
+    "ng-packagr": "^19.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "typescript": "~5.7.2",
+    "zone.js": "~0.15.0"
   }
 }

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Page Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Page Component <span class="version-badge">v1.0.1</span></h1>
+                <p class="subtitle">The <wa-page> component is a comprehensive layout container that structures web pages with rich support for slots and responsive navigation. The Angular wrapper must support full slot projection, input bindings for layout control, and imperative methods for toggling the navigation drawer.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the page directive from the angular-awesome package:</p>
+        <pre>// Import the page directive
+import { WaPageDirective } from 'angular-awesome/page';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Page Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page Title&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content goes here.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>With Navigation</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Navigation&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;nav waPageNavigation&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Services&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with navigation.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>With Banner and Subheader</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;div waPageBanner&gt;
+    &lt;p&gt;Important announcement or promotional content&lt;/p&gt;
+  &lt;/div&gt;
+  
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Banner and Subheader&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;div waPageSubheader&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Subheader Link 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Subheader Link 2&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with banner and subheader.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>With Aside Content</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Aside&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with aside section.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;aside waPageAside&gt;
+    &lt;h2&gt;Related Information&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Related item 1&lt;/li&gt;
+      &lt;li&gt;Related item 2&lt;/li&gt;
+      &lt;li&gt;Related item 3&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/aside&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>With Menu and Main Header/Footer</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Menu&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;div waPageMenu&gt;
+    &lt;h2&gt;Menu&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 3&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  
+  &lt;header waPageMainHeader&gt;
+    &lt;h2&gt;Main Content Header&lt;/h2&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with menu and main header/footer.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageMainFooter&gt;
+    &lt;p&gt;Main content footer&lt;/p&gt;
+  &lt;/footer&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Page footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>With Skip to Content Link</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;a href=&quot;#main-content&quot; waPageSkipToContent&gt;Skip to content&lt;/a&gt;
+  
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Accessible Page&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;nav waPageNavigation&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Services&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  
+  &lt;main id=&quot;main-content&quot;&gt;
+    &lt;p&gt;Main content with skip to content link for accessibility.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>Navigation with Header and Footer</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Navigation Header/Footer&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;header waPageNavigationHeader&gt;
+    &lt;h2&gt;Navigation Header&lt;/h2&gt;
+  &lt;/header&gt;
+  
+  &lt;nav waPageNavigation&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Services&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  
+  &lt;footer waPageNavigationFooter&gt;
+    &lt;p&gt;Navigation Footer&lt;/p&gt;
+  &lt;/footer&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with navigation header and footer.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Page footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-page
+  [menuWidth]=&quot;&#39;300px&#39;&quot;
+  [mainWidth]=&quot;&#39;800px&#39;&quot;
+  [asideWidth]=&quot;&#39;250px&#39;&quot;
+  [bannerHeight]=&quot;&#39;50px&#39;&quot;
+  [headerHeight]=&quot;&#39;80px&#39;&quot;
+  [subheaderHeight]=&quot;&#39;40px&#39;&quot;
+&gt;
+  &lt;div waPageBanner&gt;Banner content&lt;/div&gt;
+  
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Custom Styled Page&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;div waPageSubheader&gt;Subheader content&lt;/div&gt;
+  
+  &lt;nav waPageNavigation&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Services&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  
+  &lt;div waPageMenu&gt;
+    &lt;h2&gt;Menu&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 3&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with custom dimensions.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;aside waPageAside&gt;
+    &lt;h2&gt;Aside Content&lt;/h2&gt;
+    &lt;p&gt;Sidebar content here.&lt;/p&gt;
+  &lt;/aside&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>Mobile Breakpoint and Navigation Control</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { WaPageComponent } from &#39;@angular-awesome/directives/page&#39;;
+
+@Component({
+  selector: &#39;app-responsive-page-demo&#39;,
+  template: `
+    &lt;wa-page
+      [mobileBreakpoint]=&quot;&#39;768px&#39;&quot;
+      [navOpen]=&quot;isNavOpen&quot;
+      [navigationPlacement]=&quot;&#39;start&#39;&quot;
+      (click)=&quot;closeNavOnMobile($event)&quot;
+    &gt;
+      &lt;header waPageHeader&gt;
+        &lt;button (click)=&quot;toggleNavigation()&quot;&gt;
+          &lt;span&gt;☰&lt;/span&gt; Menu
+        &lt;/button&gt;
+        &lt;h1&gt;Responsive Page&lt;/h1&gt;
+      &lt;/header&gt;
+      
+      &lt;nav waPageNavigation&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Services&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/nav&gt;
+      
+      &lt;main&gt;
+        &lt;p&gt;This page has responsive navigation that can be toggled on mobile devices.&lt;/p&gt;
+        &lt;p&gt;Current view: {{ currentView }}&lt;/p&gt;
+        &lt;button (click)=&quot;toggleNavigation()&quot;&gt;Toggle Navigation&lt;/button&gt;
+      &lt;/main&gt;
+      
+      &lt;footer waPageFooter&gt;
+        &lt;p&gt;Footer content&lt;/p&gt;
+      &lt;/footer&gt;
+    &lt;/wa-page&gt;
+  `,
+  standalone: true,
+  imports: [WaPageComponent]
+})
+export class ResponsivePageDemoComponent {
+  isNavOpen = false;
+  
+  get currentView(): string {
+    const pageElement = document.querySelector(&#39;wa-page&#39;);
+    return pageElement?.getAttribute(&#39;view&#39;) || &#39;unknown&#39;;
+  }
+  
+  toggleNavigation() {
+    this.isNavOpen = !this.isNavOpen;
+  }
+  
+  closeNavOnMobile(event: MouseEvent) {
+    // Close navigation when clicking outside on mobile
+    if (this.currentView === &#39;mobile&#39; &amp;&amp; this.isNavOpen) {
+      const target = event.target as HTMLElement;
+      if (!target.closest(&#39;[waPageNavigation]&#39;)) {
+        this.isNavOpen = false;
+      }
+    }
+  }
+}
+</code></pre>
+<h2>Disable Sticky Elements</h2>
+<pre><code class="language-html">&lt;wa-page [disableSticky]=&quot;&#39;header&#39;&quot;&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Non-Sticky Header&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;This page has a header that doesn&#39;t stick to the top when scrolling.&lt;/p&gt;
+    &lt;!-- Add lots of content to enable scrolling --&gt;
+  &lt;/main&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<h2>Dialog Integration</h2>
+<pre><code class="language-html">&lt;wa-page&gt;
+  &lt;header waPageHeader&gt;
+    &lt;h1&gt;Page with Dialog&lt;/h1&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;p&gt;Main content with dialog integration.&lt;/p&gt;
+    &lt;button (click)=&quot;openDialog()&quot;&gt;Open Dialog&lt;/button&gt;
+  &lt;/main&gt;
+  
+  &lt;div waPageDialogWrapper&gt;
+    &lt;!-- Dialogs will be rendered here --&gt;
+    &lt;wa-dialog id=&quot;example-dialog&quot; label=&quot;Example Dialog&quot;&gt;
+      &lt;p&gt;This is a dialog that&#39;s properly integrated with the page layout.&lt;/p&gt;
+      &lt;button slot=&quot;footer&quot; (click)=&quot;closeDialog()&quot;&gt;Close&lt;/button&gt;
+    &lt;/wa-dialog&gt;
+  &lt;/div&gt;
+  
+  &lt;footer waPageFooter&gt;
+    &lt;p&gt;Footer content&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/wa-page&gt;
+</code></pre>
+<pre><code class="language-typescript">// Dialog control methods
+function openDialog() {
+  const dialog = document.getElementById(&#39;example-dialog&#39;) as any;
+  dialog?.show();
+}
+
+function closeDialog() {
+  const dialog = document.getElementById(&#39;example-dialog&#39;) as any;
+  dialog?.hide();
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

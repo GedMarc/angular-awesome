@@ -2,7 +2,7 @@
 
 Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://webawesome.dev) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
 
-📦 Version: `1.0.0-rc.2`
+📦 Version: `1.0.1`
 🔗 [Web Awesome Component Docs](https://webawesome.dev)
 
 ---
@@ -63,6 +63,15 @@ Each contains:
 * Styling customizations
 * Link to general [Web Awesome Angular Rules](./RULES.md)
 
+### 📖 Documentation
+
+Visit our [GitHub Pages documentation](https://gedmarc.github.io/angular-awesome/) for comprehensive information about all components and directives, including:
+
+* Component overviews
+* API references
+* Usage examples
+* Styling options
+
 ---
 
 ## 🎨 Styling
@@ -118,4 +127,4 @@ Contributions are welcome through issues and PR's!
 
 ## 🧾 License
 
-MIT © 2025 Web Awesome Team
+2025 GedMarc

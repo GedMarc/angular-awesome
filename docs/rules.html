@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Rules & Guidelines</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        h3 {
+            margin-top: 1.5rem;
+            color: #0066cc;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .nav {
+            margin-bottom: 2rem;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Angular Awesome - Rules & Guidelines</h1>
+        <p>Angular 19 Library Wrapping Rules for the Web Awesome (wa-*) Component Kit</p>
+        <div class="nav">
+            <a href="index.html">Home</a> |
+            <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Purpose</h2>
+            <p>Create Angular components/directives to wrap Web Awesome web components and:</p>
+            <ul>
+                <li>Use Angular <strong>template-driven</strong> forms primarily (avoid Reactive Forms)</li>
+                <li>Enable ngModel binding, value binding support, and template interactivity</li>
+                <li>Bridge Input/Output with web component props/events</li>
+                <li>Support named slot projection using ng-content select</li>
+                <li>Simplify styling for Angular users (inputs become CSS vars on host)</li>
+                <li>Ensure lazy initialization with customElements.whenDefined()</li>
+                <li>Enable slot layout rendering for wa-page and related patterns</li>
+                <li>Ensure boolean attributes are rendered only when true (omit otherwise)</li>
+                <li>Use <strong>native tag selectors</strong> for all components (wa-button, wa-badge, etc.)</li>
+                <li>Avoid Signals for inputs/outputs in Angular libraries (due to scope issues)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Component Categories</h2>
+
+            <h3>1. Input Components</h3>
+            <p>Web Components: wa-input, wa-select, wa-textarea</p>
+            <p>Responsibilities:</p>
+            <ul>
+                <li>Provide ngModel or value + valueChange support</li>
+                <li>Wait for component load before syncing props/events</li>
+                <li>Allow placeholder, size, variant, etc. as Input</li>
+                <li>Apply component style via individual Input properties that are bound to CSS custom properties</li>
+                <li>Project wa-icon and other slot="prefix"/"suffix" elements</li>
+            </ul>
+
+            <h3>2. UI Components</h3>
+            <p>Examples: wa-badge, wa-tag, wa-button, wa-icon, wa-avatar</p>
+            <p>Responsibilities:</p>
+            <ul>
+                <li>Use <strong>directive wrappers</strong> with Directive selector</li>
+                <li>Map known attributes as Input</li>
+                <li>Use individual Input properties for CSS custom properties</li>
+                <li>Ensure boolean inputs render as attributes only when true</li>
+                <li>Booleans must be assignable with boolean or strings</li>
+                <li>Avoid wrapping in ng-template or using TemplateRef</li>
+                <li>Use ngOnInit lifecycle for setup</li>
+            </ul>
+
+            <h3>3. Pattern Components</h3>
+            <p>Example: wa-page</p>
+            <p>Responsibilities:</p>
+            <ul>
+                <li>Project child content to named slots (e.g., slot="header", slot="aside")</li>
+                <li>Expose mobileBreakpoint, view, and theming attributes</li>
+                <li>Declare individual style inputs as Input properties that bind to CSS custom properties on the host element</li>
+                <li>Support wa-dark, wa-light, etc. mode switching via attribute</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Global Requirements (for Consumers)</h2>
+            <h3>Required Assets (CDN Defaults)</h3>
+            <p>Include the Web Awesome CSS and JavaScript files in your application.</p>
+            <p>Optional: Add data-fa-kit-code if integrating with Font Awesome Kit.</p>
+            <p>For cherry-picking or bundling, use the setBasePath function.</p>
+        </section>
+
+        <section>
+            <h2>Layout and Styling Utilities</h2>
+            <h3>Alignment Classes</h3>
+            <p>wa-align-items-start, wa-align-items-end, wa-align-items-center, wa-align-items-stretch, wa-align-items-baseline</p>
+
+            <h3>Gap Classes (for clusters, stacks, and splits)</h3>
+            <p>wa-gap-0, wa-gap-3xs, wa-gap-2xs, wa-gap-xs, wa-gap-s, wa-gap-m, wa-gap-l, wa-gap-xl, wa-gap-2xl, wa-gap-3xl</p>
+
+            <h3>Appearance Classes</h3>
+            <p>.wa-accent, .wa-outlined, .wa-filled, .wa-plain</p>
+            <p>These utilities set tokens such as:</p>
+            <ul>
+                <li>--background-color, --border-color, --text-color</li>
+            </ul>
+
+            <h3>Color Variant Classes</h3>
+            <p>.wa-brand, .wa-neutral, .wa-success, .wa-warning, .wa-danger</p>
+            <p>Tokens are semantic, consumed via --wa-color-fill-* and related</p>
+        </section>
+
+        <section>
+            <h2>Layout Primitives</h2>
+            <h3>wa-cluster</h3>
+            <p>Align items in a row with consistent spacing, wrapping when needed. Supports wa-align-items-* and wa-gap-*.</p>
+
+            <h3>wa-stack</h3>
+            <p>Arrange items in a column with spacing.</p>
+
+            <h3>wa-flank</h3>
+            <p>Two items side-by-side with one stretching to fill space. Wraps when needed.</p>
+
+            <h3>wa-split</h3>
+            <p>Distribute items across available space. Append :column or :row to control direction.</p>
+            <ul>
+                <li>Directional: wa-split:row, wa-split:column</li>
+                <li>Alignment: wa-align-items-*</li>
+                <li>Gap support: wa-gap-*</li>
+            </ul>
+
+            <h3>wa-frame</h3>
+            <p>Responsive container with consistent proportions. Ideal for wrapping images or visuals.</p>
+
+            <h3>wa-grid</h3>
+            <p>Responsive grid layout. Use --min-column-size to control columns. wa-span-grid spans full row.</p>
+        </section>
+
+        <section>
+            <h2>Angular Implementation Guidelines</h2>
+            <ul>
+                <li>Use native Web Component tag selectors (wa-*) as Angular directive selectors</li>
+                <li>Wrap UI components like badges, icons, buttons using Directive (not Component)</li>
+                <li>Use Input for properties; bind via Renderer2 in ngOnInit</li>
+                <li>Output event bindings for animation lifecycle and other custom web component events</li>
+                <li>Boolean inputs: render attribute if true, omit otherwise</li>
+                <li>Avoid using Signals inside libraries</li>
+                <li>Avoid TemplateRef or ng-template unless required by slotting patterns</li>
+                <li>Use individual Input properties for CSS custom properties</li>
+                <li>Always ensure the module declares CUSTOM_ELEMENTS_SCHEMA</li>
+            </ul>
+
+            <h3>Attribute Coercion Rules</h3>
+            <p>To support template usage without bindings:</p>
+            <ul>
+                <li>All Inputs should accept string or the native type (number | string, boolean | string) to ensure Angular doesn't reject unbound literal inputs.</li>
+                <li>Boolean inputs must render as attributes only when the value is truthy — this includes the string "true".</li>
+                <li>Number inputs passed as strings (e.g., duration="300") should be converted to numbers in the directive/component logic before assigning to properties or attributes.</li>
+                <li>Avoid relying on native type inference — always normalize input types manually.</li>
+            </ul>
+
+            <h3>Custom Event Support</h3>
+            <ul>
+                <li>Angular wrappers must allow users to bind to custom events emitted by Web Awesome components.</li>
+                <li>For components that emit events, document all event names and map them in the directive/component.</li>
+                <li>Events can be passed through natively using event binding, or explicitly exposed via Output as needed for type safety.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>2025 GedMarc</p>
+        <p><a href="index.html">Back to Home</a></p>
+    </footer>
+</body>
+</html>
