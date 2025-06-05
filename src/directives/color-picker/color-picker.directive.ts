@@ -1,6 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild, inject } from '@angular/core';
 
-/**
+/**ple
  * WaColorPickerDirective
  *
  * Angular wrapper for the <wa-color-picker> Web Component that allows declarative usage,

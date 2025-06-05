@@ -31,7 +31,7 @@ Create Angular components/directives to wrap Web Awesome web components and:
   * Provide `[(ngModel)]` or `value + (valueChange)` support
   * Wait for component load before syncing props/events
   * Allow `placeholder`, `size`, `variant`, etc. as `@Input()`
-  * Apply component style via `[style.--var]` bindings
+  * Apply component style via individual `@Input()` properties that are bound to CSS custom properties
   * Project `wa-icon` and other `slot="prefix"/"suffix"` elements
 
 ### 2. **UI Components**
@@ -41,7 +41,7 @@ Create Angular components/directives to wrap Web Awesome web components and:
 
   * Use **directive wrappers** with `@Directive({ selector: 'wa-*' })`
   * Map known attributes as `@Input()`
-  * Use Angular `[style]` bindings to map CSS custom properties
+  * Use individual `@Input()` properties for CSS custom properties, which are then applied via `[style.--property]="value"` bindings
   * Ensure boolean inputs render as `attr.name=""` only when true
   * Booleans must be assignable with boolean or strings
   * Avoid wrapping in `<ng-template>` or using `TemplateRef`
@@ -54,7 +54,7 @@ Create Angular components/directives to wrap Web Awesome web components and:
 
   * Project child content to named slots (e.g., `slot="header"`, `slot="aside"`)
   * Expose `mobileBreakpoint`, `view`, and theming attributes
-  * Declare style inputs that bind to host via `[style.--var]`
+  * Declare individual style inputs as `@Input()` properties that bind to CSS custom properties on the host element
   * Support `wa-dark`, `wa-light`, etc. mode switching via attribute
 
 ---
@@ -181,7 +181,7 @@ All tokens include theme-aware variables like:
 * Boolean inputs: render `attr.name=""` if true, omit otherwise
 * Avoid using Signals inside libraries
 * Avoid TemplateRef or `<ng-template>` unless required by slotting patterns
-* Use `[style.--var]` bindings for CSS custom properties
+* Use individual `@Input()` properties for CSS custom properties that are applied via `[style.--property]="value"` bindings
 * Always ensure the module declares `CUSTOM_ELEMENTS_SCHEMA`
 
 ---

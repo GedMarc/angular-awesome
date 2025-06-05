@@ -95,11 +95,3 @@ CSS custom properties applied via Angular bindings:
 * Angular wrapper should mirror DOM slot structure where relevant (especially for icon slots).
 
 ---
-
-Include accompanying:
-
-* `README.md` with rule reference
-* `tree-wrapper.component.ts/html/spec.ts`
-* `tree-wrapper.examples.md`
-
-End of file.

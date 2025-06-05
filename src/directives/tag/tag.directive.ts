@@ -10,6 +10,7 @@ import {
 @Directive({
   selector: 'wa-tag[ngModel]',
   exportAs: 'waTag',
+  standalone: true
 })
 export class WaTagDirective {
   constructor(private el: ElementRef<HTMLElement>) {}
