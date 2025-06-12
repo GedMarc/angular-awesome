@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { WaCheckboxDirective } from './checkbox.directive';
 
 // Create a test host component to test the checkbox directive
@@ -15,6 +16,16 @@ import { WaCheckboxDirective } from './checkbox.directive';
       [required]="required"
       [indeterminate]="indeterminate"
       [size]="size"
+      [backgroundColor]="backgroundColor"
+      [backgroundColorChecked]="backgroundColorChecked"
+      [borderColor]="borderColor"
+      [borderColorChecked]="borderColorChecked"
+      [borderRadius]="borderRadius"
+      [borderStyle]="borderStyle"
+      [borderWidth]="borderWidth"
+      [boxShadow]="boxShadow"
+      [checkedIconColor]="checkedIconColor"
+      [toggleSize]="toggleSize"
       (checkedChange)="onCheckedChange($event)"
       (input)="onInput($event)"
       (blur)="onBlur($event)"
@@ -40,12 +51,58 @@ class TestHostComponent {
   size?: string;
   checkboxText = 'Checkbox Text';
 
+  // CSS custom properties
+  backgroundColor?: string;
+  backgroundColorChecked?: string;
+  borderColor?: string;
+  borderColorChecked?: string;
+  borderRadius?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  boxShadow?: string;
+  checkedIconColor?: string;
+  toggleSize?: string;
+
   onCheckedChange(isChecked: boolean): void {}
   onInput(event: Event): void {}
   onBlur(event: Event): void {}
   onFocus(event: Event): void {}
   onChange(event: Event): void {}
   onInvalid(event: Event): void {}
+}
+
+// Test component for template-driven forms
+@Component({
+  template: `
+    <form #form="ngForm">
+      <wa-checkbox [(ngModel)]="isChecked" name="checkbox" required>
+        Template-driven form checkbox
+      </wa-checkbox>
+    </form>
+  `,
+  standalone: true,
+  imports: [WaCheckboxDirective, FormsModule]
+})
+class TemplateFormComponent {
+  isChecked = false;
+}
+
+// Test component for reactive forms
+@Component({
+  template: `
+    <form [formGroup]="form">
+      <wa-checkbox formControlName="isChecked">
+        Reactive form checkbox
+      </wa-checkbox>
+    </form>
+  `,
+  standalone: true,
+  imports: [WaCheckboxDirective, ReactiveFormsModule]
+})
+class ReactiveFormComponent {
+  form = new FormGroup({
+    isChecked: new FormControl(false)
+  });
 }
 
 describe('WaCheckboxDirective', () => {
@@ -204,6 +261,160 @@ describe('WaCheckboxDirective', () => {
       hostComponent.size = size;
       hostFixture.detectChanges();
       expect(checkboxElement.getAttribute('size')).toBe(size);
+    });
+  });
+
+  it('should set CSS custom properties correctly', () => {
+    // Set CSS custom properties
+    hostComponent.backgroundColor = '#f0f0f0';
+    hostComponent.backgroundColorChecked = '#4a90e2';
+    hostComponent.borderColor = '#cccccc';
+    hostComponent.borderColorChecked = '#2a70c2';
+    hostComponent.borderRadius = '4px';
+    hostComponent.borderStyle = 'solid';
+    hostComponent.borderWidth = '2px';
+    hostComponent.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
+    hostComponent.checkedIconColor = 'white';
+    hostComponent.toggleSize = '24px';
+    hostFixture.detectChanges();
+
+    // Verify CSS custom properties are set
+    expect(checkboxElement.getAttribute('--background-color')).toBe('#f0f0f0');
+    expect(checkboxElement.getAttribute('--background-color-checked')).toBe('#4a90e2');
+    expect(checkboxElement.getAttribute('--border-color')).toBe('#cccccc');
+    expect(checkboxElement.getAttribute('--border-color-checked')).toBe('#2a70c2');
+    expect(checkboxElement.getAttribute('--border-radius')).toBe('4px');
+    expect(checkboxElement.getAttribute('--border-style')).toBe('solid');
+    expect(checkboxElement.getAttribute('--border-width')).toBe('2px');
+    expect(checkboxElement.getAttribute('--box-shadow')).toBe('0 0 5px rgba(0,0,0,0.2)');
+    expect(checkboxElement.getAttribute('--checked-icon-color')).toBe('white');
+    expect(checkboxElement.getAttribute('--toggle-size')).toBe('24px');
+  });
+});
+
+describe('WaCheckboxDirective - Form Integration', () => {
+  describe('Template-driven forms', () => {
+    let component: TemplateFormComponent;
+    let fixture: ComponentFixture<TemplateFormComponent>;
+    let checkboxElement: HTMLElement;
+    let checkboxDirective: WaCheckboxDirective;
+
+    beforeEach(async () => {
+      // Mock the customElements API
+      if (!window.customElements) {
+        (window as any).customElements = {
+          whenDefined: () => Promise.resolve(),
+          define: () => {}
+        };
+      }
+
+      await TestBed.configureTestingModule({
+        imports: [TemplateFormComponent]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(TemplateFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      // Get the wa-checkbox element
+      checkboxElement = fixture.nativeElement.querySelector('wa-checkbox');
+      checkboxDirective = fixture.debugElement.query(sel => sel.nativeElement === checkboxElement).injector.get(WaCheckboxDirective);
+    });
+
+    it('should create the template-driven form component', () => {
+      expect(component).toBeTruthy();
+      expect(checkboxElement).toBeTruthy();
+      expect(checkboxDirective).toBeTruthy();
+    });
+
+    it('should bind with ngModel', () => {
+      // Initially the checkbox should be unchecked
+      expect(component.isChecked).toBeFalse();
+      expect(checkboxElement.hasAttribute('checked')).toBeFalse();
+
+      // Simulate user checking the checkbox
+      const checkedChangeEvent = new CustomEvent('checkedChange', { detail: true });
+      checkboxElement.dispatchEvent(checkedChangeEvent);
+      fixture.detectChanges();
+
+      // The model should be updated
+      expect(component.isChecked).toBeTrue();
+    });
+
+    it('should update the view when model changes', () => {
+      // Change the model
+      component.isChecked = true;
+      fixture.detectChanges();
+
+      // The view should be updated
+      expect(checkboxElement.hasAttribute('checked')).toBeTrue();
+    });
+  });
+
+  describe('Reactive forms', () => {
+    let component: ReactiveFormComponent;
+    let fixture: ComponentFixture<ReactiveFormComponent>;
+    let checkboxElement: HTMLElement;
+    let checkboxDirective: WaCheckboxDirective;
+
+    beforeEach(async () => {
+      // Mock the customElements API
+      if (!window.customElements) {
+        (window as any).customElements = {
+          whenDefined: () => Promise.resolve(),
+          define: () => {}
+        };
+      }
+
+      await TestBed.configureTestingModule({
+        imports: [ReactiveFormComponent]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(ReactiveFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      // Get the wa-checkbox element
+      checkboxElement = fixture.nativeElement.querySelector('wa-checkbox');
+      checkboxDirective = fixture.debugElement.query(sel => sel.nativeElement === checkboxElement).injector.get(WaCheckboxDirective);
+    });
+
+    it('should create the reactive form component', () => {
+      expect(component).toBeTruthy();
+      expect(checkboxElement).toBeTruthy();
+      expect(checkboxDirective).toBeTruthy();
+    });
+
+    it('should bind with formControlName', () => {
+      // Initially the checkbox should be unchecked
+      expect(component.form.get('isChecked')?.value).toBeFalse();
+      expect(checkboxElement.hasAttribute('checked')).toBeFalse();
+
+      // Simulate user checking the checkbox
+      const checkedChangeEvent = new CustomEvent('checkedChange', { detail: true });
+      checkboxElement.dispatchEvent(checkedChangeEvent);
+      fixture.detectChanges();
+
+      // The form control should be updated
+      expect(component.form.get('isChecked')?.value).toBeTrue();
+    });
+
+    it('should update the view when form control changes', () => {
+      // Change the form control value
+      component.form.get('isChecked')?.setValue(true);
+      fixture.detectChanges();
+
+      // The view should be updated
+      expect(checkboxElement.hasAttribute('checked')).toBeTrue();
+    });
+
+    it('should handle disabled state from form control', () => {
+      // Disable the form control
+      component.form.get('isChecked')?.disable();
+      fixture.detectChanges();
+
+      // The checkbox should be disabled
+      expect(checkboxElement.hasAttribute('disabled')).toBeTrue();
     });
   });
 });

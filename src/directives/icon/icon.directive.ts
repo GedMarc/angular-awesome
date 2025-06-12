@@ -33,14 +33,11 @@ export class WaIconDirective implements OnInit {
   @Input() backgroundColor?: string;
   @Input() fontSize?: string;
 
-  // CSS custom properties inputs
-  @Input() iconName?: string;
-  @Input() iconVariant?: string;
-  @Input() iconFamily?: string;
-  @Input() iconLibrary?: string;
-  @Input() iconSize?: string;
-  @Input() iconColor?: string;
-  @Input() iconBackgroundColor?: string;
+  // Duotone icon inputs
+  @Input() primaryColor?: string;
+  @Input() primaryOpacity?: string;
+  @Input() secondaryColor?: string;
+  @Input() secondaryOpacity?: string;
 
   // Injected services
   private el = inject(ElementRef);
@@ -60,19 +57,16 @@ export class WaIconDirective implements OnInit {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('fixed-width', this.fixedWidth);
 
-    // Apply direct styling inputs
-    if (this.color) nativeEl.style.color = this.color;
-    if (this.backgroundColor) nativeEl.style.backgroundColor = this.backgroundColor;
-    if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
+    // Apply styling inputs using CSS custom properties
+    this.setCssStyle('text-color', this.color);
+    this.setCssStyle('background-color', this.backgroundColor);
+    this.setCssStyle('font-size', this.fontSize);
 
-    // Set CSS custom properties
-    if (this.iconName) nativeEl.style.setProperty('--wa-icon-name', this.iconName);
-    if (this.iconVariant) nativeEl.style.setProperty('--wa-icon-variant', this.iconVariant);
-    if (this.iconFamily) nativeEl.style.setProperty('--wa-icon-family', this.iconFamily);
-    if (this.iconLibrary) nativeEl.style.setProperty('--wa-icon-library', this.iconLibrary);
-    if (this.iconSize) nativeEl.style.setProperty('--wa-icon-size', this.iconSize);
-    if (this.iconColor) nativeEl.style.setProperty('--wa-icon-color', this.iconColor);
-    if (this.iconBackgroundColor) nativeEl.style.setProperty('--wa-icon-background-color', this.iconBackgroundColor);
+    // Set duotone icon CSS custom properties
+    this.setCssVar('--primary-color', this.primaryColor);
+    this.setCssVar('--primary-opacity', this.primaryOpacity);
+    this.setCssVar('--secondary-color', this.secondaryColor);
+    this.setCssVar('--secondary-opacity', this.secondaryOpacity);
   }
 
   /**
@@ -98,6 +92,24 @@ export class WaIconDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+    /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
+    }
+  }
+
+  /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssStyle(name: string, value: string | null | undefined) {
+    if (value) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
     }
   }
 }

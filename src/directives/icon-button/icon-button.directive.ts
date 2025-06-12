@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaIconButtonDirective
@@ -51,18 +51,6 @@ export class WaIconButtonDirective implements OnInit {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
-  // Host bindings for direct styling
-  @HostBinding('style.color') get styleColor() {
-    return this.color || null;
-  }
-
-  @HostBinding('style.backgroundColor') get styleBackground() {
-    return this.backgroundColor || null;
-  }
-
-  @HostBinding('style.fontSize') get styleFontSize() {
-    return this.fontSize || null;
-  }
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -82,6 +70,11 @@ export class WaIconButtonDirective implements OnInit {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('disabled', this.disabled);
+
+    // Set style attributes
+    this.setCssStyle('color', this.color);
+    this.setCssStyle('background-color', this.backgroundColor);
+    this.setCssStyle('font-size', this.fontSize);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
@@ -132,6 +125,24 @@ export class WaIconButtonDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+    /**
+   * Sets a CSS custom property on the native element if the value is truthy
+   */
+  private setCssStyle(name: string, value: string | null | undefined) {
+    if (value) {
+      this.renderer.setAttribute(this.el.nativeElement, name, value);
+    }
+  }
+
+  /**
+   * Sets a CSS custom property on the native element if the value is truthy
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
     }
   }
 }

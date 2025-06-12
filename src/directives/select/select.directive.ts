@@ -176,7 +176,7 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   }
 
   /**
-   * Sets a CSS custom property on the native element if the value is not null or undefined
+   * Sets a CSS custom property on the native element if the value is truthy
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
@@ -282,7 +282,7 @@ export class WaOptionComponent implements OnInit {
   }
 
   /**
-   * Sets a CSS custom property on the native element if the value is not null or undefined
+   * Sets a CSS custom property on the native element if the value is truthy
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {

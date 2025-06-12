@@ -90,32 +90,6 @@ Custom properties for color theming:
 * `--text-color-hover`
 * `--text-color-active`
 
-In addition, support the following Angular-style styling inputs:
-
-### Angular Styling Inputs
-
-These are optional and applied via host binding:
-
-```ts
-@Input() color?: string;
-@Input() backgroundColor?: string;
-@Input() fontSize?: string;
-```
-
-You may apply these with:
-
-```ts
-@HostBinding('style.color') get styleColor() {
-  return this.color || null;
-}
-@HostBinding('style.backgroundColor') get styleBackground() {
-  return this.backgroundColor || null;
-}
-@HostBinding('style.fontSize') get styleFontSize() {
-  return this.fontSize || null;
-}
-```
-
 ---
 
 ## Behavior Notes

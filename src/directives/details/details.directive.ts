@@ -57,11 +57,11 @@ export class WaDetailsDirective implements OnInit {
     this.setBooleanAttr('open', this.open);
 
     // Set CSS custom properties
-    if (this.iconColor) nativeEl.style.setProperty('--icon-color', this.iconColor);
-    if (this.spacing) nativeEl.style.setProperty('--spacing', this.spacing);
-    if (this.showDuration) nativeEl.style.setProperty('--show-duration', this.showDuration);
-    if (this.hideDuration) nativeEl.style.setProperty('--hide-duration', this.hideDuration);
-    if (this.display) nativeEl.style.setProperty('--display', this.display);
+    if (this.iconColor) this.setCssVar('--icon-color', this.iconColor);
+    if (this.spacing) this.setCssVar('--spacing', this.spacing);
+    if (this.showDuration) this.setCssVar('--show-duration', this.showDuration);
+    if (this.hideDuration) this.setCssVar('--hide-duration', this.hideDuration);
+    if (this.display) this.setCssVar('--display', this.display);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'show', (event) => this.waShow.emit(event));
@@ -111,6 +111,16 @@ export class WaDetailsDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+
+    /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
     }
   }
 }

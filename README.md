@@ -1,9 +1,22 @@
 # Angular Awesome
 
-Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://webawesome.dev) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
+Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://backers.webawesome.com/) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
 
-📦 Version: `1.0.1`
-🔗 [Web Awesome Component Docs](https://webawesome.dev)
+
+
+
+📦 Version: `1.0.2`
+
+### What's New in 1.0.2
+- Enhanced checkbox directive with improved form integration
+- Updated icon and icon-button directives for better customization
+- Improved color-picker directive with additional styling options
+- Fixed issues in comparison and details directives
+- Enhanced select directive functionality
+- Updated documentation for various components
+- General bug fixes and performance improvements
+
+🔗 [Web Awesome Component Docs](https://backers.webawesome.com/)
 
 ---
 

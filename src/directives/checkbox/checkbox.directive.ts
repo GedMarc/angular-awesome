@@ -1,4 +1,5 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, forwardRef, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * WaCheckboxDirective
@@ -14,12 +15,20 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
  * - Allows slot projection for label and hint content
  * - Supports custom styling via CSS variables
  * - Provides accessibility support through aria attributes
+ * - Implements ControlValueAccessor for ngModel support
  */
 @Directive({
   selector: 'wa-checkbox',
-  standalone: true
+  standalone: true,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => WaCheckboxDirective),
+      multi: true
+    }
+  ]
 })
-export class WaCheckboxDirective implements OnInit {
+export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   // Value inputs
   @Input() checked?: boolean | string;
   @Input() value?: string | null;
@@ -35,6 +44,18 @@ export class WaCheckboxDirective implements OnInit {
   // Appearance inputs
   @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
 
+  // CSS custom property inputs
+  @Input() backgroundColor?: string;
+  @Input() backgroundColorChecked?: string;
+  @Input() borderColor?: string;
+  @Input() borderColorChecked?: string;
+  @Input() borderRadius?: string;
+  @Input() borderStyle?: string;
+  @Input() borderWidth?: string;
+  @Input() boxShadow?: string;
+  @Input() checkedIconColor?: string;
+  @Input() toggleSize?: string;
+
   // Event outputs
   @Output() checkedChange = new EventEmitter<boolean>();
   @Output() input = new EventEmitter<Event>();
@@ -46,6 +67,10 @@ export class WaCheckboxDirective implements OnInit {
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+
+  // ControlValueAccessor implementation
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -63,12 +88,28 @@ export class WaCheckboxDirective implements OnInit {
     this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('indeterminate', this.indeterminate);
 
+    // Set CSS custom properties
+    this.setCssVar('--background-color', this.backgroundColor);
+    this.setCssVar('--background-color-checked', this.backgroundColorChecked);
+    this.setCssVar('--border-color', this.borderColor);
+    this.setCssVar('--border-color-checked', this.borderColorChecked);
+    this.setCssVar('--border-radius', this.borderRadius);
+    this.setCssVar('--border-style', this.borderStyle);
+    this.setCssVar('--border-width', this.borderWidth);
+    this.setCssVar('--box-shadow', this.boxShadow);
+    this.setCssVar('--checked-icon-color', this.checkedIconColor);
+    this.setCssVar('--toggle-size', this.toggleSize);
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
       this.checkedChange.emit(event.detail);
+      this.onChange(event.detail);
     });
     this.renderer.listen(nativeEl, 'input', (event) => this.input.emit(event));
-    this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
+    this.renderer.listen(nativeEl, 'blur', (event) => {
+      this.blurEvent.emit(event);
+      this.onTouched();
+    });
     this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
     this.renderer.listen(nativeEl, 'change', (event) => this.change.emit(event));
     this.renderer.listen(nativeEl, 'waInvalid', (event) => this.waInvalid.emit(event));
@@ -128,5 +169,33 @@ export class WaCheckboxDirective implements OnInit {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     }
+  }
+
+  /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
+    }
+  }
+
+  // ControlValueAccessor implementation
+  writeValue(value: any): void {
+    if (value !== undefined) {
+      this.renderer.setProperty(this.el.nativeElement, 'checked', !!value);
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.setBooleanAttr('disabled', isDisabled);
   }
 }

@@ -21,6 +21,12 @@ export class WaComparisonDirective implements OnInit {
   // Position input
   @Input() position?: number | string;
 
+  // CSS custom property inputs
+  @Input() dividerColor?: string;
+  @Input() dividerWidth?: string;
+  @Input() handleColor?: string;
+  @Input() handleSize?: string;
+
   // Event outputs
   @Output() change = new EventEmitter<number>();
 
@@ -33,6 +39,12 @@ export class WaComparisonDirective implements OnInit {
 
     // Set position attribute
     this.setNumericAttr('position', this.position);
+
+    // Set CSS custom properties
+    this.setCssVar('--divider-color', this.dividerColor);
+    this.setCssVar('--divider-width', this.dividerWidth);
+    this.setCssVar('--handle-color', this.handleColor);
+    this.setCssVar('--handle-size', this.handleSize);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {
@@ -56,6 +68,15 @@ export class WaComparisonDirective implements OnInit {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    }
+  }
+
+  /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
     }
   }
 }

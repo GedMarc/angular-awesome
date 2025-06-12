@@ -36,11 +36,6 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   @Input() form?: string | null;
   @Input() swatches?: string | string[];
 
-  // Direct styling inputs
-  @Input() color?: string;
-  @Input() backgroundColor?: string;
-  @Input() fontSize?: string;
-
   // CSS custom property inputs
   @Input() swatchSize?: string;
   @Input() swatchSpacing?: string;
@@ -87,17 +82,12 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
       }
     }
 
-    // Apply direct styling inputs
-    if (this.color) nativeEl.style.color = this.color;
-    if (this.backgroundColor) nativeEl.style.backgroundColor = this.backgroundColor;
-    if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
-
     // Set CSS custom properties
-    if (this.swatchSize) nativeEl.style.setProperty('--swatch-size', this.swatchSize);
-    if (this.swatchSpacing) nativeEl.style.setProperty('--swatch-spacing', this.swatchSpacing);
-    if (this.borderRadius) nativeEl.style.setProperty('--border-radius', this.borderRadius);
-    if (this.dropdownWidth) nativeEl.style.setProperty('--dropdown-width', this.dropdownWidth);
-    if (this.dropdownHeight) nativeEl.style.setProperty('--dropdown-height', this.dropdownHeight);
+    if (this.swatchSize) this.setCssVar('--swatch-size', this.swatchSize);
+    if (this.swatchSpacing) this.setCssVar('--swatch-spacing', this.swatchSpacing);
+    if (this.borderRadius) this.setCssVar('--border-radius', this.borderRadius);
+    if (this.dropdownWidth) this.setCssVar('--dropdown-width', this.dropdownWidth);
+    if (this.dropdownHeight) this.setCssVar('--dropdown-height', this.dropdownHeight);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'change', (event) => this.change.emit(event));
@@ -182,6 +172,16 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+
+    /**
+   * Sets a CSS custom property on the native element if the value is not null or undefined
+   */
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
     }
   }
 }

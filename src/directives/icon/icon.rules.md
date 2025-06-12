@@ -36,31 +36,16 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 
 ### Shortcut Styles for Consumers
 
-The following CSS variables can be used by consumers to change icon defaults contextually:
-
-```css
---wa-icon-name: info-circle;
---wa-icon-variant: regular;
---wa-icon-family: classic;
---wa-icon-library: default;
---wa-icon-size: 1.5em;
---wa-icon-color: #333;
---wa-icon-background-color: transparent;
-```
-
-You can apply these to any parent container. For example:
-
-```css
-.custom-icon-context {
-  --wa-icon-name: bell;
-  --wa-icon-variant: solid;
-  --wa-icon-color: #4a90e2;
-  --wa-icon-size: 2rem;
-  --wa-icon-background-color: #f0f0f0;
-}
-```
 
 > ✅ These variables allow external styling of the `wa-icon` through its parent, avoiding the need for inline styles or direct DOM access.
+
+
+```css 
+--primary-color	: Sets a duotone icons primary color. Default currentColor
+--primary-opacity	Sets a duotone icons primary opacity. Default 1
+--secondary-color	: Sets a duotone icons secondary color. Default currentColor
+--secondary-opacity	Sets a duotone iconss secondary opacity. Default 0.4
+```
 
 ### Accessibility
 

@@ -1,80 +1,147 @@
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
-# Checkbox Rules (`wa-checkbox`)
+# `wa-checkbox` Angular Integration Rules
 
-This directive wraps the `<wa-checkbox>` Web Component, integrating it with Angular forms and change detection.
+## Component Selector
 
-## Selector
+`<wa-checkbox>` → `waCheckbox`
 
-```ts
-waCheckbox
-```
+## Inputs
 
-## Angular Inputs
+| Name           | Type                                          | Binding Required | Notes                                                                                     |
+| -------------- | --------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
+| `checked`      | `boolean \| string`                           | Yes              | Determines if the checkbox is checked.                                                    |
+| `value`        | `string \| null`                              | No               | Value attribute for the checkbox.                                                         |
+| `name`         | `string`                                      | No               | Used in form submissions.                                                                 |
+| `form`         | `string \| null`                              | No               | Link to external form by ID.                                                              |
+| `hint`         | `string`                                      | No               | Descriptive hint text.                                                                    |
+| `disabled`     | `boolean \| string`                           | Yes              | Disables the checkbox.                                                                    |
+| `required`     | `boolean \| string`                           | Yes              | Marks checkbox as required.                                                               |
+| `indeterminate`| `boolean \| string`                           | Yes              | Sets checkbox to indeterminate state.                                                     |
+| `size`         | `'small' \| 'medium' \| 'large' \| 'inherit'` | No               | Controls the size of the checkbox.                                                        |
 
-| Input           | Type                                                    | Description                                                               |
-| --------------- | ------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `checked`       | `boolean \| string`                                     | Whether the checkbox is checked. Prefer `[checked]` binding for booleans. |
-| `indeterminate` | `boolean \| string`                                     | Displays indeterminate state.                                             |
-| `disabled`      | `boolean \| string`                                     | Disables the checkbox.                                                    |
-| `required`      | `boolean \| string`                                     | Marks checkbox as required.                                               |
-| `size`          | `'small' \| 'medium' \| 'large' \| 'inherit' \| string` | Sets checkbox size.                                                       |
-| `name`          | `string`                                                | Checkbox name (used in form submissions).                                 |
-| `value`         | `string \| null`                                        | Value sent when checked (for forms).                                      |
-| `hint`          | `string`                                                | Optional description text.                                                |
-| `form`          | `string`                                                | ID of the associated form (if outside `<form>` tag).                      |
+## Outputs
 
-All boolean and enum-like attributes support both native and string input for template convenience.
+| Event           | Description                                                   |
+| --------------- | ------------------------------------------------------------- |
+| `checkedChange` | Fires when the checked state changes.                         |
+| `input`         | Fires on every user input.                                    |
+| `blurEvent`     | Fires when checkbox loses focus.                              |
+| `focusEvent`    | Fires when checkbox gains focus.                              |
+| `change`        | Fires when the value changes.                                 |
+| `waInvalid`     | Fires on failed validity check.                               |
 
-## Angular Outputs
+## Two-Way Binding (Template-Driven)
 
-| Output          | Description                                             |
-| --------------- | ------------------------------------------------------- |
-| `checkedChange` | Fires when the checkbox's checked state changes.        |
-| `input`         | Mirrors the native input event.                         |
-| `blur`          | Fired when the checkbox loses focus.                    |
-| `focus`         | Fired when the checkbox gains focus.                    |
-| `change`        | Fires when the state changes (checked/unchecked).       |
-| `waInvalid`     | Fires when the form control fails validity constraints. |
-
-## Two-Way Binding
-
-This directive supports Angular's two-way binding syntax via `[(checked)]`.
+Use `[(ngModel)]` for binding form values in Angular template-driven forms. Do not use custom `[(checked)]` syntax.
 
 ```html
-<wa-checkbox [(checked)]="formValue.myCheckbox">Subscribe</wa-checkbox>
+<wa-checkbox [(ngModel)]="isAccepted" name="accept" hint="Accept terms and conditions">
+  I accept the terms
+</wa-checkbox>
 ```
 
-## Slots
-
-| Slot    | Purpose                                         |
-| ------- | ----------------------------------------------- |
-| default | The checkbox label (text or HTML).              |
-| `hint`  | Used to display more complex hint HTML content. |
+The `name` attribute is required for `ngModel` in forms.
 
 ## Methods
 
-You may access the native element using `@ViewChild(WaCheckboxDirective)` to call methods like:
+| Method              | Description                                |
+| ------------------- | ------------------------------------------ |
+| `focus()`           | Programmatically focuses checkbox.         |
+| `blur()`            | Removes focus from checkbox.               |
+| `click()`           | Programmatically clicks the checkbox.      |
+| `setCustomValidity()`| Sets custom validity message.             |
 
-* `setCustomValidity(message: string)`
-* `click()`
-* `focus()` / `blur()`
+## CSS Custom Properties
 
-## Styling Hooks
+These properties allow external styling of the checkbox through its parent, avoiding the need for inline styles or direct DOM access.
 
-All styling should be done through the Web Awesome CSS custom properties or parts.
-Refer to the base component for these:
+| Name                      | Description                                         |
+| ------------------------- | --------------------------------------------------- |
+| `--background-color`      | The checkbox's background color.                    |
+| `--background-color-checked` | The checkbox's background color when checked.    |
+| `--border-color`          | The color of the checkbox's borders.                |
+| `--border-color-checked`  | The color of the checkbox's borders when checked.   |
+| `--border-radius`         | The radius of the checkbox's corners.               |
+| `--border-style`          | The style of the checkbox's borders.                |
+| `--border-width`          | The width of the checkbox's borders. Expects a single value. |
+| `--box-shadow`            | The shadow effects around the edges of the checkbox. |
+| `--checked-icon-color`    | The color of the checkbox's icon.                   |
+| `--toggle-size`           | The size of the checkbox.                           |
 
-* `--background-color`, `--border-radius`, `--box-shadow`, etc.
-* Parts: `base`, `control`, `checked-icon`, `label`, `hint`
+## Examples
+
+```html
+<!-- Basic checkbox -->
+<wa-checkbox label="Accept terms"></wa-checkbox>
+
+<!-- Checked checkbox with custom styling -->
+<wa-checkbox 
+  [checked]="true" 
+  [backgroundColor]="'#f0f0f0'" 
+  [backgroundColorChecked]="'#4a90e2'" 
+  [borderColor]="'#cccccc'"
+  [borderColorChecked]="'#2a70c2'"
+  [borderRadius]="'4px'"
+  [checkedIconColor]="'white'">
+  Custom styled checkbox
+</wa-checkbox>
+
+<!-- Required checkbox in a form -->
+<form>
+  <wa-checkbox 
+    name="agreement" 
+    [required]="true" 
+    hint="You must agree to continue">
+    I agree to the terms
+  </wa-checkbox>
+</form>
+
+<!-- Indeterminate state checkbox -->
+<wa-checkbox [indeterminate]="true">Select all items</wa-checkbox>
+
+<!-- Different sizes -->
+<wa-checkbox size="small">Small checkbox</wa-checkbox>
+<wa-checkbox size="medium">Medium checkbox</wa-checkbox>
+<wa-checkbox size="large">Large checkbox</wa-checkbox>
+
+<!-- Using ngModel in a form -->
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <wa-checkbox 
+    [(ngModel)]="user.acceptTerms" 
+    name="acceptTerms" 
+    [required]="true">
+    I accept the terms and conditions
+  </wa-checkbox>
+  <button type="submit" [disabled]="!myForm.valid">Submit</button>
+</form>
+```
+
+## Form Integration
+
+Supports both **template-driven forms** using `ngModel` and **reactive forms**. When using with template-driven forms, ensure the `name` attribute is set.
+
+```html
+<!-- Template-driven form -->
+<form #myForm="ngForm">
+  <wa-checkbox [(ngModel)]="user.acceptTerms" name="acceptTerms" required>
+    Accept Terms
+  </wa-checkbox>
+</form>
+
+<!-- Reactive form -->
+<form [formGroup]="myForm">
+  <wa-checkbox formControlName="acceptTerms">
+    Accept Terms
+  </wa-checkbox>
+</form>
+```
 
 ## Notes
 
-* Integrates with Angular's `ControlValueAccessor`.
-* Supports form validation (`required`, `setCustomValidity`).
-* Angular should use bound boolean inputs for accurate behavior, but plain strings like `"true"` also work.
-
-## Related
-
-* For form support, see the [Form Field Rules](../../form-field/form-field.rules.md) if using with labels or layout wrappers.
-* For toggle-like behavior, consider [`wa-switch`](../switch/switch.rules.md).
+* Always use property binding for boolean inputs (e.g., `[checked]="true"`, `[required]="isRequired"`).
+* For accessibility, ensure checkboxes have associated text content or labels.
+* Use `indeterminate` state for parent checkboxes that control a group of child checkboxes.
+* Custom styling can be applied through CSS custom properties or direct style binding.
+* When using `ngModel`, always include the `name` attribute for proper form integration.
+* For reactive forms, use `formControlName` or `formControl` directives.

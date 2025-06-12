@@ -64,6 +64,83 @@
 <wa-checkbox form="myForm" name="external">I'm outside the form</wa-checkbox>
 ```
 
+### Template-Driven Forms with ngModel
+
+```html
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <!-- Basic ngModel binding -->
+  <wa-checkbox [(ngModel)]="user.acceptTerms" name="acceptTerms" required>
+    I accept the terms and conditions
+  </wa-checkbox>
+  
+  <!-- With validation and error message -->
+  <div>
+    <wa-checkbox [(ngModel)]="user.subscribe" name="subscribe" #subscribe="ngModel" required>
+      Subscribe to newsletter
+    </wa-checkbox>
+    <div [class.visible]="subscribe.invalid && (subscribe.dirty || subscribe.touched)" class="error-message">
+      This field is required
+    </div>
+  </div>
+  
+  <button type="submit" [disabled]="!myForm.valid">Submit</button>
+</form>
+```
+
+### Reactive Forms
+
+```html
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <!-- Basic formControlName binding -->
+  <wa-checkbox formControlName="acceptTerms">
+    I accept the terms and conditions
+  </wa-checkbox>
+  
+  <!-- With validation and error message -->
+  <div>
+    <wa-checkbox formControlName="subscribe">
+      Subscribe to newsletter
+    </wa-checkbox>
+    <div [class.visible]="myForm.get('subscribe')?.invalid && 
+               (myForm.get('subscribe')?.dirty || myForm.get('subscribe')?.touched)" 
+         class="error-message">
+      This field is required
+    </div>
+  </div>
+  
+  <button type="submit" [disabled]="myForm.invalid">Submit</button>
+</form>
+```
+
+```typescript
+// In your component
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-checkbox-form-example',
+  templateUrl: './checkbox-form-example.component.html'
+})
+export class CheckboxFormExampleComponent implements OnInit {
+  myForm!: FormGroup;
+  
+  constructor(private fb: FormBuilder) {}
+  
+  ngOnInit(): void {
+    this.myForm = this.fb.group({
+      acceptTerms: [false, Validators.requiredTrue],
+      subscribe: [false, Validators.required]
+    });
+  }
+  
+  onSubmit(): void {
+    if (this.myForm.valid) {
+      console.log(this.myForm.value);
+    }
+  }
+}
+```
+
 ## Using with Angular Bindings
 
 ```html
@@ -77,8 +154,8 @@
   Notify on change
 </wa-checkbox>
 
-<!-- Two-way binding -->
-<wa-checkbox [(checked)]="formValue.subscribe">
+<!-- Two-way binding with ngModel (recommended) -->
+<wa-checkbox [(ngModel)]="formValue.subscribe" name="subscribe">
   Subscribe to newsletter
 </wa-checkbox>
 
@@ -99,7 +176,7 @@ export class CheckboxExampleComponent {
   onCheckboxChange(isChecked: boolean): void {
     console.log(`Checkbox is now ${isChecked ? 'checked' : 'unchecked'}`);
   }
-
+  
   onInvalid(event: Event): void {
     console.log('Checkbox validation failed');
   }
@@ -133,19 +210,66 @@ import { WaCheckboxDirective } from './checkbox.directive';
 })
 export class CheckboxDemoComponent {
   @ViewChild('myCheckbox') checkbox!: WaCheckboxDirective;
-
+  
   focusCheckbox(): void {
     this.checkbox.focus();
   }
-
+  
   clickCheckbox(): void {
     this.checkbox.click();
   }
-
+  
   setInvalid(): void {
     this.checkbox.setCustomValidity('This checkbox is invalid');
   }
 }
+```
+
+## Custom Styling with CSS Properties
+
+```html
+<!-- Basic custom styling -->
+<wa-checkbox 
+  [backgroundColor]="'#f0f0f0'" 
+  [backgroundColorChecked]="'#4a90e2'">
+  Custom background colors
+</wa-checkbox>
+
+<!-- Border customization -->
+<wa-checkbox 
+  [borderColor]="'#cccccc'" 
+  [borderColorChecked]="'#2a70c2'" 
+  [borderRadius]="'4px'" 
+  [borderStyle]="'solid'" 
+  [borderWidth]="'2px'">
+  Custom borders
+</wa-checkbox>
+
+<!-- Icon and size customization -->
+<wa-checkbox 
+  [checkedIconColor]="'white'" 
+  [toggleSize]="'24px'">
+  Custom icon and size
+</wa-checkbox>
+
+<!-- Shadow effects -->
+<wa-checkbox 
+  [boxShadow]="'0 0 5px rgba(0,0,0,0.2)'">
+  With shadow effect
+</wa-checkbox>
+
+<!-- Comprehensive styling example -->
+<wa-checkbox 
+  [backgroundColor]="'#f8f9fa'" 
+  [backgroundColorChecked]="'#28a745'" 
+  [borderColor]="'#dee2e6'" 
+  [borderColorChecked]="'#28a745'" 
+  [borderRadius]="'50%'" 
+  [borderWidth]="'1px'" 
+  [checkedIconColor]="'white'" 
+  [toggleSize]="'20px'">
+  Fully customized checkbox
+</wa-checkbox>
 ```
 
 ## Common Use Cases

@@ -158,6 +158,75 @@ import { WaCheckboxDirective } from 'angular-awesome/checkbox';</pre>
 &lt;!-- Using form attribute to associate with a form --&gt;
 &lt;wa-checkbox form=&quot;myForm&quot; name=&quot;external&quot;&gt;I&#39;m outside the form&lt;/wa-checkbox&gt;
 </code></pre>
+<h3>Template-Driven Forms with ngModel</h3>
+<pre><code class="language-html">&lt;form #myForm=&quot;ngForm&quot; (ngSubmit)=&quot;onSubmit(myForm)&quot;&gt;
+  &lt;!-- Basic ngModel binding --&gt;
+  &lt;wa-checkbox [(ngModel)]=&quot;user.acceptTerms&quot; name=&quot;acceptTerms&quot; required&gt;
+    I accept the terms and conditions
+  &lt;/wa-checkbox&gt;
+  
+  &lt;!-- With validation and error message --&gt;
+  &lt;div&gt;
+    &lt;wa-checkbox [(ngModel)]=&quot;user.subscribe&quot; name=&quot;subscribe&quot; #subscribe=&quot;ngModel&quot; required&gt;
+      Subscribe to newsletter
+    &lt;/wa-checkbox&gt;
+    &lt;div [class.visible]=&quot;subscribe.invalid &amp;&amp; (subscribe.dirty || subscribe.touched)&quot; class=&quot;error-message&quot;&gt;
+      This field is required
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;!myForm.valid&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<h3>Reactive Forms</h3>
+<pre><code class="language-html">&lt;form [formGroup]=&quot;myForm&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;
+  &lt;!-- Basic formControlName binding --&gt;
+  &lt;wa-checkbox formControlName=&quot;acceptTerms&quot;&gt;
+    I accept the terms and conditions
+  &lt;/wa-checkbox&gt;
+  
+  &lt;!-- With validation and error message --&gt;
+  &lt;div&gt;
+    &lt;wa-checkbox formControlName=&quot;subscribe&quot;&gt;
+      Subscribe to newsletter
+    &lt;/wa-checkbox&gt;
+    &lt;div [class.visible]=&quot;myForm.get(&#39;subscribe&#39;)?.invalid &amp;&amp; 
+               (myForm.get(&#39;subscribe&#39;)?.dirty || myForm.get(&#39;subscribe&#39;)?.touched)&quot; 
+         class=&quot;error-message&quot;&gt;
+      This field is required
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;myForm.invalid&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+import { Component, OnInit } from &#39;@angular/core&#39;;
+import { FormBuilder, FormGroup, Validators } from &#39;@angular/forms&#39;;
+
+@Component({
+  selector: &#39;app-checkbox-form-example&#39;,
+  templateUrl: &#39;./checkbox-form-example.component.html&#39;
+})
+export class CheckboxFormExampleComponent implements OnInit {
+  myForm!: FormGroup;
+  
+  constructor(private fb: FormBuilder) {}
+  
+  ngOnInit(): void {
+    this.myForm = this.fb.group({
+      acceptTerms: [false, Validators.requiredTrue],
+      subscribe: [false, Validators.required]
+    });
+  }
+  
+  onSubmit(): void {
+    if (this.myForm.valid) {
+      console.log(this.myForm.value);
+    }
+  }
+}
+</code></pre>
 <h2>Using with Angular Bindings</h2>
 <pre><code class="language-html">&lt;!-- Property binding --&gt;
 &lt;wa-checkbox [checked]=&quot;isChecked&quot; [disabled]=&quot;isDisabled&quot;&gt;
@@ -169,8 +238,8 @@ import { WaCheckboxDirective } from 'angular-awesome/checkbox';</pre>
   Notify on change
 &lt;/wa-checkbox&gt;
 
-&lt;!-- Two-way binding --&gt;
-&lt;wa-checkbox [(checked)]=&quot;formValue.subscribe&quot;&gt;
+&lt;!-- Two-way binding with ngModel (recommended) --&gt;
+&lt;wa-checkbox [(ngModel)]=&quot;formValue.subscribe&quot; name=&quot;subscribe&quot;&gt;
   Subscribe to newsletter
 &lt;/wa-checkbox&gt;
 
@@ -188,7 +257,7 @@ export class CheckboxExampleComponent {
   onCheckboxChange(isChecked: boolean): void {
     console.log(`Checkbox is now ${isChecked ? &#39;checked&#39; : &#39;unchecked&#39;}`);
   }
-
+  
   onInvalid(event: Event): void {
     console.log(&#39;Checkbox validation failed&#39;);
   }
@@ -217,19 +286,63 @@ import { WaCheckboxDirective } from &#39;./checkbox.directive&#39;;
 })
 export class CheckboxDemoComponent {
   @ViewChild(&#39;myCheckbox&#39;) checkbox!: WaCheckboxDirective;
-
+  
   focusCheckbox(): void {
     this.checkbox.focus();
   }
-
+  
   clickCheckbox(): void {
     this.checkbox.click();
   }
-
+  
   setInvalid(): void {
     this.checkbox.setCustomValidity(&#39;This checkbox is invalid&#39;);
   }
 }
+</code></pre>
+<h2>Custom Styling with CSS Properties</h2>
+<pre><code class="language-html">&lt;!-- Basic custom styling --&gt;
+&lt;wa-checkbox 
+  [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
+  [backgroundColorChecked]=&quot;&#39;#4a90e2&#39;&quot;&gt;
+  Custom background colors
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Border customization --&gt;
+&lt;wa-checkbox 
+  [borderColor]=&quot;&#39;#cccccc&#39;&quot; 
+  [borderColorChecked]=&quot;&#39;#2a70c2&#39;&quot; 
+  [borderRadius]=&quot;&#39;4px&#39;&quot; 
+  [borderStyle]=&quot;&#39;solid&#39;&quot; 
+  [borderWidth]=&quot;&#39;2px&#39;&quot;&gt;
+  Custom borders
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Icon and size customization --&gt;
+&lt;wa-checkbox 
+  [checkedIconColor]=&quot;&#39;white&#39;&quot; 
+  [toggleSize]=&quot;&#39;24px&#39;&quot;&gt;
+  Custom icon and size
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Shadow effects --&gt;
+&lt;wa-checkbox 
+  [boxShadow]=&quot;&#39;0 0 5px rgba(0,0,0,0.2)&#39;&quot;&gt;
+  With shadow effect
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Comprehensive styling example --&gt;
+&lt;wa-checkbox 
+  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot; 
+  [backgroundColorChecked]=&quot;&#39;#28a745&#39;&quot; 
+  [borderColor]=&quot;&#39;#dee2e6&#39;&quot; 
+  [borderColorChecked]=&quot;&#39;#28a745&#39;&quot; 
+  [borderRadius]=&quot;&#39;50%&#39;&quot; 
+  [borderWidth]=&quot;&#39;1px&#39;&quot; 
+  [checkedIconColor]=&quot;&#39;white&#39;&quot; 
+  [toggleSize]=&quot;&#39;20px&#39;&quot;&gt;
+  Fully customized checkbox
+&lt;/wa-checkbox&gt;
 </code></pre>
 <h2>Common Use Cases</h2>
 <pre><code class="language-html">&lt;!-- In a settings form --&gt;

@@ -3,7 +3,7 @@ import {
   Input,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  ElementRef
+  ElementRef, OnChanges, Renderer2
 } from '@angular/core';
 
 @Component({
@@ -13,8 +13,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
-export class WaPageComponent {
-  constructor(private el: ElementRef<HTMLElement>) {}
+export class WaPageComponent implements OnChanges {
+  constructor(private el: ElementRef<HTMLElement>,private renderer: Renderer2) {}
 
   @Input() mobileBreakpoint?: string | number;
   @Input() navOpen?: boolean;
@@ -52,12 +52,12 @@ export class WaPageComponent {
       el.setAttribute('navigation-placement', this.navigationPlacement);
     }
 
-    el.style.setProperty('--menu-width', this.menuWidth || '');
-    el.style.setProperty('--main-width', this.mainWidth || '');
-    el.style.setProperty('--aside-width', this.asideWidth || '');
-    el.style.setProperty('--banner-height', this.bannerHeight || '');
-    el.style.setProperty('--header-height', this.headerHeight || '');
-    el.style.setProperty('--subheader-height', this.subheaderHeight || '');
+    this.setCssVar('--menu-width', this.menuWidth || '');
+    this.setCssVar('--main-width', this.mainWidth || '');
+    this.setCssVar('--aside-width', this.asideWidth || '');
+    this.setCssVar('--banner-height', this.bannerHeight || '');
+    this.setCssVar('--header-height', this.headerHeight || '');
+    this.setCssVar('--subheader-height', this.subheaderHeight || '');
   }
 
   showNavigation() {
@@ -70,5 +70,11 @@ export class WaPageComponent {
 
   toggleNavigation() {
     (this.el.nativeElement as any).toggleNavigation?.();
+  }
+
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null) {
+      this.renderer.setStyle(this.el.nativeElement, name, value);
+    }
   }
 }
