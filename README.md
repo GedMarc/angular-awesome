@@ -5,9 +5,9 @@ Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://
 
 
 
-📦 Version: `1.0.2`
+📦 Version: `1.0.4`
 
-### What's New in 1.0.2
+### What's New in 1.0.3
 - Enhanced checkbox directive with improved form integration
 - Updated icon and icon-button directives for better customization
 - Improved color-picker directive with additional styling options

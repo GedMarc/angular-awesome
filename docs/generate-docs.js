@@ -366,7 +366,7 @@ componentDirs.forEach(componentDir => {
                 <p>${componentDescription}</p>
                 <div class="links">
                     <a href="components/${componentDir}.html">Documentation</a>
-                    <a href="https://github.com/GedMarc/angular-awesome/tree/main/src/directives/${componentDir}" target="_blank">Source</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/${componentDir}" target="_blank">Source</a>
                 </div>
             </div>`;
 });
