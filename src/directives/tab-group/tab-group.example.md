@@ -7,7 +7,7 @@
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
   <wa-tab panel="tab3">Tab 3</wa-tab>
-  
+
   <wa-tab-panel name="tab1">
     <p>Content for Tab 1</p>
   </wa-tab-panel>
@@ -27,7 +27,7 @@
 <wa-tab-group placement="top">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -36,7 +36,7 @@
 <wa-tab-group placement="bottom">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -45,7 +45,7 @@
 <wa-tab-group placement="start">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -54,7 +54,7 @@
 <wa-tab-group placement="end">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -67,7 +67,7 @@
 <wa-tab-group activation="auto">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -76,7 +76,7 @@
 <wa-tab-group activation="manual">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -89,7 +89,7 @@
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2" disabled>Tab 2 (Disabled)</wa-tab>
   <wa-tab panel="tab3">Tab 3</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
   <wa-tab-panel name="tab3">Content for Tab 3</wa-tab-panel>
@@ -103,7 +103,7 @@
 <wa-tab-group [indicatorColor]="'#2196F3'" [trackColor]="'#e0e0e0'" [trackWidth]="'2px'">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -112,7 +112,7 @@
 <wa-tab-group>
   <wa-tab panel="tab1" [activeTabColor]="'#4CAF50'">Tab 1</wa-tab>
   <wa-tab panel="tab2" [activeTabColor]="'#FF5722'">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
 </wa-tab-group>
@@ -121,7 +121,7 @@
 <wa-tab-group>
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
-  
+
   <wa-tab-panel name="tab1" [padding]="'24px'">Content with more padding</wa-tab-panel>
   <wa-tab-panel name="tab2" [padding]="'8px'">Content with less padding</wa-tab-panel>
 </wa-tab-group>
@@ -130,13 +130,13 @@
 ## No Scroll Controls
 
 ```html
-<wa-tab-group [noScrollControls]="true">
+<wa-tab-group [withoutScrollControls]="true">
   <wa-tab panel="tab1">Tab 1</wa-tab>
   <wa-tab panel="tab2">Tab 2</wa-tab>
   <wa-tab panel="tab3">Tab 3</wa-tab>
   <wa-tab panel="tab4">Tab 4</wa-tab>
   <wa-tab panel="tab5">Tab 5</wa-tab>
-  
+
   <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
   <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
   <wa-tab-panel name="tab3">Content for Tab 3</wa-tab-panel>
@@ -159,23 +159,23 @@ import { WaTabGroupComponent, WaTabComponent, WaTabPanelComponent } from '@angul
       <wa-tab panel="personal">Personal Info</wa-tab>
       <wa-tab panel="address">Address</wa-tab>
       <wa-tab panel="payment">Payment</wa-tab>
-      
+
       <wa-tab-panel name="personal">
         <h3>Personal Information</h3>
         <p>Enter your personal details here.</p>
       </wa-tab-panel>
-      
+
       <wa-tab-panel name="address">
         <h3>Address Information</h3>
         <p>Enter your address details here.</p>
       </wa-tab-panel>
-      
+
       <wa-tab-panel name="payment">
         <h3>Payment Information</h3>
         <p>Enter your payment details here.</p>
       </wa-tab-panel>
     </wa-tab-group>
-    
+
     <div class="controls">
       <p>Current active tab: {{ activeTab }}</p>
       <button (click)="activeTab = 'personal'">Go to Personal</button>
@@ -207,12 +207,12 @@ import { WaTabGroupComponent, WaTabComponent, WaTabPanelComponent } from '@angul
       <wa-tab panel="tab1">Tab 1</wa-tab>
       <wa-tab panel="tab2">Tab 2</wa-tab>
       <wa-tab panel="tab3">Tab 3</wa-tab>
-      
+
       <wa-tab-panel name="tab1">Content for Tab 1</wa-tab-panel>
       <wa-tab-panel name="tab2">Content for Tab 2</wa-tab-panel>
       <wa-tab-panel name="tab3">Content for Tab 3</wa-tab-panel>
     </wa-tab-group>
-    
+
     <div class="event-log">
       <p>Last event: {{ lastEvent }}</p>
     </div>
@@ -222,12 +222,12 @@ import { WaTabGroupComponent, WaTabComponent, WaTabPanelComponent } from '@angul
 })
 export class TabGroupEventsDemoComponent {
   lastEvent = 'None';
-  
+
   onTabShow(event: CustomEvent) {
     this.lastEvent = `Tab shown: ${event.detail.name}`;
     console.log('Tab shown:', event.detail);
   }
-  
+
   onTabHide(event: CustomEvent) {
     this.lastEvent = `Tab hidden: ${event.detail.name}`;
     console.log('Tab hidden:', event.detail);
@@ -255,10 +255,10 @@ interface TabItem {
       <button (click)="addTab()">Add Tab</button>
       <button (click)="removeTab()" [disabled]="tabs.length <= 1">Remove Last Tab</button>
     </div>
-    
+
     <wa-tab-group [(ngModel)]="activeTab">
       <wa-tab *ngFor="let tab of tabs" [panel]="tab.id">{{ tab.title }}</wa-tab>
-      
+
       <wa-tab-panel *ngFor="let tab of tabs" [name]="tab.id">
         <p>{{ tab.content }}</p>
       </wa-tab-panel>
@@ -273,7 +273,7 @@ export class DynamicTabsDemoComponent {
     { id: 'tab2', title: 'Tab 2', content: 'Content for Tab 2' }
   ];
   activeTab = 'tab1';
-  
+
   addTab() {
     const id = `tab${this.tabs.length + 1}`;
     this.tabs.push({
@@ -283,7 +283,7 @@ export class DynamicTabsDemoComponent {
     });
     this.activeTab = id;
   }
-  
+
   removeTab() {
     if (this.tabs.length > 1) {
       const removedTab = this.tabs.pop();

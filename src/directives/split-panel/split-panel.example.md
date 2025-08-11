@@ -12,7 +12,7 @@
 ## Vertical Split
 
 ```html
-<wa-split-panel [vertical]="true">
+<wa-split-panel orientation="vertical">
   <div slot="start">Top Panel Content</div>
   <div slot="end">Bottom Panel Content</div>
 </wa-split-panel>
@@ -186,7 +186,7 @@ import { Component } from '@angular/core';
     </div>
     
     <wa-split-panel 
-      [vertical]="isVertical" 
+      [orientation]="isVertical ? 'vertical' : 'horizontal'" 
       [primary]="primaryPanel" 
       [position]="panelPosition" 
       [dividerColor]="dividerColorValue" 
@@ -278,7 +278,7 @@ import { Component } from '@angular/core';
         <!-- Editor and Preview -->
         <div slot="end" class="editor-preview-container">
           <wa-split-panel 
-            [vertical]="true" 
+            orientation="vertical" 
             [position]="60" 
             [dividerColor]="'#444'" 
             [dividerWidth]="'1px'">

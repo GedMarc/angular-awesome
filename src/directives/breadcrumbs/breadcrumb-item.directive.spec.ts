@@ -10,8 +10,8 @@ import { WaBreadcrumbItemDirective } from './breadcrumb-item.directive';
       [target]="target"
       [rel]="rel"
     >
-      <div slot="prefix" *ngIf="showPrefix">Prefix Icon</div>
-      <div slot="suffix" *ngIf="showSuffix">Suffix Icon</div>
+      <div slot="start" *ngIf="showPrefix">Prefix Icon</div>
+      <div slot="end" *ngIf="showSuffix">Suffix Icon</div>
       <div slot="separator" *ngIf="showSeparator">Custom Separator</div>
       {{ content }}
     </wa-breadcrumb-item>
@@ -84,20 +84,20 @@ describe('WaBreadcrumbItemDirective', () => {
     expect(breadcrumbItemElement.textContent?.trim()).toBe('Home');
   });
 
-  it('should project content into slot="prefix" correctly', () => {
+  it('should project content into slot="start" correctly', () => {
     hostComponent.showPrefix = true;
     hostFixture.detectChanges();
 
-    const slotContent = hostFixture.nativeElement.querySelector('[slot="prefix"]');
+    const slotContent = hostFixture.nativeElement.querySelector('[slot="start"]');
     expect(slotContent).toBeTruthy();
     expect(slotContent.textContent?.trim()).toBe('Prefix Icon');
   });
 
-  it('should project content into slot="suffix" correctly', () => {
+  it('should project content into slot="end" correctly', () => {
     hostComponent.showSuffix = true;
     hostFixture.detectChanges();
 
-    const slotContent = hostFixture.nativeElement.querySelector('[slot="suffix"]');
+    const slotContent = hostFixture.nativeElement.querySelector('[slot="end"]');
     expect(slotContent).toBeTruthy();
     expect(slotContent.textContent?.trim()).toBe('Suffix Icon');
   });

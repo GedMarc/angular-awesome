@@ -174,10 +174,10 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
   &lt;wa-option value=&quot;option3&quot;&gt;Option 3&lt;/wa-option&gt;
 &lt;/wa-select-wrapper&gt;
 </code></pre>
-<h2>Clearable Select</h2>
+<h2>Select with Clear Button</h2>
 <pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Clearable Select&quot; 
-  [clearable]=&quot;true&quot;
+  label=&quot;Select with Clear Button&quot; 
+  [withClear]=&quot;true&quot;
   placeholder=&quot;Select an option&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
   &lt;wa-option value=&quot;option2&quot;&gt;Option 2&lt;/wa-option&gt;
@@ -358,7 +358,7 @@ onSelectInvalid(event: CustomEvent): void {
       [required]=&quot;isRequired&quot; 
       [disabled]=&quot;isDisabled&quot;
       [multiple]=&quot;isMultiple&quot;
-      [clearable]=&quot;isClearable&quot;
+      [withClear]=&quot;isWithClear&quot;
       (changeEvent)=&quot;onSelectionChange($event)&quot;&gt;
       &lt;wa-option *ngFor=&quot;let option of options&quot; [value]=&quot;option.value&quot; [disabled]=&quot;option.disabled&quot;&gt;
         {{ option.label }}
@@ -377,7 +377,7 @@ export class SelectDemoComponent {
   isRequired = true;
   isDisabled = false;
   isMultiple = false;
-  isClearable = true;
+  isWithClear = true;
   
   options = [
     { value: &#39;option1&#39;, label: &#39;Option 1&#39;, disabled: false },
@@ -425,7 +425,7 @@ interface Country {
       
       &lt;wa-select-wrapper 
         label=&quot;Country&quot; 
-        [clearable]=&quot;true&quot;
+        [withClear]=&quot;true&quot;
         placeholder=&quot;Select your country&quot;
         [(ngModel)]=&quot;selectedCountry&quot;
         (changeEvent)=&quot;onCountryChange($event)&quot;
@@ -496,7 +496,7 @@ export class CountrySelectorComponent implements OnInit {
 <h2>Grouped Options with Custom Styling</h2>
 <pre><code class="language-html">&lt;wa-select-wrapper 
   label=&quot;Select a Destination&quot; 
-  [clearable]=&quot;true&quot;
+  [withClear]=&quot;true&quot;
   placeholder=&quot;Choose a destination&quot;
   [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
   [borderColor]=&quot;&#39;#007bff&#39;&quot;

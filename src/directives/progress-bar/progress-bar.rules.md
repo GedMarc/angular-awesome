@@ -51,6 +51,7 @@ Supports the following style inputs mapped from CSS custom properties:
 | ---------------- | --------------------------- |
 | `indicatorColor` | `--indicator-color`         |
 | `display`        | `--display`                 |
+| `trackHeight`    | `--track-height`            |
 
 ---
 
@@ -59,7 +60,7 @@ Supports the following style inputs mapped from CSS custom properties:
 | Slot Name | Description                                                                       |
 | --------- | --------------------------------------------------------------------------------- |
 | (default) | The default slot can be used to show the current value as text (e.g., `50%`).     |
-| `prefix`  | For an optional icon or element before the bar (e.g., `<wa-icon slot="prefix">`). |
+| `start`  | For an optional icon or element before the bar (e.g., `<wa-icon slot="start">`). |
 
 ---
 

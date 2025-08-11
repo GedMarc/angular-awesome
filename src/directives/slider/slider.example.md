@@ -38,25 +38,40 @@
 </wa-slider>
 ```
 
-## Tooltip Options
+## Showing Tooltips
 
 ```html
-<!-- Tooltip on top (default) -->
+<!-- With tooltip (shows value when focused or dragged) -->
 <wa-slider 
-  label="Tooltip on Top" 
-  tooltip="top">
+  label="With Tooltip" 
+  [withTooltip]="true">
 </wa-slider>
 
-<!-- Tooltip on bottom -->
+<!-- Custom tooltip placement -->
 <wa-slider 
   label="Tooltip on Bottom" 
-  tooltip="bottom">
+  [withTooltip]="true"
+  tooltipPlacement="bottom">
 </wa-slider>
 
-<!-- No tooltip -->
+<!-- Custom tooltip distance -->
 <wa-slider 
-  label="No Tooltip" 
-  tooltip="none">
+  label="Custom Tooltip Distance" 
+  [withTooltip]="true"
+  [tooltipDistance]="12">
+</wa-slider>
+```
+
+## Showing Markers
+
+```html
+<!-- With markers at each step -->
+<wa-slider 
+  label="With Markers" 
+  [min]="0" 
+  [max]="8" 
+  [step]="1" 
+  [withMarkers]="true">
 </wa-slider>
 ```
 
@@ -78,65 +93,243 @@
 </wa-slider>
 ```
 
-## Disabled State
+## Different Sizes
 
 ```html
+<!-- Small size -->
+<wa-slider 
+  label="Small Slider" 
+  size="small">
+</wa-slider>
+
+<!-- Medium size (default) -->
+<wa-slider 
+  label="Medium Slider" 
+  size="medium">
+</wa-slider>
+
+<!-- Large size -->
+<wa-slider 
+  label="Large Slider" 
+  size="large">
+</wa-slider>
+```
+
+## Range Selection
+
+```html
+<!-- Range slider with dual thumbs -->
+<wa-slider 
+  label="Price Range" 
+  [range]="true" 
+  [min]="0" 
+  [max]="100" 
+  [minValue]="20" 
+  [maxValue]="80">
+</wa-slider>
+
+<!-- Range slider with tooltip -->
+<wa-slider 
+  label="Temperature Range" 
+  [range]="true" 
+  [min]="0" 
+  [max]="100" 
+  [minValue]="30" 
+  [maxValue]="70" 
+  [withTooltip]="true">
+</wa-slider>
+```
+
+## Vertical Orientation
+
+```html
+<!-- Vertical slider -->
+<wa-slider 
+  label="Volume" 
+  orientation="vertical" 
+  [value]="65" 
+  style="height: 200px; width: 80px;">
+</wa-slider>
+
+<!-- Vertical range slider -->
+<wa-slider 
+  label="Temperature Range" 
+  orientation="vertical" 
+  [range]="true" 
+  [min]="0" 
+  [max]="100" 
+  [minValue]="30" 
+  [maxValue]="70" 
+  [withTooltip]="true" 
+  tooltipPlacement="right" 
+  style="height: 300px; width: 80px;">
+</wa-slider>
+```
+
+## Adding References
+
+```html
+<!-- With reference labels -->
+<wa-slider 
+  label="Speed" 
+  [min]="1" 
+  [max]="5" 
+  [value]="3" 
+  [withMarkers]="true" 
+  hint="Controls the speed of the thing you're currently doing">
+  <span slot="reference">Slow</span>
+  <span slot="reference">Medium</span>
+  <span slot="reference">Fast</span>
+</wa-slider>
+```
+
+## Indicator Offset
+
+```html
+<!-- With indicator offset -->
+<wa-slider 
+  label="User Friendliness" 
+  hint="Did you find our product easy to use?" 
+  [min]="-5" 
+  [max]="5" 
+  [value]="0" 
+  [indicatorOffset]="0" 
+  [withMarkers]="true" 
+  [withTooltip]="true">
+  <span slot="reference">Easy</span>
+  <span slot="reference">Moderate</span>
+  <span slot="reference">Difficult</span>
+</wa-slider>
+```
+
+## Disabled and Read-only States
+
+```html
+<!-- Disabled slider -->
 <wa-slider 
   label="Disabled Slider" 
   [disabled]="true" 
-  [min]="0" 
-  [max]="100" 
   [value]="50">
 </wa-slider>
+
+<!-- Read-only slider -->
+<wa-slider 
+  label="Read-only Slider" 
+  [readonly]="true" 
+  [value]="50">
+</wa-slider>
+```
+
+## Required Slider
+
+```html
+<form action="about:blank" target="_blank" method="get">
+  <wa-slider 
+    name="slide" 
+    label="Required Slider" 
+    [min]="0" 
+    [max]="10" 
+    [required]="true">
+  </wa-slider>
+  <br />
+  <button type="submit">Submit</button>
+</form>
 ```
 
 ## Custom Styling
 
 ```html
-<!-- Custom track colors -->
+<!-- Custom track size -->
 <wa-slider 
-  label="Custom Track Colors" 
-  [trackColorActive]="'#4caf50'" 
-  [trackColorInactive]="'#e0e0e0'">
+  label="Custom Track Size" 
+  [trackSize]="'0.75em'">
 </wa-slider>
 
-<!-- Custom track height -->
+<!-- Custom marker size -->
 <wa-slider 
-  label="Custom Track Height" 
-  [trackHeight]="'6px'">
+  label="Custom Markers" 
+  [withMarkers]="true" 
+  [markerWidth]="'0.25em'" 
+  [markerHeight]="'0.25em'">
 </wa-slider>
 
-<!-- Custom thumb styling -->
+<!-- Custom thumb size -->
 <wa-slider 
-  label="Custom Thumb" 
-  [thumbColor]="'#2196f3'" 
-  [thumbSize]="'20px'" 
-  [thumbShadow]="'0 0 5px rgba(33, 150, 243, 0.5)'">
+  label="Custom Thumb Size" 
+  [thumbWidth]="'1.5em'" 
+  [thumbHeight]="'1.5em'">
+</wa-slider>
+```
+
+## Value Formatting
+
+```html
+<!-- Percentage formatter -->
+<wa-slider 
+  id="slider__percent" 
+  label="Percentage" 
+  [min]="0" 
+  [max]="1" 
+  [step]="0.01" 
+  [value]="0.5" 
+  [withTooltip]="true">
 </wa-slider>
 
-<!-- Custom thumb gap -->
+<script>
+  const percentSlider = document.getElementById('slider__percent');
+  const formatter = new Intl.NumberFormat('en-US', { style: 'percent' });
+
+  customElements.whenDefined('wa-slider').then(() => {
+    percentSlider.valueFormatter = value => formatter.format(value);
+  });
+</script>
+
+<!-- Duration formatter -->
 <wa-slider 
-  label="Custom Thumb Gap" 
-  [thumbGap]="'2px'">
+  id="slider__duration" 
+  label="Duration" 
+  [min]="0" 
+  [max]="24" 
+  [value]="12" 
+  [withTooltip]="true">
 </wa-slider>
 
-<!-- Custom tooltip offset -->
+<script>
+  const durationSlider = document.getElementById('slider__duration');
+  const durationFormatter = new Intl.NumberFormat('en-US', { 
+    style: 'unit', 
+    unit: 'hour', 
+    unitDisplay: 'long' 
+  });
+
+  customElements.whenDefined('wa-slider').then(() => {
+    durationSlider.valueFormatter = value => durationFormatter.format(value);
+  });
+</script>
+
+<!-- Currency formatter -->
 <wa-slider 
-  label="Custom Tooltip Offset" 
-  [tooltipOffset]="'10px'">
+  id="slider__currency" 
+  label="Currency" 
+  [min]="0" 
+  [max]="100" 
+  [value]="50" 
+  [withTooltip]="true">
 </wa-slider>
 
-<!-- Combined custom styling -->
-<wa-slider 
-  label="Fully Customized Slider" 
-  [trackColorActive]="'#ff4081'" 
-  [trackColorInactive]="'#f8bbd0'" 
-  [trackHeight]="'8px'" 
-  [thumbColor]="'#c2185b'" 
-  [thumbSize]="'24px'" 
-  [thumbShadow]="'0 0 8px rgba(194, 24, 91, 0.5)'" 
-  [tooltipOffset]="'12px'">
-</wa-slider>
+<script>
+  const currencySlider = document.getElementById('slider__currency');
+  const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'symbol',
+    maximumFractionDigits: 0,
+  });
+
+  customElements.whenDefined('wa-slider').then(() => {
+    currencySlider.valueFormatter = value => currencyFormatter.format(value);
+  });
+</script>
 ```
 
 ## Event Handling
@@ -154,25 +347,25 @@
 
 ```typescript
 // In your component
-onSliderInput(event: Event): void {
+function onSliderInput(event: Event): void {
   const value = (event.target as HTMLInputElement).value;
   console.log('Slider input:', value);
 }
 
-onSliderChange(event: Event): void {
+function onSliderChange(event: Event): void {
   const value = (event.target as HTMLInputElement).value;
   console.log('Slider change:', value);
 }
 
-onSliderFocus(): void {
+function onSliderFocus(): void {
   console.log('Slider focused');
 }
 
-onSliderBlur(): void {
+function onSliderBlur(): void {
   console.log('Slider blurred');
 }
 
-onSliderInvalid(event: CustomEvent): void {
+function onSliderInvalid(event: CustomEvent): void {
   console.log('Slider invalid:', event.detail);
 }
 ```
@@ -192,8 +385,10 @@ import { Component } from '@angular/core';
       [step]="sliderStep" 
       [value]="sliderValue" 
       [disabled]="isDisabled"
-      [tooltip]="tooltipPosition"
-      [trackColorActive]="trackColor"
+      [withTooltip]="showTooltip"
+      [withMarkers]="showMarkers"
+      [orientation]="orientation"
+      [size]="sliderSize"
       (inputEvent)="onSliderInput($event)">
     </wa-slider>
     
@@ -204,17 +399,19 @@ import { Component } from '@angular/core';
         {{ isDisabled ? 'Enable' : 'Disable' }} Slider
       </button>
       
-      <wa-select [(ngModel)]="tooltipPosition" label="Tooltip Position">
-        <wa-option value="top">Top</wa-option>
-        <wa-option value="bottom">Bottom</wa-option>
-        <wa-option value="none">None</wa-option>
+      <wa-select [(ngModel)]="orientation" label="Orientation">
+        <wa-option value="horizontal">Horizontal</wa-option>
+        <wa-option value="vertical">Vertical</wa-option>
       </wa-select>
       
-      <wa-input 
-        type="color" 
-        [(ngModel)]="trackColor" 
-        label="Track Color">
-      </wa-input>
+      <wa-select [(ngModel)]="sliderSize" label="Size">
+        <wa-option value="small">Small</wa-option>
+        <wa-option value="medium">Medium</wa-option>
+        <wa-option value="large">Large</wa-option>
+      </wa-select>
+      
+      <wa-checkbox [(ngModel)]="showTooltip" label="Show Tooltip"></wa-checkbox>
+      <wa-checkbox [(ngModel)]="showMarkers" label="Show Markers"></wa-checkbox>
     </div>
   `
 })
@@ -225,8 +422,10 @@ export class SliderDemoComponent {
   sliderStep = 1;
   sliderValue = 50;
   isDisabled = false;
-  tooltipPosition = 'top';
-  trackColor = '#2196f3';
+  showTooltip = true;
+  showMarkers = false;
+  orientation = 'horizontal';
+  sliderSize = 'medium';
   
   onSliderInput(event: Event): void {
     this.sliderValue = parseFloat((event.target as HTMLInputElement).value);
@@ -244,11 +443,36 @@ export class SliderDemoComponent {
     [(ngModel)]="volumeLevel" 
     [min]="0" 
     [max]="100" 
-    [step]="1">
+    [step]="1"
+    [withTooltip]="true">
   </wa-slider>
   
   <div>Current volume: {{ volumeLevel }}%</div>
 </form>
+```
+
+## Using with Range Slider and ngModel
+
+```html
+<form #rangeForm="ngForm">
+  <wa-slider 
+    label="Price Range" 
+    name="priceRange" 
+    [range]="true"
+    [min]="0" 
+    [max]="1000" 
+    [(ngModel)]="priceRange" 
+    [withTooltip]="true">
+  </wa-slider>
+  
+  <div>Min price: ${{ priceRange?.min }}</div>
+  <div>Max price: ${{ priceRange?.max }}</div>
+</form>
+```
+
+```typescript
+// In your component
+priceRange = { min: 200, max: 800 };
 ```
 
 ## Real-World Example: Image Editor Controls
@@ -270,6 +494,7 @@ import { Component } from '@angular/core';
             [max]="100" 
             [step]="1" 
             [(ngModel)]="brightness"
+            [withTooltip]="true"
             (inputEvent)="updateImage()">
           </wa-slider>
           
@@ -279,6 +504,7 @@ import { Component } from '@angular/core';
             [max]="100" 
             [step]="1" 
             [(ngModel)]="contrast"
+            [withTooltip]="true"
             (inputEvent)="updateImage()">
           </wa-slider>
           
@@ -288,6 +514,7 @@ import { Component } from '@angular/core';
             [max]="100" 
             [step]="1" 
             [(ngModel)]="saturation"
+            [withTooltip]="true"
             (inputEvent)="updateImage()">
           </wa-slider>
           
@@ -297,6 +524,7 @@ import { Component } from '@angular/core';
             [max]="20" 
             [step]="0.1" 
             [(ngModel)]="blur"
+            [withTooltip]="true"
             (inputEvent)="updateImage()">
           </wa-slider>
           
@@ -306,7 +534,13 @@ import { Component } from '@angular/core';
             [max]="360" 
             [step]="1" 
             [(ngModel)]="hueRotate"
+            [withTooltip]="true"
+            [withMarkers]="true"
+            [indicatorOffset]="0"
             (inputEvent)="updateImage()">
+            <span slot="reference">0°</span>
+            <span slot="reference">180°</span>
+            <span slot="reference">360°</span>
           </wa-slider>
           
           <button (click)="resetFilters()">Reset All</button>
@@ -387,74 +621,3 @@ export class ImageEditorComponent {
     `;
   }
 }
-```
-
-## Multiple Sliders for Range Selection
-
-```html
-<div class="price-range">
-  <h3>Price Range</h3>
-  
-  <div class="slider-container">
-    <wa-slider 
-      label="Minimum Price" 
-      [min]="0" 
-      [max]="1000" 
-      [step]="10" 
-      [(ngModel)]="minPrice"
-      (changeEvent)="updatePriceRange()">
-    </wa-slider>
-    
-    <wa-slider 
-      label="Maximum Price" 
-      [min]="0" 
-      [max]="1000" 
-      [step]="10" 
-      [(ngModel)]="maxPrice"
-      (changeEvent)="updatePriceRange()">
-    </wa-slider>
-  </div>
-  
-  <div class="selected-range">
-    Selected range: ${{ minPrice }} - ${{ maxPrice }}
-  </div>
-</div>
-```
-
-```typescript
-// In your component
-minPrice = 200;
-maxPrice = 800;
-
-updatePriceRange(): void {
-  // Ensure min doesn't exceed max
-  if (this.minPrice > this.maxPrice) {
-    this.minPrice = this.maxPrice;
-  }
-  
-  // Filter products or perform other actions based on the price range
-  console.log(`Price range updated: $${this.minPrice} - $${this.maxPrice}`);
-}
-```
-
-## Slider with Custom Labels
-
-```html
-<wa-slider 
-  [min]="0" 
-  [max]="3" 
-  [step]="1" 
-  [(ngModel)]="qualityLevel">
-  <div slot="label">
-    Quality: 
-    <strong>
-      {{ ['Low', 'Medium', 'High', 'Ultra'][qualityLevel] }}
-    </strong>
-  </div>
-</wa-slider>
-```
-
-```typescript
-// In your component
-qualityLevel = 1; // Default to Medium
-```

@@ -77,12 +77,12 @@
 </wa-select-wrapper>
 ```
 
-## Clearable Select
+## Select with Clear Button
 
 ```html
 <wa-select-wrapper 
-  label="Clearable Select" 
-  [clearable]="true"
+  label="Select with Clear Button" 
+  [withClear]="true"
   placeholder="Select an option">
   <wa-option value="option1">Option 1</wa-option>
   <wa-option value="option2">Option 2</wa-option>
@@ -286,7 +286,7 @@ import { Component } from '@angular/core';
       [required]="isRequired" 
       [disabled]="isDisabled"
       [multiple]="isMultiple"
-      [clearable]="isClearable"
+      [withClear]="isWithClear"
       (changeEvent)="onSelectionChange($event)">
       <wa-option *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">
         {{ option.label }}
@@ -305,7 +305,7 @@ export class SelectDemoComponent {
   isRequired = true;
   isDisabled = false;
   isMultiple = false;
-  isClearable = true;
+  isWithClear = true;
   
   options = [
     { value: 'option1', label: 'Option 1', disabled: false },
@@ -359,7 +359,7 @@ interface Country {
       
       <wa-select-wrapper 
         label="Country" 
-        [clearable]="true"
+        [withClear]="true"
         placeholder="Select your country"
         [(ngModel)]="selectedCountry"
         (changeEvent)="onCountryChange($event)"
@@ -433,7 +433,7 @@ export class CountrySelectorComponent implements OnInit {
 ```html
 <wa-select-wrapper 
   label="Select a Destination" 
-  [clearable]="true"
+  [withClear]="true"
   placeholder="Choose a destination"
   [backgroundColor]="'#f8f9fa'"
   [borderColor]="'#007bff'"

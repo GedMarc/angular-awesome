@@ -5,11 +5,9 @@
 ```html
 <wa-dropdown>
   <wa-button slot="trigger">Dropdown</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-    <wa-menu-item>Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
+  <wa-dropdown-item>Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -19,55 +17,43 @@
 <!-- Bottom placement (default) -->
 <wa-dropdown placement="bottom">
   <wa-button slot="trigger">Bottom</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <!-- Bottom-start placement -->
 <wa-dropdown placement="bottom-start">
   <wa-button slot="trigger">Bottom Start</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <!-- Bottom-end placement -->
 <wa-dropdown placement="bottom-end">
   <wa-button slot="trigger">Bottom End</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <!-- Top placement -->
 <wa-dropdown placement="top">
   <wa-button slot="trigger">Top</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <!-- Left placement -->
 <wa-dropdown placement="left">
   <wa-button slot="trigger">Left</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <!-- Right placement -->
 <wa-dropdown placement="right">
   <wa-button slot="trigger">Right</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -76,10 +62,8 @@
 ```html
 <wa-dropdown disabled>
   <wa-button slot="trigger">Disabled Dropdown</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -88,11 +72,9 @@
 ```html
 <wa-dropdown stayOpenOnSelect>
   <wa-button slot="trigger">Stay Open On Select</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-    <wa-menu-item>Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
+  <wa-dropdown-item>Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -101,10 +83,8 @@
 ```html
 <wa-dropdown [distance]="10" [skidding]="5">
   <wa-button slot="trigger">Custom Offset</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -113,10 +93,8 @@
 ```html
 <wa-dropdown sync="width">
   <wa-button slot="trigger">Sync Width</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -125,10 +103,8 @@
 ```html
 <wa-dropdown [boxShadow]="'0 4px 8px rgba(0,0,0,0.2)'">
   <wa-button slot="trigger">Custom Styling</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -137,11 +113,9 @@
 ```html
 <wa-dropdown [(ngModel)]="selectedItem">
   <wa-button slot="trigger">{{ selectedItem || 'Select an item' }}</wa-button>
-  <wa-menu>
-    <wa-menu-item value="item1">Item 1</wa-menu-item>
-    <wa-menu-item value="item2">Item 2</wa-menu-item>
-    <wa-menu-item value="item3">Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item value="item1">Item 1</wa-dropdown-item>
+  <wa-dropdown-item value="item2">Item 2</wa-dropdown-item>
+  <wa-dropdown-item value="item3">Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -162,11 +136,9 @@ export class DropdownExampleComponent {
   (afterHideEvent)="onAfterHide()"
   (selectEvent)="onSelect($event)">
   <wa-button slot="trigger">Event Handling</wa-button>
-  <wa-menu>
-    <wa-menu-item value="item1">Item 1</wa-menu-item>
-    <wa-menu-item value="item2">Item 2</wa-menu-item>
-    <wa-menu-item value="item3">Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item value="item1">Item 1</wa-dropdown-item>
+  <wa-dropdown-item value="item2">Item 2</wa-dropdown-item>
+  <wa-dropdown-item value="item3">Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -201,10 +173,8 @@ export class DropdownExampleComponent {
 ```html
 <wa-dropdown #myDropdown>
   <wa-button slot="trigger">Programmatic Control</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
 </wa-dropdown>
 
 <wa-button (click)="openDropdown()">Open Dropdown</wa-button>
@@ -236,12 +206,10 @@ export class DropdownExampleComponent {
 ```html
 <wa-dropdown>
   <wa-button slot="trigger">With Divider</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>Item 2</wa-menu-item>
-    <wa-divider></wa-divider>
-    <wa-menu-item>Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>Item 2</wa-dropdown-item>
+  <wa-divider></wa-divider>
+  <wa-dropdown-item>Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -250,20 +218,18 @@ export class DropdownExampleComponent {
 ```html
 <wa-dropdown>
   <wa-button slot="trigger">With Icons</wa-button>
-  <wa-menu>
-    <wa-menu-item>
-      <wa-icon name="cut" slot="prefix"></wa-icon>
-      Cut
-    </wa-menu-item>
-    <wa-menu-item>
-      <wa-icon name="copy" slot="prefix"></wa-icon>
-      Copy
-    </wa-menu-item>
-    <wa-menu-item>
-      <wa-icon name="paste" slot="prefix"></wa-icon>
-      Paste
-    </wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>
+    <wa-icon name="cut" slot="start"></wa-icon>
+    Cut
+  </wa-dropdown-item>
+  <wa-dropdown-item>
+    <wa-icon name="copy" slot="start"></wa-icon>
+    Copy
+  </wa-dropdown-item>
+  <wa-dropdown-item>
+    <wa-icon name="paste" slot="start"></wa-icon>
+    Paste
+  </wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -272,17 +238,15 @@ export class DropdownExampleComponent {
 ```html
 <wa-dropdown>
   <wa-button slot="trigger">With Submenu</wa-button>
-  <wa-menu>
-    <wa-menu-item>Item 1</wa-menu-item>
-    <wa-menu-item>
-      More Options
-      <wa-menu slot="submenu">
-        <wa-menu-item>Submenu Item 1</wa-menu-item>
-        <wa-menu-item>Submenu Item 2</wa-menu-item>
-      </wa-menu>
-    </wa-menu-item>
-    <wa-menu-item>Item 3</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item>Item 1</wa-dropdown-item>
+  <wa-dropdown-item>
+    More Options
+    <wa-dropdown slot="submenu">
+      <wa-dropdown-item>Submenu Item 1</wa-dropdown-item>
+      <wa-dropdown-item>Submenu Item 2</wa-dropdown-item>
+    </wa-dropdown>
+  </wa-dropdown-item>
+  <wa-dropdown-item>Item 3</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -292,10 +256,8 @@ export class DropdownExampleComponent {
 <div #container class="dropdown-container">
   <wa-dropdown [containingElement]="container">
     <wa-button slot="trigger">Custom Containing Element</wa-button>
-    <wa-menu>
-      <wa-menu-item>Item 1</wa-menu-item>
-      <wa-menu-item>Item 2</wa-menu-item>
-    </wa-menu>
+    <wa-dropdown-item>Item 1</wa-dropdown-item>
+    <wa-dropdown-item>Item 2</wa-dropdown-item>
   </wa-dropdown>
 </div>
 ```
@@ -315,12 +277,10 @@ export class DropdownExampleComponent {
     <label for="country">Select Country</label>
     <wa-dropdown [(ngModel)]="selectedCountry" name="country">
       <wa-button slot="trigger">{{ selectedCountry || 'Select a country' }}</wa-button>
-      <wa-menu>
-        <wa-menu-item value="us">United States</wa-menu-item>
-        <wa-menu-item value="ca">Canada</wa-menu-item>
-        <wa-menu-item value="mx">Mexico</wa-menu-item>
-        <wa-menu-item value="uk">United Kingdom</wa-menu-item>
-      </wa-menu>
+      <wa-dropdown-item value="us">United States</wa-dropdown-item>
+      <wa-dropdown-item value="ca">Canada</wa-dropdown-item>
+      <wa-dropdown-item value="mx">Mexico</wa-dropdown-item>
+      <wa-dropdown-item value="uk">United Kingdom</wa-dropdown-item>
     </wa-dropdown>
   </div>
   
@@ -328,12 +288,10 @@ export class DropdownExampleComponent {
     <label for="language">Select Language</label>
     <wa-dropdown [(ngModel)]="selectedLanguage" name="language">
       <wa-button slot="trigger">{{ selectedLanguage || 'Select a language' }}</wa-button>
-      <wa-menu>
-        <wa-menu-item value="en">English</wa-menu-item>
-        <wa-menu-item value="fr">French</wa-menu-item>
-        <wa-menu-item value="es">Spanish</wa-menu-item>
-        <wa-menu-item value="de">German</wa-menu-item>
-      </wa-menu>
+      <wa-dropdown-item value="en">English</wa-dropdown-item>
+      <wa-dropdown-item value="fr">French</wa-dropdown-item>
+      <wa-dropdown-item value="es">Spanish</wa-dropdown-item>
+      <wa-dropdown-item value="de">German</wa-dropdown-item>
     </wa-dropdown>
   </div>
   

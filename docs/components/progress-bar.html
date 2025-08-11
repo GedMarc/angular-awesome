@@ -132,6 +132,12 @@ import { WaProgressBarDirective } from 'angular-awesome/progress-bar';</pre>
   [display]=&quot;&#39;inline-block&#39;&quot; 
   [indicatorColor]=&quot;&#39;#ff9800&#39;&quot;&gt;
 &lt;/wa-progress-bar&gt;
+
+&lt;!-- Custom track height --&gt;
+&lt;wa-progress-bar 
+  value=&quot;75&quot; 
+  [trackHeight]=&quot;&#39;10px&#39;&quot;&gt;
+&lt;/wa-progress-bar&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
@@ -299,7 +305,7 @@ export class FileUploadComponent {
 </code></pre>
 <h2>Progress Bar with Custom Content</h2>
 <pre><code class="language-html">&lt;wa-progress-bar value=&quot;65&quot;&gt;
-  &lt;div slot=&quot;prefix&quot;&gt;
+  &lt;div slot=&quot;start&quot;&gt;
     &lt;wa-icon name=&quot;download&quot;&gt;&lt;/wa-icon&gt;
   &lt;/div&gt;
   Downloading 65%

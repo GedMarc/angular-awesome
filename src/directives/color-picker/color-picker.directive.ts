@@ -26,7 +26,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   @Input() hint?: string;
   @Input() value?: string | null;
   @Input() format?: 'hex' | 'rgb' | 'hsl' | 'hsv' | string;
-  @Input() noFormatToggle?: boolean | string;
+  @Input() withoutFormatToggle?: boolean | string;
   @Input() opacity?: boolean | string;
   @Input() uppercase?: boolean | string;
   @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
@@ -67,7 +67,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('no-format-toggle', this.noFormatToggle);
+    this.setBooleanAttr('without-format-toggle', this.withoutFormatToggle);
     this.setBooleanAttr('opacity', this.opacity);
     this.setBooleanAttr('uppercase', this.uppercase);
     this.setBooleanAttr('disabled', this.disabled);

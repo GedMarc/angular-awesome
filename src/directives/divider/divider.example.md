@@ -29,7 +29,7 @@
 ## Vertical Divider
 
 ```html
-<wa-divider [vertical]="true"></wa-divider>
+<wa-divider orientation="vertical"></wa-divider>
 ```
 
 ## Vertical Divider Inside a Flex Container
@@ -37,30 +37,31 @@
 ```html
 <div style="display: flex; align-items: center; height: 2rem;">
   First
-  <wa-divider [vertical]="true" [spacing]="'1rem'"></wa-divider>
+  <wa-divider orientation="vertical" [spacing]="'1rem'"></wa-divider>
   Middle
-  <wa-divider [vertical]="true" [spacing]="'1rem'"></wa-divider>
+  <wa-divider orientation="vertical" [spacing]="'1rem'"></wa-divider>
   Last
 </div>
 ```
 
-## Menu with Divider
+## Dropdown with Divider
 
 ```html
-<wa-menu style="max-width: 200px;">
-  <wa-menu-item value="1">Option 1</wa-menu-item>
-  <wa-menu-item value="2">Option 2</wa-menu-item>
-  <wa-menu-item value="3">Option 3</wa-menu-item>
+<wa-dropdown style="max-width: 200px;">
+  <wa-button slot="trigger">Options</wa-button>
+  <wa-dropdown-item value="1">Option 1</wa-dropdown-item>
+  <wa-dropdown-item value="2">Option 2</wa-dropdown-item>
+  <wa-dropdown-item value="3">Option 3</wa-dropdown-item>
   <wa-divider></wa-divider>
-  <wa-menu-item value="4">Option 4</wa-menu-item>
-</wa-menu>
+  <wa-dropdown-item value="4">Option 4</wa-dropdown-item>
+</wa-dropdown>
 ```
 
 ## Divider with String Literal Attributes
 
 ```html
 <!-- Using string literals instead of property binding -->
-<wa-divider vertical></wa-divider>
+<wa-divider orientation="vertical"></wa-divider>
 <wa-divider color="#ff5722" width="2px" spacing="1rem"></wa-divider>
 ```
 
@@ -120,7 +121,7 @@ export class DividerExampleComponent {
 
 ```html
 <wa-divider 
-  [vertical]="isVertical"
+  [orientation]="isVertical ? 'vertical' : 'horizontal'"
   [color]="dividerColor"
   [width]="dividerWidth"
   [spacing]="dividerSpacing">

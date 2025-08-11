@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * - Supports boolean attributes like required, readonly, clearable, etc.
  * - Emits events for input, change, focus, blur, etc.
  * - Enables Angular-style class and style bindings
- * - Allows slot projection for label, hint, prefix, suffix, etc.
+ * - Allows slot projection for label, hint, start, end, etc.
  * - Supports custom styling via CSS variables
  * - Provides methods for programmatic control: focus(), blur(), select(), etc.
  * - Implements ControlValueAccessor for ngModel support
@@ -39,12 +39,12 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
   @Input() pill?: boolean | string;
   @Input() label?: string;
   @Input() hint?: string;
-  @Input() clearable?: boolean | string;
+  @Input() withClear?: boolean | string;
   @Input() placeholder?: string;
   @Input() readonly?: boolean | string;
   @Input() passwordToggle?: boolean | string;
   @Input() passwordVisible?: boolean | string;
-  @Input() noSpinButtons?: boolean | string;
+  @Input() withoutSpinButtons?: boolean | string;
   @Input() form?: string | null;
   @Input() required?: boolean | string;
   @Input() pattern?: string;
@@ -117,11 +117,11 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('pill', this.pill);
-    this.setBooleanAttr('clearable', this.clearable);
+    this.setBooleanAttr('with-clear', this.withClear);
     this.setBooleanAttr('readonly', this.readonly);
     this.setBooleanAttr('password-toggle', this.passwordToggle);
     this.setBooleanAttr('password-visible', this.passwordVisible);
-    this.setBooleanAttr('no-spin-buttons', this.noSpinButtons);
+    this.setBooleanAttr('without-spin-buttons', this.withoutSpinButtons);
     this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('autofocus', this.autofocus);
     this.setBooleanAttr('spellcheck', this.spellcheck);

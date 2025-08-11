@@ -22,7 +22,7 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 | `library`         | `string`  | No               | Name of a registered icon library.                  |
 | `src`             | `string`  | No               | URL to an SVG resource for custom icons.            |
 | `label`           | `string`  | No               | Accessible label for assistive technologies.        |
-| `fixedWidth`      | `boolean` | No               | If true, forces a fixed 1em width.                  |
+| `withFixedWidth`  | `boolean` | No               | If true, forces a fixed 1em width.                  |
 | `color`           | `string`  | No               | Sets the icon's text color directly.                |
 | `backgroundColor` | `string`  | No               | Sets the icon's background color.                   |
 | `fontSize`        | `string`  | No               | Adjusts the icon's font size.                       |
@@ -31,7 +31,7 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 
 * Font size determines the rendered size of the icon.
 * Text color is inherited unless explicitly overridden.
-* Use `fixedWidth` for aligning icons in lists or button groups.
+* Use `withFixedWidth` for aligning icons in lists or button groups.
 * The directive supports native Angular-style inputs for `color`, `backgroundColor`, and `fontSize`, which apply styles directly to the `<wa-icon>` element.
 
 ### Shortcut Styles for Consumers
@@ -96,7 +96,7 @@ Use with:
 <div style="font-size: 2em; color: #4a90e2;">
   <wa-icon name="bell"></wa-icon>
 </div>
-<wa-icon fixedWidth name="truck"></wa-icon>
+<wa-icon withFixedWidth name="truck"></wa-icon>
 <wa-icon name="heart" [color]="'#ff0000'" [fontSize]="'24px'" [backgroundColor]="'transparent'"></wa-icon>
 ```
 

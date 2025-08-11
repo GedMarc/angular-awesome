@@ -34,6 +34,12 @@
   [display]="'inline-block'" 
   [indicatorColor]="'#ff9800'">
 </wa-progress-bar>
+
+<!-- Custom track height -->
+<wa-progress-bar 
+  value="75" 
+  [trackHeight]="'10px'">
+</wa-progress-bar>
 ```
 
 ## Using with Angular Bindings
@@ -213,7 +219,7 @@ export class FileUploadComponent {
 
 ```html
 <wa-progress-bar value="65">
-  <div slot="prefix">
+  <div slot="start">
     <wa-icon name="download"></wa-icon>
   </div>
   Downloading 65%

@@ -99,7 +99,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
     this.renderer.listen(nativeEl, 'wa-select', (event: CustomEvent<{ item: HTMLElement }>) => {
       this.selectEvent.emit(event.detail);
 
-      // Handle ngModel value update when a menu item is selected
+      // Handle ngModel value update when a dropdown item is selected
       const selectedItem = event.detail.item;
       if (selectedItem && selectedItem.hasAttribute('value')) {
         const newValue = selectedItem.getAttribute('value');
@@ -190,12 +190,12 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   writeValue(value: any): void {
     this.value = value;
 
-    // Find and select the menu item with the matching value
+    // Find and select the dropdown item with the matching value
     if (value != null) {
       setTimeout(() => {
-        const menuItems = this.el.nativeElement.querySelectorAll('wa-menu-item[value]');
-        for (let i = 0; i < menuItems.length; i++) {
-          const item = menuItems[i];
+        const dropdownItems = this.el.nativeElement.querySelectorAll('wa-dropdown-item[value]');
+        for (let i = 0; i < dropdownItems.length; i++) {
+          const item = dropdownItems[i];
           if (item.getAttribute('value') === value) {
             item.selected = true;
             break;

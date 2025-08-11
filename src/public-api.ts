@@ -1,6 +1,8 @@
 /*
  * Public API Surface of angular-awesome
  */
+
+// Import CSS tokens
 export * from './directives/badge/badge.component';
 export * from './directives/avatar/avatar.component';
 export * from './directives/animated-image/animated-image.directive';
@@ -14,7 +16,6 @@ export * from './directives/card/card.directive';
 export * from './directives/carousel/carousel.directive';
 export * from './directives/carousel/carousel-item.directive';
 export * from './directives/icon/icon.directive';
-export * from './directives/icon-button/icon-button.directive';
 export * from './directives/rating/rating.directive';
 export * from './directives/checkbox/checkbox.directive';
 export * from './directives/comparison/comparison.directive';
@@ -25,12 +26,12 @@ export * from './directives/dialog/dialog.directive';
 export * from './directives/divider/divider.directive';
 export * from './directives/drawer/drawer.directive';
 export * from './directives/dropdown/dropdown.directive';
+export * from './directives/dropdown/dropdown-item.directive';
 export * from './directives/format-bytes/format-bytes.directive';
 export * from './directives/format-date/format-date.directive';
 export * from './directives/format-number/format-number.directive';
 export * from './directives/include/include.directive';
 export * from './directives/input/input.directive';
-export * from './directives/menu/menu.directive';
 export * from './directives/progress-bar/progress-bar.directive';
 export * from './directives/progress-ring/progress-ring.directive';
 export * from './directives/qr-code/qr-code.directive';
@@ -52,3 +53,5 @@ export * from './directives/tab-group/tab.component';
 export * from './directives/tab-group/tab-panel.component';
 export * from './directives/tab-group/tab-group.component';
 export * from './directives/page/page.component';
+export * from './directives/popup/popup.directive';
+export * from './directives/popover/popover.directive';

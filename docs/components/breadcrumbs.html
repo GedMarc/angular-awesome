@@ -119,7 +119,7 @@ import { WaBreadcrumbsDirective } from 'angular-awesome/breadcrumbs';</pre>
 <h2>With Icons</h2>
 <pre><code class="language-html">&lt;wa-breadcrumb label=&quot;Site Navigation&quot;&gt;
   &lt;wa-breadcrumb-item href=&quot;/home&quot;&gt;
-    &lt;wa-icon slot=&quot;prefix&quot; name=&quot;house&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
+    &lt;wa-icon slot=&quot;start&quot; name=&quot;house&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
     Home
   &lt;/wa-breadcrumb-item&gt;
   
@@ -129,7 +129,7 @@ import { WaBreadcrumbsDirective } from 'angular-awesome/breadcrumbs';</pre>
   
   &lt;wa-breadcrumb-item href=&quot;/home/products/widgets&quot;&gt;
     Widgets
-    &lt;wa-icon slot=&quot;suffix&quot; name=&quot;star&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
+    &lt;wa-icon slot=&quot;end&quot; name=&quot;star&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
   &lt;/wa-breadcrumb-item&gt;
 &lt;/wa-breadcrumb&gt;
 </code></pre>
@@ -154,15 +154,15 @@ import { WaBreadcrumbsDirective } from 'angular-awesome/breadcrumbs';</pre>
   .custom-breadcrumbs wa-breadcrumb-item::part(separator) {
     color: pink;
   }
-  .custom-breadcrumbs wa-breadcrumb-item::part(prefix),
-  .custom-breadcrumbs wa-breadcrumb-item::part(suffix) {
+  .custom-breadcrumbs wa-breadcrumb-item::part(start),
+  .custom-breadcrumbs wa-breadcrumb-item::part(end) {
     color: blue;
   }
 &lt;/style&gt;
 
 &lt;wa-breadcrumb class=&quot;custom-breadcrumbs&quot;&gt;
   &lt;wa-breadcrumb-item href=&quot;/home&quot;&gt;
-    &lt;wa-icon slot=&quot;prefix&quot; name=&quot;house&quot;&gt;&lt;/wa-icon&gt;
+    &lt;wa-icon slot=&quot;start&quot; name=&quot;house&quot;&gt;&lt;/wa-icon&gt;
     Home
   &lt;/wa-breadcrumb-item&gt;
   &lt;wa-breadcrumb-item&gt;Current Page&lt;/wa-breadcrumb-item&gt;
@@ -175,10 +175,8 @@ import { WaBreadcrumbsDirective } from 'angular-awesome/breadcrumbs';</pre>
   &lt;wa-breadcrumb-item&gt;
     &lt;wa-dropdown&gt;
       &lt;wa-button slot=&quot;trigger&quot;&gt;Products&lt;/wa-button&gt;
-      &lt;wa-menu&gt;
-        &lt;wa-menu-item href=&quot;/products/category1&quot;&gt;Category 1&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item href=&quot;/products/category2&quot;&gt;Category 2&lt;/wa-menu-item&gt;
-      &lt;/wa-menu&gt;
+      &lt;wa-dropdown-item href=&quot;/products/category1&quot;&gt;Category 1&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item href=&quot;/products/category2&quot;&gt;Category 2&lt;/wa-dropdown-item&gt;
     &lt;/wa-dropdown&gt;
   &lt;/wa-breadcrumb-item&gt;
   

@@ -7,6 +7,7 @@ import { WaDividerDirective } from './divider.directive';
   template: `
     <wa-divider
       [vertical]="vertical"
+      [orientation]="orientation"
       [color]="color"
       [width]="width"
       [spacing]="spacing"
@@ -17,6 +18,7 @@ import { WaDividerDirective } from './divider.directive';
 })
 class TestHostComponent {
   vertical?: boolean | string;
+  orientation?: 'vertical' | 'horizontal' | string;
   color?: string;
   width?: string;
   spacing?: string;
@@ -80,6 +82,38 @@ describe('WaDividerDirective', () => {
     hostFixture.detectChanges();
 
     expect(dividerElement.hasAttribute('vertical')).toBeTrue();
+  });
+
+  it('should set orientation attribute correctly', () => {
+    hostComponent.orientation = 'vertical';
+    hostFixture.detectChanges();
+
+    expect(dividerElement.getAttribute('orientation')).toBe('vertical');
+  });
+
+  it('should handle both vertical and orientation attributes', () => {
+    // When only orientation is set
+    hostComponent.orientation = 'vertical';
+    hostComponent.vertical = undefined;
+    hostFixture.detectChanges();
+
+    expect(dividerElement.getAttribute('orientation')).toBe('vertical');
+    expect(dividerElement.hasAttribute('vertical')).toBeFalse();
+
+    // When only vertical is set
+    hostComponent.orientation = undefined;
+    hostComponent.vertical = true;
+    hostFixture.detectChanges();
+
+    expect(dividerElement.hasAttribute('vertical')).toBeTrue();
+    expect(dividerElement.hasAttribute('orientation')).toBeFalse();
+
+    // When both are set, orientation should take precedence
+    hostComponent.orientation = 'vertical';
+    hostComponent.vertical = true;
+    hostFixture.detectChanges();
+
+    expect(dividerElement.getAttribute('orientation')).toBe('vertical');
   });
 
   it('should set CSS custom properties correctly', () => {

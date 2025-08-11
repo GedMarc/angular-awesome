@@ -30,9 +30,9 @@ import { WaButtonDirective } from './button.directive';
       (focus)="onFocus($event)"
       (waInvalid)="onInvalid($event)"
     >
-      <div slot="prefix" *ngIf="showPrefix">Prefix</div>
+      <div slot="start" *ngIf="showPrefix">Prefix</div>
       {{ buttonText }}
-      <div slot="suffix" *ngIf="showSuffix">Suffix</div>
+      <div slot="end" *ngIf="showSuffix">Suffix</div>
     </wa-button>
   `,
   standalone: true,
@@ -172,8 +172,8 @@ describe('WaButtonDirective', () => {
     hostComponent.showSuffix = true;
     hostFixture.detectChanges();
 
-    const prefixSlot = hostFixture.nativeElement.querySelector('[slot="prefix"]');
-    const suffixSlot = hostFixture.nativeElement.querySelector('[slot="suffix"]');
+    const prefixSlot = hostFixture.nativeElement.querySelector('[slot="start"]');
+    const suffixSlot = hostFixture.nativeElement.querySelector('[slot="end"]');
 
     expect(prefixSlot).toBeTruthy();
     expect(prefixSlot.textContent?.trim()).toBe('Prefix');

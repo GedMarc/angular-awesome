@@ -35,7 +35,7 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder?: string;
   @Input() appearance?: 'outlined' | 'filled' | string;
   @Input() pill?: boolean | string;
-  @Input() clearable?: boolean | string;
+  @Input() withClear?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() multiple?: boolean | string;
   @Input() size?: 'small' | 'medium' | 'large' | string;
@@ -89,7 +89,7 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('pill', this.pill);
-    this.setBooleanAttr('clearable', this.clearable);
+    this.setBooleanAttr('with-clear', this.withClear);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('multiple', this.multiple);
     this.setBooleanAttr('required', this.required);

@@ -35,6 +35,7 @@ export class WaProgressBarDirective implements OnInit, ControlValueAccessor {
   // Style inputs
   @Input() indicatorColor?: string;
   @Input() display?: string;
+  @Input() trackHeight?: string;
 
   // Event outputs
   @Output() focusEvent = new EventEmitter<FocusEvent>();
@@ -59,6 +60,7 @@ export class WaProgressBarDirective implements OnInit, ControlValueAccessor {
     // Set style attributes
     this.setCssVar('--indicator-color', this.indicatorColor);
     this.setCssVar('--display', this.display);
+    this.setCssVar('--track-height', this.trackHeight);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {

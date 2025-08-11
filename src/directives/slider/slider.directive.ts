@@ -9,6 +9,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  *
  * Features:
  * - Binds all supported slider attributes as @Input() properties
+ * - Supports range sliders with dual thumbs
+ * - Supports vertical orientation
+ * - Supports markers at each step
+ * - Supports reference labels
+ * - Supports tooltips for current values
  * - Emits events for input, change, focus, blur, etc.
  * - Enables Angular-style class and style bindings
  * - Supports ngModel for form integration
@@ -32,7 +37,8 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   @Input() max?: number;
   @Input() step?: number;
   @Input() disabled?: boolean | string;
-  @Input() tooltip?: 'top' | 'bottom' | 'none' | string;
+  @Input() readonly?: boolean | string;
+  @Input() required?: boolean | string;
   @Input() label?: string;
   @Input() hint?: string;
   @Input() name?: string;
@@ -40,16 +46,25 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   @Input() withLabel?: boolean | string;
   @Input() withHint?: boolean | string;
 
+  // New attributes from the updated specification
+  @Input() range?: boolean | string;
+  @Input() minValue?: number;
+  @Input() maxValue?: number;
+  @Input() orientation?: 'horizontal' | 'vertical' | string;
+  @Input() size?: 'small' | 'medium' | 'large' | string;
+  @Input() indicatorOffset?: number;
+  @Input() withMarkers?: boolean | string;
+  @Input() withTooltip?: boolean | string;
+  @Input() tooltipDistance?: number;
+  @Input() tooltipPlacement?: 'top' | 'right' | 'bottom' | 'left' | string;
+  @Input() autofocus?: boolean | string;
+
   // Style inputs
-  @Input() trackColorActive?: string;
-  @Input() trackColorInactive?: string;
-  @Input() trackHeight?: string;
-  @Input() trackActiveOffset?: string;
-  @Input() thumbColor?: string;
-  @Input() thumbGap?: string;
-  @Input() thumbShadow?: string;
-  @Input() thumbSize?: string;
-  @Input() tooltipOffset?: string;
+  @Input() trackSize?: string;
+  @Input() markerWidth?: string;
+  @Input() markerHeight?: string;
+  @Input() thumbWidth?: string;
+  @Input() thumbHeight?: string;
 
   // Event outputs
   @Output() blurEvent = new EventEmitter<FocusEvent>();
@@ -65,6 +80,7 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  private valueFormatter?: (value: number) => string;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -73,49 +89,79 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
     this.setNumericAttr('min', this.min);
     this.setNumericAttr('max', this.max);
     this.setNumericAttr('step', this.step);
+    this.setNumericAttr('min-value', this.minValue);
+    this.setNumericAttr('max-value', this.maxValue);
+    this.setNumericAttr('indicator-offset', this.indicatorOffset);
+    this.setNumericAttr('tooltip-distance', this.tooltipDistance);
 
     // Set string attributes
-    this.setAttr('tooltip', this.tooltip);
     this.setAttr('label', this.label);
     this.setAttr('hint', this.hint);
     this.setAttr('name', this.name);
     this.setAttr('form', this.form);
+    this.setAttr('orientation', this.orientation);
+    this.setAttr('size', this.size);
+    this.setAttr('tooltip-placement', this.tooltipPlacement);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('readonly', this.readonly);
+    this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('with-label', this.withLabel);
     this.setBooleanAttr('with-hint', this.withHint);
+    this.setBooleanAttr('range', this.range);
+    this.setBooleanAttr('with-markers', this.withMarkers);
+    this.setBooleanAttr('with-tooltip', this.withTooltip);
+    this.setBooleanAttr('autofocus', this.autofocus);
 
     // Set style attributes
-    this.setCssVar('--track-color-active', this.trackColorActive);
-    this.setCssVar('--track-color-inactive', this.trackColorInactive);
-    this.setCssVar('--track-height', this.trackHeight);
-    this.setCssVar('--track-active-offset', this.trackActiveOffset);
-    this.setCssVar('--thumb-color', this.thumbColor);
-    this.setCssVar('--thumb-gap', this.thumbGap);
-    this.setCssVar('--thumb-shadow', this.thumbShadow);
-    this.setCssVar('--thumb-size', this.thumbSize);
-    this.setCssVar('--tooltip-offset', this.tooltipOffset);
+    this.setCssVar('--track-size', this.trackSize);
+    this.setCssVar('--marker-width', this.markerWidth);
+    this.setCssVar('--marker-height', this.markerHeight);
+    this.setCssVar('--thumb-width', this.thumbWidth);
+    this.setCssVar('--thumb-height', this.thumbHeight);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.inputEvent.emit(event);
       const target = event.target as HTMLInputElement;
-      this.onChange(target.value !== '' ? parseFloat(target.value) : null);
+
+      // Handle range slider with dual thumbs
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        const minValue = parseFloat((target as any).minValue);
+        const maxValue = parseFloat((target as any).maxValue);
+        this.onChange({ min: minValue, max: maxValue });
+      } else {
+        // Regular slider
+        this.onChange(target.value !== '' ? parseFloat(target.value) : null);
+      }
     });
+
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
     });
+
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
+
     this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });
+
     this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
       this.invalidEvent.emit(event);
     });
+  }
+
+  /**
+   * Sets the value formatter function
+   * @param formatter A function that takes a number and returns a formatted string
+   */
+  public setValueFormatter(formatter: (value: number) => string): void {
+    this.valueFormatter = formatter;
+    (this.el.nativeElement as any).valueFormatter = formatter;
   }
 
   /**
@@ -123,6 +169,42 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
    */
   public get nativeElement(): HTMLElement {
     return this.el.nativeElement;
+  }
+
+  /**
+   * Focuses the slider
+   */
+  public focus(): void {
+    if (typeof this.el.nativeElement.focus === 'function') {
+      this.el.nativeElement.focus();
+    }
+  }
+
+  /**
+   * Removes focus from the slider
+   */
+  public blur(): void {
+    if (typeof this.el.nativeElement.blur === 'function') {
+      this.el.nativeElement.blur();
+    }
+  }
+
+  /**
+   * Decreases the slider's value by step
+   */
+  public stepDown(): void {
+    if (typeof this.el.nativeElement.stepDown === 'function') {
+      this.el.nativeElement.stepDown();
+    }
+  }
+
+  /**
+   * Increases the slider's value by step
+   */
+  public stepUp(): void {
+    if (typeof this.el.nativeElement.stepUp === 'function') {
+      this.el.nativeElement.stepUp();
+    }
   }
 
   /**
@@ -168,7 +250,20 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   writeValue(value: any): void {
     if (value !== undefined) {
-      this.setAttr('value', value?.toString());
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        // Handle range slider with dual thumbs
+        if (typeof value === 'object' && value !== null) {
+          if ('min' in value) {
+            this.setNumericAttr('min-value', value.min);
+          }
+          if ('max' in value) {
+            this.setNumericAttr('max-value', value.max);
+          }
+        }
+      } else {
+        // Regular slider
+        this.setAttr('value', value?.toString());
+      }
     }
   }
 

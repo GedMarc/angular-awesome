@@ -20,7 +20,7 @@ export class WaTagDirective {
   @Input() appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'outlined filled' = 'outlined filled';
   @Input() size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
   @Input() pill = false;
-  @Input() removable = false;
+  @Input() withRemove = false;
 
   // Outputs
   @Output() waRemove = new EventEmitter<Event>();
@@ -36,7 +36,7 @@ export class WaTagDirective {
     tag.setAttribute('appearance', this.appearance);
     tag.setAttribute('size', this.size);
     this.setBooleanAttribute(tag, 'pill', this.pill);
-    this.setBooleanAttribute(tag, 'removable', this.removable);
+    this.setBooleanAttribute(tag, 'with-remove', this.withRemove);
   }
 
   private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean) {

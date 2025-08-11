@@ -130,7 +130,7 @@ Use `withHeader`, `withFooter`, or `withImage` bindings when content is injected
          borderColor="var(--wa-color-border)"
          innerBorderColor="lightgray"
          borderWidth="1px"
-         spacing="var(--wa-space)">
+         spacing="1em"> <!-- Changed from var(--wa-space) to relative em value -->
   <img
     slot="image"
     src="https://example.com/cat.jpg"

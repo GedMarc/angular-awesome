@@ -25,6 +25,7 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   @Input() showDelay = 150;
   @Input() hideDelay = 0;
   @Input() trigger: string = 'hover focus';
+  @Input() withoutArrow = false;
 
   // Styling Inputs (mapped to CSS custom properties)
   @Input() set backgroundColor(value: string) {
@@ -76,11 +77,20 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
     this.setAttr('show-delay', this.showDelay);
     this.setAttr('hide-delay', this.hideDelay);
     this.setAttr('trigger', this.trigger);
+    this.setAttr('without-arrow', this.withoutArrow);
   }
 
   private setAttr(name: string, value: any): void {
     if (value !== undefined && value !== null) {
-      this.renderer.setProperty(this.el, name, value);
+      if (typeof value === 'boolean') {
+        if (value) {
+          this.renderer.setAttribute(this.el, name, '');
+        } else {
+          this.renderer.removeAttribute(this.el, name);
+        }
+      } else {
+        this.renderer.setAttribute(this.el, name, value.toString());
+      }
     }
   }
 

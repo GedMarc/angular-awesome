@@ -34,7 +34,7 @@ export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
   @Input() currency?: string;
   @Input() currencyDisplay?: 'symbol' | 'narrowSymbol' | 'code' | 'name';
   @Input() lang?: string;
-  @Input() noGrouping?: boolean | string;
+  @Input() withoutGrouping?: boolean | string;
   @Input() minimumIntegerDigits?: number | string;
   @Input() minimumFractionDigits?: number | string;
   @Input() maximumFractionDigits?: number | string;
@@ -75,7 +75,7 @@ export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
     this.setAttr('lang', this.lang);
 
     // Set boolean attributes
-    this.setBooleanAttr('no-grouping', this.noGrouping);
+    this.setBooleanAttr('without-grouping', this.withoutGrouping);
 
     // Set style attributes
     this.setCssVar('--color', this.color);

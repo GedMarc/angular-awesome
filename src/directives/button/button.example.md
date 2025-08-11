@@ -39,7 +39,7 @@
 
 ```html
 <wa-button pill>Pill Button</wa-button>
-<wa-button caret>Dropdown</wa-button>
+<wa-button with-caret>Dropdown</wa-button>
 <wa-button disabled>Disabled</wa-button>
 <wa-button loading>Loading</wa-button>
 ```
@@ -82,13 +82,13 @@
 
 ```html
 <wa-button>
-  <wa-icon slot="prefix" name="star"></wa-icon>
-  With Icon Prefix
+  <wa-icon slot="start" name="star"></wa-icon>
+  With Icon Start
 </wa-button>
 
 <wa-button>
-  With Icon Suffix
-  <wa-icon slot="suffix" name="arrow-right"></wa-icon>
+  With Icon End
+  <wa-icon slot="end" name="arrow-right"></wa-icon>
 </wa-button>
 ```
 
@@ -111,7 +111,7 @@
   size="large" 
   [loading]="isSubmitting"
   (click)="saveData()">
-  <wa-icon slot="prefix" name="save"></wa-icon>
+  <wa-icon slot="start" name="save"></wa-icon>
   Save Changes
 </wa-button>
 

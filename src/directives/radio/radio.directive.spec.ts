@@ -89,10 +89,11 @@ class RadioTestHostComponent {
   radioText = 'Radio Option';
 }
 
-// Create a test host component for WaRadioButtonDirective
+// Create a test host component for WaRadioDirective with appearance="button"
 @Component({
   template: `
-    <wa-radio-button
+    <wa-radio
+      appearance="button"
       [value]="value"
       [checked]="checked"
       [disabled]="disabled"
@@ -102,13 +103,13 @@ class RadioTestHostComponent {
       [styleIndicatorWidth]="styleIndicatorWidth"
       [styleDisplay]="styleDisplay"
     >
-      <div *ngIf="prefixContent" slot="prefix">{{ prefixContent }}</div>
+      <div *ngIf="prefixContent" slot="start">{{ prefixContent }}</div>
       {{ buttonText }}
-      <div *ngIf="suffixContent" slot="suffix">{{ suffixContent }}</div>
-    </wa-radio-button>
+      <div *ngIf="suffixContent" slot="end">{{ suffixContent }}</div>
+    </wa-radio>
   `,
   standalone: true,
-  imports: [WaRadioButtonDirective]
+  imports: [WaRadioDirective]
 })
 class RadioButtonTestHostComponent {
   value?: string;
@@ -361,11 +362,11 @@ describe('WaRadioDirective', () => {
   });
 });
 
-describe('WaRadioButtonDirective', () => {
+describe('WaRadioDirective with appearance="button"', () => {
   let hostComponent: RadioButtonTestHostComponent;
   let hostFixture: ComponentFixture<RadioButtonTestHostComponent>;
   let radioButtonElement: HTMLElement;
-  let radioButtonDirective: WaRadioButtonDirective;
+  let radioDirective: WaRadioDirective;
 
   beforeEach(async () => {
     // Mock the customElements API
@@ -384,15 +385,16 @@ describe('WaRadioButtonDirective', () => {
     hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
 
-    // Get the wa-radio-button element
-    radioButtonElement = hostFixture.nativeElement.querySelector('wa-radio-button');
-    radioButtonDirective = hostFixture.debugElement.query(sel => sel.nativeElement === radioButtonElement).injector.get(WaRadioButtonDirective);
+    // Get the wa-radio element with appearance="button"
+    radioButtonElement = hostFixture.nativeElement.querySelector('wa-radio[appearance="button"]');
+    radioDirective = hostFixture.debugElement.query(sel => sel.nativeElement === radioButtonElement).injector.get(WaRadioDirective);
   });
 
-  it('should create the radio button directive', () => {
+  it('should create the radio directive with button appearance', () => {
     expect(hostComponent).toBeTruthy();
     expect(radioButtonElement).toBeTruthy();
-    expect(radioButtonDirective).toBeTruthy();
+    expect(radioDirective).toBeTruthy();
+    expect(radioButtonElement.getAttribute('appearance')).toBe('button');
   });
 
   it('should set string attributes correctly', () => {
@@ -455,17 +457,17 @@ describe('WaRadioButtonDirective', () => {
     expect(radioButtonElement.textContent?.trim()).toBe('Updated Button');
   });
 
-  it('should project prefix and suffix content correctly', () => {
+  it('should project start and end content correctly', () => {
     hostComponent.prefixContent = 'Prefix';
     hostComponent.suffixContent = 'Suffix';
     hostComponent.withPrefix = true;
     hostComponent.withSuffix = true;
     hostFixture.detectChanges();
 
-    const prefixSlot = radioButtonElement.querySelector('[slot="prefix"]');
-    const suffixSlot = radioButtonElement.querySelector('[slot="suffix"]');
+    const startSlot = radioButtonElement.querySelector('[slot="start"]');
+    const endSlot = radioButtonElement.querySelector('[slot="end"]');
 
-    expect(prefixSlot?.textContent?.trim()).toBe('Prefix');
-    expect(suffixSlot?.textContent?.trim()).toBe('Suffix');
+    expect(startSlot?.textContent?.trim()).toBe('Prefix');
+    expect(endSlot?.textContent?.trim()).toBe('Suffix');
   });
 });

@@ -116,7 +116,7 @@ import { WaSplitPanelDirective } from 'angular-awesome/split-panel';</pre>
 &lt;/wa-split-panel&gt;
 </code></pre>
 <h2>Vertical Split</h2>
-<pre><code class="language-html">&lt;wa-split-panel [vertical]=&quot;true&quot;&gt;
+<pre><code class="language-html">&lt;wa-split-panel orientation=&quot;vertical&quot;&gt;
   &lt;div slot=&quot;start&quot;&gt;Top Panel Content&lt;/div&gt;
   &lt;div slot=&quot;end&quot;&gt;Bottom Panel Content&lt;/div&gt;
 &lt;/wa-split-panel&gt;
@@ -264,7 +264,7 @@ onReposition(event: CustomEvent): void {
     &lt;/div&gt;
     
     &lt;wa-split-panel 
-      [vertical]=&quot;isVertical&quot; 
+      [orientation]=&quot;isVertical ? &#39;vertical&#39; : &#39;horizontal&#39;&quot; 
       [primary]=&quot;primaryPanel&quot; 
       [position]=&quot;panelPosition&quot; 
       [dividerColor]=&quot;dividerColorValue&quot; 
@@ -353,7 +353,7 @@ export class SplitPanelDemoComponent {
         &lt;!-- Editor and Preview --&gt;
         &lt;div slot=&quot;end&quot; class=&quot;editor-preview-container&quot;&gt;
           &lt;wa-split-panel 
-            [vertical]=&quot;true&quot; 
+            orientation=&quot;vertical&quot; 
             [position]=&quot;60&quot; 
             [dividerColor]=&quot;&#39;#444&#39;&quot; 
             [dividerWidth]=&quot;&#39;1px&#39;&quot;&gt;

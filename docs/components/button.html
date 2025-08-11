@@ -133,7 +133,7 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 </code></pre>
 <h2>Boolean Attributes</h2>
 <pre><code class="language-html">&lt;wa-button pill&gt;Pill Button&lt;/wa-button&gt;
-&lt;wa-button caret&gt;Dropdown&lt;/wa-button&gt;
+&lt;wa-button with-caret&gt;Dropdown&lt;/wa-button&gt;
 &lt;wa-button disabled&gt;Disabled&lt;/wa-button&gt;
 &lt;wa-button loading&gt;Loading&lt;/wa-button&gt;
 </code></pre>
@@ -167,13 +167,13 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 </code></pre>
 <h2>With Slots</h2>
 <pre><code class="language-html">&lt;wa-button&gt;
-  &lt;wa-icon slot=&quot;prefix&quot; name=&quot;star&quot;&gt;&lt;/wa-icon&gt;
-  With Icon Prefix
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;star&quot;&gt;&lt;/wa-icon&gt;
+  With Icon Start
 &lt;/wa-button&gt;
 
 &lt;wa-button&gt;
-  With Icon Suffix
-  &lt;wa-icon slot=&quot;suffix&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
+  With Icon End
+  &lt;wa-icon slot=&quot;end&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
 &lt;/wa-button&gt;
 </code></pre>
 <h2>Form Buttons</h2>
@@ -190,7 +190,7 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
   size=&quot;large&quot; 
   [loading]=&quot;isSubmitting&quot;
   (click)=&quot;saveData()&quot;&gt;
-  &lt;wa-icon slot=&quot;prefix&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
   Save Changes
 &lt;/wa-button&gt;
 

@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
       (focusEvent)="onFocus($event)"
       (blurEvent)="onBlur($event)"
     >
-      <div slot="prefix">{{ prefixContent }}</div>
+      <div slot="start">{{ prefixContent }}</div>
     </wa-qr-code>
   `,
   standalone: true,
@@ -125,7 +125,7 @@ describe('WaQrCodeDirective', () => {
   });
 
   it('should project content correctly', () => {
-    const prefixSlot = qrCodeElement.querySelector('[slot="prefix"]');
+    const prefixSlot = qrCodeElement.querySelector('[slot="start"]');
     expect(prefixSlot?.textContent?.trim()).toBe('Scan me');
 
     hostComponent.prefixContent = 'Scan this code';

@@ -47,6 +47,7 @@ Wrap the `<wa-badge>` Web Component inside an Angular 19 directive to allow decl
 @Input() backgroundColor?: string; // --background-color
 @Input() borderColor?: string;     // --border-color
 @Input() textColor?: string;       // --text-color
+@Input() pulseColor?: string;      // --pulse-color
 ```
 
 ---
@@ -71,6 +72,7 @@ export class WaBadgeDirective implements OnInit {
   @Input() backgroundColor?: string;
   @Input() borderColor?: string;
   @Input() textColor?: string;
+  @Input() pulseColor?: string;
 
   el = inject(ElementRef);
   renderer = inject(Renderer2);
@@ -87,6 +89,7 @@ export class WaBadgeDirective implements OnInit {
     if (this.backgroundColor) nativeEl.style.setProperty('--background-color', this.backgroundColor);
     if (this.borderColor) nativeEl.style.setProperty('--border-color', this.borderColor);
     if (this.textColor) nativeEl.style.setProperty('--text-color', this.textColor);
+    if (this.pulseColor) nativeEl.style.setProperty('--pulse-color', this.pulseColor);
   }
 
   private setAttr(name: string, value: string | null) {

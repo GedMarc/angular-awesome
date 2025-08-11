@@ -5,7 +5,24 @@ Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://
 
 
 
-📦 Version: `1.0.4`
+📦 Version: `1.1.0`
+
+### Version Compatibility
+- Versions 1.0.0 to 1.0.3 match to Web Awesome 3.0.0-alpha.13
+- Versions 1.0.4 match to Web Awesome 3.0.0-beta.1
+- Versions 2.0.0+ match to Web Awesome 3.0.0-beta.4
+
+### Component Removals
+- Removed the experimental `<wa-code-demo>` component
+- `<wa-menu>`, `<wa-menu-item>`, `<wa-menu-label>` were dropped; use `<wa-dropdown-item>` instead
+- `<wa-icon-button>` was removed; icon buttons can be added via `<wa-button>` now
+- `<wa-radio-button>` was dropped; use `<wa-radio appearance="button">` instead
+
+### What's New in 1.1.0
+- Major version update to align with Web Awesome 3.0.0-beta.4
+- Added all component removals from Web Awesome beta
+- Updated documentation to reflect the latest changes
+- General bug fixes and improvements
 
 ### What's New in 1.0.3
 - Enhanced checkbox directive with improved form integration

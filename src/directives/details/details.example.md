@@ -3,289 +3,264 @@
 ## Basic Usage
 
 ```html
-<wa-details summary="View Details">
-  This is the content that will be shown when the details are expanded.
+<wa-details summary="Toggle Me">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 </wa-details>
 ```
 
-## With Different Appearances
+## Disabled
 
 ```html
-<wa-details summary="Filled Appearance" appearance="filled">
-  This details component has a filled appearance.
-</wa-details>
-
-<wa-details summary="Outlined Appearance" appearance="outlined">
-  This details component has an outlined appearance.
-</wa-details>
-
-<wa-details summary="Plain Appearance" appearance="plain">
-  This details component has a plain appearance.
-</wa-details>
-
-<!-- Multiple appearances can be combined -->
-<wa-details summary="Combined Appearance" appearance="filled outlined">
-  This details component has both filled and outlined appearances.
+<wa-details summary="Disabled" [disabled]="true">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 </wa-details>
 ```
 
-## With Initial State
+## Customizing the Summary Icon
 
 ```html
-<!-- Initially open -->
-<wa-details summary="Initially Open" open>
-  This details component is initially open.
+<wa-details summary="Toggle Me" class="custom-icons">
+  <wa-icon name="square-plus" slot="expand-icon" variant="regular"></wa-icon>
+  <wa-icon name="square-minus" slot="collapse-icon" variant="regular"></wa-icon>
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 </wa-details>
 
-<!-- Initially closed (default) -->
-<wa-details summary="Initially Closed">
-  This details component is initially closed.
-</wa-details>
+<style>
+  /* Disable the expand/collapse animation */
+  wa-details.custom-icons::part(icon) {
+    rotate: none;
+  }
+</style>
 ```
 
-## Disabled State
+## Icon Position
 
 ```html
-<wa-details summary="Disabled Details" disabled>
-  This details component cannot be toggled by the user.
-</wa-details>
+<div class="wa-stack">
+  <wa-details summary="Start" iconPosition="start">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+  <wa-details summary="End" iconPosition="end">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+</div>
 ```
 
-## Using HTML in Summary
+## HTML in Summary
 
 ```html
 <wa-details>
   <span slot="summary">
-    Custom HTML Summary with <a href="#">link</a>
+    Some text
+    <a href="https://webawesome.com" target="_blank">a link</a>
+    more text
   </span>
-  This details component has a custom HTML summary.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 </wa-details>
 ```
 
-## Custom Icons
+## Right-to-Left Languages
 
 ```html
-<wa-details summary="Custom Icons">
-  <wa-icon slot="expand-icon" name="plus-circle"></wa-icon>
-  <wa-icon slot="collapse-icon" name="minus-circle"></wa-icon>
-  This details component has custom expand and collapse icons.
-</wa-details>
+<div class="wa-stack">
+  <wa-details summary="تبديلني" lang="ar" dir="rtl">
+    استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن
+  </wa-details>
+  <wa-details summary="تبديلني" lang="ar" dir="rtl" iconPosition="start">
+    استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن
+  </wa-details>
+</div>
 ```
 
-## Custom Styling
+## Appearance
 
 ```html
-<style>
-  .custom-details {
-    --icon-color: #4a90e2;
-    --spacing: 1rem;
-    --show-duration: 300ms;
-    --hide-duration: 300ms;
-    --display: block;
-  }
-</style>
-
-<wa-details summary="Custom Styled Details" class="custom-details">
-  This details component has custom styling applied using CSS variables.
-</wa-details>
-
-<!-- Using direct styling inputs -->
-<wa-details 
-  summary="Directly Styled Details" 
-  [color]="'#333333'" 
-  [backgroundColor]="'#f8f9fa'" 
-  [fontSize]="'1rem'"
-  [iconColor]="'#4a90e2'"
-  [spacing]="'1rem'"
-  [showDuration]="'300ms'"
-  [hideDuration]="'300ms'"
-  [display]="'block'">
-  This details component has styling applied using direct styling inputs.
-</wa-details>
-
-<!-- Dynamic direct styling -->
-<wa-details 
-  summary="Dynamic Styled Details" 
-  [color]="isDarkMode ? '#ffffff' : '#333333'" 
-  [backgroundColor]="isDarkMode ? '#333333' : '#ffffff'" 
-  [iconColor]="isHighlighted ? '#ff4081' : '#4a90e2'">
-  This details component has dynamic styling based on component state.
-</wa-details>
+<div class="wa-stack">
+  <wa-details summary="Outlined (default)">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+  <wa-details summary="Filled + Outlined" appearance="filled outlined">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+  <wa-details summary="Filled" appearance="filled">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+  <wa-details summary="Plain" appearance="plain">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
+</div>
 ```
 
-## Event Handling
+## Grouping Details
 
 ```html
-<wa-details 
-  summary="Event Handling" 
-  (waShow)="onShow()" 
-  (waAfterShow)="onAfterShow()" 
-  (waHide)="onHide()" 
-  (waAfterHide)="onAfterHide()">
-  This details component emits events when toggled.
-</wa-details>
-```
+<div class="wa-stack">
+  <wa-details name="group-1" summary="Section 1" [open]="true">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </wa-details>
 
-```typescript
-// In your component
-onShow(): void {
-  console.log('Details are being shown');
-}
+  <wa-details name="group-1" summary="Section 2">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+  </wa-details>
 
-onAfterShow(): void {
-  console.log('Details have been shown');
-}
-
-onHide(): void {
-  console.log('Details are being hidden');
-}
-
-onAfterHide(): void {
-  console.log('Details have been hidden');
-}
+  <wa-details name="group-1" summary="Section 3">
+    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+    corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+  </wa-details>
+</div>
 ```
 
 ## Using with Angular Bindings
 
-```html
-<wa-details 
-  [summary]="detailsSummary" 
-  [appearance]="detailsAppearance" 
-  [open]="isOpen" 
-  [disabled]="isDisabled"
-  (waShow)="onShow()" 
-  (waAfterShow)="onAfterShow()" 
-  (waHide)="onHide()" 
-  (waAfterHide)="onAfterHide()">
-  {{detailsContent}}
-</wa-details>
+```typescript
+import { Component } from '@angular/core';
 
-<!-- Two-way binding for open state -->
-<wa-details 
-  summary="Two-way Binding" 
-  [(open)]="isOpen">
-  This details component has two-way binding for the open state.
-</wa-details>
-
-<!-- Using direct styling with Angular bindings -->
-<wa-details 
-  [summary]="detailsSummary" 
-  [open]="isOpen" 
-  [color]="detailsColor" 
-  [backgroundColor]="detailsBackgroundColor" 
-  [fontSize]="detailsFontSize"
-  [iconColor]="detailsIconColor"
-  [spacing]="detailsSpacing"
-  [showDuration]="detailsShowDuration"
-  [hideDuration]="detailsHideDuration"
-  [display]="detailsDisplay">
-  {{detailsContent}}
-</wa-details>
-
-<!-- Conditional styling based on component state -->
-<wa-details 
-  [summary]="detailsSummary" 
-  [color]="isDarkMode ? '#ffffff' : '#333333'" 
-  [backgroundColor]="isDarkMode ? '#333333' : '#ffffff'"
-  [iconColor]="isHighlighted ? accentColor : defaultIconColor">
-  {{detailsContent}}
-</wa-details>
+@Component({
+  selector: 'app-details-demo',
+  template: `
+    <div class="controls">
+      <wa-button (click)="toggleOpen()">Toggle Open</wa-button>
+      <wa-button (click)="toggleDisabled()">Toggle Disabled</wa-button>
+      <wa-select [(ngModel)]="iconPosition" label="Icon Position">
+        <wa-option value="start">Start</wa-option>
+        <wa-option value="end">End</wa-option>
+      </wa-select>
+      <wa-select [(ngModel)]="appearance" label="Appearance">
+        <wa-option value="outlined">Outlined</wa-option>
+        <wa-option value="filled">Filled</wa-option>
+        <wa-option value="plain">Plain</wa-option>
+      </wa-select>
+    </div>
+    
+    <wa-details
+      [summary]="summary"
+      [open]="isOpen"
+      [disabled]="isDisabled"
+      [iconPosition]="iconPosition"
+      [appearance]="appearance"
+      (waShow)="onShow()"
+      (waAfterShow)="onAfterShow()"
+      (waHide)="onHide()"
+      (waAfterHide)="onAfterHide()">
+      
+      <p>This is the content of the details component.</p>
+      <p>You can include any HTML or Angular components here.</p>
+      
+    </wa-details>
+  `,
+  styles: [`
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 16px;
+    }
+  `]
+})
+export class DetailsDemoComponent {
+  summary = 'Click to Toggle';
+  isOpen = false;
+  isDisabled = false;
+  iconPosition = 'end';
+  appearance = 'outlined';
+  
+  toggleOpen(): void {
+    this.isOpen = !this.isOpen;
+  }
+  
+  toggleDisabled(): void {
+    this.isDisabled = !this.isDisabled;
+  }
+  
+  onShow(): void {
+    console.log('Details showing');
+  }
+  
+  onAfterShow(): void {
+    console.log('Details shown');
+  }
+  
+  onHide(): void {
+    console.log('Details hiding');
+  }
+  
+  onAfterHide(): void {
+    console.log('Details hidden');
+  }
+}
 ```
 
 ## Programmatic Control
 
 ```typescript
 import { Component, ViewChild } from '@angular/core';
-import { WaDetailsDirective } from './details.directive';
+import { WaDetailsDirective } from 'angular-awesome';
 
 @Component({
-  selector: 'app-details-demo',
+  selector: 'app-details-programmatic',
   template: `
-    <wa-details #detailsRef summary="Programmatic Control">
-      This details component can be controlled programmatically.
+    <div class="controls">
+      <wa-button (click)="showDetails()">Show</wa-button>
+      <wa-button (click)="hideDetails()">Hide</wa-button>
+    </div>
+    
+    <wa-details #detailsElement summary="Programmatically Controlled">
+      This details element is controlled programmatically using the show() and hide() methods.
     </wa-details>
-    <button (click)="showDetails()">Show</button>
-    <button (click)="hideDetails()">Hide</button>
   `
 })
-export class DetailsDemoComponent {
-  @ViewChild('detailsRef') detailsRef!: WaDetailsDirective;
-
+export class DetailsProgrammaticComponent {
+  @ViewChild('detailsElement') details!: WaDetailsDirective;
+  
   showDetails(): void {
-    this.detailsRef.show();
+    this.details.show();
   }
-
+  
   hideDetails(): void {
-    this.detailsRef.hide();
+    this.details.hide();
   }
 }
 ```
 
-## Using with ngModel
+## Custom Styling
 
 ```html
-<wa-details summary="Using ngModel" [(ngModel)]="isDetailsOpen">
-  This details component uses ngModel for two-way binding of the open state.
+<wa-details 
+  summary="Custom Styled Details"
+  [spacing]="'1.5rem'"
+  [showDuration]="'300ms'"
+  [hideDuration]="'300ms'"
+  [iconColor]="'#2196f3'">
+  
+  <p>This details element has custom styling applied through Angular inputs.</p>
+  
 </wa-details>
 
-<button (click)="isDetailsOpen = !isDetailsOpen">
-  {{ isDetailsOpen ? 'Close' : 'Open' }} Details
-</button>
-```
-
-## Common Use Cases
-
-```html
-<!-- In a FAQ section -->
-<div class="faq-section">
-  <wa-details summary="What is Web Awesome?">
-    Web Awesome is a library of web components for building modern web applications.
-  </wa-details>
-
-  <wa-details summary="How do I install Web Awesome?">
-    You can install Web Awesome using npm: <code>npm install web-awesome</code>
-  </wa-details>
-
-  <wa-details summary="Is Web Awesome free to use?">
-    Yes, Web Awesome is open source and free to use in your projects.
-  </wa-details>
-</div>
-
-<!-- In a form with sections -->
-<form>
-  <wa-details summary="Personal Information" open>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" type="text">
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" type="email">
-    </div>
-  </wa-details>
-
-  <wa-details summary="Shipping Address">
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" type="text">
-    </div>
-    <div class="form-group">
-      <label for="city">City</label>
-      <input id="city" type="text">
-    </div>
-  </wa-details>
-
-  <wa-details summary="Payment Information">
-    <div class="form-group">
-      <label for="card">Card Number</label>
-      <input id="card" type="text">
-    </div>
-    <div class="form-group">
-      <label for="expiry">Expiry Date</label>
-      <input id="expiry" type="text">
-    </div>
-  </wa-details>
-
-  <button type="submit">Submit</button>
-</form>
+<style>
+  wa-details::part(base) {
+    border-color: #2196f3;
+  }
+  
+  wa-details::part(header) {
+    background-color: #e3f2fd;
+  }
+  
+  wa-details::part(content) {
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+  }
+</style>
 ```

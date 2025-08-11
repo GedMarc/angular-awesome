@@ -35,6 +35,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
   @Input() orientation?: 'horizontal' | 'vertical' | string;
   @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
   @Input() required?: boolean | string;
+  @Input() disabled?: boolean | string;
   @Input() withLabel?: boolean | string;
   @Input() withHint?: boolean | string;
 
@@ -69,6 +70,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('required', this.required);
+    this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('with-label', this.withLabel);
     this.setBooleanAttr('with-hint', this.withHint);
 
@@ -163,6 +165,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content
  * - Supports custom styling via CSS variables
+ * - Supports button appearance (replaces wa-radio-button)
  */
 @Directive({
   selector: 'wa-radio',
@@ -171,8 +174,16 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
 export class WaRadioDirective implements OnInit {
   // Core input attributes
   @Input() value?: string;
+  @Input() form?: string | null;
   @Input() checked?: boolean | string;
   @Input() disabled?: boolean | string;
+  @Input() appearance?: 'button' | string;
+  @Input() withPrefix?: boolean | string;
+  @Input() withSuffix?: boolean | string;
+
+  // Event outputs
+  @Output() blur = new EventEmitter<FocusEvent>();
+  @Output() focus = new EventEmitter<FocusEvent>();
 
   // Style inputs
   @Input() styleBackgroundColor?: string;
@@ -185,18 +196,35 @@ export class WaRadioDirective implements OnInit {
   @Input() styleCheckedIconColor?: string;
   @Input() styleCheckedIconScale?: string;
   @Input() styleToggleSize?: string;
+  @Input() styleIndicatorColor?: string;
+  @Input() styleIndicatorWidth?: string;
+  @Input() styleDisplay?: string;
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
     // Set string attributes
     this.setAttr('value', this.value);
+    this.setAttr('form', this.form);
+    this.setAttr('appearance', this.appearance);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('checked', this.checked);
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('with-prefix', this.withPrefix);
+    this.setBooleanAttr('with-suffix', this.withSuffix);
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.blur.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.focus.emit(event);
+    });
 
     // Set style attributes
     this.setCssVar('--background-color', this.styleBackgroundColor);
@@ -209,6 +237,11 @@ export class WaRadioDirective implements OnInit {
     this.setCssVar('--checked-icon-color', this.styleCheckedIconColor);
     this.setCssVar('--checked-icon-scale', this.styleCheckedIconScale);
     this.setCssVar('--toggle-size', this.styleToggleSize);
+
+    // Button appearance style attributes
+    this.setCssVar('--indicator-color', this.styleIndicatorColor);
+    this.setCssVar('--indicator-width', this.styleIndicatorWidth);
+    this.setCssVar('--display', this.styleDisplay);
   }
 
   /**
@@ -241,16 +274,10 @@ export class WaRadioDirective implements OnInit {
 }
 
 /**
- * WaRadioButtonDirective
+ * @deprecated Use WaRadioDirective with appearance="button" instead
  *
- * Angular wrapper for the <wa-radio-button> Web Component that allows declarative usage,
- * input binding, and integration with Angular templates.
- *
- * Features:
- * - Binds all supported radio button attributes as @Input() properties
- * - Enables Angular-style class and style bindings
- * - Allows slot projection for content, prefix, and suffix
- * - Supports custom styling via CSS variables
+ * This directive is kept for backward compatibility but will be removed in a future version.
+ * Please migrate to <wa-radio appearance="button"> as per the changelog.
  */
 @Directive({
   selector: 'wa-radio-button',
@@ -274,46 +301,30 @@ export class WaRadioButtonDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
-    // Set string attributes
-    this.setAttr('value', this.value);
+    console.warn('DEPRECATED: <wa-radio-button> is deprecated. Please use <wa-radio appearance="button"> instead.');
 
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('checked', this.checked);
-    this.setBooleanAttr('disabled', this.disabled);
-    this.setBooleanAttr('with-prefix', this.withPrefix);
-    this.setBooleanAttr('with-suffix', this.withSuffix);
+    // Create a wa-radio element with appearance="button"
+    const radioEl = document.createElement('wa-radio');
+    radioEl.setAttribute('appearance', 'button');
 
-    // Set style attributes
-    this.setCssVar('--indicator-color', this.styleIndicatorColor);
-    this.setCssVar('--indicator-width', this.styleIndicatorWidth);
-    this.setCssVar('--display', this.styleDisplay);
-  }
+    // Copy attributes
+    if (this.value) radioEl.setAttribute('value', this.value);
+    if (this.checked === true || this.checked === 'true') radioEl.setAttribute('checked', '');
+    if (this.disabled === true || this.disabled === 'true') radioEl.setAttribute('disabled', '');
+    if (this.withPrefix === true || this.withPrefix === 'true') radioEl.setAttribute('with-prefix', '');
+    if (this.withSuffix === true || this.withSuffix === 'true') radioEl.setAttribute('with-suffix', '');
 
-  /**
-   * Sets an attribute on the native element if the value is not null or undefined
-   */
-  private setAttr(name: string, value: string | null | undefined) {
-    if (value != null) {
-      this.renderer.setAttribute(this.el.nativeElement, name, value);
+    // Copy styles
+    if (this.styleIndicatorColor) radioEl.style.setProperty('--indicator-color', this.styleIndicatorColor);
+    if (this.styleIndicatorWidth) radioEl.style.setProperty('--indicator-width', this.styleIndicatorWidth);
+    if (this.styleDisplay) radioEl.style.setProperty('--display', this.styleDisplay);
+
+    // Copy children
+    while (this.el.nativeElement.firstChild) {
+      radioEl.appendChild(this.el.nativeElement.firstChild);
     }
-  }
 
-  /**
-   * Sets a CSS custom property on the native element if the value is not null or undefined
-   */
-  private setCssVar(name: string, value: string | null | undefined) {
-    if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
-    }
-  }
-
-  /**
-   * Sets a boolean attribute on the native element if the value is truthy
-   * For boolean attributes, the presence of the attribute (with empty value) indicates true
-   */
-  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
-    if (value === true || value === 'true' || value === '') {
-      this.renderer.setAttribute(this.el.nativeElement, name, '');
-    }
+    // Replace the element
+    this.el.nativeElement.parentNode.replaceChild(radioEl, this.el.nativeElement);
   }
 }

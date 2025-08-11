@@ -112,122 +112,96 @@ import { WaDropdownDirective } from 'angular-awesome/dropdown';</pre>
 <h2>Basic Usage</h2>
 <pre><code class="language-html">&lt;wa-dropdown&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Dropdown&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With Different Placements</h2>
 <pre><code class="language-html">&lt;!-- Bottom placement (default) --&gt;
 &lt;wa-dropdown placement=&quot;bottom&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;!-- Bottom-start placement --&gt;
 &lt;wa-dropdown placement=&quot;bottom-start&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom Start&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;!-- Bottom-end placement --&gt;
 &lt;wa-dropdown placement=&quot;bottom-end&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom End&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;!-- Top placement --&gt;
 &lt;wa-dropdown placement=&quot;top&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Top&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;!-- Left placement --&gt;
 &lt;wa-dropdown placement=&quot;left&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Left&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;!-- Right placement --&gt;
 &lt;wa-dropdown placement=&quot;right&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Right&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>Disabled Dropdown</h2>
 <pre><code class="language-html">&lt;wa-dropdown disabled&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Disabled Dropdown&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>Stay Open On Select</h2>
 <pre><code class="language-html">&lt;wa-dropdown stayOpenOnSelect&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Stay Open On Select&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With Distance and Skidding</h2>
 <pre><code class="language-html">&lt;wa-dropdown [distance]=&quot;10&quot; [skidding]=&quot;5&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Offset&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>Sync Width with Trigger</h2>
 <pre><code class="language-html">&lt;wa-dropdown sync=&quot;width&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Sync Width&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;wa-dropdown [boxShadow]=&quot;&#39;0 4px 8px rgba(0,0,0,0.2)&#39;&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Styling&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With ngModel Binding</h2>
 <pre><code class="language-html">&lt;wa-dropdown [(ngModel)]=&quot;selectedItem&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedItem || &#39;Select an item&#39; }}&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <pre><code class="language-typescript">// In your component
@@ -243,11 +217,9 @@ export class DropdownExampleComponent {
   (afterHideEvent)=&quot;onAfterHide()&quot;
   (selectEvent)=&quot;onSelect($event)&quot;&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Event Handling&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <pre><code class="language-typescript">// In your component
@@ -277,10 +249,8 @@ export class DropdownExampleComponent {
 <h2>Programmatic Control</h2>
 <pre><code class="language-html">&lt;wa-dropdown #myDropdown&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;Programmatic Control&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 
 &lt;wa-button (click)=&quot;openDropdown()&quot;&gt;Open Dropdown&lt;/wa-button&gt;
@@ -307,57 +277,49 @@ export class DropdownExampleComponent {
 <h2>With Divider</h2>
 <pre><code class="language-html">&lt;wa-dropdown&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;With Divider&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;wa-divider&gt;&lt;/wa-divider&gt;
-    &lt;wa-menu-item&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-divider&gt;&lt;/wa-divider&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With Icons</h2>
 <pre><code class="language-html">&lt;wa-dropdown&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;With Icons&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;
-      &lt;wa-icon name=&quot;cut&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
-      Cut
-    &lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;
-      &lt;wa-icon name=&quot;copy&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
-      Copy
-    &lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;
-      &lt;wa-icon name=&quot;paste&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
-      Paste
-    &lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;cut&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Cut
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;copy&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Copy
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;paste&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Paste
+  &lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With Submenu</h2>
 <pre><code class="language-html">&lt;wa-dropdown&gt;
   &lt;wa-button slot=&quot;trigger&quot;&gt;With Submenu&lt;/wa-button&gt;
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;
-      More Options
-      &lt;wa-menu slot=&quot;submenu&quot;&gt;
-        &lt;wa-menu-item&gt;Submenu Item 1&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item&gt;Submenu Item 2&lt;/wa-menu-item&gt;
-      &lt;/wa-menu&gt;
-    &lt;/wa-menu-item&gt;
-    &lt;wa-menu-item&gt;Item 3&lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    More Options
+    &lt;wa-dropdown slot=&quot;submenu&quot;&gt;
+      &lt;wa-dropdown-item&gt;Submenu Item 1&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item&gt;Submenu Item 2&lt;/wa-dropdown-item&gt;
+    &lt;/wa-dropdown&gt;
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
 <h2>With Custom Containing Element</h2>
 <pre><code class="language-html">&lt;div #container class=&quot;dropdown-container&quot;&gt;
   &lt;wa-dropdown [containingElement]=&quot;container&quot;&gt;
     &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Containing Element&lt;/wa-button&gt;
-    &lt;wa-menu&gt;
-      &lt;wa-menu-item&gt;Item 1&lt;/wa-menu-item&gt;
-      &lt;wa-menu-item&gt;Item 2&lt;/wa-menu-item&gt;
-    &lt;/wa-menu&gt;
+    &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
   &lt;/wa-dropdown&gt;
 &lt;/div&gt;
 </code></pre>
@@ -372,12 +334,10 @@ export class DropdownExampleComponent {
     &lt;label for=&quot;country&quot;&gt;Select Country&lt;/label&gt;
     &lt;wa-dropdown [(ngModel)]=&quot;selectedCountry&quot; name=&quot;country&quot;&gt;
       &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedCountry || &#39;Select a country&#39; }}&lt;/wa-button&gt;
-      &lt;wa-menu&gt;
-        &lt;wa-menu-item value=&quot;us&quot;&gt;United States&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;ca&quot;&gt;Canada&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;mx&quot;&gt;Mexico&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;uk&quot;&gt;United Kingdom&lt;/wa-menu-item&gt;
-      &lt;/wa-menu&gt;
+      &lt;wa-dropdown-item value=&quot;us&quot;&gt;United States&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;ca&quot;&gt;Canada&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;mx&quot;&gt;Mexico&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;uk&quot;&gt;United Kingdom&lt;/wa-dropdown-item&gt;
     &lt;/wa-dropdown&gt;
   &lt;/div&gt;
   
@@ -385,12 +345,10 @@ export class DropdownExampleComponent {
     &lt;label for=&quot;language&quot;&gt;Select Language&lt;/label&gt;
     &lt;wa-dropdown [(ngModel)]=&quot;selectedLanguage&quot; name=&quot;language&quot;&gt;
       &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedLanguage || &#39;Select a language&#39; }}&lt;/wa-button&gt;
-      &lt;wa-menu&gt;
-        &lt;wa-menu-item value=&quot;en&quot;&gt;English&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;fr&quot;&gt;French&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;es&quot;&gt;Spanish&lt;/wa-menu-item&gt;
-        &lt;wa-menu-item value=&quot;de&quot;&gt;German&lt;/wa-menu-item&gt;
-      &lt;/wa-menu&gt;
+      &lt;wa-dropdown-item value=&quot;en&quot;&gt;English&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;fr&quot;&gt;French&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;es&quot;&gt;Spanish&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;de&quot;&gt;German&lt;/wa-dropdown-item&gt;
     &lt;/wa-dropdown&gt;
   &lt;/div&gt;
   

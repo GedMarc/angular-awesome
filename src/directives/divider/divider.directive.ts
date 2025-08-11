@@ -18,7 +18,8 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
 })
 export class WaDividerDirective implements OnInit {
   // Boolean inputs
-  @Input() vertical?: boolean | string;
+  @Input() orientation?: 'vertical' | 'horizontal' | string;
+  @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
 
   // Style inputs
   @Input() color?: string;
@@ -33,7 +34,11 @@ export class WaDividerDirective implements OnInit {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('vertical', this.vertical);
+    if (this.orientation === 'vertical') {
+      this.renderer.setAttribute(this.el.nativeElement, 'orientation', 'vertical');
+    } else {
+      this.setBooleanAttr('vertical', this.vertical);
+    }
 
     // Set style attributes
     this.setCssVar('--color', this.color);

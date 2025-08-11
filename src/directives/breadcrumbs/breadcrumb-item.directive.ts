@@ -9,7 +9,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
  * Features:
  * - Binds attributes: href, target, rel
  * - Enables Angular-style class and style bindings
- * - Allows slot projection for content, prefix, suffix, and custom separators
+ * - Allows slot projection for content, start, end, and custom separators
  * - Supports custom styling via CSS variables and ::part() selectors
  */
 @Directive({

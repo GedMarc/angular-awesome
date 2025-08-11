@@ -131,17 +131,17 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
   This card has a plain appearance.
 &lt;/wa-card&gt;
 </code></pre>
-<h2>With Different Sizes</h2>
-<pre><code class="language-html">&lt;wa-card size=&quot;small&quot;&gt;
-  This is a small card.
+<h2>Setting Sizes on Child Elements</h2>
+<pre><code class="language-html">&lt;wa-card&gt;
+  &lt;div style=&quot;font-size: 0.875rem;&quot;&gt;This content has small text size.&lt;/div&gt;
 &lt;/wa-card&gt;
 
-&lt;wa-card size=&quot;medium&quot;&gt;
-  This is a medium card.
+&lt;wa-card&gt;
+  &lt;div style=&quot;font-size: 1rem;&quot;&gt;This content has medium text size.&lt;/div&gt;
 &lt;/wa-card&gt;
 
-&lt;wa-card size=&quot;large&quot;&gt;
-  This is a large card.
+&lt;wa-card&gt;
+  &lt;div style=&quot;font-size: 1.25rem;&quot;&gt;This content has large text size.&lt;/div&gt;
 &lt;/wa-card&gt;
 </code></pre>
 <h2>With Header</h2>
@@ -165,7 +165,6 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 <h2>Complete Example with All Slots</h2>
 <pre><code class="language-html">&lt;wa-card 
   appearance=&quot;outlined&quot; 
-  size=&quot;medium&quot; 
   [withHeader]=&quot;true&quot; 
   [withImage]=&quot;true&quot; 
   [withFooter]=&quot;true&quot;&gt;

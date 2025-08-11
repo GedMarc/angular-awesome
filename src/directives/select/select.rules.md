@@ -24,7 +24,7 @@ Wraps the `<wa-select>` Web Awesome component and provides Angular-style binding
 | `placeholder`       | `string`                         | Placeholder when no option is selected.                              |
 | `appearance`        | `'outlined' \| 'filled'`         | Changes visual style.                                                |
 | `pill`              | `boolean`                        | Applies pill-style rounded borders.                                  |
-| `clearable`         | `boolean`                        | Shows a clear button when an option is selected.                     |
+| `withClear`         | `boolean`                        | Shows a clear button when an option is selected.                     |
 | `disabled`          | `boolean`                        | Disables the select control.                                         |
 | `multiple`          | `boolean`                        | Enables multiple selection.                                          |
 | `size`              | `'small' \| 'medium' \| 'large'` | Sets size variant.                                                   |
@@ -74,7 +74,7 @@ Wraps the `<wa-select>` Web Awesome component and provides Angular-style binding
   [(ngModel)]="selectedOption"
   label="Select one"
   placeholder="Choose an option"
-  clearable
+  with-clear
   [disabled]="false"
   (changeEvent)="onChange($event)"
   style.backgroundColor="white"

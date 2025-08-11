@@ -22,7 +22,6 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
 export class WaCardDirective implements OnInit {
   // Appearance inputs
   @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
 
   // Boolean inputs
   @Input() withHeader?: boolean | string;
@@ -50,7 +49,6 @@ export class WaCardDirective implements OnInit {
 
     // Set standard attributes
     this.setAttr('appearance', this.appearance);
-    this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-header', this.withHeader);

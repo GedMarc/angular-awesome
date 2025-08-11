@@ -143,11 +143,13 @@ export class DialogExampleComponent {
 </code></pre>
 <h2>With Custom Header Actions</h2>
 <pre><code class="language-html">&lt;wa-dialog label=&quot;Custom Header Dialog&quot; [(open)]=&quot;isCustomHeaderOpen&quot;&gt;
-  &lt;wa-icon-button 
+  &lt;wa-button 
+    appearance=&quot;plain&quot; 
+    size=&quot;small&quot; 
     slot=&quot;header-actions&quot; 
-    name=&quot;info-circle&quot;
     aria-label=&quot;More information&quot;&gt;
-  &lt;/wa-icon-button&gt;
+    &lt;wa-icon name=&quot;info-circle&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/wa-button&gt;
   
   &lt;p&gt;This dialog has custom actions in the header.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;

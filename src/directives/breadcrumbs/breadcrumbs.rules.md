@@ -47,8 +47,8 @@ These directives provide Angular-native integration for breadcrumb navigation us
 | Slot      | Description                          |
 | --------- | ------------------------------------ |
 | default   | The label text or projected content  |
-| prefix    | Icon or element before the label     |
-| suffix    | Icon or element after the label      |
+| start     | Icon or element before the label     |
+| end       | Icon or element after the label      |
 | separator | Optional per-item separator override |
 
 ---
@@ -83,8 +83,8 @@ Customize prefix/suffix/separator colors using `::part()` selectors:
 wa-breadcrumb-item::part(separator) {
   color: pink;
 }
-wa-breadcrumb-item::part(prefix),
-wa-breadcrumb-item::part(suffix) {
+wa-breadcrumb-item::part(start),
+wa-breadcrumb-item::part(end) {
   color: currentColor;
 }
 ```
@@ -101,7 +101,7 @@ Control layout and behavior via:
 ```html
 <wa-breadcrumb label="Site Navigation">
   <wa-breadcrumb-item href="/home">
-    <wa-icon slot="prefix" name="house" variant="solid"></wa-icon>
+    <wa-icon slot="start" name="house" variant="solid"></wa-icon>
     Home
   </wa-breadcrumb-item>
 
@@ -111,7 +111,7 @@ Control layout and behavior via:
 
   <wa-breadcrumb-item href="/home/products/widgets">
     Widgets
-    <wa-icon slot="suffix" name="star" variant="solid"></wa-icon>
+    <wa-icon slot="end" name="star" variant="solid"></wa-icon>
   </wa-breadcrumb-item>
 </wa-breadcrumb>
 ```
@@ -131,8 +131,8 @@ Control layout and behavior via:
 
 ## 🔼 Dependencies
 
-* `<wa-icon>` (for prefix/suffix/separator icons)
-* `<wa-dropdown>`, `<wa-menu>`, `<wa-button>` (optional for advanced breadcrumbs)
+* `<wa-icon>` (for start/end/separator icons)
+* `<wa-dropdown>`, `<wa-button>` (optional for advanced breadcrumbs)
 
 ---
 

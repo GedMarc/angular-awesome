@@ -26,7 +26,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     '[attr.active]': 'value',
     '[attr.placement]': 'placement',
     '[attr.activation]': 'activation',
-    '[attr.no-scroll-controls]': 'noScrollControls ? "" : null',
+    '[attr.without-scroll-controls]': 'withoutScrollControls ? "" : null',
     '(wa-tab-show)': 'tabShow.emit($event)',
     '(wa-tab-hide)': 'tabHide.emit($event)'
   }
@@ -34,7 +34,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class WaTabGroupComponent implements ControlValueAccessor {
   @Input() placement: 'top' | 'bottom' | 'start' | 'end' = 'top';
   @Input() activation: 'auto' | 'manual' = 'auto';
-  @Input() noScrollControls = false;
+  @Input() withoutScrollControls = false;
 
   @Output() tabShow = new EventEmitter<CustomEvent>();
   @Output() tabHide = new EventEmitter<CustomEvent>();

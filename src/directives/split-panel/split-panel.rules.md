@@ -18,7 +18,8 @@ Wraps the `<wa-split-panel>` Web Awesome component, which displays two adjacent 
 | ------------------ | ------------------ | ------------------------------------------------------------------------------ |
 | `position`         | `number`           | Percentage (0–100) of initial divider position. Reflects `position` attribute. |
 | `positionInPixels` | `number`           | Initial divider position in pixels. Reflects `position-in-pixels` attribute.   |
-| `vertical`         | `boolean`          | Whether the split orientation is vertical.                                     |
+| `orientation`      | `'vertical' \| 'horizontal'` | Sets the orientation of the split panel. Use `'vertical'` for top/bottom split. |
+| `vertical`         | `boolean`          | **Deprecated.** Use `orientation="vertical"` instead.                          |
 | `disabled`         | `boolean`          | Prevents resizing the divider.                                                 |
 | `primary`          | `'start' \| 'end'` | Designates the primary panel that maintains size during host resize.           |
 | `snap`             | `string`           | Space-separated values (in px or %) to which the divider can snap.             |
@@ -61,15 +62,15 @@ These are written to the host element as style properties.
 ```html
 <wa-split-panel
   [position]="60"
-  vertical
+  orientation="vertical"
   snap="25% 75%"
   [primary]="'start'"
   [dividerColor]="'var(--wa-color-red-50)'"
   (repositionEvent)="onReposition($event)">
 
-  <div slot="start">Left Panel</div>
-  <div slot="end">Right Panel</div>
-  <wa-icon slot="divider" name="grip-vertical"></wa-icon>
+  <div slot="start">Top Panel</div>
+  <div slot="end">Bottom Panel</div>
+  <wa-icon slot="divider" name="grip-horizontal"></wa-icon>
 
 </wa-split-panel>
 ```

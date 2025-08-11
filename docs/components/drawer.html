@@ -175,11 +175,13 @@ export class DrawerExampleComponent {
 </code></pre>
 <h2>With Custom Header Actions</h2>
 <pre><code class="language-html">&lt;wa-drawer label=&quot;Custom Header Drawer&quot; [(open)]=&quot;isCustomHeaderOpen&quot;&gt;
-  &lt;wa-icon-button 
+  &lt;wa-button 
+    appearance=&quot;plain&quot; 
+    size=&quot;small&quot; 
     slot=&quot;header-actions&quot; 
-    name=&quot;info-circle&quot;
     aria-label=&quot;More information&quot;&gt;
-  &lt;/wa-icon-button&gt;
+    &lt;wa-icon name=&quot;info-circle&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/wa-button&gt;
   
   &lt;p&gt;This drawer has custom actions in the header.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
@@ -358,25 +360,25 @@ export class DrawerExampleComponent {
   placement=&quot;start&quot;
   size=&quot;250px&quot;&gt;
   
-  &lt;wa-menu&gt;
-    &lt;wa-menu-item (click)=&quot;navigate(&#39;home&#39;); isNavOpen = false;&quot;&gt;
-      &lt;wa-icon name=&quot;home&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+  &lt;div class=&quot;navigation-items&quot;&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;home&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;home&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
       Home
-    &lt;/wa-menu-item&gt;
-    &lt;wa-menu-item (click)=&quot;navigate(&#39;profile&#39;); isNavOpen = false;&quot;&gt;
-      &lt;wa-icon name=&quot;user&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+    &lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;profile&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;user&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
       Profile
-    &lt;/wa-menu-item&gt;
-    &lt;wa-menu-item (click)=&quot;navigate(&#39;settings&#39;); isNavOpen = false;&quot;&gt;
-      &lt;wa-icon name=&quot;cog&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+    &lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;settings&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;cog&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
       Settings
-    &lt;/wa-menu-item&gt;
+    &lt;/wa-dropdown-item&gt;
     &lt;wa-divider&gt;&lt;/wa-divider&gt;
-    &lt;wa-menu-item (click)=&quot;logout(); isNavOpen = false;&quot;&gt;
-      &lt;wa-icon name=&quot;sign-out-alt&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+    &lt;wa-dropdown-item (click)=&quot;logout(); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;sign-out-alt&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
       Logout
-    &lt;/wa-menu-item&gt;
-  &lt;/wa-menu&gt;
+    &lt;/wa-dropdown-item&gt;
+  &lt;/div&gt;
 &lt;/wa-drawer&gt;
 
 &lt;wa-button (click)=&quot;isNavOpen = true&quot;&gt;Open Navigation&lt;/wa-button&gt;

@@ -11,7 +11,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
  * - Supports boolean attributes like pill, caret, disabled, loading
  * - Emits button events (blur, focus, waInvalid)
  * - Enables Angular-style class and style bindings
- * - Allows slot projection for prefix, suffix, and default content
+ * - Allows slot projection for start, end, and default content
  * - Supports custom styling via CSS variables
  * - Supports direct styling through color, backgroundColor, and fontSize inputs
  */
@@ -27,7 +27,7 @@ export class WaButtonDirective implements OnInit {
 
   // Boolean inputs
   @Input() pill?: boolean | string;
-  @Input() caret?: boolean | string;
+  @Input() withCaret?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() loading?: boolean | string;
 
@@ -90,7 +90,7 @@ export class WaButtonDirective implements OnInit {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('pill', this.pill);
-    this.setBooleanAttr('caret', this.caret);
+    this.setBooleanAttr('with-caret', this.withCaret);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('loading', this.loading);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);

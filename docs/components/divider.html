@@ -130,29 +130,30 @@ import { WaDividerDirective } from 'angular-awesome/divider';</pre>
 &lt;/wa-divider&gt;
 </code></pre>
 <h2>Vertical Divider</h2>
-<pre><code class="language-html">&lt;wa-divider [vertical]=&quot;true&quot;&gt;&lt;/wa-divider&gt;
+<pre><code class="language-html">&lt;wa-divider orientation=&quot;vertical&quot;&gt;&lt;/wa-divider&gt;
 </code></pre>
 <h2>Vertical Divider Inside a Flex Container</h2>
 <pre><code class="language-html">&lt;div style=&quot;display: flex; align-items: center; height: 2rem;&quot;&gt;
   First
-  &lt;wa-divider [vertical]=&quot;true&quot; [spacing]=&quot;&#39;1rem&#39;&quot;&gt;&lt;/wa-divider&gt;
+  &lt;wa-divider orientation=&quot;vertical&quot; [spacing]=&quot;&#39;1rem&#39;&quot;&gt;&lt;/wa-divider&gt;
   Middle
-  &lt;wa-divider [vertical]=&quot;true&quot; [spacing]=&quot;&#39;1rem&#39;&quot;&gt;&lt;/wa-divider&gt;
+  &lt;wa-divider orientation=&quot;vertical&quot; [spacing]=&quot;&#39;1rem&#39;&quot;&gt;&lt;/wa-divider&gt;
   Last
 &lt;/div&gt;
 </code></pre>
-<h2>Menu with Divider</h2>
-<pre><code class="language-html">&lt;wa-menu style=&quot;max-width: 200px;&quot;&gt;
-  &lt;wa-menu-item value=&quot;1&quot;&gt;Option 1&lt;/wa-menu-item&gt;
-  &lt;wa-menu-item value=&quot;2&quot;&gt;Option 2&lt;/wa-menu-item&gt;
-  &lt;wa-menu-item value=&quot;3&quot;&gt;Option 3&lt;/wa-menu-item&gt;
+<h2>Dropdown with Divider</h2>
+<pre><code class="language-html">&lt;wa-dropdown style=&quot;max-width: 200px;&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Options&lt;/wa-button&gt;
+  &lt;wa-dropdown-item value=&quot;1&quot;&gt;Option 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;2&quot;&gt;Option 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;3&quot;&gt;Option 3&lt;/wa-dropdown-item&gt;
   &lt;wa-divider&gt;&lt;/wa-divider&gt;
-  &lt;wa-menu-item value=&quot;4&quot;&gt;Option 4&lt;/wa-menu-item&gt;
-&lt;/wa-menu&gt;
+  &lt;wa-dropdown-item value=&quot;4&quot;&gt;Option 4&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
 </code></pre>
 <h2>Divider with String Literal Attributes</h2>
 <pre><code class="language-html">&lt;!-- Using string literals instead of property binding --&gt;
-&lt;wa-divider vertical&gt;&lt;/wa-divider&gt;
+&lt;wa-divider orientation=&quot;vertical&quot;&gt;&lt;/wa-divider&gt;
 &lt;wa-divider color=&quot;#ff5722&quot; width=&quot;2px&quot; spacing=&quot;1rem&quot;&gt;&lt;/wa-divider&gt;
 </code></pre>
 <h2>Divider in a Card Layout</h2>
@@ -201,7 +202,7 @@ export class DividerExampleComponent {
 }
 </code></pre>
 <pre><code class="language-html">&lt;wa-divider 
-  [vertical]=&quot;isVertical&quot;
+  [orientation]=&quot;isVertical ? &#39;vertical&#39; : &#39;horizontal&#39;&quot;
   [color]=&quot;dividerColor&quot;
   [width]=&quot;dividerWidth&quot;
   [spacing]=&quot;dividerSpacing&quot;&gt;

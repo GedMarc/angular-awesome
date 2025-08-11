@@ -19,7 +19,7 @@ Wraps the `<wa-format-number>` Web Awesome component.
 * `currency`: ISO 4217 code (e.g. `USD`, `EUR`). Only used when `type="currency"`.
 * `currencyDisplay`: `'symbol' | 'narrowSymbol' | 'code' | 'name'` — how currency should be displayed.
 * `lang`: Locale string (e.g. `en`, `de`, `ru`).
-* `noGrouping`: `true` disables thousands separators.
+* `withoutGrouping`: `true` disables thousands separators.
 * `minimumIntegerDigits`: Minimum integer digits (1-21).
 * `minimumFractionDigits`: Minimum fraction digits (0-100).
 * `maximumFractionDigits`: Maximum fraction digits (0-100).

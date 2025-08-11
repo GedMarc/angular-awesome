@@ -61,22 +61,22 @@ All inputs accept string values in templates for compatibility. Boolean inputs m
 <wa-button size="large" style="width: 100%">Large</wa-button>
 ```
 
-## Prefix and Suffix Icons
+## Start and End Icons
 
 ```html
 <wa-button>
-  <wa-icon slot="prefix" name="gear"></wa-icon>
+  <wa-icon slot="start" name="gear"></wa-icon>
   Settings
 </wa-button>
 
 <wa-button>
-  <wa-icon slot="suffix" name="undo"></wa-icon>
+  <wa-icon slot="end" name="undo"></wa-icon>
   Refresh
 </wa-button>
 
 <wa-button>
-  <wa-icon slot="prefix" name="link"></wa-icon>
-  <wa-icon slot="suffix" name="arrow-up-right-from-square"></wa-icon>
+  <wa-icon slot="start" name="link"></wa-icon>
+  <wa-icon slot="end" name="arrow-up-right-from-square"></wa-icon>
   Open
 </wa-button>
 ```

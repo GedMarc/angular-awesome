@@ -14,9 +14,10 @@ wa-divider
 
 ## Inputs
 
-| Input      | Type    | Description                                          |
-| ---------- | ------- | ---------------------------------------------------- |
-| `vertical` | boolean | Whether the divider is vertical. Default is `false`. |
+| Input         | Type                           | Description                                                      |
+| ------------- | ------------------------------ | ---------------------------------------------------------------- |
+| `orientation` | `'vertical' \| 'horizontal'`   | Sets the orientation of the divider. Default is `'horizontal'`.   |
+| `vertical`    | boolean                        | **Deprecated.** Use `orientation="vertical"` instead.             |
 
 ### Style Inputs
 
@@ -55,30 +56,32 @@ None.
 ```html
 <div style="display: flex; align-items: center; height: 2rem;">
   First
-  <wa-divider vertical [spacing]="'1rem'"></wa-divider>
+  <wa-divider orientation="vertical" [spacing]="'1rem'"></wa-divider>
   Middle
-  <wa-divider vertical [spacing]="'1rem'"></wa-divider>
+  <wa-divider orientation="vertical" [spacing]="'1rem'"></wa-divider>
   Last
 </div>
 ```
 
-### Menu with Divider
+### Dropdown with Divider
 
 ```html
-<wa-menu style="max-width: 200px;">
-  <wa-menu-item value="1">Option 1</wa-menu-item>
-  <wa-menu-item value="2">Option 2</wa-menu-item>
-  <wa-menu-item value="3">Option 3</wa-menu-item>
+<wa-dropdown style="max-width: 200px;">
+  <wa-button slot="trigger">Options</wa-button>
+  <wa-dropdown-item value="1">Option 1</wa-dropdown-item>
+  <wa-dropdown-item value="2">Option 2</wa-dropdown-item>
+  <wa-dropdown-item value="3">Option 3</wa-dropdown-item>
   <wa-divider></wa-divider>
-  <wa-menu-item value="4">Option 4</wa-menu-item>
-</wa-menu>
+  <wa-dropdown-item value="4">Option 4</wa-dropdown-item>
+</wa-dropdown>
 ```
 
 ---
 
 ## Notes
 
-* `vertical` is a boolean input and should be bound using Angular syntax (e.g. `[vertical]="true"`).
+* `orientation` accepts string values `'vertical'` or `'horizontal'` and can be used as a direct attribute (e.g., `orientation="vertical"`) or bound (e.g., `[orientation]="'vertical'"`).
+* The `vertical` attribute is deprecated but still supported for backward compatibility.
 * The directive does not emit events.
 * All style inputs support both binding and string literals.
 

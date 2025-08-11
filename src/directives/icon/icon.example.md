@@ -165,7 +165,7 @@
 ```html
 <!-- In a button -->
 <wa-button>
-  <wa-icon name="save" slot="prefix"></wa-icon>
+  <wa-icon name="save" slot="start"></wa-icon>
   Save
 </wa-button>
 

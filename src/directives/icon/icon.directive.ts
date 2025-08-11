@@ -8,7 +8,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
  *
  * Features:
  * - Binds all supported icon attributes as @Input() properties
- * - Supports name, family, variant, library, src, label, and fixedWidth customization
+ * - Supports name, family, variant, library, src, label, and withFixedWidth customization
  * - Enables Angular-style class and style bindings
  * - Supports custom styling via CSS variables
  * - Provides accessibility support through label attribute
@@ -26,7 +26,7 @@ export class WaIconDirective implements OnInit {
   @Input() library?: string;
   @Input() src?: string;
   @Input() label?: string;
-  @Input() fixedWidth?: boolean | string;
+  @Input() withFixedWidth?: boolean | string;
 
   // Direct styling inputs
   @Input() color?: string;
@@ -55,7 +55,7 @@ export class WaIconDirective implements OnInit {
     this.setAttr('label', this.label);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('fixed-width', this.fixedWidth);
+    this.setBooleanAttr('with-fixed-width', this.withFixedWidth);
 
     // Apply styling inputs using CSS custom properties
     this.setCssStyle('text-color', this.color);

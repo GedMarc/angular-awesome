@@ -25,7 +25,8 @@ export class WaSplitPanelDirective implements OnInit {
   // Core input attributes
   @Input() position?: number;
   @Input() positionInPixels?: number;
-  @Input() vertical?: boolean | string;
+  @Input() orientation?: 'vertical' | 'horizontal' | string;
+  @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
   @Input() disabled?: boolean | string;
   @Input() primary?: 'start' | 'end' | string;
   @Input() snap?: string;
@@ -58,7 +59,11 @@ export class WaSplitPanelDirective implements OnInit {
     this.setAttr('snap', this.snap);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('vertical', this.vertical);
+    if (this.orientation === 'vertical') {
+      this.renderer.setAttribute(this.el.nativeElement, 'orientation', 'vertical');
+    } else {
+      this.setBooleanAttr('vertical', this.vertical);
+    }
     this.setBooleanAttr('disabled', this.disabled);
 
     // Set style attributes

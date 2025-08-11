@@ -223,51 +223,70 @@ import { WaRadioDirective } from 'angular-awesome/radio';</pre>
   &lt;/wa-radio&gt;
   &lt;wa-radio value=&quot;option2&quot;&gt;Regular Option&lt;/wa-radio&gt;
 &lt;/wa-radio-group&gt;
+
+&lt;!-- Custom checked icon scale --&gt;
+&lt;wa-radio-group label=&quot;Custom Checked Icon Scale&quot;&gt;
+  &lt;wa-radio 
+    value=&quot;small&quot; 
+    [styleCheckedIconScale]=&quot;&#39;0.6&#39;&quot;&gt;
+    Small Check Icon
+  &lt;/wa-radio&gt;
+  &lt;wa-radio 
+    value=&quot;medium&quot; 
+    [styleCheckedIconScale]=&quot;&#39;0.8&#39;&quot;&gt;
+    Medium Check Icon
+  &lt;/wa-radio&gt;
+  &lt;wa-radio 
+    value=&quot;large&quot; 
+    [styleCheckedIconScale]=&quot;&#39;1.0&#39;&quot;&gt;
+    Large Check Icon
+  &lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
 </code></pre>
 <h2>Radio Buttons</h2>
 <pre><code class="language-html">&lt;wa-radio-group label=&quot;Radio Buttons&quot;&gt;
-  &lt;wa-radio-button value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio-button&gt;
-  &lt;wa-radio-button value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio-button&gt;
-  &lt;wa-radio-button value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio-button&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
 &lt;/wa-radio-group&gt;
 
 &lt;!-- With prefix and suffix --&gt;
 &lt;wa-radio-group label=&quot;Radio Buttons with Icons&quot;&gt;
-  &lt;wa-radio-button value=&quot;home&quot; [withPrefix]=&quot;true&quot;&gt;
-    &lt;wa-icon name=&quot;home&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;home&quot; [withPrefix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;home&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
     Home
-  &lt;/wa-radio-button&gt;
-  &lt;wa-radio-button value=&quot;settings&quot; [withPrefix]=&quot;true&quot;&gt;
-    &lt;wa-icon name=&quot;settings&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;settings&quot; [withPrefix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;settings&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
     Settings
-  &lt;/wa-radio-button&gt;
-  &lt;wa-radio-button value=&quot;profile&quot; [withPrefix]=&quot;true&quot; [withSuffix]=&quot;true&quot;&gt;
-    &lt;wa-icon name=&quot;user&quot; slot=&quot;prefix&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;profile&quot; [withPrefix]=&quot;true&quot; [withSuffix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;user&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
     Profile
-    &lt;wa-badge slot=&quot;suffix&quot;&gt;New&lt;/wa-badge&gt;
-  &lt;/wa-radio-button&gt;
+    &lt;wa-badge slot=&quot;end&quot;&gt;New&lt;/wa-badge&gt;
+  &lt;/wa-radio&gt;
 &lt;/wa-radio-group&gt;
 
 &lt;!-- Custom styled radio buttons --&gt;
 &lt;wa-radio-group label=&quot;Custom Styled Radio Buttons&quot;&gt;
-  &lt;wa-radio-button 
+  &lt;wa-radio appearance=&quot;button&quot;
     value=&quot;option1&quot; 
     [styleIndicatorColor]=&quot;&#39;#4caf50&#39;&quot;
     [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
     Green Option
-  &lt;/wa-radio-button&gt;
-  &lt;wa-radio-button 
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot;
     value=&quot;option2&quot; 
     [styleIndicatorColor]=&quot;&#39;#2196f3&#39;&quot;
     [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
     Blue Option
-  &lt;/wa-radio-button&gt;
-  &lt;wa-radio-button 
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot;
     value=&quot;option3&quot; 
     [styleIndicatorColor]=&quot;&#39;#f44336&#39;&quot;
     [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
     Red Option
-  &lt;/wa-radio-button&gt;
+  &lt;/wa-radio&gt;
 &lt;/wa-radio-group&gt;
 </code></pre>
 <h2>Event Handling</h2>
