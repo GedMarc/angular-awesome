@@ -50,8 +50,14 @@ export * from './directives/tag/tag.directive';
 export * from './directives/tree/tree.directive';
 export * from './directives/tree/tree-item.directive';
 export * from './directives/tab-group/tab.component';
+// Backward-compatible alias: allow importing WaTabDirective (docs may reference directive naming)
+export { WaTabComponent as WaTabDirective } from './directives/tab-group/tab.component';
 export * from './directives/tab-group/tab-panel.component';
+// Backward-compatible alias: allow importing WaTabPanelDirective (docs may reference directive naming)
+export { WaTabPanelComponent as WaTabPanelDirective } from './directives/tab-group/tab-panel.component';
 export * from './directives/tab-group/tab-group.component';
+// Backward-compatible alias: allow importing WaTabGroupDirective (docs may reference directive naming)
+export { WaTabGroupComponent as WaTabGroupDirective } from './directives/tab-group/tab-group.component';
 export * from './directives/page/page.component';
 export * from './directives/popup/popup.directive';
 export * from './directives/popover/popover.directive';

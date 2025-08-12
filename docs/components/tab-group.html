@@ -93,10 +93,10 @@
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
-        <p></p>
+        <p>Tab groups organize content into a container that shows one section at a time. Tab groups make use of tabs and tab panels. Each panel should have a name that's unique within the tab group, and tabs should have a panel attribute that points to the respective panel's name.</p>
       </section>
 
       <section>
@@ -286,7 +286,7 @@ import { WaTabGroupComponent, WaTabComponent, WaTabPanelComponent } from &#39;@a
 @Component({
   selector: &#39;app-tab-group-events-demo&#39;,
   template: `
-    &lt;wa-tab-group 
+    &lt;wa-tab-group
       (tabShow)=&quot;onTabShow($event)&quot;
       (tabHide)=&quot;onTabHide($event)&quot;
     &gt;
@@ -381,15 +381,54 @@ export class DynamicTabsDemoComponent {
       </section>
 
       <section>
-        <h2>API Reference</h2>
-        
+        <h2>Slots</h2>
+        <ul>
+          <li>(default) — Used for grouping tab panels in the tab group. Must be &lt;wa-tab-panel&gt; elements.</li>
+          <li>nav — Used for grouping tabs in the tab group. Must be &lt;wa-tab&gt; elements. Note that &lt;wa-tab&gt; will set this slot on itself automatically.</li>
+        </ul>
       </section>
 
       <section>
-        <h2>Styling</h2>
-        
+        <h2>Attributes &amp; Properties</h2>
+        <ul>
+          <li><strong>active</strong> (string) — Sets the active tab. Default: ''</li>
+          <li><strong>placement</strong> ('top' | 'bottom' | 'start' | 'end') — The placement of the tabs. Default: 'top'</li>
+          <li><strong>activation</strong> ('auto' | 'manual') — When set to auto, navigating tabs with the arrow keys will instantly show the corresponding tab panel. When set to manual, the tab will receive focus but will not show until the user presses spacebar or enter. Default: 'auto'</li>
+          <li><strong>withoutScrollControls</strong> (boolean) — Disables the scroll arrows that appear when tabs overflow. Reflects to <code>without-scroll-controls</code>. Default: false</li>
+        </ul>
       </section>
-    
+
+      <section>
+        <h2>Events</h2>
+        <ul>
+          <li>wa-tab-show — Emitted when a tab is shown.</li>
+          <li>wa-tab-hide — Emitted when a tab is hidden.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>CSS custom properties</h2>
+        <ul>
+          <li>--indicator-color — The color of the active tab indicator.</li>
+          <li>--track-color — The color of the indicator's track (the line that separates tabs from panels).</li>
+          <li>--track-width — The width of the indicator's track (the line that separates tabs from panels).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>CSS parts</h2>
+        <ul>
+          <li>base — The component's base wrapper.</li>
+          <li>nav — The tab group's navigation container where tabs are slotted in.</li>
+          <li>tabs — The container that wraps the tabs.</li>
+          <li>body — The tab group's body where tab panels are slotted in.</li>
+          <li>scroll-button — The previous/next scroll buttons that show when tabs are scrollable, a &lt;wa-button&gt;.</li>
+          <li>scroll-button-start — The starting scroll button.</li>
+          <li>scroll-button-end — The ending scroll button.</li>
+          <li>scroll-button__base — The scroll button's exported base part.</li>
+        </ul>
+      </section>
+
             </main>
 
             <footer>

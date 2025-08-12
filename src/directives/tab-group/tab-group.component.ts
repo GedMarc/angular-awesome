@@ -34,10 +34,20 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class WaTabGroupComponent implements ControlValueAccessor {
   @Input() placement: 'top' | 'bottom' | 'start' | 'end' = 'top';
   @Input() activation: 'auto' | 'manual' = 'auto';
+  // Updated naming to match spec: withoutScrollControls reflects to without-scroll-controls
   @Input() withoutScrollControls = false;
 
   @Output() tabShow = new EventEmitter<CustomEvent>();
   @Output() tabHide = new EventEmitter<CustomEvent>();
+
+  // Support binding via [active]
+  @Input('active')
+  set active(val: string | null) {
+    this.value = val;
+  }
+  get active(): string | null {
+    return this.value;
+  }
 
   @Input()
   get value(): string | null {

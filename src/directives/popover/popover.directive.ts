@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaPopoverDirective
@@ -26,7 +26,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-popover',
   standalone: true
 })
-export class WaPopoverDirective implements OnInit {
+export class WaPopoverDirective implements OnInit, OnDestroy {
   // String inputs
   @Input() anchor?: string;
   @Input() placement?: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string;
@@ -59,6 +59,12 @@ export class WaPopoverDirective implements OnInit {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  // Lazy rendering state
+  private contentFragment: DocumentFragment | null = null;
+  private contentRendered = false;
+  private unlistenShow?: () => void;
+  private unlistenHide?: () => void;
+
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
@@ -87,10 +93,47 @@ export class WaPopoverDirective implements OnInit {
     this.setNumericAttr('shift-padding', this.shiftPadding);
     this.setNumericAttr('auto-size-padding', this.autoSizePadding);
 
+    // Prepare lazy content: move non-anchor nodes into a fragment so they are not rendered initially
+    this.captureContentIntoFragment();
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
       this.waReposition.emit(event);
     });
+
+    // Listen for show/hide from the web component to toggle content rendering
+    // Support both generic and Web Awesome-prefixed events for compatibility
+    this.unlistenShow = this.renderer.listen(nativeEl, 'show', () => {
+      this.renderContentFromFragment();
+    });
+    const unlistenShowWa = this.renderer.listen(nativeEl, 'wa-show', () => {
+      this.renderContentFromFragment();
+    });
+
+    this.unlistenHide = this.renderer.listen(nativeEl, 'hide', () => {
+      this.captureContentIntoFragment();
+    });
+    const unlistenHideWa = this.renderer.listen(nativeEl, 'wa-hide', () => {
+      this.captureContentIntoFragment();
+    });
+
+    // If the popover starts active, ensure content is rendered immediately
+    if (nativeEl.hasAttribute('active')) {
+      this.renderContentFromFragment();
+    }
+
+    // Store additional unlisten handlers on the element to clean up in ngOnDestroy
+    (this as any)._unlistenShowWa = unlistenShowWa;
+    (this as any)._unlistenHideWa = unlistenHideWa;
+  }
+
+  ngOnDestroy(): void {
+    if (this.unlistenShow) this.unlistenShow();
+    if (this.unlistenHide) this.unlistenHide();
+    if ((this as any)._unlistenShowWa) (this as any)._unlistenShowWa();
+    if ((this as any)._unlistenHideWa) (this as any)._unlistenHideWa();
+    // Ensure we don't leak detached nodes
+    this.contentFragment = null;
   }
 
   /**
@@ -135,6 +178,46 @@ export class WaPopoverDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+  // Move all non-anchor slotted child nodes into a fragment (to prevent initial render)
+  private captureContentIntoFragment() {
+    const host = this.el.nativeElement as HTMLElement;
+    if (!this.contentFragment) this.contentFragment = document.createDocumentFragment();
+
+    // If content already captured (not rendered), do nothing
+    if (!this.contentRendered && this.contentFragment.childNodes.length > 0) {
+      return;
+    }
+
+    // Detach all nodes except those with slot="anchor"
+    const nodesToMove: ChildNode[] = [];
+    host.childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = node as Element;
+        if (el.getAttribute('slot') === 'anchor') {
+          return; // keep anchor
+        }
+      }
+      // Text, comments, and non-anchor elements are considered popover content
+      nodesToMove.push(node);
+    });
+
+    if (nodesToMove.length > 0) {
+      nodesToMove.forEach(n => this.contentFragment!.appendChild(n));
+      this.contentRendered = false;
+    }
+  }
+
+  // Render captured content back into the host when showing
+  private renderContentFromFragment() {
+    const host = this.el.nativeElement as HTMLElement;
+    if (this.contentFragment && this.contentFragment.childNodes.length > 0) {
+      host.appendChild(this.contentFragment);
+      // contentFragment becomes empty after append; recreate for future hides
+      this.contentFragment = document.createDocumentFragment();
+      this.contentRendered = true;
     }
   }
 }

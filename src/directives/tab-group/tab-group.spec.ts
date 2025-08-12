@@ -11,7 +11,7 @@ import { WaTabPanelComponent } from './tab-panel.component';
     <wa-tab-group
       [placement]="placement"
       [activation]="activation"
-      [noScrollControls]="noScrollControls"
+      [withoutScrollControls]="withoutScrollControls"
       [(ngModel)]="activeTab"
       [indicatorColor]="indicatorColor"
       [trackColor]="trackColor"
@@ -41,7 +41,7 @@ class TestHostComponent {
   // Tab Group properties
   placement: 'top' | 'bottom' | 'start' | 'end' = 'top';
   activation: 'auto' | 'manual' = 'auto';
-  noScrollControls = false;
+  withoutScrollControls = false;
   activeTab = 'tab1';
   indicatorColor?: string;
   trackColor?: string;
@@ -118,12 +118,12 @@ describe('Tab Group Components', () => {
   it('should set tab group attributes correctly', () => {
     hostComponent.placement = 'bottom';
     hostComponent.activation = 'manual';
-    hostComponent.noScrollControls = true;
+    hostComponent.withoutScrollControls = true;
     hostFixture.detectChanges();
 
     expect(tabGroupElement.getAttribute('placement')).toBe('bottom');
     expect(tabGroupElement.getAttribute('activation')).toBe('manual');
-    expect(tabGroupElement.hasAttribute('no-scroll-controls')).toBe(true);
+    expect(tabGroupElement.hasAttribute('without-scroll-controls')).toBe(true);
   });
 
   it('should set tab attributes correctly', () => {

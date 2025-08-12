@@ -16,7 +16,7 @@ Organizes content into panels, showing one at a time. Tabs are linked to panels 
   * `active: string` — name of the currently active tab panel.
   * `placement: 'top' | 'bottom' | 'start' | 'end'` — sets the position of tabs.
   * `activation: 'auto' | 'manual'` — configures keyboard activation behavior.
-  * `noScrollControls: boolean` — disables scroll arrows.
+  * `withoutScrollControls: boolean` — disables the scroll arrows. Reflects to `without-scroll-controls`.
 * **Outputs:**
 
   * `tabShow: Event` — emitted when a tab becomes active.
