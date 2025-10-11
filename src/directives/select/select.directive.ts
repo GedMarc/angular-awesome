@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -16,7 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * - Implements ControlValueAccessor for ngModel support
  */
 @Component({
-  selector: 'wa-select-wrapper',
+  selector: 'wa-select',
   standalone: true,
   template: '<ng-content></ng-content>',
   providers: [
@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
+export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
   @Input() value?: string | string[];
   @Input() label?: string;
@@ -43,6 +43,8 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   @Input() required?: boolean | string;
   @Input() maxOptionsVisible?: number | string;
   @Input() form?: string;
+  // Custom tag renderer for multiselect tags
+  @Input() getTag?: any;
 
   // Style inputs
   @Input() backgroundColor?: string;
@@ -73,52 +75,55 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  /**
+   * Internal flag to suppress model updates when we are writing programmatically
+   * to the underlying element (prevents feedback loops with MutationObserver/events).
+   */
+  private isWriting = false;
+  private attrObserver?: MutationObserver;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set string attributes
-    this.setAttr('label', this.label);
-    this.setAttr('hint', this.hint);
-    this.setAttr('placeholder', this.placeholder);
-    this.setAttr('appearance', this.appearance);
-    this.setAttr('size', this.size);
-    this.setAttr('placement', this.placement);
-    this.setAttr('form', this.form);
-    this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('pill', this.pill);
-    this.setBooleanAttr('with-clear', this.withClear);
-    this.setBooleanAttr('disabled', this.disabled);
-    this.setBooleanAttr('multiple', this.multiple);
-    this.setBooleanAttr('required', this.required);
-
-    // Set style attributes
-    this.setCssVar('--background-color', this.backgroundColor);
-    this.setCssVar('--border-color', this.borderColor);
-    this.setCssVar('--border-width', this.borderWidth);
-    this.setCssVar('--box-shadow', this.boxShadow);
-    this.setCssVar('--background-color-current', this.backgroundColorCurrent);
-    this.setCssVar('--background-color-hover', this.backgroundColorHover);
-    this.setCssVar('--text-color-current', this.textColorCurrent);
-    this.setCssVar('--text-color-hover', this.textColorHover);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.inputEvent.emit(event);
-      const target = event.target as HTMLSelectElement;
-      let newValue: string | string[] = target.value;
-
-      // Handle multiple selection
-      if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
-        newValue = target.value.split(' ').filter(v => v !== '');
+      // Read current value from the WC, not event.target (shadow DOM safety)
+      const el: any = this.el.nativeElement;
+      // Prefer attribute first; fallback to property
+      let raw: any = el?.getAttribute?.('value');
+      if (raw == null) {
+        raw = el?.value ?? '';
       }
-
+      let newValue: string | string[] = raw;
+      if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
+        if (Array.isArray(newValue)) {
+          // Ensure array if WC already provides it
+          // no-op
+        } else {
+          newValue = String(newValue).split(' ').filter(v => v !== '');
+        }
+      }
       this.onChange(newValue);
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
+      const el: any = this.el.nativeElement;
+      let raw: any = el?.getAttribute?.('value');
+      if (raw == null) {
+        raw = el?.value ?? '';
+      }
+      let newValue: string | string[] = raw;
+      if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
+        if (Array.isArray(newValue)) {
+          // keep array
+        } else {
+          newValue = String(newValue).split(' ').filter(v => v !== '');
+        }
+      }
+      this.onChange(newValue);
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
@@ -145,6 +150,67 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
     this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
       this.invalidEvent.emit(event);
     });
+    // Observe 'value' attribute changes to sync model when WC updates attribute
+    try {
+      this.attrObserver = new MutationObserver((mutations) => {
+        if (this.isWriting) { return; }
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'value') {
+            const el: any = this.el.nativeElement;
+            const current = el?.value ?? el?.getAttribute?.('value') ?? '';
+            let newValue: string | string[] = current;
+            if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
+              if (!Array.isArray(newValue)) {
+                newValue = String(current).split(' ').filter(v => v !== '');
+              }
+            }
+            this.onChange(newValue);
+          }
+        }
+      });
+      this.attrObserver.observe(nativeEl, { attributes: true, attributeFilter: ['value'] });
+    } catch {}
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
+    // Set string attributes
+    this.setAttr('label', this.label);
+    this.setAttr('hint', this.hint);
+    this.setAttr('placeholder', this.placeholder);
+    this.setAttr('appearance', this.appearance);
+    this.setAttr('size', this.size);
+    this.setAttr('placement', this.placement);
+    this.setAttr('form', this.form);
+    this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
+
+    // Set boolean attributes (only if true)
+    // First clear booleans then reapply to allow toggling off
+    const host = this.el.nativeElement as HTMLElement;
+    ['pill','with-clear','disabled','multiple','required'].forEach(a => host.removeAttribute(a));
+    this.setBooleanAttr('pill', this.pill);
+    this.setBooleanAttr('with-clear', this.withClear);
+    this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('multiple', this.multiple);
+    this.setBooleanAttr('required', this.required);
+
+    // Styles
+    this.setCssVar('--background-color', this.backgroundColor);
+    this.setCssVar('--border-color', this.borderColor);
+    this.setCssVar('--border-width', this.borderWidth);
+    this.setCssVar('--box-shadow', this.boxShadow);
+    this.setCssVar('--background-color-current', this.backgroundColorCurrent);
+    this.setCssVar('--background-color-hover', this.backgroundColorHover);
+    this.setCssVar('--text-color-current', this.textColorCurrent);
+    this.setCssVar('--text-color-hover', this.textColorHover);
+
+    // Properties
+    if (this.getTag) {
+      (this.el.nativeElement as any).getTag = this.getTag;
+    }
   }
 
   /**
@@ -198,16 +264,36 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   writeValue(value: any): void {
     if (value !== undefined) {
       this.value = value;
-
-      // Handle multiple selection
-      if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
-        if (Array.isArray(value)) {
-          this.setAttr('value', value.join(' '));
+      this.isWriting = true;
+      try {
+        const el: any = this.el.nativeElement;
+        // Reflect to property first
+        if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
+          if (Array.isArray(value)) {
+            this.renderer.setProperty(el, 'value', value);
+            if (value.length === 0) {
+              this.renderer.removeAttribute(el, 'value');
+            } else {
+              this.setAttr('value', value.join(' '));
+            }
+          } else if (value == null || value === '') {
+            this.renderer.setProperty(el, 'value', []);
+            this.renderer.removeAttribute(el, 'value');
+          } else {
+            const parts = String(value).split(' ').filter(v => v !== '');
+            this.renderer.setProperty(el, 'value', parts);
+            this.setAttr('value', parts.join(' '));
+          }
         } else {
-          this.setAttr('value', value);
+          this.renderer.setProperty(el, 'value', value ?? '');
+          if (value == null || value === '') {
+            this.renderer.removeAttribute(el, 'value');
+          } else {
+            this.setAttr('value', String(value));
+          }
         }
-      } else {
-        this.setAttr('value', value);
+      } finally {
+        Promise.resolve().then(() => (this.isWriting = false));
       }
     }
   }
@@ -221,7 +307,13 @@ export class WaSelectWrapperComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.setBooleanAttr('disabled', isDisabled);
+    // Reflect disabled in both property and attribute space
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', !!isDisabled);
+    if (isDisabled) {
+      this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+    } else {
+      this.el.nativeElement.removeAttribute('disabled');
+    }
   }
 }
 

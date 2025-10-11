@@ -1,330 +1,108 @@
 # Textarea Examples
 
-## Basic Usage
+Textarea collects multiline user input. These examples mirror the official sections.
 
+## Basic
 ```html
-<waTextarea></waTextarea>
+<wa-textarea label="Type something', will ya"></wa-textarea>
 ```
 
-## With Label and Placeholder
-
+## Labels
 ```html
-<waTextarea label="Comments" placeholder="Enter your comments here"></waTextarea>
+<wa-textarea label="Comments"></wa-textarea>
 ```
 
-## With Hint
-
+## Hint
 ```html
-<waTextarea 
-  label="Feedback" 
-  hint="Please provide detailed feedback"
-  placeholder="Enter your feedback"
-></waTextarea>
+<wa-textarea label="Feedback" hint="Please tell us what you think."> </wa-textarea>
 ```
 
-## Different Sizes
-
+## Rows
 ```html
-<!-- Small size -->
-<waTextarea label="Small" size="small"></waTextarea>
-
-<!-- Medium size (default) -->
-<waTextarea label="Medium" size="medium"></waTextarea>
-
-<!-- Large size -->
-<waTextarea label="Large" size="large"></waTextarea>
+<wa-textarea rows="2"></wa-textarea>
 ```
 
-## Different Appearances
-
+## Placeholders
 ```html
-<!-- Filled appearance -->
-<waTextarea label="Filled" appearance="filled"></waTextarea>
-
-<!-- Outlined appearance -->
-<waTextarea label="Outlined" appearance="outlined"></waTextarea>
+<wa-textarea placeholder="Type something"></wa-textarea>
 ```
 
-## Rows and Resize Options
-
+## Appearance
 ```html
-<!-- Specify number of rows -->
-<waTextarea label="Fixed Rows" rows="5"></waTextarea>
-
-<!-- No resize -->
-<waTextarea label="No Resize" resize="none"></waTextarea>
-
-<!-- Vertical resize only -->
-<waTextarea label="Vertical Resize" resize="vertical"></waTextarea>
-
-<!-- Horizontal resize only -->
-<waTextarea label="Horizontal Resize" resize="horizontal"></waTextarea>
-
-<!-- Both directions resize -->
-<waTextarea label="Both Directions" resize="both"></waTextarea>
-
-<!-- Auto resize -->
-<waTextarea label="Auto Resize" resize="auto"></waTextarea>
+<wa-textarea placeholder="Type something" appearance="filled"></wa-textarea>
 ```
 
-## Validation
-
+## Disabled
 ```html
-<!-- Required textarea -->
-<waTextarea label="Required Field" [required]="true"></waTextarea>
-
-<!-- Min and max length -->
-<waTextarea 
-  label="Character Count" 
-  [minlength]="10" 
-  [maxlength]="100"
-  hint="Enter between 10 and 100 characters"
-></waTextarea>
+<wa-textarea placeholder="Textarea" disabled></wa-textarea>
 ```
 
-## States
-
+## Value
 ```html
-<!-- Disabled state -->
-<waTextarea label="Disabled" [disabled]="true"></waTextarea>
-
-<!-- Read-only state -->
-<waTextarea 
-  label="Read Only" 
-  [readonly]="true" 
-  value="This content cannot be edited"
-></waTextarea>
+<wa-textarea value="Write something awesome!"></wa-textarea>
 ```
 
-## Custom Styling
-
+## Sizes
 ```html
-<!-- Custom background color -->
-<waTextarea 
-  label="Custom Background" 
-  [backgroundColor]="'#f5f5f5'"
-></waTextarea>
-
-<!-- Custom border -->
-<waTextarea 
-  label="Custom Border" 
-  [borderColor]="'#2196F3'" 
-  [borderWidth]="'2px'"
-></waTextarea>
-
-<!-- Custom box shadow -->
-<waTextarea 
-  label="Custom Shadow" 
-  [boxShadow]="'0 4px 8px rgba(0,0,0,0.1)'"
-></waTextarea>
-
-<!-- Combined custom styling -->
-<waTextarea 
-  label="Custom Styling" 
-  [backgroundColor]="'#f0f8ff'" 
-  [borderColor]="'#4CAF50'" 
-  [borderWidth]="'1px'" 
-  [boxShadow]="'0 2px 4px rgba(0,0,0,0.1)'"
-></waTextarea>
+<wa-textarea placeholder="Small" size="small"></wa-textarea>
+<br />
+<wa-textarea placeholder="Medium" size="medium"></wa-textarea>
+<br />
+<wa-textarea placeholder="Large" size="large"></wa-textarea>
 ```
 
-## Input Modes and Attributes
-
+## Prevent Resizing
 ```html
-<!-- Email input mode -->
-<waTextarea 
-  label="Email Message" 
-  inputmode="email" 
-  autocomplete="email"
-></waTextarea>
-
-<!-- URL input mode -->
-<waTextarea 
-  label="Website Description" 
-  inputmode="url"
-></waTextarea>
-
-<!-- With autocapitalize -->
-<waTextarea 
-  label="Capitalize Sentences" 
-  autocapitalize="sentences"
-></waTextarea>
-
-<!-- With spellcheck -->
-<waTextarea 
-  label="Spellcheck" 
-  [spellcheck]="true"
-></waTextarea>
+<wa-textarea resize="none"></wa-textarea>
 ```
 
-## Using with Angular Forms
+## Expand with Content
+```html
+<wa-textarea resize="auto"></wa-textarea>
+```
 
-### Template-driven Forms
+## Resize horizontal
+```html
+<wa-textarea resize="horizontal"></wa-textarea>
+```
 
+## Resize both
+```html
+<wa-textarea resize="both"></wa-textarea>
+```
+
+---
+
+## Angular bindings (template-driven)
+```html
+<form #f="ngForm">
+  <wa-textarea label="Comments" name="comments" [(ngModel)]="comments"></wa-textarea>
+  <div>Value: {{ comments }}</div>
+</form>
+```
+
+## Event Handling (Angular)
 ```typescript
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { WaTextareaComponent } from '@angular-awesome/directives/text-area';
 
 @Component({
-  selector: 'app-textarea-demo',
+  selector: 'app-textarea-events',
   template: `
-    <form #form="ngForm" (ngSubmit)="onSubmit(form.value)">
-      <waTextarea
-        label="Comments"
-        hint="Please provide your feedback"
-        [(ngModel)]="feedback.comments"
-        name="comments"
-        [required]="true"
-        [minlength]="10"
-      ></waTextarea>
-      
-      <div class="form-actions">
-        <button type="submit" [disabled]="form.invalid">Submit</button>
-      </div>
-      
-      <div *ngIf="submitted">
-        <h3>Submitted Feedback:</h3>
-        <p>{{ feedback.comments }}</p>
-      </div>
-    </form>
-  `,
-  standalone: true,
-  imports: [FormsModule, WaTextareaComponent]
-})
-export class TextareaDemoComponent {
-  feedback = {
-    comments: ''
-  };
-  submitted = false;
-  
-  onSubmit(formValue: any) {
-    this.submitted = true;
-    console.log('Form submitted:', formValue);
-  }
-}
-```
-
-### Reactive Forms
-
-```typescript
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { WaTextareaComponent } from '@angular-awesome/directives/text-area';
-
-@Component({
-  selector: 'app-textarea-reactive-demo',
-  template: `
-    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
-      <waTextarea
-        label="Comments"
-        hint="Please provide your feedback"
-        formControlName="comments"
-        [minlength]="10"
-        [maxlength]="500"
-      ></waTextarea>
-      
-      <waTextarea
-        label="Suggestions"
-        hint="Optional suggestions for improvement"
-        formControlName="suggestions"
-      ></waTextarea>
-      
-      <div class="form-actions">
-        <button type="submit" [disabled]="feedbackForm.invalid">Submit</button>
-      </div>
-      
-      <div *ngIf="submitted">
-        <h3>Submitted Feedback:</h3>
-        <pre>{{ feedbackForm.value | json }}</pre>
-      </div>
-    </form>
-  `,
-  standalone: true,
-  imports: [ReactiveFormsModule, WaTextareaComponent]
-})
-export class TextareaReactiveDemoComponent implements OnInit {
-  feedbackForm!: FormGroup;
-  submitted = false;
-  
-  constructor(private fb: FormBuilder) {}
-  
-  ngOnInit() {
-    this.feedbackForm = this.fb.group({
-      comments: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
-      suggestions: ['']
-    });
-  }
-  
-  onSubmit() {
-    if (this.feedbackForm.valid) {
-      this.submitted = true;
-      console.log('Form submitted:', this.feedbackForm.value);
-    }
-  }
-}
-```
-
-## Event Handling
-
-```typescript
-import { Component } from '@angular/core';
-import { WaTextareaComponent } from '@angular-awesome/directives/text-area';
-
-@Component({
-  selector: 'app-textarea-events-demo',
-  template: `
-    <waTextarea
+    <wa-textarea
       label="Event Demo"
       placeholder="Type something..."
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (invalid)="onInvalid($event)"
-    ></waTextarea>
-    
-    <div class="event-log">
-      <h3>Event Log:</h3>
-      <ul>
-        <li *ngFor="let event of eventLog">{{ event }}</li>
-      </ul>
-    </div>
-  `,
-  standalone: true,
-  imports: [WaTextareaComponent]
+      (focusEvent)="log('focus')"
+      (blurEvent)="log('blur')"
+      (inputEvent)="log('input')"
+      (changeEvent)="log('change')"
+      (invalid)="log('invalid')"
+    ></wa-textarea>
+
+    <ul><li *ngFor="let e of events">{{ e }}</li></ul>
+  `
 })
-export class TextareaEventsDemoComponent {
-  eventLog: string[] = [];
-  
-  onFocus(event: FocusEvent) {
-    this.logEvent('Focus event');
-  }
-  
-  onBlur(event: FocusEvent) {
-    this.logEvent('Blur event');
-  }
-  
-  onInput(event: Event) {
-    const target = event.target as HTMLTextAreaElement;
-    this.logEvent(`Input event: "${target.value}"`);
-  }
-  
-  onChange(event: Event) {
-    const target = event.target as HTMLTextAreaElement;
-    this.logEvent(`Change event: "${target.value}"`);
-  }
-  
-  onInvalid(event: CustomEvent) {
-    this.logEvent(`Invalid event: ${event.detail}`);
-  }
-  
-  private logEvent(message: string) {
-    this.eventLog.unshift(`${new Date().toLocaleTimeString()}: ${message}`);
-    // Keep only the last 10 events
-    if (this.eventLog.length > 10) {
-      this.eventLog.pop();
-    }
-  }
+export class TextareaEventsComponent {
+  events: string[] = [];
+  log(t: string) { this.events.unshift(`${new Date().toLocaleTimeString()}: ${t}`); if (this.events.length>10) this.events.pop(); }
 }
 ```

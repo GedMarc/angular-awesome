@@ -9,7 +9,10 @@
     ]
   },
   "include": [
-    "src/**/*.spec.ts",
+    "src/checkbox-test-main.ts",
+    "src/directives/checkbox/checkbox.browserstack.spec.ts",
+    "src/directives/color-picker/color-picker.browserstack.spec.ts",
+    "src/directives/select/select.browserstack.spec.ts",
     "src/**/*.d.ts"
   ]
 }

@@ -1,4 +1,5 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, inject, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**ple
  * WaColorPickerDirective
@@ -18,9 +19,16 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Outp
  */
 @Directive({
   selector: 'wa-color-picker',
-  standalone: true
+  standalone: true,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => WaColorPickerDirective),
+      multi: true
+    }
+  ]
 })
-export class WaColorPickerDirective implements OnInit, AfterViewInit {
+export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   // Color picker inputs
   @Input() label?: string;
   @Input() hint?: string;
@@ -36,6 +44,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   @Input() form?: string | null;
   @Input() swatches?: string | string[];
 
+  // Direct styling inputs (apply to host element styles)
+  @Input() color?: string;
+  @Input() backgroundColor?: string;
+  @Input() fontSize?: string;
+
   // CSS custom property inputs
   @Input() swatchSize?: string;
   @Input() swatchSpacing?: string;
@@ -49,10 +62,21 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   @Output() focusEvent = new EventEmitter<Event>();
   @Output() blurEvent = new EventEmitter<Event>();
   @Output() waInvalid = new EventEmitter<Event>();
+  @Output() waShow = new EventEmitter<CustomEvent>();
+  @Output() waAfterShow = new EventEmitter<CustomEvent>();
+  @Output() waHide = new EventEmitter<CustomEvent>();
+  @Output() waAfterHide = new EventEmitter<CustomEvent>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+
+  // ControlValueAccessor callbacks
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
+  // Prevent feedback loops when writing programmatically to the element
+  private isWriting = false;
+  private attrObserver?: MutationObserver;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -82,6 +106,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
       }
     }
 
+    // Apply direct styles
+    if (this.color) this.renderer.setStyle(nativeEl, 'color', this.color);
+    if (this.backgroundColor) this.renderer.setStyle(nativeEl, 'background-color', this.backgroundColor);
+    if (this.fontSize) this.renderer.setStyle(nativeEl, 'font-size', this.fontSize);
+
     // Set CSS custom properties
     if (this.swatchSize) this.setCssVar('--swatch-size', this.swatchSize);
     if (this.swatchSpacing) this.setCssVar('--swatch-spacing', this.swatchSpacing);
@@ -90,15 +119,66 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
     if (this.dropdownHeight) this.setCssVar('--dropdown-height', this.dropdownHeight);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'change', (event) => this.change.emit(event));
-    this.renderer.listen(nativeEl, 'input', (event) => this.input.emit(event));
-    this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
-    this.renderer.listen(nativeEl, 'waInvalid', (event) => this.waInvalid.emit(event));
+    this.renderer.listen(nativeEl, 'change', (event: Event) => {
+      this.change.emit(event);
+      // Sync Angular model to current value of the WC
+      const el: any = this.el.nativeElement;
+      // Prefer attribute if present; fallback to property
+      let current = el?.getAttribute?.('value');
+      if (current == null) {
+        current = el?.value ?? null;
+      }
+      this.onChange(current);
+    });
+    this.renderer.listen(nativeEl, 'input', (event: Event) => {
+      this.input.emit(event);
+      // Prefer reading attribute first (WC often reflects to attr), then property
+      const el: any = this.el.nativeElement;
+      let current = el?.getAttribute?.('value');
+      if (current == null) {
+        current = el?.value ?? null;
+      }
+      this.onChange(current);
+    });
+    this.renderer.listen(nativeEl, 'focus', (event: Event) => this.focusEvent.emit(event));
+    this.renderer.listen(nativeEl, 'blur', (event: Event) => {
+      this.blurEvent.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'waInvalid', (event: Event) => this.waInvalid.emit(event));
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: Event) => this.waInvalid.emit(event));
+    this.renderer.listen(nativeEl, 'wa-show', (event: CustomEvent) => this.waShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => this.waHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => this.waAfterHide.emit(event));
+
+    // Observe 'value' attribute changes to keep model in sync when WC reflects updates via attributes
+    try {
+      this.attrObserver = new MutationObserver((mutations) => {
+        if (this.isWriting) { return; }
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'value') {
+            const el: any = this.el.nativeElement;
+            let current = el?.getAttribute?.('value');
+            if (current == null) {
+              current = el?.value ?? null;
+            }
+            this.onChange(current);
+          }
+        }
+      });
+      this.attrObserver.observe(nativeEl, { attributes: true, attributeFilter: ['value'] });
+    } catch {}
   }
 
   ngAfterViewInit() {
     // Any post-initialization logic can go here
+  }
+
+  ngOnDestroy(): void {
+    try {
+      this.attrObserver?.disconnect();
+    } catch {}
   }
 
   /**
@@ -182,6 +262,41 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit {
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setStyle(this.el.nativeElement, name, value);
+    }
+  }
+
+  // ControlValueAccessor implementation
+  writeValue(value: any): void {
+    this.value = value;
+    this.isWriting = true;
+    try {
+      const el: any = this.el.nativeElement;
+      // Reflect to property first if available
+      this.renderer.setProperty(el, 'value', value ?? '');
+      if (value == null || value === '') {
+        // remove attribute if null/empty to clear
+        this.renderer.removeAttribute(el, 'value');
+      } else {
+        this.setAttr('value', String(value));
+      }
+    } finally {
+      Promise.resolve().then(() => (this.isWriting = false));
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.setBooleanAttr('disabled', '');
+    } else {
+      this.el.nativeElement.removeAttribute('disabled');
     }
   }
 }

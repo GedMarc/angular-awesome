@@ -38,6 +38,12 @@ export class WaCopyButtonDirective implements OnInit {
   // Boolean inputs
   @Input() disabled?: boolean | string;
 
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
+
   // Event outputs
   @Output() waCopy = new EventEmitter<void>();
   @Output() waError = new EventEmitter<Error>();
@@ -62,6 +68,9 @@ export class WaCopyButtonDirective implements OnInit {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('disabled', this.disabled);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'waCopy', () => this.waCopy.emit());

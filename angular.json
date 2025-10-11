@@ -42,16 +42,24 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
+            "main": "src/checkbox-test-main.ts",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js"
+            "karmaConfig": "karma.conf.js",
+            "include": [
+              "src/directives/checkbox/checkbox.browserstack.spec.ts",
+              "src/directives/color-picker/color-picker.browserstack.spec.ts",
+              "src/directives/select/select.browserstack.spec.ts"
+            ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

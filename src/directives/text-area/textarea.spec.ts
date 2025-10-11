@@ -6,7 +6,7 @@ import { WaTextareaComponent } from './textarea.component';
 // Create a test host component for the textarea component
 @Component({
   template: `
-    <waTextarea
+    <wa-textarea
       [(ngModel)]="value"
       [label]="label"
       [hint]="hint"
@@ -39,7 +39,7 @@ import { WaTextareaComponent } from './textarea.component';
       (inputEvent)="onInput($event)"
       (changeEvent)="onChange($event)"
       (invalid)="onInvalid($event)"
-    ></waTextarea>
+    ></wa-textarea>
   `,
   standalone: true,
   imports: [WaTextareaComponent, FormsModule]
@@ -123,8 +123,8 @@ describe('WaTextareaComponent', () => {
     hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
 
-    // Get the waTextarea element
-    textareaElement = hostFixture.nativeElement.querySelector('waTextarea');
+    // Get the wa-textarea element
+    textareaElement = hostFixture.nativeElement.querySelector('wa-textarea');
   });
 
   it('should create the textarea component', () => {

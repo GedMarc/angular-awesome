@@ -29,6 +29,9 @@ import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 export class WaPopoverDirective implements OnInit, OnDestroy {
   // String inputs
   @Input() anchor?: string;
+  // Allow using HTML's label-like API: for/htmlFor. We alias to properties that map to `anchor`.
+  @Input('for') forAttr?: string;
+  @Input() htmlFor?: string;
   @Input() placement?: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string;
   @Input() boundary?: 'viewport' | 'scroll' | string;
   @Input() flipFallbackPlacements?: string;
@@ -68,8 +71,13 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    // Prepare lazy content FIRST so we control when it appears
+    // This avoids a race where the component opens before Angular-projected content exists
+    this.captureContentIntoFragment();
+
     // Set string attributes
-    this.setAttr('anchor', this.anchor);
+    const resolvedAnchor = this.anchor ?? this.forAttr ?? this.htmlFor;
+    this.setAttr('anchor', resolvedAnchor);
     this.setAttr('placement', this.placement);
     this.setAttr('boundary', this.boundary);
     this.setAttr('flip-fallback-placements', this.flipFallbackPlacements);
@@ -78,8 +86,7 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
     this.setAttr('sync', this.sync);
     this.setAttr('arrow-placement', this.arrowPlacement);
 
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('active', this.active);
+    // Set boolean attributes (only if true) — DO NOT set `active` yet
     this.setBooleanAttr('arrow', this.arrow);
     this.setBooleanAttr('flip', this.flip);
     this.setBooleanAttr('shift', this.shift);
@@ -92,9 +99,6 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
     this.setNumericAttr('flip-padding', this.flipPadding);
     this.setNumericAttr('shift-padding', this.shiftPadding);
     this.setNumericAttr('auto-size-padding', this.autoSizePadding);
-
-    // Prepare lazy content: move non-anchor nodes into a fragment so they are not rendered initially
-    this.captureContentIntoFragment();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
@@ -117,14 +121,26 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
       this.captureContentIntoFragment();
     });
 
-    // If the popover starts active, ensure content is rendered immediately
-    if (nativeEl.hasAttribute('active')) {
+    // If the popover starts active or `active` input is set, render content BEFORE enabling active
+    const wantsActive = (this.active === true || this.active === 'true' || this.active === '');
+    if (nativeEl.hasAttribute('active') || wantsActive) {
       this.renderContentFromFragment();
+      // Now set active if requested via input so the component opens with content already present
+      if (wantsActive && !nativeEl.hasAttribute('active')) {
+        this.setBooleanAttr('active', true);
+      }
     }
 
     // Store additional unlisten handlers on the element to clean up in ngOnDestroy
     (this as any)._unlistenShowWa = unlistenShowWa;
     (this as any)._unlistenHideWa = unlistenHideWa;
+  }
+
+  ngOnChanges(changes: any): void {
+    if (changes['anchor'] || changes['forAttr'] || changes['htmlFor']) {
+      const resolvedAnchor = this.anchor ?? this.forAttr ?? this.htmlFor;
+      this.setAttr('anchor', resolvedAnchor);
+    }
   }
 
   ngOnDestroy(): void {

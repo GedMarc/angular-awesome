@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, OnChanges, SimpleChanges, inject } from '@angular/core';
 
 /**
  * WaButtonDirective
@@ -19,7 +19,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-button',
   standalone: true
 })
-export class WaButtonDirective implements OnInit {
+export class WaButtonDirective implements OnInit, OnChanges {
   // Appearance inputs
   @Input() variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'inherit' | string;
   @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | string;
@@ -54,6 +54,12 @@ export class WaButtonDirective implements OnInit {
   @Input() color?: string;
   @Input() backgroundColor?: string;
   @Input() fontSize?: string;
+
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
 
   // Event outputs
   @Output() blurEvent = new EventEmitter<Event>();
@@ -95,10 +101,47 @@ export class WaButtonDirective implements OnInit {
     this.setBooleanAttr('loading', this.loading);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);
 
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
     this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
     this.renderer.listen(nativeEl, 'waInvalid', (event) => this.waInvalid.emit(event));
+
+    // Handle data-dialog at click time to avoid timing issues with Angular rendering
+    this.renderer.listen(nativeEl, 'click', (event: Event) => {
+      // Determine the instruction from the cached input or live attribute
+      const raw = (this._dataDialog ?? nativeEl.getAttribute('data-dialog') ?? '').trim();
+      if (!raw) return;
+
+      // Support forms: "open id", "close id", or just "id" (treated as open)
+      let action: 'open' | 'close' = 'open';
+      let target = raw;
+      const parts = raw.split(/\s+/);
+      if (parts.length > 1 && (parts[0] === 'open' || parts[0] === 'close')) {
+        action = parts[0] as 'open' | 'close';
+        target = parts.slice(1).join(' ');
+      }
+
+      // Normalize id (accept leading '#')
+      const id = target.replace(/^#/,'').trim();
+      if (!id) return;
+
+      const dialogEl = document.getElementById(id) as any;
+      if (dialogEl && typeof dialogEl.show === 'function' && typeof dialogEl.hide === 'function') {
+        try {
+          if (action === 'open') {
+            dialogEl.show();
+          } else {
+            dialogEl.hide();
+          }
+          // Prevent default if we handled the action
+          event.preventDefault?.();
+          event.stopPropagation?.();
+        } catch { /* no-op */ }
+      }
+    });
 
     // Apply direct styling inputs
     if (this.color) nativeEl.style.color = this.color;
@@ -150,6 +193,30 @@ export class WaButtonDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Update dynamic attributes when inputs change after initialization
+    if ('variant' in changes) {
+      this.setOrRemoveAttr('variant', this.variant);
+    }
+    if ('appearance' in changes) {
+      this.setOrRemoveAttr('appearance', this.appearance);
+      // Also set the property to support web components that react to property changes but not attribute mutations
+      (this.el.nativeElement as any).appearance = this.appearance ?? null;
+    }
+    if ('size' in changes) {
+      this.setOrRemoveAttr('size', this.size);
+    }
+  }
+
+  private setOrRemoveAttr(name: string, value: string | null | undefined) {
+    const el = this.el.nativeElement as HTMLElement;
+    if (value == null) {
+      this.renderer.removeAttribute(el, name);
+    } else {
+      this.renderer.setAttribute(el, name, String(value));
     }
   }
 }

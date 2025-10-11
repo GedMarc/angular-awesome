@@ -25,6 +25,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class WaSwitchDirective implements OnInit, ControlValueAccessor {
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Core input attributes
   @Input() disabled?: boolean | string;
   @Input() hint?: string;
@@ -84,6 +89,9 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--thumb-size', this.thumbSize);
     this.setCssVar('--width', this.width);
 
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.inputEvent.emit(event);
@@ -92,6 +100,8 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
+      const target = event.target as HTMLInputElement;
+      this.onChange(!!target.checked);
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);

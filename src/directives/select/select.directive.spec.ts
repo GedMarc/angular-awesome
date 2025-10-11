@@ -339,6 +339,33 @@ describe('WaSelectWrapperComponent', () => {
       expect(selectElement.getAttribute('placement')).toBe(placement);
     });
   });
+
+  it('should update ngModel on change for single selection', () => {
+    hostComponent.multiple = false;
+    hostFixture.detectChanges();
+
+    // Simulate user picking option2 by setting value attribute and dispatching 'change'
+    selectElement.setAttribute('value', 'option2');
+    (selectElement as any).value = 'option2';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.value).toBe('option2');
+  });
+
+  it('should update ngModel on change for multiple selection', () => {
+    hostComponent.multiple = true;
+    hostFixture.detectChanges();
+
+    // Simulate user picking option1 and option3
+    selectElement.setAttribute('value', 'option1 option3');
+    (selectElement as any).value = 'option1 option3';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(Array.isArray(hostComponent.value)).toBeTrue();
+    expect(hostComponent.value).toEqual(['option1', 'option3']);
+  });
 });
 
 describe('WaOptionComponent', () => {

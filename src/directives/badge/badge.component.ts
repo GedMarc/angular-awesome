@@ -1,4 +1,4 @@
-import {Input, ElementRef, OnInit, inject} from '@angular/core';
+import {Input, ElementRef, OnInit, OnChanges, SimpleChanges, inject} from '@angular/core';
 
 /**
  * WaBadgeComponent
@@ -19,9 +19,10 @@ import { Directive,  Renderer2 } from '@angular/core';
   selector: 'wa-badge',
   standalone: true
 })
-export class WaBadgeDirective implements OnInit {
+export class WaBadgeDirective implements OnInit, OnChanges {
   @Input() variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
-  @Input() appearance: 'accent' | 'filled' | 'outlined' = 'accent';
+  // Allowed appearances derived from Java enum: lowercased, underscores replaced with spaces
+  @Input() appearance: 'accent' | 'filled' | 'tinted' | 'outlined' | 'text' | 'plain' | 'filled outlined' | 'accent outlined' | 'plain outlined' | 'tinted outlined' | 'text outlined' = 'accent';
   @Input() pill?: boolean | null;
   @Input() pulse?: boolean | null;
   @Input() fontSize?: string;
@@ -36,6 +37,14 @@ export class WaBadgeDirective implements OnInit {
 
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.setAttr('variant', this.variant);
@@ -43,22 +52,47 @@ export class WaBadgeDirective implements OnInit {
     this.setBoolAttr('pill', this.pill);
     this.setBoolAttr('pulse', this.pulse);
 
-    if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
-    if (this.backgroundColor) nativeEl.style.setProperty('--background-color', this.backgroundColor);
-    if (this.borderColor) nativeEl.style.setProperty('--border-color', this.borderColor);
-    if (this.textColor) nativeEl.style.setProperty('--text-color', this.textColor);
-    if (this.pulseColor) nativeEl.style.setProperty('--pulse-color', this.pulseColor);
+    // Styles
+    this.setStyleValue('fontSize', this.fontSize);
+    this.setCssVar('--background-color', this.backgroundColor);
+    this.setCssVar('--border-color', this.borderColor);
+    this.setCssVar('--text-color', this.textColor);
+    this.setCssVar('--pulse-color', this.pulseColor);
   }
 
-  private setAttr(name: string, value: string | null) {
+  private setAttr(name: string, value: string | null | undefined) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
     if (value != null) {
-      this.renderer.setAttribute(this.el.nativeElement, name, value);
+      this.renderer.setAttribute(nativeEl, name, String(value));
+    } else {
+      this.renderer.removeAttribute(nativeEl, name);
     }
   }
 
   private setBoolAttr(name: string, value: boolean | null | undefined) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
     if (value) {
-      this.renderer.setAttribute(this.el.nativeElement, name, '');
+      this.renderer.setAttribute(nativeEl, name, '');
+    } else {
+      this.renderer.removeAttribute(nativeEl, name);
+    }
+  }
+
+  private setStyleValue(styleProp: 'fontSize', value?: string) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    if (value != null) {
+      (nativeEl.style as any)[styleProp] = value;
+    } else {
+      (nativeEl.style as any)[styleProp] = '';
+    }
+  }
+
+  private setCssVar(varName: string, value?: string) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    if (value != null) {
+      nativeEl.style.setProperty(varName, value);
+    } else {
+      nativeEl.style.removeProperty(varName);
     }
   }
 }

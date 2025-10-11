@@ -10,6 +10,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
+      require('karma-browserstack-launcher'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
@@ -33,7 +34,31 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    browsers: ['Chrome'],
+    // Configure BrowserStack when BS env var is set
+    // If BROWSERSTACK_USERNAME / BROWSERSTACK_ACCESS_KEY are not set in the environment
+    // and BS=true, fallback to the provided defaults below. WARNING: hardcoded credentials
+    // are for convenience only and should be rotated if exposed.
+    browsers: process.env.BS ? ['bs_chrome'] : ['Chrome'],
+    browserStack: process.env.BS ? {
+      username: process.env.BROWSERSTACK_USERNAME || 'marcmagon1',
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY || 'P7pnVbL7JBJ732Spjr39',
+      project: 'AngularAwesome',
+      build: process.env.BUILD_TAG || undefined
+    } : undefined,
+    customLaunchers: process.env.BS ? {
+      bs_chrome: {
+        base: 'BrowserStack',
+        browser: 'chrome',
+        browser_version: 'latest',
+        os: 'Windows',
+        os_version: '11'
+      }
+    } : {},
+    captureTimeout: 120000,
+    browserDisconnectTimeout: 120000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 240000,
+    concurrency: 2,
     restartOnFileChange: true
   });
 };

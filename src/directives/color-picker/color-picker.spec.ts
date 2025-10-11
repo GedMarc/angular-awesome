@@ -11,7 +11,7 @@ import { WaColorPickerDirective } from './color-picker.directive';
       [hint]="hint"
       [value]="value"
       [format]="format"
-      [noFormatToggle]="noFormatToggle"
+      [withoutFormatToggle]="noFormatToggle"
       [opacity]="opacity"
       [uppercase]="uppercase"
       [size]="size"
@@ -148,7 +148,7 @@ describe('WaColorPickerDirective', () => {
     hostComponent.required = true;
     hostFixture.detectChanges();
 
-    expect(colorPickerElement.hasAttribute('no-format-toggle')).toBe(true);
+    expect(colorPickerElement.hasAttribute('without-format-toggle')).toBe(true);
     expect(colorPickerElement.hasAttribute('opacity')).toBe(true);
     expect(colorPickerElement.hasAttribute('uppercase')).toBe(true);
     expect(colorPickerElement.hasAttribute('disabled')).toBe(true);
@@ -161,7 +161,7 @@ describe('WaColorPickerDirective', () => {
     hostComponent.required = false;
     hostFixture.detectChanges();
 
-    expect(colorPickerElement.hasAttribute('no-format-toggle')).toBe(false);
+    expect(colorPickerElement.hasAttribute('without-format-toggle')).toBe(false);
     expect(colorPickerElement.hasAttribute('opacity')).toBe(false);
     expect(colorPickerElement.hasAttribute('uppercase')).toBe(false);
     expect(colorPickerElement.hasAttribute('disabled')).toBe(false);

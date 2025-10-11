@@ -169,6 +169,34 @@ describe('WaSwitchDirective', () => {
     expect(switchElement.hasAttribute('checked')).toBe(true);
   });
 
+  it('should update ngModel when native change event fires (user toggles on)', () => {
+    hostComponent.isChecked = false;
+    hostFixture.detectChanges();
+    expect(hostComponent.isChecked).toBeFalse();
+
+    // Simulate the underlying element becoming checked and dispatch 'change'
+    (switchElement as any).checked = true;
+    switchElement.setAttribute('checked', '');
+    switchElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.isChecked).toBeTrue();
+  });
+
+  it('should update ngModel when native change event fires (user toggles off)', () => {
+    hostComponent.isChecked = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('checked')).toBeTrue();
+
+    // Simulate unchecking and dispatch 'change'
+    (switchElement as any).checked = false;
+    switchElement.removeAttribute('checked');
+    switchElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.isChecked).toBeFalse();
+  });
+
   it('should emit events correctly', () => {
     // Simulate input event
     switchElement.dispatchEvent(new Event('input'));

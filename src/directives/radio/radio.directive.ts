@@ -80,8 +80,20 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
     // Set up event listeners
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.input.emit(event);
-      const target = event.target as HTMLInputElement;
-      this.onChange(target.value);
+      // For custom elements, prefer the host element's value property
+      const hostValue = (this.el.nativeElement as any)?.value;
+      const target = event.target as any;
+      const nextValue = hostValue ?? target?.value ?? null;
+      // Keep internal value and attribute in sync for two-way binding
+      this.value = nextValue;
+      if (nextValue == null) {
+        this.renderer.removeAttribute(this.el.nativeElement, 'value');
+        this.renderer.setProperty(this.el.nativeElement, 'value', null);
+      } else {
+        this.renderer.setProperty(this.el.nativeElement, 'value', nextValue);
+        this.renderer.setAttribute(this.el.nativeElement, 'value', String(nextValue));
+      }
+      this.onChange(nextValue);
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.change.emit(event);
@@ -135,9 +147,19 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-      this.setAttr('value', value);
+    // Sync value from model into the host element
+    if (value === undefined) {
+      return; // Angular may call with undefined initially; ignore
+    }
+    this.value = value ?? null;
+    if (value == null) {
+      // Clear selection
+      this.renderer.setProperty(this.el.nativeElement, 'value', null);
+      this.renderer.removeAttribute(this.el.nativeElement, 'value');
+    } else {
+      // Set both the property and the attribute for robust syncing
+      this.renderer.setProperty(this.el.nativeElement, 'value', value);
+      this.renderer.setAttribute(this.el.nativeElement, 'value', String(value));
     }
   }
 
@@ -150,7 +172,14 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.setBooleanAttr('disabled', isDisabled);
+    // Reflect to property as well for custom element parity
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', !!isDisabled);
+    // Add or remove the disabled attribute to match the state
+    if (isDisabled) {
+      this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
+    }
   }
 }
 

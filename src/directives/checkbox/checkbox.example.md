@@ -187,7 +187,7 @@ export class CheckboxExampleComponent {
 <!-- In your template -->
 <wa-checkbox 
   required
-  (checkedChange)="onCheckboxChange($event)"
+  (change)="onCheckboxChange($event)"
   (waInvalid)="onInvalid($event)">
   This field is required
 </wa-checkbox>

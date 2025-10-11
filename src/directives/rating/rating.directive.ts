@@ -21,6 +21,11 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Outp
   standalone: true
 })
 export class WaRatingDirective implements OnInit, AfterViewInit {
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Rating inputs
   @Input() label?: string;
   @Input() value?: number | string;
@@ -68,6 +73,9 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
     if (this.color) nativeEl.style.color = this.color;
     if (this.backgroundColor) nativeEl.style.backgroundColor = this.backgroundColor;
     if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {

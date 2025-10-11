@@ -22,6 +22,11 @@ export class WaTreeItemDirective implements OnChanges {
   @Input() disabled = false;
   @Input() lazy = false;
 
+  /** Optional data payload bound to this tree item. Used for two-way binding via ngModel */
+  @Input() data: any;
+  /** Optional value key; if provided, will be used as value identity */
+  @Input() value: any;
+
   // Outputs
   @Output() expand = new EventEmitter<void>();
   @Output() afterExpand = new EventEmitter<void>();
@@ -73,13 +78,25 @@ export class WaTreeItemDirective implements OnChanges {
   }
 
   ngOnChanges() {
-    const item = this.el.nativeElement;
+    const item = this.el.nativeElement as any;
 
     // Set boolean attributes
     this.setBooleanAttr('expanded', this.expanded);
     this.setBooleanAttr('selected', this.selected);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('lazy', this.lazy);
+
+    // Store data/value on the DOM element for wa-tree to collect
+    if (this.data !== undefined) {
+      item.__waData = this.data;
+    }
+    if (this.value !== undefined) {
+      item.__waValue = this.value;
+      // Mirror as attribute when it's a primitive for potential CSS/selector usage
+      if (typeof this.value === 'string' || typeof this.value === 'number' || typeof this.value === 'boolean') {
+        try { this.renderer.setAttribute(item, 'value', String(this.value)); } catch {}
+      }
+    }
 
     // Apply custom CSS properties for styling
     this.setCssVar('--selection-background-color', this.selectionBackgroundColor);

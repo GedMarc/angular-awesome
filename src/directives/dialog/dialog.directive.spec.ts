@@ -6,7 +6,7 @@ import { WaDialogDirective } from './dialog.directive';
 @Component({
   template: `
     <wa-dialog
-      [open]="open"
+      [(open)]="open"
       [label]="label"
       [withoutHeader]="withoutHeader"
       [lightDismiss]="lightDismiss"
@@ -206,5 +206,113 @@ describe('WaDialogDirective', () => {
     expect(hostComponent.onAfterShow).toHaveBeenCalled();
     expect(hostComponent.onHide).toHaveBeenCalledWith({ source: 'escape' });
     expect(hostComponent.onAfterHide).toHaveBeenCalled();
+  });
+
+  it('should support two-way binding on open and update when dialog closes (light dismiss)', (done) => {
+    hostComponent.open = true;
+    hostComponent.lightDismiss = true;
+    hostFixture.detectChanges();
+
+    expect(dialogElement.hasAttribute('open')).toBeTrue();
+
+    // Simulate the dialog closing itself (e.g. via light dismiss) by removing the 'open' attribute
+    dialogElement.removeAttribute('open');
+
+    // Allow MutationObserver to run
+    setTimeout(() => {
+      hostFixture.detectChanges();
+      expect(hostComponent.open).toBeFalse();
+      done();
+    }, 0);
+  });
+});
+
+
+// Additional host components for alias testing
+@Component({
+  template: `<wa-dialog [light-dismiss]="ld"></wa-dialog>`,
+  standalone: true,
+  imports: [WaDialogDirective]
+})
+class KebabCaseHostComponent { ld = true; }
+
+@Component({
+  template: `<wa-dialog [lightdismiss]="ld"></wa-dialog>`,
+  standalone: true,
+  imports: [WaDialogDirective]
+})
+class NoDashHostComponent { ld = true; }
+
+// Additional tests for input aliasing
+describe('WaDialogDirective input aliasing', () => {
+  it('should accept kebab-case [light-dismiss] binding and reflect attribute', async () => {
+    await TestBed.configureTestingModule({
+      imports: [KebabCaseHostComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(KebabCaseHostComponent);
+    fixture.detectChanges();
+
+    const el: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    expect(el).toBeTruthy();
+    expect(el.hasAttribute('light-dismiss')).toBeTrue();
+  });
+
+  it('should accept no-dash [lightdismiss] binding and reflect attribute', async () => {
+    await TestBed.configureTestingModule({
+      imports: [NoDashHostComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(NoDashHostComponent);
+    fixture.detectChanges();
+
+    const el: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    expect(el).toBeTruthy();
+    expect(el.hasAttribute('light-dismiss')).toBeTrue();
+  });
+});
+
+
+// Static attribute host components for testing bare attributes
+@Component({
+  template: `<wa-dialog light-dismiss></wa-dialog>`,
+  standalone: true,
+  imports: [WaDialogDirective]
+})
+class StaticKebabHostComponent {}
+
+@Component({
+  template: `<wa-dialog lightdismiss></wa-dialog>`,
+  standalone: true,
+  imports: [WaDialogDirective]
+})
+class StaticNoDashHostComponent {}
+
+// Tests for static/bare attribute presence
+describe('WaDialogDirective static attribute handling', () => {
+  it('should reflect bare light-dismiss attribute on rendered element', async () => {
+    await TestBed.configureTestingModule({
+      imports: [StaticKebabHostComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(StaticKebabHostComponent);
+    fixture.detectChanges();
+
+    const el: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    expect(el).toBeTruthy();
+    expect(el.hasAttribute('light-dismiss')).toBeTrue();
+  });
+
+  it('should accept bare no-dash lightdismiss and reflect as light-dismiss', async () => {
+    await TestBed.configureTestingModule({
+      imports: [StaticNoDashHostComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(StaticNoDashHostComponent);
+    fixture.detectChanges();
+
+    const el: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    expect(el).toBeTruthy();
+    expect(el.hasAttribute('light-dismiss')).toBeTrue();
   });
 });

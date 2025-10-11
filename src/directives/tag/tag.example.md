@@ -3,75 +3,75 @@
 ## Basic Usage
 
 ```html
-<wa-tag ngModel>Basic Tag</wa-tag>
+<wa-tag>Basic Tag</wa-tag>
 ```
 
 ## Variants
 
 ```html
 <!-- Brand variant -->
-<wa-tag ngModel variant="brand">Brand</wa-tag>
+<wa-tag variant="brand">Brand</wa-tag>
 
 <!-- Neutral variant -->
-<wa-tag ngModel variant="neutral">Neutral</wa-tag>
+<wa-tag variant="neutral">Neutral</wa-tag>
 
 <!-- Success variant -->
-<wa-tag ngModel variant="success">Success</wa-tag>
+<wa-tag variant="success">Success</wa-tag>
 
 <!-- Warning variant -->
-<wa-tag ngModel variant="warning">Warning</wa-tag>
+<wa-tag variant="warning">Warning</wa-tag>
 
 <!-- Danger variant -->
-<wa-tag ngModel variant="danger">Danger</wa-tag>
+<wa-tag variant="danger">Danger</wa-tag>
 ```
 
 ## Appearances
 
 ```html
 <!-- Accent appearance -->
-<wa-tag ngModel appearance="accent">Accent</wa-tag>
+<wa-tag appearance="accent">Accent</wa-tag>
 
 <!-- Outlined accent appearance -->
-<wa-tag ngModel appearance="outlined accent">Outlined Accent</wa-tag>
+<wa-tag appearance="outlined accent">Outlined Accent</wa-tag>
 
 <!-- Filled appearance -->
-<wa-tag ngModel appearance="filled">Filled</wa-tag>
+<wa-tag appearance="filled">Filled</wa-tag>
 
 <!-- Outlined appearance -->
-<wa-tag ngModel appearance="outlined">Outlined</wa-tag>
+<wa-tag appearance="outlined">Outlined</wa-tag>
 
 <!-- Outlined filled appearance (default) -->
-<wa-tag ngModel appearance="outlined filled">Outlined Filled</wa-tag>
+<wa-tag appearance="outlined filled">Outlined Filled</wa-tag>
 ```
 
 ## Sizes
 
 ```html
 <!-- Small size -->
-<wa-tag ngModel size="small">Small</wa-tag>
+<wa-tag size="small">Small</wa-tag>
 
 <!-- Medium size -->
-<wa-tag ngModel size="medium">Medium</wa-tag>
+<wa-tag size="medium">Medium</wa-tag>
 
 <!-- Large size -->
-<wa-tag ngModel size="large">Large</wa-tag>
+<wa-tag size="large">Large</wa-tag>
 ```
 
 ## Pill Shape
 
 ```html
 <!-- Regular tag -->
-<wa-tag ngModel>Regular</wa-tag>
+<wa-tag>Regular</wa-tag>
 
 <!-- Pill-shaped tag -->
-<wa-tag ngModel [pill]="true">Pill</wa-tag>
+<wa-tag [pill]="true">Pill</wa-tag>
 ```
 
 ## Removable Tags
 
 ```html
 <!-- Non-removable tag -->
-<wa-tag ngModel>Non-removable</wa-tag>
+<wa-tag>Non-removable</wa-tag>
 
 <!-- Removable tag -->
 <wa-tag ngModel [removable]="true" (waRemove)="handleRemove($event)">Removable</wa-tag>

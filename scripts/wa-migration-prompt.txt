@@ -1,0 +1,113 @@
+Web Awesome Angular Migration Prompt (React Types → Angular Wrappers)
+
+Purpose:
+Migrate ONE component per run, alphabetically, using React types as the single source of truth to update Angular wrappers for Web Components. Ensure two-way binding (ControlValueAccessor) for value-like components. Exclude docs/ entirely.
+
+Parameters (fill these each run):
+- COMPONENT_TAG: e.g., wa-button
+- REACT_TYPES_PATH: path(s) to the React type file(s) for this component (inside react/)
+- ANGULAR_WRAPPER_PATH: expected Angular wrapper path for this component (e.g., src/...)
+- CATEGORY: Input | UI | Pattern
+- NOTES: any special considerations
+
+Non-Goals and Constraints:
+- Angular + Web Components only; exclude all other frameworks.
+- Template-driven forms preferred; implement ControlValueAccessor when component is value-like.
+- Exclude docs/ from any edits.
+- React types are the source of truth for props, events, and value semantics.
+- Boolean attributes: render only when truthy (presence/absence), support boolean|string.
+- Number inputs: accept number|string and coerce to number internally.
+- Read attributes first, then properties when syncing values.
+- Support named slots via Angular content projection.
+- Pass through custom events; add typed Angular outputs where helpful.
+- Provide [data-dialog] | [dialog] | [dataDialog] inputs for interactive controls.
+
+Process (execute for COMPONENT_TAG):
+1) Analyze React Types
+   - Extract: props (name, type, default), events (onXxx or CustomEvent map), value semantics (value/checked/selected/multiple), slots, style tokens.
+   - Identify booleans (presence attrs), numeric props, string unions, dialog-related attributes, and any prop vs attribute naming differences.
+
+2) Plan Angular Wrapper
+   - Use native tag selector (COMPONENT_TAG) in a directive by default (component only for complex slot layouts).
+   - Inputs:
+     - Define @Input()s matching native attribute/property names where possible; add aliases only when necessary.
+     - Apply coercion rules: boolean|string and number|string, normalize before reflecting.
+     - Style inputs: map to CSS custom properties via Renderer2.setStyle(host, '--var-name', value).
+   - Outputs:
+     - Re-emit relevant custom events via @Output()s (camelCase aliases allowed) and allow native kebab-case binding.
+   - Dialog integration:
+     - Add inputs: [data-dialog], [dialog], [dataDialog] and reflect to data-dialog attribute when set.
+
+3) Two-Way Binding (if value-like)
+   - Implement ControlValueAccessor: writeValue, registerOnChange, registerOnTouched, setDisabledState.
+   - Event listeners: listen to 'input' and 'change' on host; add 'click' fallback for toggles.
+   - Attribute-first reads: read attribute (e.g., 'value' or presence of 'checked') before falling back to property.
+   - MutationObserver:
+     - Observe 'value' and/or 'checked' and sync to Angular model using onChange (with isWriting guard).
+   - Disabled reflection:
+     - Reflect to property and attribute (el.disabled and set/remove 'disabled').
+   - Multiple selection:
+     - Angular model: string[].
+     - Attribute reflection: space-delimited string.
+     - writeValue: remove attribute when empty, otherwise join array for attribute, set property to array if supported.
+
+4) Initialization and Reflection
+   - Apply attributes/properties upfront; do not touch shadow DOM internals.
+   - Only await customElements.whenDefined(COMPONENT_TAG) if strictly required by the Web Component.
+   - Ensure boolean attributes are present only when truthy and omitted when falsy.
+
+5) Update .rules.md (next to wrapper)
+   - Include:
+     - Inputs with types, coercion behavior, defaults, mapping to attributes/properties.
+     - Outputs/events mapping and payload types.
+     - Value semantics and CVA explanation (including attribute-first reads, observed attributes).
+     - Template-driven forms guidance and name requirement for [(ngModel)] on custom elements.
+     - Slot usage (named slots), and styling map (input → CSS variable).
+     - Dialog integration details and supported input aliases.
+     - Migration notes if React prop names differ from native attributes.
+
+6) Update examples/ (exclude docs/)
+   - Examples should demonstrate:
+     - Literal attribute usage (booleans/numbers without [] bindings).
+     - Two-way binding: [(ngModel)] or [(value)] with name for form compatibility.
+     - Named slot usage (e.g., prefix/suffix/header/footer).
+     - Styling via CSS variables set on the host (by inputs or inline style).
+
+7) Validation and Acceptance Criteria
+   - Type-check passes.
+   - Two-way binding updates the Angular model on input/change (and click fallback where applicable).
+   - MutationObserver correctly syncs external attribute changes without loops (guarded by isWriting).
+   - Boolean attributes: presence-based, accept true/"true"/"" and remove when falsy.
+   - Numbers: accept number|string and coerce.
+   - Multiple: string[] model with space-delimited attribute reflection.
+   - No changes under docs/.
+
+8) Progress Tracking (MIGRATION_PROGRESS.md)
+   - Add/update an entry under the alphabet section:
+     - [x] COMPONENT_TAG — Updated wrapper, rules, examples — YYYY-MM-DD
+       - Wrapper: ANGULAR_WRAPPER_PATH
+       - Rules:   (path to .rules.md)
+       - Example: (path to example)
+       - Notes:   (brief)
+   - If blocked, mark as [blocked] and add a note with follow-ups.
+
+Output (deliverables for this run):
+- Wrapper code updates (directive/component as applicable) implementing inputs/outputs, coercion, CVA, events, styling, dialog aliases.
+- Updated .rules.md next to wrapper documenting API and usage.
+- Updated example(s) under examples/.
+- Updated MIGRATION_PROGRESS.md with a checked entry, date, and links.
+
+Checklist (copy/paste and fill for COMPONENT_TAG):
+- [ ] React types reviewed: REACT_TYPES_PATH
+- [ ] Inputs mapped with coercion
+- [ ] Outputs (events) mapped and typed
+- [ ] CVA implemented (if value-like)
+- [ ] Attribute-first reads; MutationObserver added
+- [ ] Disabled reflection to prop + attr
+- [ ] Multiple selection (if applicable)
+- [ ] Style inputs → CSS vars
+- [ ] Dialog input aliases
+- [ ] .rules.md updated
+- [ ] examples/ updated (binding + slots + styling)
+- [ ] MIGRATION_PROGRESS.md updated
+- [ ] Next component chosen alphabetically

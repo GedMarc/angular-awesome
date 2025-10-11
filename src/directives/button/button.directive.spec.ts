@@ -222,4 +222,43 @@ describe('WaButtonDirective', () => {
     expect(hostComponent.onFocus).toHaveBeenCalled();
     expect(hostComponent.onInvalid).toHaveBeenCalled();
   });
+  it('should open dialog by id on click even if dialog is added later', () => {
+    // Ensure no dialog initially
+    expect(document.getElementById('testDialog')).toBeFalsy();
+
+    // Set data-dialog attribute after init to simulate dynamic usage
+    buttonElement.setAttribute('data-dialog', 'open testDialog');
+
+    // Create dialog element later (after button init)
+    const dialogEl: any = document.createElement('wa-dialog');
+    dialogEl.id = 'testDialog';
+    dialogEl.show = jasmine.createSpy('show');
+    dialogEl.hide = jasmine.createSpy('hide');
+    document.body.appendChild(dialogEl);
+
+    // Click the button
+    buttonElement.click();
+
+    expect(dialogEl.show).toHaveBeenCalled();
+
+    // Cleanup
+    document.body.removeChild(dialogEl);
+  });
+
+  it('should update variant and appearance when inputs change', () => {
+    // Initial values
+    hostComponent.variant = 'neutral';
+    hostComponent.appearance = 'filled';
+    hostFixture.detectChanges();
+    expect(buttonElement.getAttribute('variant')).toBe('neutral');
+    expect(buttonElement.getAttribute('appearance')).toBe('filled');
+
+    // Update values
+    hostComponent.variant = 'danger';
+    hostComponent.appearance = 'outlined';
+    hostFixture.detectChanges();
+
+    expect(buttonElement.getAttribute('variant')).toBe('danger');
+    expect(buttonElement.getAttribute('appearance')).toBe('outlined');
+  });
 });

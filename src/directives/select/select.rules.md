@@ -1,18 +1,13 @@
 # Select Component Rules
 
-📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
+This is the native `<wa-select>` Web Awesome component wrapper. It must be used with the tag name `wa-select` so that the Web Awesome library detects and upgrades it.
 
-## Component Selector
+📌 Follows the general [Web Awesome Angular Rules](../../../RULES.md).
 
-```ts
-@Component({
-  selector: 'wa-select-wrapper',
-})
-```
-
-## Description
-
-Wraps the `<wa-select>` Web Awesome component and provides Angular-style bindings, integration with `ngModel`, and typed outputs. Supports single and multiple selection modes. This wrapper also supports `<wa-option>` elements inside the content projection.
+## Overview
+- Selector: `wa-select` (native tag selector)
+- Purpose: a combobox/select that supports single and multiple selection, works with forms, and exposes rich slots and events.
+- Angular: supports template-driven forms via ControlValueAccessor ([(ngModel)]).
 
 ## Inputs
 
@@ -70,7 +65,7 @@ Wraps the `<wa-select>` Web Awesome component and provides Angular-style binding
 ## Example
 
 ```html
-<wa-select-wrapper
+<wa-select
   [(ngModel)]="selectedOption"
   label="Select one"
   placeholder="Choose an option"
@@ -83,12 +78,101 @@ Wraps the `<wa-select>` Web Awesome component and provides Angular-style binding
   <wa-option value="option-1">Option 1</wa-option>
   <wa-option value="option-2">Option 2</wa-option>
   <wa-option value="option-3">Option 3</wa-option>
-</wa-select-wrapper>
+</wa-select>
 ```
 
 ## Custom Tags for Multi-Select
 
-The wrapper does **not** expose a way to provide a `getTag` callback yet. For advanced tagging scenarios, use native Web Awesome and connect to Angular manually.
+When `multiple` is true, you can customize rendered tags by assigning a function to the element’s `getTag` property. Your function receives the `<wa-option>` element and the tag index and must return a string of HTML or an HTMLElement.
+
+```html
+<wa-select multiple with-clear class="custom-tag">
+  <wa-option value="email" selected>
+    <wa-icon slot="start" name="envelope" variant="solid"></wa-icon>
+    Email
+  </wa-option>
+  <wa-option value="phone" selected>
+    <wa-icon slot="start" name="phone" variant="solid"></wa-icon>
+    Phone
+  </wa-option>
+</wa-select>
+<script type="module">
+  await customElements.whenDefined('wa-select');
+  const el = document.querySelector('.custom-tag');
+  if (el && 'updateComplete' in el) await el.updateComplete;
+  el.getTag = (option) => `<wa-tag with-remove>${option.label || option.textContent?.trim() || ''}</wa-tag>`;
+</script>
+```
+
+## Slots
+- (default) — The listbox options. Must be `<wa-option>` elements. You can use `<wa-divider>` to group items visually.
+- label — The input’s label. Alternatively, use the `label` attribute.
+- start — Presentational element placed at the start of the combobox (e.g., `<wa-icon>`).
+- end — Presentational element placed at the end.
+- clear-icon — Icon used instead of the default clear icon.
+- expand-icon — The icon that rotates when the control opens/closes.
+- hint — Text that describes how to use the input. Alternatively, use the `hint` attribute.
+
+## Attributes & Properties
+- name: string — Control name submitted with form data.
+- value: string | string[] — The select’s value (string for single, array for multi).
+- size: 'small' | 'medium' | 'large' — Size of the control. Default 'medium'.
+- placeholder: string — Placeholder when the select is empty.
+- multiple: boolean — Allows more than one option to be selected.
+- max-options-visible: number — Max number of tags to show when `multiple`. 0 to remove limit. Default 3.
+- disabled: boolean — Disables the control.
+- with-clear: boolean — Shows a clear button when not empty.
+- open: boolean — Reflects whether the menu is open.
+- appearance: 'filled' | 'outlined' — Visual appearance. Default 'outlined'.
+- pill: boolean — Draw rounded edges.
+- label: string — Accessible label (or use slot).
+- placement: 'top' | 'bottom' — Preferred placement. Default 'bottom'.
+- hint: string — Hint (or use slot).
+- with-label: boolean — SSR aid when label is slotted. Shows label on first render.
+- with-hint: boolean — SSR aid when hint is slotted. Shows hint on first render.
+- form: string — Associate control to a form by id when outside.
+- required: boolean — Native required attribute.
+- getTag: Function — Custom tag renderer for multiselect.
+
+## Methods
+- show(): void — Opens the listbox.
+- hide(): void — Closes the listbox.
+- focus(options?: FocusOptions): void — Sets focus.
+- blur(): void — Removes focus.
+
+## Events
+- input — Emitted when the control receives input.
+- change — Emitted when the control’s value changes.
+- focus — Emitted when the control gains focus.
+- blur — Emitted when the control loses focus.
+- wa-clear — Emitted when the value is cleared.
+- wa-show / wa-after-show — When the menu opens / after animations.
+- wa-hide / wa-after-hide — When the menu closes / after animations.
+- wa-invalid — When validity checks fail.
+
+## CSS custom properties
+- --tag-max-size — When using multiple, the max size of tags before content truncates. Default 10ch.
+
+## Custom states
+- :state(blank) — The select is empty.
+
+## CSS parts
+- form-control — Wrapper around label, input, and hint.
+- form-control-label — Label wrapper.
+- form-control-input — Select wrapper.
+- hint — Hint wrapper.
+- combobox — Container that wraps start, end, value, clear icon, and expand button.
+- start — Start slot container.
+- end — End slot container.
+- display-input — Element that displays the selected label.
+- listbox — Listbox container where options are slotted.
+- tags — Container that houses option tags when multiselect is used.
+- tag — Individual tag.
+- tag__content — Tag content part.
+- tag__remove-button — Tag remove button.
+- tag__remove-button__base — Tag remove button base part.
+- clear-button — Clear button.
+- expand-icon — Expand icon container.
 
 ## Option Support
 

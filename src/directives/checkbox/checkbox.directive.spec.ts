@@ -235,7 +235,7 @@ describe('WaCheckboxDirective', () => {
     const blurEvent = new Event('blur');
     const focusEvent = new Event('focus');
     const changeEvent = new Event('change');
-    const invalidEvent = new Event('waInvalid');
+    const invalidEvent = new Event('wa-invalid');
 
     // Dispatch events on the native element
     checkboxElement.dispatchEvent(checkedChangeEvent);
@@ -332,13 +332,58 @@ describe('WaCheckboxDirective - Form Integration', () => {
       expect(component.isChecked).toBeFalse();
       expect(checkboxElement.hasAttribute('checked')).toBeFalse();
 
-      // Simulate user checking the checkbox
+      // Simulate user checking the checkbox via legacy event
       const checkedChangeEvent = new CustomEvent('checkedChange', { detail: true });
       checkboxElement.dispatchEvent(checkedChangeEvent);
       fixture.detectChanges();
 
       // The model should be updated
       expect(component.isChecked).toBeTrue();
+    });
+
+    it('should update ngModel when native change event fires', () => {
+      component.isChecked = false;
+      fixture.detectChanges();
+      expect(component.isChecked).toBeFalse();
+
+      // The directive listens to 'change' and calls onChange with current checked state.
+      // Simulate the underlying element becoming checked before dispatching 'change'.
+      (checkboxElement as any).checked = true;
+      checkboxElement.setAttribute('checked', '');
+      const changeEvent = new Event('change');
+      checkboxElement.dispatchEvent(changeEvent);
+      fixture.detectChanges();
+
+      expect(component.isChecked).toBeTrue();
+    });
+
+    it('should update ngModel when native input event fires', () => {
+      component.isChecked = false;
+      fixture.detectChanges();
+
+      (checkboxElement as any).checked = true;
+      checkboxElement.setAttribute('checked', '');
+      const inputEvent = new Event('input');
+      checkboxElement.dispatchEvent(inputEvent);
+      fixture.detectChanges();
+
+      expect(component.isChecked).toBeTrue();
+    });
+
+    it('should update ngModel back to false when unchecked via change', () => {
+      // Start true in the model and view
+      component.isChecked = true;
+      fixture.detectChanges();
+      expect(checkboxElement.hasAttribute('checked')).toBeTrue();
+
+      // Simulate unchecking by clearing property/attribute then dispatch change
+      (checkboxElement as any).checked = false;
+      checkboxElement.removeAttribute('checked');
+      const changeEvent = new Event('change');
+      checkboxElement.dispatchEvent(changeEvent);
+      fixture.detectChanges();
+
+      expect(component.isChecked).toBeFalse();
     });
 
     it('should update the view when model changes', () => {

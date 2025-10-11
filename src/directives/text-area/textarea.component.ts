@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'waTextarea',
+  selector: 'wa-textarea',
   standalone: true,
   encapsulation: ViewEncapsulation.None,
   template: '',
@@ -25,8 +25,6 @@ import {
     }
   ],
   host: {
-    'is': 'wa-textarea',
-
     '[attr.label]': 'label',
     '[attr.hint]': 'hint',
     '[attr.placeholder]': 'placeholder',

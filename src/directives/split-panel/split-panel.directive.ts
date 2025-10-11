@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
 
 /**
  * WaSplitPanelDirective
@@ -21,7 +21,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
     <ng-content select="[slot=divider]"></ng-content>
   `
 })
-export class WaSplitPanelDirective implements OnInit {
+export class WaSplitPanelDirective implements OnInit, OnChanges {
   // Core input attributes
   @Input() position?: number;
   @Input() positionInPixels?: number;
@@ -48,35 +48,46 @@ export class WaSplitPanelDirective implements OnInit {
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
-
-    // Set numeric attributes
-    this.setNumericAttr('position', this.position);
-    this.setNumericAttr('position-in-pixels', this.positionInPixels);
-    this.setNumericAttr('snap-threshold', this.snapThreshold);
-
-    // Set string attributes
-    this.setAttr('primary', this.primary);
-    this.setAttr('snap', this.snap);
-
-    // Set boolean attributes (only if true)
-    if (this.orientation === 'vertical') {
-      this.renderer.setAttribute(this.el.nativeElement, 'orientation', 'vertical');
-    } else {
-      this.setBooleanAttr('vertical', this.vertical);
-    }
-    this.setBooleanAttr('disabled', this.disabled);
-
-    // Set style attributes
-    this.setCssVar('--divider-color', this.dividerColor);
-    this.setCssVar('--divider-width', this.dividerWidth);
-    this.setCssVar('--divider-hit-area', this.dividerHitArea);
-    this.setCssVar('--min', this.min);
-    this.setCssVar('--max', this.max);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
       this.repositionEvent.emit(event);
     });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
+    // Numeric attributes
+    this.setNumericAttr('position', this.position);
+    this.setNumericAttr('position-in-pixels', this.positionInPixels);
+    this.setNumericAttr('snap-threshold', this.snapThreshold);
+
+    // String attributes
+    this.setAttr('primary', this.primary);
+    this.setAttr('snap', this.snap);
+
+    // Orientation/booleans
+    const host = this.el.nativeElement as HTMLElement;
+    // Clear previous orientation attribute if needed
+    host.removeAttribute('orientation');
+    if (this.orientation === 'vertical') {
+      this.renderer.setAttribute(host, 'orientation', 'vertical');
+    }
+    // Clear boolean attrs before re-applying
+    ['vertical','disabled'].forEach(a => host.removeAttribute(a));
+    this.setBooleanAttr('vertical', this.vertical);
+    this.setBooleanAttr('disabled', this.disabled);
+
+    // CSS custom properties
+    this.setCssVar('--divider-color', this.dividerColor);
+    this.setCssVar('--divider-width', this.dividerWidth);
+    this.setCssVar('--divider-hit-area', this.dividerHitArea);
+    this.setCssVar('--min', this.min);
+    this.setCssVar('--max', this.max);
   }
 
   /**

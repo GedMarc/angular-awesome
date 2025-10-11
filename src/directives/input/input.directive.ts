@@ -141,6 +141,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.change.emit(event);
+      this.onChange((event.target as HTMLInputElement).value);
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);

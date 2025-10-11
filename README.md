@@ -158,3 +158,34 @@ Contributions are welcome through issues and PR's!
 ## 🧾 License
 
 2025 GedMarc
+
+# AngularAwesome
+
+## Running tests on BrowserStack
+
+This project can run its Karma/Jasmine test suite on BrowserStack.
+
+Prerequisites:
+- Create a BrowserStack account and obtain BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY.
+- Install dev dependencies: npm install
+
+Run:
+- Set environment variables and run the BrowserStack test script:
+  - PowerShell (Windows):
+    $env:BROWSERSTACK_USERNAME="marcmagon1"; $env:BROWSERSTACK_ACCESS_KEY="P7pnVbL7JBJ732Spjr39"; npm run test:bs
+  - Bash:
+    BROWSERSTACK_USERNAME="marcmagon1" BROWSERSTACK_ACCESS_KEY="P7pnVbL7JBJ732Spjr39" npm run test:bs
+
+Notes:
+- If you don’t set env vars, karma.conf.js will fall back to the above defaults when BS=true.
+- The config uses a Windows 11 Chrome latest launcher by default.
+- You can set BUILD_TAG to label runs (e.g., BUILD_TAG=CI-123).
+- Locally, you can still run tests with Chrome using: npm test
+- SECURITY: Consider rotating these credentials if this repository becomes public.
+
+### Quick commands (Windows)
+- Run BrowserStack tests via batch file (uses default credentials):
+  - .\bs-test.bat
+  - With build tag: .\bs-test.bat MyBuildTag
+- Run BrowserStack tests via npm one-liner (uses default credentials inline):
+  - npm run test:bs:win

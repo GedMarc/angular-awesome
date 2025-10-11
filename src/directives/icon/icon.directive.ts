@@ -33,6 +33,12 @@ export class WaIconDirective implements OnInit {
   @Input() backgroundColor?: string;
   @Input() fontSize?: string;
 
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
+
   // Duotone icon inputs
   @Input() primaryColor?: string;
   @Input() primaryOpacity?: string;
@@ -67,6 +73,9 @@ export class WaIconDirective implements OnInit {
     this.setCssVar('--primary-opacity', this.primaryOpacity);
     this.setCssVar('--secondary-color', this.secondaryColor);
     this.setCssVar('--secondary-opacity', this.secondaryOpacity);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
   }
 
   /**

@@ -329,6 +329,19 @@ describe('WaInputDirective', () => {
     expect(hostComponent.onInvalid).toHaveBeenCalled();
   });
 
+  it('should update ngModel when native change event fires', () => {
+    hostComponent.value = '';
+    hostFixture.detectChanges();
+
+    // Simulate user typing then blurring causing a change
+    (inputElement as any).value = 'hello world';
+    inputElement.setAttribute('value', 'hello world');
+    inputElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.value).toBe('hello world');
+  });
+
   it('should handle different size values', () => {
     const sizes = ['small', 'medium', 'large', 'inherit'];
 

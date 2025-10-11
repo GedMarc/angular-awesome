@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: 'wa-tag[ngModel]',
+  // Allow using <wa-tag> directly without requiring ngModel
+  selector: 'wa-tag',
   exportAs: 'waTag',
   standalone: true
 })
