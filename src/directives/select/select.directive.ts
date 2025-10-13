@@ -29,7 +29,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
-  @Input() value?: string | string[];
+  @Input() value?: any | any[];
   @Input() label?: string;
   @Input() hint?: string;
   @Input() placeholder?: string;
@@ -72,6 +72,57 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  // Object binding support
+  @Input() valueField?: string; // property name to use as key when value is an object
+  @Input() trackBy?: (item: any) => string; // custom key generator
+  private keyToObject = new Map<string, any>();
+  private objectToKey = new WeakMap<object, string>();
+  private uidCounter = 0;
+
+  private getKeyFor(val: any): string {
+    // primitives and null/undefined -> stringify directly
+    if (val == null) { return ''; }
+    const t = typeof val;
+    if (t !== 'object') { return String(val); }
+    // objects
+    if (this.objectToKey.has(val)) { return this.objectToKey.get(val)!; }
+    let key: string | undefined;
+    try {
+      if (this.trackBy) {
+        key = this.trackBy(val);
+      } else if (this.valueField && (val as any)[this.valueField] != null) {
+        key = String((val as any)[this.valueField]);
+      }
+    } catch {}
+    if (!key) {
+      key = `obj:${++this.uidCounter}`;
+    }
+    this.objectToKey.set(val as object, key);
+    if (!this.keyToObject.has(key)) {
+      this.keyToObject.set(key, val);
+    }
+    return key;
+  }
+
+  /** Register an option's value and return the key to set on DOM */
+  public registerOptionValue(val: any): string {
+    const key = this.getKeyFor(val);
+    // ensure reverse map exists for primitives too, to translate back
+    if (!this.keyToObject.has(key)) {
+      this.keyToObject.set(key, val);
+    }
+    return key;
+  }
+
+  /** Translate raw value(s) from WC back to Angular model values */
+  private mapFromKeys(raw: string | string[]): any | any[] {
+    const mapOne = (k: string) => this.keyToObject.has(k) ? this.keyToObject.get(k) : k;
+    if (Array.isArray(raw)) {
+      return raw.map(mapOne);
+    }
+    return mapOne(raw);
+  }
+
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
@@ -101,12 +152,12 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
         if (Array.isArray(newValue)) {
           // Ensure array if WC already provides it
-          // no-op
         } else {
           newValue = String(newValue).split(' ').filter(v => v !== '');
         }
       }
-      this.onChange(newValue);
+      const mapped = this.mapFromKeys(newValue);
+      this.onChange(mapped);
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
@@ -123,7 +174,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
           newValue = String(newValue).split(' ').filter(v => v !== '');
         }
       }
-      this.onChange(newValue);
+      const mapped = this.mapFromKeys(newValue);
+      this.onChange(mapped);
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
@@ -164,7 +216,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
                 newValue = String(current).split(' ').filter(v => v !== '');
               }
             }
-            this.onChange(newValue);
+            const mapped = this.mapFromKeys(newValue);
+            this.onChange(mapped);
           }
         }
       });
@@ -270,26 +323,29 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
         // Reflect to property first
         if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
           if (Array.isArray(value)) {
-            this.renderer.setProperty(el, 'value', value);
-            if (value.length === 0) {
+            const keys = value.map(v => this.getKeyFor(v));
+            this.renderer.setProperty(el, 'value', keys);
+            if (keys.length === 0) {
               this.renderer.removeAttribute(el, 'value');
             } else {
-              this.setAttr('value', value.join(' '));
+              this.setAttr('value', keys.join(' '));
             }
           } else if (value == null || value === '') {
             this.renderer.setProperty(el, 'value', []);
             this.renderer.removeAttribute(el, 'value');
           } else {
-            const parts = String(value).split(' ').filter(v => v !== '');
-            this.renderer.setProperty(el, 'value', parts);
-            this.setAttr('value', parts.join(' '));
+            const key = this.getKeyFor(value);
+            this.renderer.setProperty(el, 'value', [key]);
+            this.setAttr('value', key);
           }
         } else {
-          this.renderer.setProperty(el, 'value', value ?? '');
           if (value == null || value === '') {
+            this.renderer.setProperty(el, 'value', '');
             this.renderer.removeAttribute(el, 'value');
           } else {
-            this.setAttr('value', String(value));
+            const key = this.getKeyFor(value);
+            this.renderer.setProperty(el, 'value', key);
+            this.setAttr('value', key);
           }
         }
       } finally {
@@ -335,7 +391,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   template: '<ng-content></ng-content>'
 })
 export class WaOptionComponent implements OnInit {
-  @Input() value?: string;
+  @Input() value?: any;
   @Input() label?: string;
   @Input() disabled?: boolean | string;
 
@@ -348,10 +404,21 @@ export class WaOptionComponent implements OnInit {
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private parent = inject(WaSelectWrapperComponent, { optional: true } as any);
 
   ngOnInit() {
-    // Set string attributes
-    this.setAttr('value', this.value);
+    // Compute and set the actual DOM value (string key)
+    let domValue: string | undefined;
+    if (this.value != null) {
+      try {
+        domValue = this.parent ? this.parent.registerOptionValue(this.value) : String(this.value);
+      } catch {
+        domValue = String(this.value);
+      }
+    }
+
+    // Set attributes
+    this.setAttr('value', domValue);
     this.setAttr('label', this.label);
 
     // Set boolean attributes (only if true)
