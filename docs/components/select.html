@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Select Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Select Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-select> provides select functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -330,8 +330,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>With Placeholder and Hint</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Choose an option&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Choose an option&quot;
   placeholder=&quot;Select an option&quot;
   hint=&quot;This is a helpful hint&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -350,8 +350,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>Select with Clear Button</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Select with Clear Button&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Select with Clear Button&quot;
   [withClear]=&quot;true&quot;
   placeholder=&quot;Select an option&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -360,8 +360,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>Multiple Selection</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Multiple Select&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Multiple Select&quot;
   [multiple]=&quot;true&quot;
   placeholder=&quot;Select multiple options&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -371,8 +371,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 
 &lt;!-- With max visible options --&gt;
-&lt;wa-select-wrapper 
-  label=&quot;Multiple Select with Max Visible&quot; 
+&lt;wa-select-wrapper
+  label=&quot;Multiple Select with Max Visible&quot;
   [multiple]=&quot;true&quot;
   [maxOptionsVisible]=&quot;2&quot;
   placeholder=&quot;Select multiple options&quot;&gt;
@@ -383,8 +383,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>Dropdown Placement</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Dropdown on Top&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Dropdown on Top&quot;
   placement=&quot;top&quot;
   placeholder=&quot;Select an option&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -392,8 +392,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
   &lt;wa-option value=&quot;option3&quot;&gt;Option 3&lt;/wa-option&gt;
 &lt;/wa-select-wrapper&gt;
 
-&lt;wa-select-wrapper 
-  label=&quot;Dropdown on Bottom&quot; 
+&lt;wa-select-wrapper
+  label=&quot;Dropdown on Bottom&quot;
   placement=&quot;bottom&quot;
   placeholder=&quot;Select an option&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -403,9 +403,9 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 </code></pre>
 <h2>Disabled States</h2>
 <pre><code class="language-html">&lt;!-- Disabled select --&gt;
-&lt;wa-select-wrapper 
-  label=&quot;Disabled Select&quot; 
-  [disabled]=&quot;true&quot; 
+&lt;wa-select-wrapper
+  label=&quot;Disabled Select&quot;
+  [disabled]=&quot;true&quot;
   value=&quot;option1&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
   &lt;wa-option value=&quot;option2&quot;&gt;Option 2&lt;/wa-option&gt;
@@ -420,8 +420,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>Required Select</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Required Select&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Required Select&quot;
   [required]=&quot;true&quot;
   placeholder=&quot;Select an option&quot;&gt;
   &lt;wa-option value=&quot;option1&quot;&gt;Option 1&lt;/wa-option&gt;
@@ -431,8 +431,8 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Select styling --&gt;
-&lt;wa-select-wrapper 
-  label=&quot;Custom Styled Select&quot; 
+&lt;wa-select-wrapper
+  label=&quot;Custom Styled Select&quot;
   [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
   [borderColor]=&quot;&#39;#6c757d&#39;&quot;
   [borderWidth]=&quot;&#39;2px&#39;&quot;
@@ -444,15 +444,15 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 
 &lt;!-- Option styling --&gt;
 &lt;wa-select-wrapper label=&quot;Custom Styled Options&quot;&gt;
-  &lt;wa-option 
-    value=&quot;option1&quot; 
-    [backgroundColorHover]=&quot;&#39;#e9ecef&#39;&quot; 
+  &lt;wa-option
+    value=&quot;option1&quot;
+    [backgroundColorHover]=&quot;&#39;#e9ecef&#39;&quot;
     [textColorHover]=&quot;&#39;#007bff&#39;&quot;&gt;
     Option with Custom Hover
   &lt;/wa-option&gt;
-  &lt;wa-option 
-    value=&quot;option2&quot; 
-    [backgroundColorCurrent]=&quot;&#39;#cfe2ff&#39;&quot; 
+  &lt;wa-option
+    value=&quot;option2&quot;
+    [backgroundColorCurrent]=&quot;&#39;#cfe2ff&#39;&quot;
     [textColorCurrent]=&quot;&#39;#0d6efd&#39;&quot;&gt;
     Option with Custom Selection
   &lt;/wa-option&gt;
@@ -460,11 +460,11 @@ import { WaSelectDirective } from 'angular-awesome/select';</pre>
 &lt;/wa-select-wrapper&gt;
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Interactive Select&quot; 
-  (inputEvent)=&quot;onSelectInput($event)&quot; 
-  (changeEvent)=&quot;onSelectChange($event)&quot; 
-  (focusEvent)=&quot;onSelectFocus()&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Interactive Select&quot;
+  (inputEvent)=&quot;onSelectInput($event)&quot;
+  (changeEvent)=&quot;onSelectChange($event)&quot;
+  (focusEvent)=&quot;onSelectFocus()&quot;
   (blurEvent)=&quot;onSelectBlur()&quot;
   (clearEvent)=&quot;onSelectClear()&quot;
   (showEvent)=&quot;onDropdownShow()&quot;
@@ -524,13 +524,13 @@ onSelectInvalid(event: CustomEvent): void {
 @Component({
   selector: &#39;app-select-demo&#39;,
   template: `
-    &lt;wa-select-wrapper 
-      [label]=&quot;selectLabel&quot; 
-      [value]=&quot;selectedValue&quot; 
-      [placeholder]=&quot;selectPlaceholder&quot; 
-      [appearance]=&quot;selectAppearance&quot; 
-      [size]=&quot;selectSize&quot; 
-      [required]=&quot;isRequired&quot; 
+    &lt;wa-select-wrapper
+      [label]=&quot;selectLabel&quot;
+      [value]=&quot;selectedValue&quot;
+      [placeholder]=&quot;selectPlaceholder&quot;
+      [appearance]=&quot;selectAppearance&quot;
+      [size]=&quot;selectSize&quot;
+      [required]=&quot;isRequired&quot;
       [disabled]=&quot;isDisabled&quot;
       [multiple]=&quot;isMultiple&quot;
       [withClear]=&quot;isWithClear&quot;
@@ -539,7 +539,7 @@ onSelectInvalid(event: CustomEvent): void {
         {{ option.label }}
       &lt;/wa-option&gt;
     &lt;/wa-select-wrapper&gt;
-    
+
     &lt;div&gt;Selected value: {{ selectedValue }}&lt;/div&gt;
   `
 })
@@ -553,13 +553,13 @@ export class SelectDemoComponent {
   isDisabled = false;
   isMultiple = false;
   isWithClear = true;
-  
+
   options = [
     { value: &#39;option1&#39;, label: &#39;Option 1&#39;, disabled: false },
     { value: &#39;option2&#39;, label: &#39;Option 2&#39;, disabled: false },
     { value: &#39;option3&#39;, label: &#39;Option 3&#39;, disabled: true }
   ];
-  
+
   onSelectionChange(event: Event): void {
     this.selectedValue = (event.target as HTMLSelectElement).value;
     console.log(&#39;Selection changed:&#39;, this.selectedValue);
@@ -568,18 +568,18 @@ export class SelectDemoComponent {
 </code></pre>
 <h2>Using with ngModel</h2>
 <pre><code class="language-html">&lt;form #selectForm=&quot;ngForm&quot;&gt;
-  &lt;wa-select-wrapper 
-    label=&quot;Select your favorite color&quot; 
-    name=&quot;favoriteColor&quot; 
-    [(ngModel)]=&quot;favoriteColor&quot; 
+  &lt;wa-select-wrapper
+    label=&quot;Select your favorite color&quot;
+    name=&quot;favoriteColor&quot;
+    [(ngModel)]=&quot;favoriteColor&quot;
     required&gt;
     &lt;wa-option value=&quot;red&quot;&gt;Red&lt;/wa-option&gt;
     &lt;wa-option value=&quot;green&quot;&gt;Green&lt;/wa-option&gt;
     &lt;wa-option value=&quot;blue&quot;&gt;Blue&lt;/wa-option&gt;
   &lt;/wa-select-wrapper&gt;
-  
+
   &lt;div&gt;Your favorite color is: {{ favoriteColor }}&lt;/div&gt;
-  
+
   &lt;button type=&quot;submit&quot; [disabled]=&quot;selectForm.invalid&quot;&gt;Submit&lt;/button&gt;
 &lt;/form&gt;
 </code></pre>
@@ -597,20 +597,20 @@ interface Country {
   template: `
     &lt;div class=&quot;country-form&quot;&gt;
       &lt;h2&gt;Select Your Country&lt;/h2&gt;
-      
-      &lt;wa-select-wrapper 
-        label=&quot;Country&quot; 
+
+      &lt;wa-select-wrapper
+        label=&quot;Country&quot;
         [withClear]=&quot;true&quot;
         placeholder=&quot;Select your country&quot;
         [(ngModel)]=&quot;selectedCountry&quot;
         (changeEvent)=&quot;onCountryChange($event)&quot;
         [required]=&quot;true&quot;&gt;
-        
+
         &lt;wa-option *ngFor=&quot;let country of countries&quot; [value]=&quot;country.code&quot;&gt;
           {{ country.name }} ({{ country.code }})
         &lt;/wa-option&gt;
       &lt;/wa-select-wrapper&gt;
-      
+
       &lt;div *ngIf=&quot;selectedCountry&quot; class=&quot;selected-country&quot;&gt;
         &lt;h3&gt;Selected Country&lt;/h3&gt;
         &lt;p&gt;Code: {{ getCountryByCode(selectedCountry)?.code }}&lt;/p&gt;
@@ -624,7 +624,7 @@ interface Country {
       max-width: 500px;
       margin: 0 auto;
     }
-    
+
     .selected-country {
       margin-top: 20px;
       padding: 15px;
@@ -637,7 +637,7 @@ interface Country {
 export class CountrySelectorComponent implements OnInit {
   countries: Country[] = [];
   selectedCountry: string = &#39;&#39;;
-  
+
   ngOnInit(): void {
     // In a real app, this would come from an API
     this.countries = [
@@ -658,37 +658,37 @@ export class CountrySelectorComponent implements OnInit {
       { code: &#39;EG&#39;, name: &#39;Egypt&#39;, continent: &#39;Africa&#39; }
     ];
   }
-  
+
   onCountryChange(event: Event): void {
     console.log(&#39;Country changed:&#39;, this.selectedCountry);
   }
-  
+
   getCountryByCode(code: string): Country | undefined {
     return this.countries.find(country =&gt; country.code === code);
   }
 }
 </code></pre>
 <h2>Grouped Options with Custom Styling</h2>
-<pre><code class="language-html">&lt;wa-select-wrapper 
-  label=&quot;Select a Destination&quot; 
+<pre><code class="language-html">&lt;wa-select-wrapper
+  label=&quot;Select a Destination&quot;
   [withClear]=&quot;true&quot;
   placeholder=&quot;Choose a destination&quot;
   [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
   [borderColor]=&quot;&#39;#007bff&#39;&quot;
   [boxShadow]=&quot;&#39;0 0 0 0.2rem rgba(0,123,255,.25)&#39;&quot;&gt;
-  
+
   &lt;!-- Europe --&gt;
   &lt;div style=&quot;padding: 8px 12px; font-weight: bold; color: #6c757d; background-color: #e9ecef;&quot;&gt;Europe&lt;/div&gt;
   &lt;wa-option value=&quot;paris&quot;&gt;Paris, France&lt;/wa-option&gt;
   &lt;wa-option value=&quot;rome&quot;&gt;Rome, Italy&lt;/wa-option&gt;
   &lt;wa-option value=&quot;barcelona&quot;&gt;Barcelona, Spain&lt;/wa-option&gt;
-  
+
   &lt;!-- Asia --&gt;
   &lt;div style=&quot;padding: 8px 12px; font-weight: bold; color: #6c757d; background-color: #e9ecef;&quot;&gt;Asia&lt;/div&gt;
   &lt;wa-option value=&quot;tokyo&quot;&gt;Tokyo, Japan&lt;/wa-option&gt;
   &lt;wa-option value=&quot;bangkok&quot;&gt;Bangkok, Thailand&lt;/wa-option&gt;
   &lt;wa-option value=&quot;singapore&quot;&gt;Singapore&lt;/wa-option&gt;
-  
+
   &lt;!-- Americas --&gt;
   &lt;div style=&quot;padding: 8px 12px; font-weight: bold; color: #6c757d; background-color: #e9ecef;&quot;&gt;Americas&lt;/div&gt;
   &lt;wa-option value=&quot;newyork&quot;&gt;New York, USA&lt;/wa-option&gt;
@@ -701,14 +701,14 @@ export class CountrySelectorComponent implements OnInit {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

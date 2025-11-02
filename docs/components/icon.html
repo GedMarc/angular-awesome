@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Icon Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Icon Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-icon> provides icon functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -181,23 +181,23 @@ import { WaIconDirective } from 'angular-awesome/icon';</pre>
 &lt;/div&gt;
 
 &lt;!-- Using direct styling inputs --&gt;
-&lt;wa-icon 
-  name=&quot;heart&quot; 
-  [color]=&quot;&#39;#ff0000&#39;&quot; 
-  [fontSize]=&quot;&#39;24px&#39;&quot; 
+&lt;wa-icon
+  name=&quot;heart&quot;
+  [color]=&quot;&#39;#ff0000&#39;&quot;
+  [fontSize]=&quot;&#39;24px&#39;&quot;
   [backgroundColor]=&quot;&#39;transparent&#39;&quot;&gt;
 &lt;/wa-icon&gt;
 
 &lt;!-- Dynamic direct styling --&gt;
-&lt;wa-icon 
-  name=&quot;star&quot; 
-  [color]=&quot;isActive ? &#39;#f39c12&#39; : &#39;#cccccc&#39;&quot; 
+&lt;wa-icon
+  name=&quot;star&quot;
+  [color]=&quot;isActive ? &#39;#f39c12&#39; : &#39;#cccccc&#39;&quot;
   [fontSize]=&quot;isLarge ? &#39;2rem&#39; : &#39;1rem&#39;&quot;&gt;
 &lt;/wa-icon&gt;
 </code></pre>
 <h2>Using CSS Custom Properties</h2>
 <pre><code class="language-html">&lt;!-- Using CSS custom property inputs --&gt;
-&lt;wa-icon 
+&lt;wa-icon
   [iconName]=&quot;&#39;info-circle&#39;&quot;
   [iconVariant]=&quot;&#39;solid&#39;&quot;
   [iconSize]=&quot;&#39;2rem&#39;&quot;
@@ -206,7 +206,7 @@ import { WaIconDirective } from 'angular-awesome/icon';</pre>
 &lt;/wa-icon&gt;
 
 &lt;!-- Using style bindings for CSS custom properties --&gt;
-&lt;wa-icon 
+&lt;wa-icon
   [style.--wa-icon-name]=&quot;&#39;info-circle&#39;&quot;
   [style.--wa-icon-variant]=&quot;&#39;solid&#39;&quot;
   [style.--wa-icon-size]=&quot;&#39;2rem&#39;&quot;
@@ -215,31 +215,31 @@ import { WaIconDirective } from 'angular-awesome/icon';</pre>
 &lt;/wa-icon&gt;
 
 &lt;!-- Dynamic CSS custom properties --&gt;
-&lt;wa-icon 
+&lt;wa-icon
   [iconName]=&quot;dynamicIconName&quot;
   [iconColor]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#cccccc&#39;&quot;&gt;
 &lt;/wa-icon&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
-<pre><code class="language-html">&lt;wa-icon 
-  [name]=&quot;iconName&quot; 
-  [family]=&quot;iconFamily&quot; 
+<pre><code class="language-html">&lt;wa-icon
+  [name]=&quot;iconName&quot;
+  [family]=&quot;iconFamily&quot;
   [variant]=&quot;iconVariant&quot;
   [label]=&quot;iconLabel&quot;
   [fixedWidth]=&quot;isFixedWidth&quot;&gt;
 &lt;/wa-icon&gt;
 
 &lt;!-- Conditionally showing different icons --&gt;
-&lt;wa-icon 
-  [name]=&quot;isActive ? &#39;toggle-on&#39; : &#39;toggle-off&#39;&quot; 
+&lt;wa-icon
+  [name]=&quot;isActive ? &#39;toggle-on&#39; : &#39;toggle-off&#39;&quot;
   [variant]=&quot;isActive ? &#39;solid&#39; : &#39;regular&#39;&quot;&gt;
 &lt;/wa-icon&gt;
 
 &lt;!-- Using direct styling with Angular bindings --&gt;
-&lt;wa-icon 
-  [name]=&quot;iconName&quot; 
-  [color]=&quot;iconColor&quot; 
-  [backgroundColor]=&quot;iconBackgroundColor&quot; 
+&lt;wa-icon
+  [name]=&quot;iconName&quot;
+  [color]=&quot;iconColor&quot;
+  [backgroundColor]=&quot;iconBackgroundColor&quot;
   [fontSize]=&quot;iconFontSize&quot;&gt;
 &lt;/wa-icon&gt;
 </code></pre>
@@ -270,14 +270,14 @@ import { WaIconDirective } from 'angular-awesome/icon';</pre>
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

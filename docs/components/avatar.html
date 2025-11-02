@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Avatar Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Avatar Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-avatar> provides avatar functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -143,17 +143,17 @@ import { WaAvatarDirective } from 'angular-awesome/avatar';</pre>
 &lt;wa-avatar initials=&quot;JD&quot; label=&quot;John Doe&quot; [size]=&quot;&#39;4rem&#39;&quot;&gt;&lt;/wa-avatar&gt;
 
 &lt;!-- Custom colors --&gt;
-&lt;wa-avatar 
-  initials=&quot;JD&quot; 
+&lt;wa-avatar
+  initials=&quot;JD&quot;
   label=&quot;John Doe&quot;
-  [backgroundColor]=&quot;&#39;#e6f7ff&#39;&quot; 
+  [backgroundColor]=&quot;&#39;#e6f7ff&#39;&quot;
   [textColor]=&quot;&#39;#0050b3&#39;&quot;&gt;
 &lt;/wa-avatar&gt;
 </code></pre>
 <h2>Using CSS Variables</h2>
 <pre><code class="language-html">&lt;!-- Using style binding for CSS variables --&gt;
-&lt;wa-avatar 
-  initials=&quot;JD&quot; 
+&lt;wa-avatar
+  initials=&quot;JD&quot;
   label=&quot;John Doe&quot;
   [style.--size]=&quot;&#39;3rem&#39;&quot;
   [style.--background-color]=&quot;&#39;lightgray&#39;&quot;
@@ -167,8 +167,8 @@ import { WaAvatarDirective } from 'angular-awesome/avatar';</pre>
 &lt;/wa-avatar&gt;
 </code></pre>
 <h2>Dynamic Content</h2>
-<pre><code class="language-html">&lt;wa-avatar 
-  [image]=&quot;userImage&quot; 
+<pre><code class="language-html">&lt;wa-avatar
+  [image]=&quot;userImage&quot;
   [initials]=&quot;userInitials&quot;
   [label]=&quot;userLabel&quot;
   [shape]=&quot;avatarShape&quot;&gt;
@@ -185,7 +185,7 @@ export class ExampleComponent {
   userInitials = &#39;JD&#39;;
   userLabel = &#39;John Doe&#39;;
   avatarShape: &#39;circle&#39; | &#39;square&#39; | &#39;rounded&#39; = &#39;circle&#39;;
-  
+
   loadUserImage() {
     this.userImage = &#39;assets/avatars/john-doe.jpg&#39;;
   }
@@ -203,7 +203,7 @@ export class ExampleComponent {
 
     &lt;!-- Rendering a list of avatars --&gt;
     &lt;div&gt;
-      &lt;wa-avatar 
+      &lt;wa-avatar
         *ngFor=&quot;let user of users&quot;
         [image]=&quot;user.image&quot;
         [initials]=&quot;user.initials&quot;
@@ -219,7 +219,7 @@ export class ExampleComponent {
   showAvatar = true;
   userImage = &#39;assets/avatars/user.jpg&#39;;
   userLabel = &#39;User profile&#39;;
-  
+
   users = [
     { name: &#39;John Doe&#39;, initials: &#39;JD&#39;, image: &#39;assets/avatars/john.jpg&#39;, avatarShape: &#39;circle&#39; },
     { name: &#39;Jane Smith&#39;, initials: &#39;JS&#39;, image: &#39;assets/avatars/jane.jpg&#39;, avatarShape: &#39;square&#39; },
@@ -232,14 +232,14 @@ export class ExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

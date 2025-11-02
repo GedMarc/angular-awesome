@@ -8,7 +8,7 @@ Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://
 📦 Version: `3.0.0`
 
 ### Version Compatibility
-- Current: 1.2.x is synced with Web Awesome 3.0.0 (stable).
+- Current: 3.0.0 is synced with Web Awesome 3.0.0 (stable).
 - 1.1.x matched Web Awesome 3.0.0-beta6
 - 1.0.4 matched Web Awesome 3.0.0-beta.1
 - 1.0.0 – 1.0.3 matched Web Awesome 3.0.0-alpha.13

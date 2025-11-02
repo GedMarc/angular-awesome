@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Switch Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Switch Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-switch> provides switch functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -143,19 +143,19 @@ import { WaSwitchDirective } from 'angular-awesome/switch';</pre>
 &lt;wa-switch waSwitch [width]=&quot;&#39;60px&#39;&quot; [height]=&quot;&#39;30px&#39;&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Combined custom styling --&gt;
-&lt;wa-switch 
-  waSwitch 
-  [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
-  [backgroundColorChecked]=&quot;&#39;#673AB7&#39;&quot; 
-  [borderColor]=&quot;&#39;#ccc&#39;&quot; 
-  [borderColorChecked]=&quot;&#39;#512DA8&#39;&quot; 
-  [borderWidth]=&quot;&#39;1px&#39;&quot; 
-  [borderStyle]=&quot;&#39;solid&#39;&quot; 
-  [thumbColor]=&quot;&#39;#fff&#39;&quot; 
-  [thumbColorChecked]=&quot;&#39;#fff&#39;&quot; 
-  [thumbSize]=&quot;&#39;18px&#39;&quot; 
-  [thumbShadow]=&quot;&#39;0 0 3px rgba(0,0,0,0.2)&#39;&quot; 
-  [width]=&quot;&#39;50px&#39;&quot; 
+&lt;wa-switch
+  waSwitch
+  [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot;
+  [backgroundColorChecked]=&quot;&#39;#673AB7&#39;&quot;
+  [borderColor]=&quot;&#39;#ccc&#39;&quot;
+  [borderColorChecked]=&quot;&#39;#512DA8&#39;&quot;
+  [borderWidth]=&quot;&#39;1px&#39;&quot;
+  [borderStyle]=&quot;&#39;solid&#39;&quot;
+  [thumbColor]=&quot;&#39;#fff&#39;&quot;
+  [thumbColorChecked]=&quot;&#39;#fff&#39;&quot;
+  [thumbSize]=&quot;&#39;18px&#39;&quot;
+  [thumbShadow]=&quot;&#39;0 0 3px rgba(0,0,0,0.2)&#39;&quot;
+  [width]=&quot;&#39;50px&#39;&quot;
   [height]=&quot;&#39;26px&#39;&quot;
 &gt;&lt;/wa-switch&gt;
 </code></pre>
@@ -171,7 +171,7 @@ import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
       &lt;wa-switch waSwitch [(ngModel)]=&quot;isEnabled&quot; hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
       &lt;p&gt;Feature is {{ isEnabled ? &#39;enabled&#39; : &#39;disabled&#39; }}&lt;/p&gt;
     &lt;/div&gt;
-    
+
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;wa-switch waSwitch [(ngModel)]=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
       &lt;p&gt;Dark mode is {{ darkMode ? &#39;on&#39; : &#39;off&#39; }}&lt;/p&gt;
@@ -192,15 +192,15 @@ import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 @Component({
   selector: &#39;app-switch-events-demo&#39;,
   template: `
-    &lt;wa-switch 
-      waSwitch 
+    &lt;wa-switch
+      waSwitch
       [hint]=&quot;&#39;Notifications&#39;&quot;
       (changeEvent)=&quot;onSwitchChange($event)&quot;
       (inputEvent)=&quot;onSwitchInput($event)&quot;
       (focusEvent)=&quot;onSwitchFocus($event)&quot;
       (blurEvent)=&quot;onSwitchBlur($event)&quot;
     &gt;&lt;/wa-switch&gt;
-    
+
     &lt;div class=&quot;event-log&quot;&gt;
       &lt;p&gt;Last event: {{ lastEvent }}&lt;/p&gt;
     &lt;/div&gt;
@@ -210,24 +210,24 @@ import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 })
 export class SwitchEventsDemoComponent {
   lastEvent = &#39;None&#39;;
-  
+
   onSwitchChange(event: Event) {
     const target = event.target as HTMLInputElement;
     this.lastEvent = `Change: ${target.checked ? &#39;checked&#39; : &#39;unchecked&#39;}`;
     console.log(&#39;Switch changed:&#39;, target.checked);
   }
-  
+
   onSwitchInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.lastEvent = `Input: ${target.checked ? &#39;checked&#39; : &#39;unchecked&#39;}`;
     console.log(&#39;Switch input:&#39;, target.checked);
   }
-  
+
   onSwitchFocus(event: FocusEvent) {
     this.lastEvent = &#39;Focus&#39;;
     console.log(&#39;Switch focused&#39;);
   }
-  
+
   onSwitchBlur(event: FocusEvent) {
     this.lastEvent = &#39;Blur&#39;;
     console.log(&#39;Switch blurred&#39;);
@@ -246,19 +246,19 @@ import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
       &lt;div class=&quot;form-group&quot;&gt;
         &lt;wa-switch waSwitch formControlName=&quot;notifications&quot; hint=&quot;Enable notifications&quot;&gt;&lt;/wa-switch&gt;
       &lt;/div&gt;
-      
+
       &lt;div class=&quot;form-group&quot;&gt;
         &lt;wa-switch waSwitch formControlName=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
       &lt;/div&gt;
-      
+
       &lt;div class=&quot;form-group&quot;&gt;
         &lt;wa-switch waSwitch formControlName=&quot;autoSave&quot; hint=&quot;Auto-save&quot; [disabled]=&quot;!settingsForm.get(&#39;notifications&#39;)?.value&quot;&gt;&lt;/wa-switch&gt;
         &lt;p class=&quot;hint&quot;&gt;Auto-save requires notifications to be enabled&lt;/p&gt;
       &lt;/div&gt;
-      
+
       &lt;button type=&quot;submit&quot;&gt;Save Settings&lt;/button&gt;
     &lt;/form&gt;
-    
+
     &lt;div *ngIf=&quot;submitted&quot;&gt;
       &lt;h3&gt;Saved Settings:&lt;/h3&gt;
       &lt;pre&gt;{{ settingsForm.value | json }}&lt;/pre&gt;
@@ -270,16 +270,16 @@ import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 export class SwitchReactiveFormDemoComponent implements OnInit {
   settingsForm!: FormGroup;
   submitted = false;
-  
+
   constructor(private fb: FormBuilder) {}
-  
+
   ngOnInit() {
     this.settingsForm = this.fb.group({
       notifications: [true],
       darkMode: [false],
       autoSave: [false]
     });
-    
+
     // Disable autoSave when notifications are off
     this.settingsForm.get(&#39;notifications&#39;)?.valueChanges.subscribe(value =&gt; {
       const autoSaveControl = this.settingsForm.get(&#39;autoSave&#39;);
@@ -291,7 +291,7 @@ export class SwitchReactiveFormDemoComponent implements OnInit {
       }
     });
   }
-  
+
   onSubmit() {
     this.submitted = true;
     console.log(&#39;Form submitted:&#39;, this.settingsForm.value);
@@ -303,14 +303,14 @@ export class SwitchReactiveFormDemoComponent implements OnInit {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

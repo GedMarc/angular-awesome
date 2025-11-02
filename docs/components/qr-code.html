@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>QrCode Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>QrCode Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-qr-code> provides qr code functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -114,8 +114,8 @@ import { WaQrCodeDirective } from 'angular-awesome/qr-code';</pre>
 <pre><code class="language-html">&lt;wa-qr-code value=&quot;https://example.com&quot;&gt;&lt;/wa-qr-code&gt;
 </code></pre>
 <h2>With Label</h2>
-<pre><code class="language-html">&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+<pre><code class="language-html">&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   label=&quot;Scan me!&quot;&gt;
 &lt;/wa-qr-code&gt;
 </code></pre>
@@ -126,64 +126,64 @@ import { WaQrCodeDirective } from 'angular-awesome/qr-code';</pre>
 </code></pre>
 <h2>Custom Colors</h2>
 <pre><code class="language-html">&lt;!-- Custom fill color --&gt;
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   [fill]=&quot;&#39;#2196f3&#39;&quot;&gt;
 &lt;/wa-qr-code&gt;
 
 &lt;!-- Custom background color --&gt;
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   [background]=&quot;&#39;#f5f5f5&#39;&quot;&gt;
 &lt;/wa-qr-code&gt;
 
 &lt;!-- Custom fill and background colors --&gt;
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
-  [fill]=&quot;&#39;#4caf50&#39;&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
+  [fill]=&quot;&#39;#4caf50&#39;&quot;
   [background]=&quot;&#39;#e8f5e9&#39;&quot;&gt;
 &lt;/wa-qr-code&gt;
 </code></pre>
 <h2>Rounded Corners</h2>
-<pre><code class="language-html">&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+<pre><code class="language-html">&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   [radius]=&quot;8&quot;&gt;
 &lt;/wa-qr-code&gt;
 </code></pre>
 <h2>Error Correction Levels</h2>
-<pre><code class="language-html">&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+<pre><code class="language-html">&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   errorCorrection=&quot;L&quot;&gt;
 &lt;/wa-qr-code&gt;
 
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   errorCorrection=&quot;M&quot;&gt;
 &lt;/wa-qr-code&gt;
 
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   errorCorrection=&quot;Q&quot;&gt;
 &lt;/wa-qr-code&gt;
 
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   errorCorrection=&quot;H&quot;&gt;
 &lt;/wa-qr-code&gt;
 </code></pre>
 <h2>Custom Styling with CSS Variables</h2>
 <pre><code class="language-html">&lt;!-- Using style inputs --&gt;
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
-  [styleSize]=&quot;&#39;250px&#39;&quot; 
-  [styleFill]=&quot;&#39;#673ab7&#39;&quot; 
-  [styleBackground]=&quot;&#39;#f3e5f5&#39;&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
+  [styleSize]=&quot;&#39;250px&#39;&quot;
+  [styleFill]=&quot;&#39;#673ab7&#39;&quot;
+  [styleBackground]=&quot;&#39;#f3e5f5&#39;&quot;
   [styleRadius]=&quot;&#39;10px&#39;&quot;&gt;
 &lt;/wa-qr-code&gt;
 
 &lt;!-- Using inline styles --&gt;
-&lt;wa-qr-code 
-  value=&quot;https://example.com&quot; 
+&lt;wa-qr-code
+  value=&quot;https://example.com&quot;
   style=&quot;--size: 200px; --fill: #ff5722; --background: #fff3e0; --radius: 5px;&quot;&gt;
 &lt;/wa-qr-code&gt;
 </code></pre>
@@ -194,35 +194,35 @@ import { WaQrCodeDirective } from 'angular-awesome/qr-code';</pre>
   selector: &#39;app-qr-code-demo&#39;,
   template: `
     &lt;div class=&quot;controls&quot;&gt;
-      &lt;wa-input 
-        label=&quot;QR Code Content&quot; 
-        [(ngModel)]=&quot;qrValue&quot; 
+      &lt;wa-input
+        label=&quot;QR Code Content&quot;
+        [(ngModel)]=&quot;qrValue&quot;
         (input)=&quot;updateQrCode()&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        label=&quot;Size&quot; 
-        type=&quot;number&quot; 
-        [(ngModel)]=&quot;qrSize&quot; 
-        min=&quot;100&quot; 
-        max=&quot;500&quot; 
+
+      &lt;wa-input
+        label=&quot;Size&quot;
+        type=&quot;number&quot;
+        [(ngModel)]=&quot;qrSize&quot;
+        min=&quot;100&quot;
+        max=&quot;500&quot;
         step=&quot;50&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        label=&quot;Fill Color&quot; 
-        type=&quot;color&quot; 
+
+      &lt;wa-input
+        label=&quot;Fill Color&quot;
+        type=&quot;color&quot;
         [(ngModel)]=&quot;qrFill&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        label=&quot;Background Color&quot; 
-        type=&quot;color&quot; 
+
+      &lt;wa-input
+        label=&quot;Background Color&quot;
+        type=&quot;color&quot;
         [(ngModel)]=&quot;qrBackground&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-select 
-        label=&quot;Error Correction&quot; 
+
+      &lt;wa-select
+        label=&quot;Error Correction&quot;
         [(ngModel)]=&quot;qrErrorCorrection&quot;&gt;
         &lt;wa-option value=&quot;L&quot;&gt;Low (7%)&lt;/wa-option&gt;
         &lt;wa-option value=&quot;M&quot;&gt;Medium (15%)&lt;/wa-option&gt;
@@ -230,13 +230,13 @@ import { WaQrCodeDirective } from 'angular-awesome/qr-code';</pre>
         &lt;wa-option value=&quot;H&quot;&gt;High (30%)&lt;/wa-option&gt;
       &lt;/wa-select&gt;
     &lt;/div&gt;
-    
+
     &lt;div class=&quot;qr-preview&quot;&gt;
-      &lt;wa-qr-code 
-        [value]=&quot;qrValue&quot; 
-        [size]=&quot;qrSize&quot; 
-        [fill]=&quot;qrFill&quot; 
-        [background]=&quot;qrBackground&quot; 
+      &lt;wa-qr-code
+        [value]=&quot;qrValue&quot;
+        [size]=&quot;qrSize&quot;
+        [fill]=&quot;qrFill&quot;
+        [background]=&quot;qrBackground&quot;
         [errorCorrection]=&quot;qrErrorCorrection&quot;
         [radius]=&quot;qrRadius&quot;
         (focusEvent)=&quot;onFocus()&quot;
@@ -252,15 +252,15 @@ export class QrCodeDemoComponent {
   qrBackground = &#39;#ffffff&#39;;
   qrErrorCorrection = &#39;M&#39;;
   qrRadius = 0;
-  
+
   updateQrCode(): void {
     console.log(&#39;QR code updated with value:&#39;, this.qrValue);
   }
-  
+
   onFocus(): void {
     console.log(&#39;QR code focused&#39;);
   }
-  
+
   onBlur(): void {
     console.log(&#39;QR code blurred&#39;);
   }
@@ -268,14 +268,14 @@ export class QrCodeDemoComponent {
 </code></pre>
 <h2>Using with ngModel</h2>
 <pre><code class="language-html">&lt;form #qrForm=&quot;ngForm&quot;&gt;
-  &lt;wa-qr-code 
-    [(ngModel)]=&quot;qrCodeValue&quot; 
+  &lt;wa-qr-code
+    [(ngModel)]=&quot;qrCodeValue&quot;
     name=&quot;qrCode&quot;&gt;
   &lt;/wa-qr-code&gt;
-  
-  &lt;wa-input 
-    label=&quot;QR Code Value&quot; 
-    [(ngModel)]=&quot;qrCodeValue&quot; 
+
+  &lt;wa-input
+    label=&quot;QR Code Value&quot;
+    [(ngModel)]=&quot;qrCodeValue&quot;
     name=&quot;qrValue&quot;&gt;
   &lt;/wa-input&gt;
 &lt;/form&gt;
@@ -297,64 +297,64 @@ interface ContactInfo {
   template: `
     &lt;div class=&quot;contact-qr-generator&quot;&gt;
       &lt;h2&gt;Contact QR Code Generator&lt;/h2&gt;
-      
+
       &lt;div class=&quot;form-container&quot;&gt;
         &lt;form #contactForm=&quot;ngForm&quot;&gt;
-          &lt;wa-input 
-            label=&quot;Name&quot; 
-            [(ngModel)]=&quot;contact.name&quot; 
-            name=&quot;name&quot; 
+          &lt;wa-input
+            label=&quot;Name&quot;
+            [(ngModel)]=&quot;contact.name&quot;
+            name=&quot;name&quot;
             required
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
-          
-          &lt;wa-input 
-            label=&quot;Phone&quot; 
-            [(ngModel)]=&quot;contact.phone&quot; 
+
+          &lt;wa-input
+            label=&quot;Phone&quot;
+            [(ngModel)]=&quot;contact.phone&quot;
             name=&quot;phone&quot;
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
-          
-          &lt;wa-input 
-            label=&quot;Email&quot; 
-            type=&quot;email&quot; 
-            [(ngModel)]=&quot;contact.email&quot; 
+
+          &lt;wa-input
+            label=&quot;Email&quot;
+            type=&quot;email&quot;
+            [(ngModel)]=&quot;contact.email&quot;
             name=&quot;email&quot;
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
-          
-          &lt;wa-input 
-            label=&quot;Website&quot; 
-            [(ngModel)]=&quot;contact.website&quot; 
+
+          &lt;wa-input
+            label=&quot;Website&quot;
+            [(ngModel)]=&quot;contact.website&quot;
             name=&quot;website&quot;
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
-          
-          &lt;wa-input 
-            label=&quot;Company&quot; 
-            [(ngModel)]=&quot;contact.company&quot; 
+
+          &lt;wa-input
+            label=&quot;Company&quot;
+            [(ngModel)]=&quot;contact.company&quot;
             name=&quot;company&quot;
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
-          
-          &lt;wa-input 
-            label=&quot;Job Title&quot; 
-            [(ngModel)]=&quot;contact.title&quot; 
+
+          &lt;wa-input
+            label=&quot;Job Title&quot;
+            [(ngModel)]=&quot;contact.title&quot;
             name=&quot;title&quot;
             (input)=&quot;generateVCard()&quot;&gt;
           &lt;/wa-input&gt;
         &lt;/form&gt;
       &lt;/div&gt;
-      
+
       &lt;div class=&quot;qr-container&quot;&gt;
-        &lt;wa-qr-code 
-          [value]=&quot;vCardString&quot; 
-          [size]=&quot;250&quot; 
-          [fill]=&quot;&#39;#333333&#39;&quot; 
+        &lt;wa-qr-code
+          [value]=&quot;vCardString&quot;
+          [size]=&quot;250&quot;
+          [fill]=&quot;&#39;#333333&#39;&quot;
           [errorCorrection]=&quot;&#39;H&#39;&quot;
           label=&quot;Scan to add contact&quot;&gt;
         &lt;/wa-qr-code&gt;
-        
+
         &lt;button (click)=&quot;downloadQrCode()&quot;&gt;Download QR Code&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -365,11 +365,11 @@ interface ContactInfo {
       flex-direction: column;
       gap: 20px;
     }
-    
+
     .form-container {
       max-width: 500px;
     }
-    
+
     .qr-container {
       display: flex;
       flex-direction: column;
@@ -387,13 +387,13 @@ export class ContactQrComponent {
     company: &#39;&#39;,
     title: &#39;&#39;
   };
-  
+
   vCardString = &#39;&#39;;
-  
+
   ngOnInit(): void {
     this.generateVCard();
   }
-  
+
   generateVCard(): void {
     this.vCardString = `BEGIN:VCARD
 VERSION:3.0
@@ -405,7 +405,7 @@ ORG:${this.contact.company}
 TITLE:${this.contact.title}
 END:VCARD`;
   }
-  
+
   downloadQrCode(): void {
     // Implementation would use the QR code element to generate an image for download
     console.log(&#39;Downloading QR code...&#39;);
@@ -414,9 +414,9 @@ END:VCARD`;
 </code></pre>
 <h2>QR Code with Logo</h2>
 <pre><code class="language-html">&lt;div class=&quot;qr-with-logo&quot;&gt;
-  &lt;wa-qr-code 
-    value=&quot;https://example.com&quot; 
-    [size]=&quot;250&quot; 
+  &lt;wa-qr-code
+    value=&quot;https://example.com&quot;
+    [size]=&quot;250&quot;
     [errorCorrection]=&quot;&#39;H&#39;&quot;&gt;
     &lt;div class=&quot;logo-container&quot;&gt;
       &lt;img src=&quot;assets/logo.png&quot; alt=&quot;Logo&quot; class=&quot;qr-logo&quot; /&gt;
@@ -429,7 +429,7 @@ END:VCARD`;
     position: relative;
     display: inline-block;
   }
-  
+
   .logo-container {
     position: absolute;
     top: 50%;
@@ -439,7 +439,7 @@ END:VCARD`;
     padding: 5px;
     border-radius: 4px;
   }
-  
+
   .qr-logo {
     width: 40px;
     height: 40px;
@@ -462,72 +462,72 @@ END:VCARD`;
           &lt;wa-option value=&quot;sms&quot;&gt;SMS&lt;/wa-option&gt;
           &lt;wa-option value=&quot;wifi&quot;&gt;WiFi&lt;/wa-option&gt;
         &lt;/wa-select&gt;
-        
+
         &lt;ng-container [ngSwitch]=&quot;selectedType&quot;&gt;
           &lt;!-- URL input --&gt;
-          &lt;wa-input 
-            *ngSwitchCase=&quot;&#39;url&#39;&quot; 
-            label=&quot;Website URL&quot; 
-            [(ngModel)]=&quot;urlValue&quot; 
+          &lt;wa-input
+            *ngSwitchCase=&quot;&#39;url&#39;&quot;
+            label=&quot;Website URL&quot;
+            [(ngModel)]=&quot;urlValue&quot;
             (input)=&quot;updateQrValue()&quot;&gt;
           &lt;/wa-input&gt;
-          
+
           &lt;!-- Text input --&gt;
-          &lt;wa-textarea 
-            *ngSwitchCase=&quot;&#39;text&#39;&quot; 
-            label=&quot;Text Content&quot; 
-            [(ngModel)]=&quot;textValue&quot; 
+          &lt;wa-textarea
+            *ngSwitchCase=&quot;&#39;text&#39;&quot;
+            label=&quot;Text Content&quot;
+            [(ngModel)]=&quot;textValue&quot;
             (input)=&quot;updateQrValue()&quot;&gt;
           &lt;/wa-textarea&gt;
-          
+
           &lt;!-- Email inputs --&gt;
           &lt;ng-container *ngSwitchCase=&quot;&#39;email&#39;&quot;&gt;
-            &lt;wa-input 
-              label=&quot;Email Address&quot; 
-              [(ngModel)]=&quot;emailAddress&quot; 
+            &lt;wa-input
+              label=&quot;Email Address&quot;
+              [(ngModel)]=&quot;emailAddress&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-input&gt;
-            &lt;wa-input 
-              label=&quot;Subject&quot; 
-              [(ngModel)]=&quot;emailSubject&quot; 
+            &lt;wa-input
+              label=&quot;Subject&quot;
+              [(ngModel)]=&quot;emailSubject&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-input&gt;
-            &lt;wa-textarea 
-              label=&quot;Body&quot; 
-              [(ngModel)]=&quot;emailBody&quot; 
+            &lt;wa-textarea
+              label=&quot;Body&quot;
+              [(ngModel)]=&quot;emailBody&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-textarea&gt;
           &lt;/ng-container&gt;
-          
+
           &lt;!-- SMS inputs --&gt;
           &lt;ng-container *ngSwitchCase=&quot;&#39;sms&#39;&quot;&gt;
-            &lt;wa-input 
-              label=&quot;Phone Number&quot; 
-              [(ngModel)]=&quot;smsPhone&quot; 
+            &lt;wa-input
+              label=&quot;Phone Number&quot;
+              [(ngModel)]=&quot;smsPhone&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-input&gt;
-            &lt;wa-textarea 
-              label=&quot;Message&quot; 
-              [(ngModel)]=&quot;smsMessage&quot; 
+            &lt;wa-textarea
+              label=&quot;Message&quot;
+              [(ngModel)]=&quot;smsMessage&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-textarea&gt;
           &lt;/ng-container&gt;
-          
+
           &lt;!-- WiFi inputs --&gt;
           &lt;ng-container *ngSwitchCase=&quot;&#39;wifi&#39;&quot;&gt;
-            &lt;wa-input 
-              label=&quot;Network Name (SSID)&quot; 
-              [(ngModel)]=&quot;wifiSsid&quot; 
+            &lt;wa-input
+              label=&quot;Network Name (SSID)&quot;
+              [(ngModel)]=&quot;wifiSsid&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-input&gt;
-            &lt;wa-input 
-              label=&quot;Password&quot; 
-              [(ngModel)]=&quot;wifiPassword&quot; 
+            &lt;wa-input
+              label=&quot;Password&quot;
+              [(ngModel)]=&quot;wifiPassword&quot;
               (input)=&quot;updateQrValue()&quot;&gt;
             &lt;/wa-input&gt;
-            &lt;wa-select 
-              label=&quot;Security Type&quot; 
-              [(ngModel)]=&quot;wifiSecurity&quot; 
+            &lt;wa-select
+              label=&quot;Security Type&quot;
+              [(ngModel)]=&quot;wifiSecurity&quot;
               (change)=&quot;updateQrValue()&quot;&gt;
               &lt;wa-option value=&quot;WPA&quot;&gt;WPA/WPA2&lt;/wa-option&gt;
               &lt;wa-option value=&quot;WEP&quot;&gt;WEP&lt;/wa-option&gt;
@@ -536,11 +536,11 @@ END:VCARD`;
           &lt;/ng-container&gt;
         &lt;/ng-container&gt;
       &lt;/div&gt;
-      
+
       &lt;div class=&quot;qr-output&quot;&gt;
-        &lt;wa-qr-code 
-          [value]=&quot;qrValue&quot; 
-          [size]=&quot;250&quot; 
+        &lt;wa-qr-code
+          [value]=&quot;qrValue&quot;
+          [size]=&quot;250&quot;
           [errorCorrection]=&quot;&#39;M&#39;&quot;&gt;
         &lt;/wa-qr-code&gt;
       &lt;/div&gt;
@@ -550,31 +550,31 @@ END:VCARD`;
 export class DynamicQrComponent {
   selectedType = &#39;url&#39;;
   qrValue = &#39;&#39;;
-  
+
   // URL type
   urlValue = &#39;https://&#39;;
-  
+
   // Text type
   textValue = &#39;&#39;;
-  
+
   // Email type
   emailAddress = &#39;&#39;;
   emailSubject = &#39;&#39;;
   emailBody = &#39;&#39;;
-  
+
   // SMS type
   smsPhone = &#39;&#39;;
   smsMessage = &#39;&#39;;
-  
+
   // WiFi type
   wifiSsid = &#39;&#39;;
   wifiPassword = &#39;&#39;;
   wifiSecurity = &#39;WPA&#39;;
-  
+
   ngOnInit(): void {
     this.updateQrValue();
   }
-  
+
   updateQrValue(): void {
     switch (this.selectedType) {
       case &#39;url&#39;:
@@ -601,14 +601,14 @@ export class DynamicQrComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

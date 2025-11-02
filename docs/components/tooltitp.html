@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Tooltitp Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Tooltitp Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-tooltitp> provides tooltitp functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -202,12 +202,12 @@ import { WaTooltitpDirective } from 'angular-awesome/tooltitp';</pre>
 
 &lt;!-- Combined custom styling --&gt;
 &lt;button id=&quot;tooltip-custom&quot;&gt;Fully customized&lt;/button&gt;
-&lt;wa-tooltip 
-  for=&quot;tooltip-custom&quot; 
-  [backgroundColor]=&quot;&#39;#212121&#39;&quot; 
-  [borderRadius]=&quot;&#39;8px&#39;&quot; 
-  [maxWidth]=&quot;&#39;250px&#39;&quot; 
-  [padding]=&quot;&#39;12px&#39;&quot; 
+&lt;wa-tooltip
+  for=&quot;tooltip-custom&quot;
+  [backgroundColor]=&quot;&#39;#212121&#39;&quot;
+  [borderRadius]=&quot;&#39;8px&#39;&quot;
+  [maxWidth]=&quot;&#39;250px&#39;&quot;
+  [padding]=&quot;&#39;12px&#39;&quot;
   [arrowSize]=&quot;&#39;8px&#39;&quot;
 &gt;
   A fully customized tooltip with dark background, rounded corners, custom width, padding, and arrow size.
@@ -221,7 +221,7 @@ import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;
   selector: &#39;app-tooltip-events-demo&#39;,
   template: `
     &lt;button id=&quot;tooltip-events&quot;&gt;Hover for events&lt;/button&gt;
-    &lt;wa-tooltip 
+    &lt;wa-tooltip
       for=&quot;tooltip-events&quot;
       (waShow)=&quot;onShow($event)&quot;
       (waAfterShow)=&quot;onAfterShow($event)&quot;
@@ -230,7 +230,7 @@ import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;
     &gt;
       This tooltip triggers events
     &lt;/wa-tooltip&gt;
-    
+
     &lt;div class=&quot;event-log&quot;&gt;
       &lt;p&gt;Last event: {{ lastEvent }}&lt;/p&gt;
     &lt;/div&gt;
@@ -240,22 +240,22 @@ import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;
 })
 export class TooltipEventsDemoComponent {
   lastEvent = &#39;None&#39;;
-  
+
   onShow(event: CustomEvent) {
     this.lastEvent = &#39;Show started&#39;;
     console.log(&#39;Tooltip show started&#39;);
   }
-  
+
   onAfterShow(event: CustomEvent) {
     this.lastEvent = &#39;Show completed&#39;;
     console.log(&#39;Tooltip show completed&#39;);
   }
-  
+
   onHide(event: CustomEvent) {
     this.lastEvent = &#39;Hide started&#39;;
     console.log(&#39;Tooltip hide started&#39;);
   }
-  
+
   onAfterHide(event: CustomEvent) {
     this.lastEvent = &#39;Hide completed&#39;;
     console.log(&#39;Tooltip hide completed&#39;);
@@ -270,15 +270,15 @@ import { WaTooltipDirective } from &#39;@angular-awesome/directives/tooltip&#39;
   selector: &#39;app-dynamic-tooltip-demo&#39;,
   template: `
     &lt;div class=&quot;user-list&quot;&gt;
-      &lt;div 
-        *ngFor=&quot;let user of users; let i = index&quot; 
+      &lt;div
+        *ngFor=&quot;let user of users; let i = index&quot;
         class=&quot;user-item&quot;
         [id]=&quot;&#39;user-&#39; + i&quot;
       &gt;
         {{ user.name }}
       &lt;/div&gt;
-      
-      &lt;wa-tooltip 
+
+      &lt;wa-tooltip
         *ngFor=&quot;let user of users; let i = index&quot;
         [for]=&quot;&#39;user-&#39; + i&quot;
       &gt;
@@ -306,14 +306,14 @@ export class DynamicTooltipDemoComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

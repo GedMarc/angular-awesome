@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>FormatBytes Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>FormatBytes Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-format-bytes> provides format bytes functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -152,10 +152,10 @@ export class FormatBytesExampleComponent {
 &lt;wa-format-bytes [value]=&quot;1024&quot; lang=&quot;ja&quot;&gt;&lt;/wa-format-bytes&gt;
 </code></pre>
 <h2>Combined Options</h2>
-<pre><code class="language-html">&lt;wa-format-bytes 
-  [value]=&quot;1024&quot; 
-  unit=&quot;bit&quot; 
-  display=&quot;long&quot; 
+<pre><code class="language-html">&lt;wa-format-bytes
+  [value]=&quot;1024&quot;
+  unit=&quot;bit&quot;
+  display=&quot;long&quot;
   lang=&quot;de&quot;&gt;
 &lt;/wa-format-bytes&gt;
 </code></pre>
@@ -163,10 +163,10 @@ export class FormatBytesExampleComponent {
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;fileSize&quot;&gt;File Size (bytes):&lt;/label&gt;
-    &lt;input 
-      type=&quot;number&quot; 
-      id=&quot;fileSize&quot; 
-      [(ngModel)]=&quot;fileSize&quot; 
+    &lt;input
+      type=&quot;number&quot;
+      id=&quot;fileSize&quot;
+      [(ngModel)]=&quot;fileSize&quot;
       name=&quot;fileSize&quot;&gt;
   &lt;/div&gt;
 
@@ -178,11 +178,11 @@ export class FormatBytesExampleComponent {
 </code></pre>
 <h2>With Dynamic Values</h2>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;input 
-    type=&quot;range&quot; 
-    [(ngModel)]=&quot;fileSize&quot; 
-    min=&quot;0&quot; 
-    max=&quot;1073741824&quot; 
+  &lt;input
+    type=&quot;range&quot;
+    [(ngModel)]=&quot;fileSize&quot;
+    min=&quot;0&quot;
+    max=&quot;1073741824&quot;
     step=&quot;1024&quot;&gt;
 
   &lt;p&gt;
@@ -238,8 +238,8 @@ export class FormatBytesExampleComponent {
 </code></pre>
 <h2>In a File Upload Component</h2>
 <pre><code class="language-html">&lt;div class=&quot;file-upload&quot;&gt;
-  &lt;input 
-    type=&quot;file&quot; 
+  &lt;input
+    type=&quot;file&quot;
     (change)=&quot;onFileSelected($event)&quot;&gt;
 
   &lt;div *ngIf=&quot;selectedFile&quot;&gt;
@@ -265,14 +265,14 @@ export class FormatBytesExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

@@ -87,14 +87,15 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Spinner Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
-                <p class="subtitle">This Angular wrapper corresponds to the <wa-spinner> Web Awesome component.</p>
+                <h1>Spinner Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle">This Angular wrapper corresponds to the <wa-spinner> Web Awesome component.
+</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -134,8 +135,8 @@ import { WaSpinnerDirective } from 'angular-awesome/spinner';</pre>
 &lt;wa-spinner [indicatorColor]=&quot;&#39;#2196f3&#39;&quot;&gt;&lt;/wa-spinner&gt;
 
 &lt;!-- Combined custom colors --&gt;
-&lt;wa-spinner 
-  [trackColor]=&quot;&#39;#f5f5f5&#39;&quot; 
+&lt;wa-spinner
+  [trackColor]=&quot;&#39;#f5f5f5&#39;&quot;
   [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;
 &lt;/wa-spinner&gt;
 </code></pre>
@@ -145,11 +146,11 @@ import { WaSpinnerDirective } from 'angular-awesome/spinner';</pre>
 &lt;wa-spinner [speed]=&quot;&#39;2s&#39;&quot;&gt;&lt;/wa-spinner&gt;
 </code></pre>
 <h3>Combined Custom Styling</h3>
-<pre><code class="language-html">&lt;wa-spinner 
-  [fontSize]=&quot;&#39;32px&#39;&quot; 
-  [trackWidth]=&quot;&#39;4px&#39;&quot; 
-  [trackColor]=&quot;&#39;#f0f0f0&#39;&quot; 
-  [indicatorColor]=&quot;&#39;#ff4081&#39;&quot; 
+<pre><code class="language-html">&lt;wa-spinner
+  [fontSize]=&quot;&#39;32px&#39;&quot;
+  [trackWidth]=&quot;&#39;4px&#39;&quot;
+  [trackColor]=&quot;&#39;#f0f0f0&#39;&quot;
+  [indicatorColor]=&quot;&#39;#ff4081&#39;&quot;
   [speed]=&quot;&#39;1.5s&#39;&quot;&gt;
 &lt;/wa-spinner&gt;
 </code></pre>
@@ -160,52 +161,52 @@ import { WaSpinnerDirective } from 'angular-awesome/spinner';</pre>
   selector: &#39;app-spinner-demo&#39;,
   template: `
     &lt;div class=&quot;controls&quot;&gt;
-      &lt;wa-input 
-        type=&quot;range&quot; 
-        [(ngModel)]=&quot;spinnerSize&quot; 
+      &lt;wa-input
+        type=&quot;range&quot;
+        [(ngModel)]=&quot;spinnerSize&quot;
         label=&quot;Size&quot;
         min=&quot;16&quot;
         max=&quot;64&quot;
         step=&quot;4&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        type=&quot;range&quot; 
-        [(ngModel)]=&quot;trackWidthValue&quot; 
+
+      &lt;wa-input
+        type=&quot;range&quot;
+        [(ngModel)]=&quot;trackWidthValue&quot;
         label=&quot;Track Width&quot;
         min=&quot;1&quot;
         max=&quot;8&quot;
         step=&quot;1&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        type=&quot;color&quot; 
-        [(ngModel)]=&quot;trackColorValue&quot; 
+
+      &lt;wa-input
+        type=&quot;color&quot;
+        [(ngModel)]=&quot;trackColorValue&quot;
         label=&quot;Track Color&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        type=&quot;color&quot; 
-        [(ngModel)]=&quot;indicatorColorValue&quot; 
+
+      &lt;wa-input
+        type=&quot;color&quot;
+        [(ngModel)]=&quot;indicatorColorValue&quot;
         label=&quot;Indicator Color&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        type=&quot;range&quot; 
-        [(ngModel)]=&quot;speedValue&quot; 
+
+      &lt;wa-input
+        type=&quot;range&quot;
+        [(ngModel)]=&quot;speedValue&quot;
         label=&quot;Animation Speed&quot;
         min=&quot;0.5&quot;
         max=&quot;3&quot;
         step=&quot;0.5&quot;&gt;
       &lt;/wa-input&gt;
     &lt;/div&gt;
-    
+
     &lt;div class=&quot;spinner-preview&quot;&gt;
-      &lt;wa-spinner 
-        [fontSize]=&quot;spinnerSize + &#39;px&#39;&quot; 
-        [trackWidth]=&quot;trackWidthValue + &#39;px&#39;&quot; 
-        [trackColor]=&quot;trackColorValue&quot; 
-        [indicatorColor]=&quot;indicatorColorValue&quot; 
+      &lt;wa-spinner
+        [fontSize]=&quot;spinnerSize + &#39;px&#39;&quot;
+        [trackWidth]=&quot;trackWidthValue + &#39;px&#39;&quot;
+        [trackColor]=&quot;trackColorValue&quot;
+        [indicatorColor]=&quot;indicatorColorValue&quot;
         [speed]=&quot;speedValue + &#39;s&#39;&quot;&gt;
       &lt;/wa-spinner&gt;
     &lt;/div&gt;
@@ -229,9 +230,9 @@ export class SpinnerDemoComponent {
 </code></pre>
 <h3>Loading Overlay</h3>
 <pre><code class="language-html">&lt;div class=&quot;loading-overlay&quot; *ngIf=&quot;isLoading&quot;&gt;
-  &lt;wa-spinner 
-    [fontSize]=&quot;&#39;48px&#39;&quot; 
-    [indicatorColor]=&quot;&#39;#ffffff&#39;&quot; 
+  &lt;wa-spinner
+    [fontSize]=&quot;&#39;48px&#39;&quot;
+    [indicatorColor]=&quot;&#39;#ffffff&#39;&quot;
     [trackColor]=&quot;&#39;rgba(255, 255, 255, 0.3)&#39;&quot;&gt;
   &lt;/wa-spinner&gt;
   &lt;div class=&quot;loading-text&quot;&gt;Loading...&lt;/div&gt;
@@ -251,7 +252,7 @@ export class SpinnerDemoComponent {
     align-items: center;
     z-index: 9999;
   }
-  
+
   .loading-text {
     color: white;
     margin-top: 16px;
@@ -278,16 +279,16 @@ export class SpinnerDemoComponent {
   &lt;div class=&quot;card-header&quot;&gt;
     &lt;h3&gt;User Profile&lt;/h3&gt;
   &lt;/div&gt;
-  
+
   &lt;div class=&quot;card-content&quot;&gt;
     &lt;div *ngIf=&quot;isLoading&quot; class=&quot;loading-container&quot;&gt;
-      &lt;wa-spinner 
-        [fontSize]=&quot;&#39;32px&#39;&quot; 
+      &lt;wa-spinner
+        [fontSize]=&quot;&#39;32px&#39;&quot;
         [indicatorColor]=&quot;&#39;#2196f3&#39;&quot;&gt;
       &lt;/wa-spinner&gt;
       &lt;p&gt;Loading profile data...&lt;/p&gt;
     &lt;/div&gt;
-    
+
     &lt;div *ngIf=&quot;!isLoading&quot; class=&quot;profile-data&quot;&gt;
       &lt;!-- Profile content here --&gt;
     &lt;/div&gt;
@@ -301,17 +302,17 @@ export class SpinnerDemoComponent {
     background-color: white;
     overflow: hidden;
   }
-  
+
   .card-header {
     padding: 16px;
     border-bottom: 1px solid #e0e0e0;
   }
-  
+
   .card-content {
     padding: 16px;
     min-height: 200px;
   }
-  
+
   .loading-container {
     display: flex;
     flex-direction: column;
@@ -338,7 +339,7 @@ interface DashboardSection {
   template: `
     &lt;div class=&quot;dashboard&quot;&gt;
       &lt;h1&gt;Analytics Dashboard&lt;/h1&gt;
-      
+
       &lt;div class=&quot;dashboard-grid&quot;&gt;
         &lt;div class=&quot;dashboard-section&quot; *ngFor=&quot;let section of sections&quot;&gt;
           &lt;div class=&quot;section-header&quot;&gt;
@@ -347,24 +348,24 @@ interface DashboardSection {
               &lt;wa-icon name=&quot;refresh&quot;&gt;&lt;/wa-icon&gt;
             &lt;/button&gt;
           &lt;/div&gt;
-          
+
           &lt;div class=&quot;section-content&quot;&gt;
             &lt;!-- Loading state --&gt;
             &lt;div *ngIf=&quot;section.loading&quot; class=&quot;loading-state&quot;&gt;
-              &lt;wa-spinner 
-                [fontSize]=&quot;&#39;32px&#39;&quot; 
-                [indicatorColor]=&quot;&#39;#2196f3&#39;&quot; 
+              &lt;wa-spinner
+                [fontSize]=&quot;&#39;32px&#39;&quot;
+                [indicatorColor]=&quot;&#39;#2196f3&#39;&quot;
                 [trackColor]=&quot;&#39;#e3f2fd&#39;&quot;&gt;
               &lt;/wa-spinner&gt;
               &lt;p&gt;Loading data...&lt;/p&gt;
             &lt;/div&gt;
-            
+
             &lt;!-- Error state --&gt;
             &lt;div *ngIf=&quot;section.error&quot; class=&quot;error-state&quot;&gt;
               &lt;wa-icon name=&quot;alert-circle&quot; style=&quot;color: #f44336; font-size: 32px;&quot;&gt;&lt;/wa-icon&gt;
               &lt;p&gt;{{ section.errorMessage || &#39;Failed to load data&#39; }}&lt;/p&gt;
             &lt;/div&gt;
-            
+
             &lt;!-- Content state (would be replaced with actual content) --&gt;
             &lt;div *ngIf=&quot;!section.loading &amp;&amp; !section.error&quot; class=&quot;content-state&quot;&gt;
               &lt;!-- Section specific content would go here --&gt;
@@ -375,7 +376,7 @@ interface DashboardSection {
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      
+
       &lt;div class=&quot;dashboard-actions&quot;&gt;
         &lt;button (click)=&quot;refreshAll()&quot; [disabled]=&quot;isAnyLoading()&quot;&gt;
           &lt;wa-spinner *ngIf=&quot;isAnyLoading()&quot; [fontSize]=&quot;&#39;16px&#39;&quot; [indicatorColor]=&quot;&#39;currentColor&#39;&quot;&gt;&lt;/wa-spinner&gt;
@@ -389,21 +390,21 @@ interface DashboardSection {
     .dashboard {
       padding: 20px;
     }
-    
+
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
       margin: 20px 0;
     }
-    
+
     .dashboard-section {
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       background-color: white;
       overflow: hidden;
     }
-    
+
     .section-header {
       padding: 16px;
       border-bottom: 1px solid #e0e0e0;
@@ -411,7 +412,7 @@ interface DashboardSection {
       justify-content: space-between;
       align-items: center;
     }
-    
+
     .section-content {
       padding: 16px;
       min-height: 200px;
@@ -420,7 +421,7 @@ interface DashboardSection {
       justify-content: center;
       align-items: center;
     }
-    
+
     .loading-state, .error-state, .content-state {
       display: flex;
       flex-direction: column;
@@ -430,17 +431,17 @@ interface DashboardSection {
       width: 100%;
       height: 100%;
     }
-    
+
     .error-state {
       color: #f44336;
     }
-    
+
     .dashboard-actions {
       display: flex;
       justify-content: center;
       margin-top: 20px;
     }
-    
+
     button {
       padding: 8px 16px;
       border-radius: 4px;
@@ -452,7 +453,7 @@ interface DashboardSection {
       align-items: center;
       gap: 8px;
     }
-    
+
     button:disabled {
       background-color: #90caf9;
       cursor: not-allowed;
@@ -466,45 +467,45 @@ export class DashboardComponent implements OnInit {
     { id: &#39;traffic&#39;, title: &#39;Traffic Sources&#39;, loading: true, error: false },
     { id: &#39;performance&#39;, title: &#39;Site Performance&#39;, loading: true, error: false }
   ];
-  
+
   ngOnInit(): void {
     // Simulate loading data for each section
     this.sections.forEach(section =&gt; {
       this.loadSectionData(section.id);
     });
   }
-  
+
   loadSectionData(sectionId: string): void {
     const section = this.sections.find(s =&gt; s.id === sectionId);
     if (!section) return;
-    
+
     section.loading = true;
     section.error = false;
-    
+
     // Simulate API call with random timing and occasional errors
     const delay = 1000 + Math.random() * 2000;
     const shouldError = Math.random() &lt; 0.2; // 20% chance of error
-    
+
     setTimeout(() =&gt; {
       section.loading = false;
-      
+
       if (shouldError) {
         section.error = true;
         section.errorMessage = `Failed to load ${section.title} data. Please try again.`;
       }
     }, delay);
   }
-  
+
   refreshSection(sectionId: string): void {
     this.loadSectionData(sectionId);
   }
-  
+
   refreshAll(): void {
     this.sections.forEach(section =&gt; {
       this.loadSectionData(section.id);
     });
   }
-  
+
   isAnyLoading(): boolean {
     return this.sections.some(section =&gt; section.loading);
   }
@@ -515,14 +516,14 @@ export class DashboardComponent implements OnInit {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

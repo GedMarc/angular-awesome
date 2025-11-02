@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>FormatDate Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>FormatDate Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-format-date> provides format date functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -129,7 +129,7 @@ export class FormatDateExampleComponent {
 <h2>Date Formatting Options</h2>
 <h3>Year, Month, Day Formatting</h3>
 <pre><code class="language-html">&lt;!-- Full date (e.g., &quot;January 1, 2023&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -137,7 +137,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Short date (e.g., &quot;Jan 1, 2023&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;short&quot;
@@ -145,7 +145,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Numeric date (e.g., &quot;1/1/2023&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;numeric&quot;
@@ -153,7 +153,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- 2-digit date (e.g., &quot;01/01/23&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;2-digit&quot;
   month=&quot;2-digit&quot;
@@ -162,14 +162,14 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h3>Time Formatting</h3>
 <pre><code class="language-html">&lt;!-- Time only (e.g., &quot;3:30 PM&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   hour=&quot;numeric&quot;
   minute=&quot;numeric&quot;&gt;
 &lt;/wa-format-date&gt;
 
 &lt;!-- Time with seconds (e.g., &quot;3:30:45 PM&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   hour=&quot;numeric&quot;
   minute=&quot;numeric&quot;
@@ -177,7 +177,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- 24-hour time (e.g., &quot;15:30&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   hour=&quot;2-digit&quot;
   minute=&quot;2-digit&quot;
@@ -186,7 +186,7 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h3>Full Date and Time</h3>
 <pre><code class="language-html">&lt;!-- Full date and time (e.g., &quot;January 1, 2023, 3:30 PM&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -196,7 +196,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- With seconds and timezone (e.g., &quot;January 1, 2023, 3:30:45 PM EST&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -209,7 +209,7 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h3>Weekday and Era</h3>
 <pre><code class="language-html">&lt;!-- With weekday (e.g., &quot;Sunday, January 1, 2023&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   weekday=&quot;long&quot;
   year=&quot;numeric&quot;
@@ -218,7 +218,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- With era (e.g., &quot;January 1, 2023 AD&quot;) --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -228,7 +228,7 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h2>Localization</h2>
 <pre><code class="language-html">&lt;!-- German format --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -237,7 +237,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- French format --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -246,7 +246,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Japanese format --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -256,7 +256,7 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h2>Time Zones</h2>
 <pre><code class="language-html">&lt;!-- New York time --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -268,7 +268,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- London time --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -280,7 +280,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Tokyo time --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -293,7 +293,7 @@ export class FormatDateExampleComponent {
 </code></pre>
 <h2>Styling Examples</h2>
 <pre><code class="language-html">&lt;!-- Custom color --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -302,7 +302,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Custom font size --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -311,7 +311,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- Bold text --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -320,7 +320,7 @@ export class FormatDateExampleComponent {
 &lt;/wa-format-date&gt;
 
 &lt;!-- With background --&gt;
-&lt;wa-format-date 
+&lt;wa-format-date
   [date]=&quot;myDate&quot;
   year=&quot;numeric&quot;
   month=&quot;long&quot;
@@ -331,8 +331,8 @@ export class FormatDateExampleComponent {
 
 &lt;!-- Inline display --&gt;
 &lt;p&gt;
-  Today is 
-  &lt;wa-format-date 
+  Today is
+  &lt;wa-format-date
     [date]=&quot;myDate&quot;
     year=&quot;numeric&quot;
     month=&quot;long&quot;
@@ -340,7 +340,7 @@ export class FormatDateExampleComponent {
     display=&quot;inline&quot;&gt;
   &lt;/wa-format-date&gt;
   and the time is
-  &lt;wa-format-date 
+  &lt;wa-format-date
     [date]=&quot;myDate&quot;
     hour=&quot;numeric&quot;
     minute=&quot;numeric&quot;
@@ -352,16 +352,16 @@ export class FormatDateExampleComponent {
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;eventDate&quot;&gt;Event Date:&lt;/label&gt;
-    &lt;input 
-      type=&quot;datetime-local&quot; 
-      id=&quot;eventDate&quot; 
-      [(ngModel)]=&quot;eventDate&quot; 
+    &lt;input
+      type=&quot;datetime-local&quot;
+      id=&quot;eventDate&quot;
+      [(ngModel)]=&quot;eventDate&quot;
       name=&quot;eventDate&quot;&gt;
   &lt;/div&gt;
-  
+
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label&gt;Formatted Date:&lt;/label&gt;
-    &lt;wa-format-date 
+    &lt;wa-format-date
       [date]=&quot;eventDate&quot;
       year=&quot;numeric&quot;
       month=&quot;long&quot;
@@ -388,7 +388,7 @@ export class FormatDateExampleComponent {
       &lt;td&gt;{{ event.name }}&lt;/td&gt;
       &lt;td&gt;{{ event.date }}&lt;/td&gt;
       &lt;td&gt;
-        &lt;wa-format-date 
+        &lt;wa-format-date
           [date]=&quot;event.date&quot;
           year=&quot;numeric&quot;
           month=&quot;long&quot;
@@ -417,8 +417,8 @@ export class FormatDateExampleComponent {
     Event: {{ eventName }}
   &lt;/p&gt;
   &lt;p&gt;
-    Date: 
-    &lt;wa-format-date 
+    Date:
+    &lt;wa-format-date
       [date]=&quot;eventDate&quot;
       year=&quot;numeric&quot;
       month=&quot;long&quot;
@@ -437,12 +437,12 @@ export class FormatDateExampleComponent {
 export class FormatDateExampleComponent {
   eventName = &#39;Annual Conference&#39;;
   eventDate = new Date(&#39;2023-12-15T09:00:00&#39;);
-  
+
   getRelativeTimeString(date: Date): string {
     const now = new Date();
     const diffMs = date.getTime() - now.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays &gt; 0) {
       return `Starts in ${diffDays} days`;
     } else if (diffDays &lt; 0) {
@@ -457,7 +457,7 @@ export class FormatDateExampleComponent {
 <pre><code class="language-html">&lt;div class=&quot;date-range&quot;&gt;
   &lt;div&gt;
     &lt;label&gt;From:&lt;/label&gt;
-    &lt;wa-format-date 
+    &lt;wa-format-date
       [date]=&quot;startDate&quot;
       year=&quot;numeric&quot;
       month=&quot;long&quot;
@@ -466,7 +466,7 @@ export class FormatDateExampleComponent {
   &lt;/div&gt;
   &lt;div&gt;
     &lt;label&gt;To:&lt;/label&gt;
-    &lt;wa-format-date 
+    &lt;wa-format-date
       [date]=&quot;endDate&quot;
       year=&quot;numeric&quot;
       month=&quot;long&quot;
@@ -486,14 +486,14 @@ export class FormatDateExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

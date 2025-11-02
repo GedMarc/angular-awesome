@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Details Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Details Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-details> provides details functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -229,7 +229,7 @@ import { WaDetailsDirective } from 'angular-awesome/details';</pre>
         &lt;wa-option value=&quot;plain&quot;&gt;Plain&lt;/wa-option&gt;
       &lt;/wa-select&gt;
     &lt;/div&gt;
-    
+
     &lt;wa-details
       [summary]=&quot;summary&quot;
       [open]=&quot;isOpen&quot;
@@ -240,10 +240,10 @@ import { WaDetailsDirective } from 'angular-awesome/details';</pre>
       (waAfterShow)=&quot;onAfterShow()&quot;
       (waHide)=&quot;onHide()&quot;
       (waAfterHide)=&quot;onAfterHide()&quot;&gt;
-      
+
       &lt;p&gt;This is the content of the details component.&lt;/p&gt;
       &lt;p&gt;You can include any HTML or Angular components here.&lt;/p&gt;
-      
+
     &lt;/wa-details&gt;
   `,
   styles: [`
@@ -260,27 +260,27 @@ export class DetailsDemoComponent {
   isDisabled = false;
   iconPosition = &#39;end&#39;;
   appearance = &#39;outlined&#39;;
-  
+
   toggleOpen(): void {
     this.isOpen = !this.isOpen;
   }
-  
+
   toggleDisabled(): void {
     this.isDisabled = !this.isDisabled;
   }
-  
+
   onShow(): void {
     console.log(&#39;Details showing&#39;);
   }
-  
+
   onAfterShow(): void {
     console.log(&#39;Details shown&#39;);
   }
-  
+
   onHide(): void {
     console.log(&#39;Details hiding&#39;);
   }
-  
+
   onAfterHide(): void {
     console.log(&#39;Details hidden&#39;);
   }
@@ -297,7 +297,7 @@ import { WaDetailsDirective } from &#39;angular-awesome&#39;;
       &lt;wa-button (click)=&quot;showDetails()&quot;&gt;Show&lt;/wa-button&gt;
       &lt;wa-button (click)=&quot;hideDetails()&quot;&gt;Hide&lt;/wa-button&gt;
     &lt;/div&gt;
-    
+
     &lt;wa-details #detailsElement summary=&quot;Programmatically Controlled&quot;&gt;
       This details element is controlled programmatically using the show() and hide() methods.
     &lt;/wa-details&gt;
@@ -305,37 +305,37 @@ import { WaDetailsDirective } from &#39;angular-awesome&#39;;
 })
 export class DetailsProgrammaticComponent {
   @ViewChild(&#39;detailsElement&#39;) details!: WaDetailsDirective;
-  
+
   showDetails(): void {
     this.details.show();
   }
-  
+
   hideDetails(): void {
     this.details.hide();
   }
 }
 </code></pre>
 <h2>Custom Styling</h2>
-<pre><code class="language-html">&lt;wa-details 
+<pre><code class="language-html">&lt;wa-details
   summary=&quot;Custom Styled Details&quot;
   [spacing]=&quot;&#39;1.5rem&#39;&quot;
   [showDuration]=&quot;&#39;300ms&#39;&quot;
   [hideDuration]=&quot;&#39;300ms&#39;&quot;
   [iconColor]=&quot;&#39;#2196f3&#39;&quot;&gt;
-  
+
   &lt;p&gt;This details element has custom styling applied through Angular inputs.&lt;/p&gt;
-  
+
 &lt;/wa-details&gt;
 
 &lt;style&gt;
   wa-details::part(base) {
     border-color: #2196f3;
   }
-  
+
   wa-details::part(header) {
     background-color: #e3f2fd;
   }
-  
+
   wa-details::part(content) {
     padding: 1.5rem;
     background-color: #f5f5f5;
@@ -347,14 +347,14 @@ export class DetailsProgrammaticComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

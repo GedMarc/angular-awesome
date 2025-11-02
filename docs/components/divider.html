@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Divider Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Divider Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-divider> provides divider functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -124,9 +124,9 @@ import { WaDividerDirective } from 'angular-awesome/divider';</pre>
 &lt;wa-divider [spacing]=&quot;&#39;2rem&#39;&quot;&gt;&lt;/wa-divider&gt;
 
 &lt;!-- Combined custom styling --&gt;
-&lt;wa-divider 
-  [color]=&quot;&#39;#e91e63&#39;&quot; 
-  [width]=&quot;&#39;3px&#39;&quot; 
+&lt;wa-divider
+  [color]=&quot;&#39;#e91e63&#39;&quot;
+  [width]=&quot;&#39;3px&#39;&quot;
   [spacing]=&quot;&#39;1.5rem&#39;&quot;&gt;
 &lt;/wa-divider&gt;
 </code></pre>
@@ -192,17 +192,17 @@ export class DividerExampleComponent {
   dividerWidth = &#39;2px&#39;;
   dividerSpacing = &#39;1rem&#39;;
   isVertical = false;
-  
+
   toggleOrientation() {
     this.isVertical = !this.isVertical;
   }
-  
+
   updateColor(color: string) {
     this.dividerColor = color;
   }
 }
 </code></pre>
-<pre><code class="language-html">&lt;wa-divider 
+<pre><code class="language-html">&lt;wa-divider
   [orientation]=&quot;isVertical ? &#39;vertical&#39; : &#39;horizontal&#39;&quot;
   [color]=&quot;dividerColor&quot;
   [width]=&quot;dividerWidth&quot;
@@ -239,7 +239,7 @@ export class DividerExampleComponent {
 &lt;/wa-dialog&gt;
 </code></pre>
 <h2>Divider with Responsive Styling</h2>
-<pre><code class="language-html">&lt;wa-divider 
+<pre><code class="language-html">&lt;wa-divider
   [width]=&quot;isMobile ? &#39;1px&#39; : &#39;3px&#39;&quot;
   [spacing]=&quot;isMobile ? &#39;0.5rem&#39; : &#39;1.5rem&#39;&quot;&gt;
 &lt;/wa-divider&gt;
@@ -247,7 +247,7 @@ export class DividerExampleComponent {
 <pre><code class="language-typescript">// In your component
 export class DividerExampleComponent {
   isMobile = window.innerWidth &lt; 768;
-  
+
   @HostListener(&#39;window:resize&#39;)
   onResize() {
     this.isMobile = window.innerWidth &lt; 768;
@@ -259,14 +259,14 @@ export class DividerExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

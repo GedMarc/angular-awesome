@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Rating Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Rating Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-rating> provides rating functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -145,9 +145,9 @@ import { WaRatingDirective } from 'angular-awesome/rating';</pre>
 &lt;wa-rating label=&quot;Whole-star Rating&quot; precision=&quot;1&quot; value=&quot;3&quot;&gt;&lt;/wa-rating&gt;
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-rating 
-  label=&quot;Interactive Rating&quot; 
-  (waChange)=&quot;onRatingChange($event)&quot; 
+<pre><code class="language-html">&lt;wa-rating
+  label=&quot;Interactive Rating&quot;
+  (waChange)=&quot;onRatingChange($event)&quot;
   (waHover)=&quot;onRatingHover($event)&quot;&gt;
 &lt;/wa-rating&gt;
 </code></pre>
@@ -182,17 +182,17 @@ onRatingHover(event: { phase: string, value: number }): void {
 &lt;wa-rating label=&quot;Heart Rating&quot; class=&quot;heart-rating&quot;&gt;&lt;/wa-rating&gt;
 
 &lt;!-- Using direct styling inputs --&gt;
-&lt;wa-rating 
-  label=&quot;Directly Styled Rating&quot; 
-  [color]=&quot;&#39;#ff6b6b&#39;&quot; 
-  [fontSize]=&quot;&#39;24px&#39;&quot; 
+&lt;wa-rating
+  label=&quot;Directly Styled Rating&quot;
+  [color]=&quot;&#39;#ff6b6b&#39;&quot;
+  [fontSize]=&quot;&#39;24px&#39;&quot;
   [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;&gt;
 &lt;/wa-rating&gt;
 
 &lt;!-- Dynamic direct styling --&gt;
-&lt;wa-rating 
-  label=&quot;Dynamic Styled Rating&quot; 
-  [color]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#cccccc&#39;&quot; 
+&lt;wa-rating
+  label=&quot;Dynamic Styled Rating&quot;
+  [color]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#cccccc&#39;&quot;
   [fontSize]=&quot;isLarge ? &#39;2rem&#39; : &#39;1rem&#39;&quot;&gt;
 &lt;/wa-rating&gt;
 </code></pre>
@@ -208,9 +208,9 @@ onRatingHover(event: { phase: string, value: number }): void {
 &lt;/script&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
-<pre><code class="language-html">&lt;wa-rating 
-  [label]=&quot;ratingLabel&quot; 
-  [value]=&quot;ratingValue&quot; 
+<pre><code class="language-html">&lt;wa-rating
+  [label]=&quot;ratingLabel&quot;
+  [value]=&quot;ratingValue&quot;
   [max]=&quot;maxRating&quot;
   [precision]=&quot;ratingPrecision&quot;
   [readonly]=&quot;isReadonly&quot;
@@ -221,11 +221,11 @@ onRatingHover(event: { phase: string, value: number }): void {
 &lt;/wa-rating&gt;
 
 &lt;!-- Using direct styling with Angular bindings --&gt;
-&lt;wa-rating 
-  [label]=&quot;ratingLabel&quot; 
-  [value]=&quot;ratingValue&quot; 
-  [color]=&quot;ratingColor&quot; 
-  [backgroundColor]=&quot;ratingBackgroundColor&quot; 
+&lt;wa-rating
+  [label]=&quot;ratingLabel&quot;
+  [value]=&quot;ratingValue&quot;
+  [color]=&quot;ratingColor&quot;
+  [backgroundColor]=&quot;ratingBackgroundColor&quot;
   [fontSize]=&quot;ratingFontSize&quot;&gt;
 &lt;/wa-rating&gt;
 </code></pre>
@@ -252,10 +252,10 @@ export class CustomRatingComponent implements AfterViewInit {
 </code></pre>
 <h2>Using in Forms</h2>
 <pre><code class="language-html">&lt;form #ratingForm=&quot;ngForm&quot; (ngSubmit)=&quot;submitRating(ratingForm)&quot;&gt;
-  &lt;wa-rating 
-    label=&quot;Rate our service&quot; 
-    name=&quot;serviceRating&quot; 
-    [(ngModel)]=&quot;serviceRating&quot; 
+  &lt;wa-rating
+    label=&quot;Rate our service&quot;
+    name=&quot;serviceRating&quot;
+    [(ngModel)]=&quot;serviceRating&quot;
     required&gt;
   &lt;/wa-rating&gt;
 
@@ -267,14 +267,14 @@ export class CustomRatingComponent implements AfterViewInit {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Scroller Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Scroller Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-scroller> provides scroller functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -169,8 +169,8 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
 &lt;/wa-scroller-wrapper&gt;
 </code></pre>
 <h2>Custom Shadow Styling</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper 
-  [shadowColor]=&quot;&#39;rgba(0, 0, 255, 0.3)&#39;&quot; 
+<pre><code class="language-html">&lt;wa-scroller-wrapper
+  [shadowColor]=&quot;&#39;rgba(0, 0, 255, 0.3)&#39;&quot;
   [shadowSize]=&quot;&#39;30px&#39;&quot;&gt;
   &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
     This content has custom shadow color and size.
@@ -189,38 +189,38 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
         &lt;wa-option value=&quot;horizontal&quot;&gt;Horizontal&lt;/wa-option&gt;
         &lt;wa-option value=&quot;vertical&quot;&gt;Vertical&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-      
+
       &lt;wa-checkbox [(ngModel)]=&quot;hideScrollbar&quot; label=&quot;Hide Scrollbar&quot;&gt;&lt;/wa-checkbox&gt;
       &lt;wa-checkbox [(ngModel)]=&quot;hideShadow&quot; label=&quot;Hide Shadow&quot;&gt;&lt;/wa-checkbox&gt;
     &lt;/div&gt;
-    
-    &lt;wa-scroller-wrapper 
-      [orientation]=&quot;scrollerOrientation&quot; 
-      [withoutScrollbar]=&quot;hideScrollbar&quot; 
+
+    &lt;wa-scroller-wrapper
+      [orientation]=&quot;scrollerOrientation&quot;
+      [withoutScrollbar]=&quot;hideScrollbar&quot;
       [withoutShadow]=&quot;hideShadow&quot;
       [shadowColor]=&quot;shadowColor&quot;
       [shadowSize]=&quot;shadowSize&quot;
       [style.height]=&quot;scrollerOrientation === &#39;vertical&#39; ? &#39;200px&#39; : &#39;auto&#39;&quot;&gt;
-      
-      &lt;div [style.width]=&quot;scrollerOrientation === &#39;horizontal&#39; ? &#39;1000px&#39; : &#39;auto&#39;&quot; 
+
+      &lt;div [style.width]=&quot;scrollerOrientation === &#39;horizontal&#39; ? &#39;1000px&#39; : &#39;auto&#39;&quot;
            [style.padding]=&quot;&#39;20px&#39;&quot;&gt;
         &lt;ng-container *ngIf=&quot;scrollerOrientation === &#39;horizontal&#39;&quot;&gt;
           &lt;div style=&quot;display: flex; gap: 20px;&quot;&gt;
-            &lt;div *ngFor=&quot;let item of items&quot; 
-                 style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; 
+            &lt;div *ngFor=&quot;let item of items&quot;
+                 style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0;
                         display: flex; align-items: center; justify-content: center;&quot;&gt;
               {{ item }}
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/ng-container&gt;
-        
+
         &lt;ng-container *ngIf=&quot;scrollerOrientation === &#39;vertical&#39;&quot;&gt;
           &lt;p *ngFor=&quot;let item of items&quot;&gt;
             Item {{ item }} - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           &lt;/p&gt;
         &lt;/ng-container&gt;
       &lt;/div&gt;
-      
+
     &lt;/wa-scroller-wrapper&gt;
   `
 })
@@ -236,10 +236,10 @@ export class ScrollerDemoComponent {
 <h2>Real-World Example: Image Gallery</h2>
 <pre><code class="language-html">&lt;div class=&quot;image-gallery&quot;&gt;
   &lt;h2&gt;Photo Gallery&lt;/h2&gt;
-  
-  &lt;wa-scroller-wrapper 
-    orientation=&quot;horizontal&quot; 
-    [shadowColor]=&quot;&#39;rgba(0, 0, 0, 0.3)&#39;&quot; 
+
+  &lt;wa-scroller-wrapper
+    orientation=&quot;horizontal&quot;
+    [shadowColor]=&quot;&#39;rgba(0, 0, 0, 0.3)&#39;&quot;
     [shadowSize]=&quot;&#39;40px&#39;&quot;&gt;
     &lt;div class=&quot;gallery-container&quot;&gt;
       &lt;div class=&quot;gallery-item&quot; *ngFor=&quot;let image of galleryImages&quot;&gt;
@@ -255,26 +255,26 @@ export class ScrollerDemoComponent {
     max-width: 100%;
     margin: 0 auto;
   }
-  
+
   .gallery-container {
     display: flex;
     gap: 16px;
     padding: 20px;
   }
-  
+
   .gallery-item {
     min-width: 280px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   .gallery-item img {
     width: 100%;
     height: 200px;
     object-fit: cover;
   }
-  
+
   .caption {
     padding: 12px;
     background-color: #f8f9fa;
@@ -284,20 +284,20 @@ export class ScrollerDemoComponent {
 </code></pre>
 <h2>Real-World Example: Content Tabs with Horizontal Scrolling</h2>
 <pre><code class="language-html">&lt;div class=&quot;scrollable-tabs&quot;&gt;
-  &lt;wa-scroller-wrapper 
-    orientation=&quot;horizontal&quot; 
+  &lt;wa-scroller-wrapper
+    orientation=&quot;horizontal&quot;
     [withoutScrollbar]=&quot;true&quot;&gt;
     &lt;div class=&quot;tabs-container&quot;&gt;
-      &lt;button 
-        class=&quot;tab-button&quot; 
-        *ngFor=&quot;let tab of tabs&quot; 
+      &lt;button
+        class=&quot;tab-button&quot;
+        *ngFor=&quot;let tab of tabs&quot;
         [class.active]=&quot;activeTab === tab.id&quot;
         (click)=&quot;activeTab = tab.id&quot;&gt;
         {{ tab.label }}
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/wa-scroller-wrapper&gt;
-  
+
   &lt;div class=&quot;tab-content&quot;&gt;
     &lt;ng-container *ngFor=&quot;let tab of tabs&quot;&gt;
       &lt;div *ngIf=&quot;activeTab === tab.id&quot;&gt;
@@ -313,14 +313,14 @@ export class ScrollerDemoComponent {
     width: 100%;
     margin-bottom: 20px;
   }
-  
+
   .tabs-container {
     display: flex;
     gap: 8px;
     padding: 8px;
     min-width: max-content;
   }
-  
+
   .tab-button {
     padding: 8px 16px;
     border: none;
@@ -329,12 +329,12 @@ export class ScrollerDemoComponent {
     cursor: pointer;
     white-space: nowrap;
   }
-  
+
   .tab-button.active {
     background-color: #007bff;
     color: white;
   }
-  
+
   .tab-content {
     padding: 16px;
     border: 1px solid #e0e0e0;
@@ -346,9 +346,9 @@ export class ScrollerDemoComponent {
 <h2>Real-World Example: Timeline</h2>
 <pre><code class="language-html">&lt;div class=&quot;timeline-container&quot;&gt;
   &lt;h2&gt;Project Timeline&lt;/h2&gt;
-  
-  &lt;wa-scroller-wrapper 
-    orientation=&quot;horizontal&quot; 
+
+  &lt;wa-scroller-wrapper
+    orientation=&quot;horizontal&quot;
     [shadowSize]=&quot;&#39;50px&#39;&quot;&gt;
     &lt;div class=&quot;timeline&quot;&gt;
       &lt;div class=&quot;timeline-item&quot; *ngFor=&quot;let event of timelineEvents&quot;&gt;
@@ -367,13 +367,13 @@ export class ScrollerDemoComponent {
   .timeline-container {
     margin: 40px 0;
   }
-  
+
   .timeline {
     display: flex;
     padding: 40px 20px;
     min-width: max-content;
   }
-  
+
   .timeline-item {
     display: flex;
     flex-direction: column;
@@ -381,12 +381,12 @@ export class ScrollerDemoComponent {
     min-width: 200px;
     position: relative;
   }
-  
+
   .timeline-date {
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+
   .timeline-connector {
     width: 100%;
     height: 4px;
@@ -394,7 +394,7 @@ export class ScrollerDemoComponent {
     position: relative;
     margin-bottom: 20px;
   }
-  
+
   .timeline-connector::before {
     content: &#39;&#39;;
     position: absolute;
@@ -406,7 +406,7 @@ export class ScrollerDemoComponent {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .timeline-content {
     text-align: center;
     padding: 15px;
@@ -415,12 +415,12 @@ export class ScrollerDemoComponent {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 180px;
   }
-  
+
   .timeline-content h3 {
     margin-top: 0;
     font-size: 16px;
   }
-  
+
   .timeline-content p {
     margin-bottom: 0;
     font-size: 14px;
@@ -432,14 +432,14 @@ export class ScrollerDemoComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

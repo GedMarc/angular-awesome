@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Skeleton Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Skeleton Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-skeleton> provides skeleton functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -137,10 +137,10 @@ import { WaSkeletonDirective } from 'angular-awesome/skeleton';</pre>
 &lt;div waSkeleton [sheenColor]=&quot;&#39;rgba(255, 255, 255, 0.5)&#39;&quot;&gt;Custom sheen color&lt;/div&gt;
 
 &lt;!-- Combined custom styling --&gt;
-&lt;div 
-  waSkeleton 
-  [borderRadius]=&quot;&#39;16px&#39;&quot; 
-  [color]=&quot;&#39;#f0f0f0&#39;&quot; 
+&lt;div
+  waSkeleton
+  [borderRadius]=&quot;&#39;16px&#39;&quot;
+  [color]=&quot;&#39;#f0f0f0&#39;&quot;
   [sheenColor]=&quot;&#39;rgba(255, 255, 255, 0.7)&#39;&quot;&gt;
   Combined custom styling
 &lt;/div&gt;
@@ -157,25 +157,25 @@ import { WaSkeletonDirective } from 'angular-awesome/skeleton';</pre>
         &lt;wa-option value=&quot;pulse&quot;&gt;Pulse&lt;/wa-option&gt;
         &lt;wa-option value=&quot;none&quot;&gt;None&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-      
-      &lt;wa-input 
-        type=&quot;color&quot; 
-        [(ngModel)]=&quot;skeletonColor&quot; 
+
+      &lt;wa-input
+        type=&quot;color&quot;
+        [(ngModel)]=&quot;skeletonColor&quot;
         label=&quot;Skeleton Color&quot;&gt;
       &lt;/wa-input&gt;
-      
-      &lt;wa-input 
-        type=&quot;range&quot; 
-        [(ngModel)]=&quot;borderRadiusValue&quot; 
+
+      &lt;wa-input
+        type=&quot;range&quot;
+        [(ngModel)]=&quot;borderRadiusValue&quot;
         label=&quot;Border Radius&quot;
         min=&quot;0&quot;
         max=&quot;24&quot;
         step=&quot;2&quot;&gt;
       &lt;/wa-input&gt;
     &lt;/div&gt;
-    
-    &lt;div 
-      waSkeleton 
+
+    &lt;div
+      waSkeleton
       [effect]=&quot;selectedEffect&quot;
       [color]=&quot;skeletonColor&quot;
       [borderRadius]=&quot;borderRadiusValue + &#39;px&#39;&quot;&gt;
@@ -205,17 +205,17 @@ export class SkeletonDemoComponent {
 &lt;div class=&quot;skeleton-card&quot; style=&quot;width: 300px; border-radius: 8px; overflow: hidden;&quot;&gt;
   &lt;!-- Image placeholder --&gt;
   &lt;div waSkeleton style=&quot;height: 200px; width: 100%;&quot;&gt;&lt;/div&gt;
-  
+
   &lt;!-- Content placeholders --&gt;
   &lt;div style=&quot;padding: 16px;&quot;&gt;
     &lt;!-- Title --&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 24px; width: 80%; margin-bottom: 16px;&quot;&gt;&lt;/div&gt;
-    
+
     &lt;!-- Description --&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 16px; width: 100%; margin-bottom: 8px;&quot;&gt;&lt;/div&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 16px; width: 90%; margin-bottom: 8px;&quot;&gt;&lt;/div&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 16px; width: 95%;&quot;&gt;&lt;/div&gt;
-    
+
     &lt;!-- Action buttons --&gt;
     &lt;div style=&quot;display: flex; gap: 8px; margin-top: 16px;&quot;&gt;
       &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 36px; width: 100px;&quot;&gt;&lt;/div&gt;
@@ -229,12 +229,12 @@ export class SkeletonDemoComponent {
 &lt;div class=&quot;skeleton-profile&quot; style=&quot;display: flex; align-items: center; gap: 16px;&quot;&gt;
   &lt;!-- Avatar placeholder --&gt;
   &lt;div waSkeleton [borderRadius]=&quot;&#39;50%&#39;&quot; style=&quot;height: 64px; width: 64px;&quot;&gt;&lt;/div&gt;
-  
+
   &lt;!-- Info placeholders --&gt;
   &lt;div style=&quot;flex: 1;&quot;&gt;
     &lt;!-- Name --&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 20px; width: 150px; margin-bottom: 8px;&quot;&gt;&lt;/div&gt;
-    
+
     &lt;!-- Title --&gt;
     &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 16px; width: 200px;&quot;&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -273,7 +273,7 @@ export class SkeletonDemoComponent {
   template: `
     &lt;div class=&quot;dashboard&quot;&gt;
       &lt;h2&gt;Dashboard&lt;/h2&gt;
-      
+
       &lt;!-- Loading state --&gt;
       &lt;div *ngIf=&quot;loading; else loadedContent&quot;&gt;
         &lt;!-- Stats cards --&gt;
@@ -283,16 +283,16 @@ export class SkeletonDemoComponent {
             &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 36px; width: 70%;&quot;&gt;&lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-        
+
         &lt;!-- Chart placeholder --&gt;
         &lt;div class=&quot;chart-container&quot;&gt;
           &lt;div waSkeleton style=&quot;height: 300px; width: 100%; margin: 24px 0;&quot;&gt;&lt;/div&gt;
         &lt;/div&gt;
-        
+
         &lt;!-- Table placeholder --&gt;
         &lt;div class=&quot;table-container&quot;&gt;
           &lt;div waSkeleton [borderRadius]=&quot;&#39;4px&#39;&quot; style=&quot;height: 24px; width: 30%; margin-bottom: 16px;&quot;&gt;&lt;/div&gt;
-          
+
           &lt;table style=&quot;width: 100%; border-collapse: collapse;&quot;&gt;
             &lt;thead&gt;
               &lt;tr&gt;
@@ -324,23 +324,23 @@ export class SkeletonDemoComponent {
           &lt;/table&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      
+
       &lt;!-- Loaded content --&gt;
       &lt;ng-template #loadedContent&gt;
         &lt;!-- Actual dashboard content goes here --&gt;
         &lt;div class=&quot;stats-row&quot;&gt;
           &lt;!-- Real stats cards --&gt;
         &lt;/div&gt;
-        
+
         &lt;div class=&quot;chart-container&quot;&gt;
           &lt;!-- Real chart --&gt;
         &lt;/div&gt;
-        
+
         &lt;div class=&quot;table-container&quot;&gt;
           &lt;!-- Real table --&gt;
         &lt;/div&gt;
       &lt;/ng-template&gt;
-      
+
       &lt;button (click)=&quot;toggleLoading()&quot;&gt;Toggle Loading State&lt;/button&gt;
     &lt;/div&gt;
   `,
@@ -348,13 +348,13 @@ export class SkeletonDemoComponent {
     .dashboard {
       padding: 20px;
     }
-    
+
     .stats-row {
       display: flex;
       gap: 16px;
       margin-bottom: 24px;
     }
-    
+
     .stat-card {
       flex: 1;
       padding: 16px;
@@ -362,7 +362,7 @@ export class SkeletonDemoComponent {
       background-color: #ffffff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     .chart-container, .table-container {
       padding: 16px;
       border-radius: 8px;
@@ -374,7 +374,7 @@ export class SkeletonDemoComponent {
 })
 export class DashboardComponent {
   loading = true;
-  
+
   toggleLoading(): void {
     this.loading = !this.loading;
   }
@@ -385,14 +385,14 @@ export class DashboardComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

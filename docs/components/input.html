@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Input Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>Input Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-input> provides input functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -135,8 +135,8 @@ import { WaInputDirective } from 'angular-awesome/input';</pre>
 &lt;wa-input label=&quot;Pill Input&quot; [pill]=&quot;true&quot;&gt;&lt;/wa-input&gt;
 </code></pre>
 <h2>With Placeholder and Hint</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Username&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Username&quot;
   placeholder=&quot;Enter your username&quot;
   hint=&quot;Username must be at least 3 characters&quot;&gt;
 &lt;/wa-input&gt;
@@ -149,91 +149,91 @@ import { WaInputDirective } from 'angular-awesome/input';</pre>
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Clearable Input</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Clearable Input&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Clearable Input&quot;
   [clearable]=&quot;true&quot;
   placeholder=&quot;Type something and clear it&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Password Toggle</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Password&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Password&quot;
   type=&quot;password&quot;
   [passwordToggle]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 
 &lt;!-- With initial visibility --&gt;
-&lt;wa-input 
-  label=&quot;Password&quot; 
+&lt;wa-input
+  label=&quot;Password&quot;
   type=&quot;password&quot;
   [passwordToggle]=&quot;true&quot;
   [passwordVisible]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Number Input Features</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Number with Min/Max&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Number with Min/Max&quot;
   type=&quot;number&quot;
   min=&quot;0&quot;
   max=&quot;100&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Number with Step&quot; 
+&lt;wa-input
+  label=&quot;Number with Step&quot;
   type=&quot;number&quot;
   min=&quot;0&quot;
   max=&quot;100&quot;
   step=&quot;5&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Number without Spin Buttons&quot; 
+&lt;wa-input
+  label=&quot;Number without Spin Buttons&quot;
   type=&quot;number&quot;
   [noSpinButtons]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Validation</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Required Input&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Required Input&quot;
   [required]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Email Validation&quot; 
+&lt;wa-input
+  label=&quot;Email Validation&quot;
   type=&quot;email&quot;
   [required]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Pattern Validation&quot; 
+&lt;wa-input
+  label=&quot;Pattern Validation&quot;
   pattern=&quot;[A-Za-z]{3,}&quot;
   hint=&quot;Enter at least 3 letters&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Length Validation&quot; 
+&lt;wa-input
+  label=&quot;Length Validation&quot;
   minlength=&quot;3&quot;
   maxlength=&quot;10&quot;
   hint=&quot;Between 3 and 10 characters&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Disabled and Readonly States</h2>
-<pre><code class="language-html">&lt;wa-input 
-  label=&quot;Disabled Input&quot; 
+<pre><code class="language-html">&lt;wa-input
+  label=&quot;Disabled Input&quot;
   value=&quot;Cannot be edited&quot;
   [disabled]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 
-&lt;wa-input 
-  label=&quot;Readonly Input&quot; 
+&lt;wa-input
+  label=&quot;Readonly Input&quot;
   value=&quot;Cannot be edited but can be focused&quot;
   [readonly]=&quot;true&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Using style inputs --&gt;
-&lt;wa-input 
-  label=&quot;Custom Styled Input&quot; 
+&lt;wa-input
+  label=&quot;Custom Styled Input&quot;
   [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
   [borderColor]=&quot;&#39;#6c757d&#39;&quot;
   [borderWidth]=&quot;&#39;2px&#39;&quot;
@@ -241,41 +241,41 @@ import { WaInputDirective } from 'angular-awesome/input';</pre>
 &lt;/wa-input&gt;
 
 &lt;!-- Dynamic styling --&gt;
-&lt;wa-input 
-  label=&quot;Dynamic Styled Input&quot; 
+&lt;wa-input
+  label=&quot;Dynamic Styled Input&quot;
   [backgroundColor]=&quot;isDarkMode ? &#39;#333333&#39; : &#39;#ffffff&#39;&quot;
   [borderColor]=&quot;isDarkMode ? &#39;#6c757d&#39; : &#39;#ced4da&#39;&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
-<pre><code class="language-html">&lt;wa-input 
-  [label]=&quot;inputLabel&quot; 
-  [type]=&quot;inputType&quot; 
-  [value]=&quot;inputValue&quot; 
-  [placeholder]=&quot;inputPlaceholder&quot; 
+<pre><code class="language-html">&lt;wa-input
+  [label]=&quot;inputLabel&quot;
+  [type]=&quot;inputType&quot;
+  [value]=&quot;inputValue&quot;
+  [placeholder]=&quot;inputPlaceholder&quot;
   [required]=&quot;isRequired&quot;
   [disabled]=&quot;isDisabled&quot;
-  (input)=&quot;onInput($event)&quot; 
-  (change)=&quot;onChange($event)&quot; 
-  (focusEvent)=&quot;onFocus()&quot; 
+  (input)=&quot;onInput($event)&quot;
+  (change)=&quot;onChange($event)&quot;
+  (focusEvent)=&quot;onFocus()&quot;
   (blurEvent)=&quot;onBlur()&quot;
   (waClear)=&quot;onClear()&quot;&gt;
 &lt;/wa-input&gt;
 </code></pre>
 <h2>Using with ngModel</h2>
 <pre><code class="language-html">&lt;form #userForm=&quot;ngForm&quot;&gt;
-  &lt;wa-input 
-    label=&quot;Username&quot; 
-    name=&quot;username&quot; 
-    [(ngModel)]=&quot;user.username&quot; 
+  &lt;wa-input
+    label=&quot;Username&quot;
+    name=&quot;username&quot;
+    [(ngModel)]=&quot;user.username&quot;
     required&gt;
   &lt;/wa-input&gt;
 
-  &lt;wa-input 
-    label=&quot;Email&quot; 
-    type=&quot;email&quot; 
-    name=&quot;email&quot; 
-    [(ngModel)]=&quot;user.email&quot; 
+  &lt;wa-input
+    label=&quot;Email&quot;
+    type=&quot;email&quot;
+    name=&quot;email&quot;
+    [(ngModel)]=&quot;user.email&quot;
     required&gt;
   &lt;/wa-input&gt;
 
@@ -316,20 +316,20 @@ export class InputDemoComponent {
 <h2>Form Integration</h2>
 <pre><code class="language-html">&lt;form #loginForm=&quot;ngForm&quot; (ngSubmit)=&quot;login()&quot;&gt;
   &lt;div class=&quot;form-group&quot;&gt;
-    &lt;wa-input 
-      label=&quot;Username&quot; 
-      name=&quot;username&quot; 
-      [(ngModel)]=&quot;loginData.username&quot; 
+    &lt;wa-input
+      label=&quot;Username&quot;
+      name=&quot;username&quot;
+      [(ngModel)]=&quot;loginData.username&quot;
       required&gt;
     &lt;/wa-input&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;form-group&quot;&gt;
-    &lt;wa-input 
-      label=&quot;Password&quot; 
-      type=&quot;password&quot; 
-      name=&quot;password&quot; 
-      [(ngModel)]=&quot;loginData.password&quot; 
+    &lt;wa-input
+      label=&quot;Password&quot;
+      type=&quot;password&quot;
+      name=&quot;password&quot;
+      [(ngModel)]=&quot;loginData.password&quot;
       [passwordToggle]=&quot;true&quot;
       required&gt;
     &lt;/wa-input&gt;
@@ -343,34 +343,34 @@ export class InputDemoComponent {
   &lt;h2&gt;Create Account&lt;/h2&gt;
 
   &lt;div class=&quot;form-row&quot;&gt;
-    &lt;wa-input 
-      label=&quot;First Name&quot; 
-      name=&quot;firstName&quot; 
-      [(ngModel)]=&quot;user.firstName&quot; 
+    &lt;wa-input
+      label=&quot;First Name&quot;
+      name=&quot;firstName&quot;
+      [(ngModel)]=&quot;user.firstName&quot;
       required&gt;
     &lt;/wa-input&gt;
 
-    &lt;wa-input 
-      label=&quot;Last Name&quot; 
-      name=&quot;lastName&quot; 
-      [(ngModel)]=&quot;user.lastName&quot; 
+    &lt;wa-input
+      label=&quot;Last Name&quot;
+      name=&quot;lastName&quot;
+      [(ngModel)]=&quot;user.lastName&quot;
       required&gt;
     &lt;/wa-input&gt;
   &lt;/div&gt;
 
-  &lt;wa-input 
-    label=&quot;Email&quot; 
-    type=&quot;email&quot; 
-    name=&quot;email&quot; 
-    [(ngModel)]=&quot;user.email&quot; 
+  &lt;wa-input
+    label=&quot;Email&quot;
+    type=&quot;email&quot;
+    name=&quot;email&quot;
+    [(ngModel)]=&quot;user.email&quot;
     required
     autocomplete=&quot;email&quot;&gt;
   &lt;/wa-input&gt;
 
-  &lt;wa-input 
-    label=&quot;Username&quot; 
-    name=&quot;username&quot; 
-    [(ngModel)]=&quot;user.username&quot; 
+  &lt;wa-input
+    label=&quot;Username&quot;
+    name=&quot;username&quot;
+    [(ngModel)]=&quot;user.username&quot;
     required
     minlength=&quot;3&quot;
     maxlength=&quot;20&quot;
@@ -378,30 +378,30 @@ export class InputDemoComponent {
     hint=&quot;3-20 characters, letters, numbers, and underscores only&quot;&gt;
   &lt;/wa-input&gt;
 
-  &lt;wa-input 
-    label=&quot;Password&quot; 
-    type=&quot;password&quot; 
-    name=&quot;password&quot; 
-    [(ngModel)]=&quot;user.password&quot; 
+  &lt;wa-input
+    label=&quot;Password&quot;
+    type=&quot;password&quot;
+    name=&quot;password&quot;
+    [(ngModel)]=&quot;user.password&quot;
     [passwordToggle]=&quot;true&quot;
     required
     minlength=&quot;8&quot;
     hint=&quot;At least 8 characters&quot;&gt;
   &lt;/wa-input&gt;
 
-  &lt;wa-input 
-    label=&quot;Confirm Password&quot; 
-    type=&quot;password&quot; 
-    name=&quot;confirmPassword&quot; 
-    [(ngModel)]=&quot;user.confirmPassword&quot; 
+  &lt;wa-input
+    label=&quot;Confirm Password&quot;
+    type=&quot;password&quot;
+    name=&quot;confirmPassword&quot;
+    [(ngModel)]=&quot;user.confirmPassword&quot;
     [passwordToggle]=&quot;true&quot;
     required&gt;
   &lt;/wa-input&gt;
 
-  &lt;wa-input 
-    label=&quot;Phone Number&quot; 
-    type=&quot;tel&quot; 
-    name=&quot;phone&quot; 
+  &lt;wa-input
+    label=&quot;Phone Number&quot;
+    type=&quot;tel&quot;
+    name=&quot;phone&quot;
     [(ngModel)]=&quot;user.phone&quot;
     pattern=&quot;[0-9]{10}&quot;
     hint=&quot;10-digit phone number&quot;&gt;
@@ -415,14 +415,14 @@ export class InputDemoComponent {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

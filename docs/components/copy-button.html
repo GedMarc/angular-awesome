@@ -87,14 +87,14 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>CopyButton Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <h1>CopyButton Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
                 <p class="subtitle"><wa-copy-button> provides copy button functionality for Angular applications.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -114,7 +114,7 @@ import { WaCopyButtonDirective } from 'angular-awesome/copy-button';</pre>
 <pre><code class="language-html">&lt;wa-copy-button value=&quot;Text to copy&quot;&gt;&lt;/wa-copy-button&gt;
 </code></pre>
 <h2>With Custom Labels</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   copyLabel=&quot;Click to copy&quot;
   successLabel=&quot;Copied!&quot;
@@ -134,34 +134,34 @@ import { WaCopyButtonDirective } from 'angular-awesome/copy-button';</pre>
 &lt;wa-copy-button from=&quot;myInput3[data-copy-value]&quot;&gt;&lt;/wa-copy-button&gt;
 </code></pre>
 <h2>With Custom Feedback Duration</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   feedbackDuration=&quot;5000&quot;&gt;
 &lt;/wa-copy-button&gt;
 </code></pre>
 <h2>With Custom Tooltip Placement</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   tooltipPlacement=&quot;right&quot;&gt;
 &lt;/wa-copy-button&gt;
 
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   tooltipPlacement=&quot;bottom&quot;&gt;
 &lt;/wa-copy-button&gt;
 
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   tooltipPlacement=&quot;left&quot;&gt;
 &lt;/wa-copy-button&gt;
 
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   tooltipPlacement=&quot;top&quot;&gt;
 &lt;/wa-copy-button&gt;
 </code></pre>
 <h2>Disabled State</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   value=&quot;Cannot copy this&quot;
   disabled&gt;
 &lt;/wa-copy-button&gt;
@@ -174,7 +174,7 @@ import { WaCopyButtonDirective } from 'angular-awesome/copy-button';</pre>
 &lt;/wa-copy-button&gt;
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   (waCopy)=&quot;onCopySuccess()&quot;
   (waError)=&quot;onCopyError($event)&quot;&gt;
@@ -192,7 +192,7 @@ export class CopyButtonExampleComponent {
 }
 </code></pre>
 <h2>Using with ngModel</h2>
-<pre><code class="language-html">&lt;wa-copy-button 
+<pre><code class="language-html">&lt;wa-copy-button
   [(ngModel)]=&quot;textToCopy&quot;
   copyLabel=&quot;Click to copy&quot;
   successLabel=&quot;Copied!&quot;&gt;
@@ -225,35 +225,35 @@ export class CopyButtonExampleComponent {
     color: white;
     border-radius: 8px;
   }
-  
+
   .custom-copy-button::part(copy-icon) {
     color: white;
   }
-  
+
   .custom-copy-button::part(success-icon) {
     color: #00e676;
   }
-  
+
   .custom-copy-button::part(error-icon) {
     color: #ff1744;
   }
 &lt;/style&gt;
 
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Custom styled button&quot;
   class=&quot;custom-copy-button&quot;&gt;
 &lt;/wa-copy-button&gt;
 </code></pre>
 <h2>Accessibility Examples</h2>
 <pre><code class="language-html">&lt;!-- Using aria-label --&gt;
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   aria-label=&quot;Copy text to clipboard&quot;&gt;
 &lt;/wa-copy-button&gt;
 
 &lt;!-- Using contextual labels --&gt;
 &lt;label id=&quot;copy-label&quot;&gt;Copy the following text&lt;/label&gt;
-&lt;wa-copy-button 
+&lt;wa-copy-button
   value=&quot;Text to copy&quot;
   aria-labelledby=&quot;copy-label&quot;&gt;
 &lt;/wa-copy-button&gt;
@@ -265,7 +265,7 @@ function example() {
   console.log(&#39;Hello, world!&#39;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;wa-copy-button 
+&lt;wa-copy-button
   from=&quot;codeSnippet&quot;
   copyLabel=&quot;Copy code&quot;
   successLabel=&quot;Code copied!&quot;&gt;
@@ -274,7 +274,7 @@ function example() {
 <h3>Copy URL</h3>
 <pre><code class="language-html">&lt;div class=&quot;share-url&quot;&gt;
   &lt;span id=&quot;pageUrl&quot;&gt;https://example.com/shared-page&lt;/span&gt;
-  &lt;wa-copy-button 
+  &lt;wa-copy-button
     from=&quot;pageUrl&quot;
     copyLabel=&quot;Copy URL&quot;
     successLabel=&quot;URL copied!&quot;&gt;
@@ -285,7 +285,7 @@ function example() {
 <pre><code class="language-html">&lt;div class=&quot;form-field&quot;&gt;
   &lt;label for=&quot;apiKey&quot;&gt;Your API Key:&lt;/label&gt;
   &lt;wa-input id=&quot;apiKey&quot; value=&quot;sk_test_abcdefghijklmnopqrstuvwxyz&quot; readonly&gt;&lt;/wa-input&gt;
-  &lt;wa-copy-button 
+  &lt;wa-copy-button
     from=&quot;apiKey&quot;
     copyLabel=&quot;Copy API key&quot;
     successLabel=&quot;API key copied!&quot;&gt;
@@ -297,14 +297,14 @@ function example() {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>
