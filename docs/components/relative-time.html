@@ -88,14 +88,13 @@
         <div class="main-content">
             <header>
                 <h1>RelativeTime Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
-                <p class="subtitle">The wa-relative-time component displays a localized phrase indicating the relative time from a given date to now. It supports automatic updates, multiple formatting styles, and localization.
-</p>
+                <p class="subtitle">The wa-relative-time component displays a localized phrase indicating the relative time from a given date to now. It supports automatic updates, multiple formatting styles, and localization.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -156,14 +155,14 @@ import { WaRelativeTimeDirective } from 'angular-awesome/relative-time';</pre>
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Using display property --&gt;
-&lt;wa-relative-time
-  [ngModel]=&quot;dateValue&quot;
+&lt;wa-relative-time 
+  [ngModel]=&quot;dateValue&quot; 
   [display]=&quot;&#39;inline-block&#39;&quot;&gt;
 &lt;/wa-relative-time&gt;
 
 &lt;!-- Using inline styles --&gt;
-&lt;wa-relative-time
-  [ngModel]=&quot;dateValue&quot;
+&lt;wa-relative-time 
+  [ngModel]=&quot;dateValue&quot; 
   style=&quot;color: #2196f3; font-weight: bold; font-size: 16px;&quot;&gt;
 &lt;/wa-relative-time&gt;
 </code></pre>
@@ -174,23 +173,23 @@ import { WaRelativeTimeDirective } from 'angular-awesome/relative-time';</pre>
   selector: &#39;app-relative-time-demo&#39;,
   template: `
     &lt;div class=&quot;controls&quot;&gt;
-      &lt;wa-select
-        label=&quot;Format&quot;
+      &lt;wa-select 
+        label=&quot;Format&quot; 
         [(ngModel)]=&quot;selectedFormat&quot;&gt;
         &lt;wa-option value=&quot;long&quot;&gt;Long&lt;/wa-option&gt;
         &lt;wa-option value=&quot;short&quot;&gt;Short&lt;/wa-option&gt;
         &lt;wa-option value=&quot;narrow&quot;&gt;Narrow&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
-      &lt;wa-select
-        label=&quot;Numeric&quot;
+      
+      &lt;wa-select 
+        label=&quot;Numeric&quot; 
         [(ngModel)]=&quot;selectedNumeric&quot;&gt;
         &lt;wa-option value=&quot;auto&quot;&gt;Auto&lt;/wa-option&gt;
         &lt;wa-option value=&quot;always&quot;&gt;Always&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
-      &lt;wa-select
-        label=&quot;Language&quot;
+      
+      &lt;wa-select 
+        label=&quot;Language&quot; 
         [(ngModel)]=&quot;selectedLang&quot;&gt;
         &lt;wa-option value=&quot;en&quot;&gt;English&lt;/wa-option&gt;
         &lt;wa-option value=&quot;es&quot;&gt;Spanish&lt;/wa-option&gt;
@@ -198,26 +197,26 @@ import { WaRelativeTimeDirective } from 'angular-awesome/relative-time';</pre>
         &lt;wa-option value=&quot;de&quot;&gt;German&lt;/wa-option&gt;
         &lt;wa-option value=&quot;ja&quot;&gt;Japanese&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
-      &lt;wa-checkbox
-        label=&quot;Auto-sync&quot;
+      
+      &lt;wa-checkbox 
+        label=&quot;Auto-sync&quot; 
         [(ngModel)]=&quot;autoSync&quot;&gt;
       &lt;/wa-checkbox&gt;
     &lt;/div&gt;
-
+    
     &lt;div class=&quot;time-display&quot;&gt;
       &lt;h3&gt;Selected Date: {{ selectedDate | date:&#39;medium&#39; }}&lt;/h3&gt;
-
-      &lt;wa-relative-time
-        [ngModel]=&quot;selectedDate&quot;
-        [format]=&quot;selectedFormat&quot;
-        [numeric]=&quot;selectedNumeric&quot;
-        [lang]=&quot;selectedLang&quot;
+      
+      &lt;wa-relative-time 
+        [ngModel]=&quot;selectedDate&quot; 
+        [format]=&quot;selectedFormat&quot; 
+        [numeric]=&quot;selectedNumeric&quot; 
+        [lang]=&quot;selectedLang&quot; 
         [sync]=&quot;autoSync&quot;
         (focusEvent)=&quot;onFocus()&quot;
         (blurEvent)=&quot;onBlur()&quot;&gt;
       &lt;/wa-relative-time&gt;
-
+      
       &lt;div class=&quot;time-controls&quot;&gt;
         &lt;button (click)=&quot;setTimeToNow()&quot;&gt;Now&lt;/button&gt;
         &lt;button (click)=&quot;setTimeToMinutesAgo(5)&quot;&gt;5 Minutes Ago&lt;/button&gt;
@@ -236,50 +235,50 @@ export class RelativeTimeDemoComponent implements OnInit {
   selectedNumeric = &#39;auto&#39;;
   selectedLang = &#39;en&#39;;
   autoSync = false;
-
+  
   ngOnInit(): void {
     // Set initial date to 1 hour ago
     this.setTimeToHoursAgo(1);
   }
-
+  
   setTimeToNow(): void {
     this.selectedDate = new Date();
   }
-
+  
   setTimeToMinutesAgo(minutes: number): void {
     const date = new Date();
     date.setMinutes(date.getMinutes() - minutes);
     this.selectedDate = date;
   }
-
+  
   setTimeToHoursAgo(hours: number): void {
     const date = new Date();
     date.setHours(date.getHours() - hours);
     this.selectedDate = date;
   }
-
+  
   setTimeToDaysAgo(days: number): void {
     const date = new Date();
     date.setDate(date.getDate() - days);
     this.selectedDate = date;
   }
-
+  
   setTimeToMonthsAgo(months: number): void {
     const date = new Date();
     date.setMonth(date.getMonth() - months);
     this.selectedDate = date;
   }
-
+  
   setTimeToYearsAgo(years: number): void {
     const date = new Date();
     date.setFullYear(date.getFullYear() - years);
     this.selectedDate = date;
   }
-
+  
   onFocus(): void {
     console.log(&#39;Relative time focused&#39;);
   }
-
+  
   onBlur(): void {
     console.log(&#39;Relative time blurred&#39;);
   }
@@ -287,18 +286,18 @@ export class RelativeTimeDemoComponent implements OnInit {
 </code></pre>
 <h2>Using with ngModel</h2>
 <pre><code class="language-html">&lt;form #timeForm=&quot;ngForm&quot;&gt;
-  &lt;wa-input
-    type=&quot;datetime-local&quot;
-    label=&quot;Select Date and Time&quot;
-    [(ngModel)]=&quot;selectedDateTime&quot;
+  &lt;wa-input 
+    type=&quot;datetime-local&quot; 
+    label=&quot;Select Date and Time&quot; 
+    [(ngModel)]=&quot;selectedDateTime&quot; 
     name=&quot;dateTime&quot;&gt;
   &lt;/wa-input&gt;
-
+  
   &lt;div class=&quot;relative-time-display&quot;&gt;
     &lt;p&gt;Selected date and time: {{ selectedDateTime | date:&#39;medium&#39; }}&lt;/p&gt;
-    &lt;p&gt;Relative time:
-      &lt;wa-relative-time
-        [(ngModel)]=&quot;selectedDateTime&quot;
+    &lt;p&gt;Relative time: 
+      &lt;wa-relative-time 
+        [(ngModel)]=&quot;selectedDateTime&quot; 
         name=&quot;relativeTime&quot;&gt;
       &lt;/wa-relative-time&gt;
     &lt;/p&gt;
@@ -321,38 +320,38 @@ interface Comment {
   template: `
     &lt;div class=&quot;comments-section&quot;&gt;
       &lt;h2&gt;Comments ({{ comments.length }})&lt;/h2&gt;
-
+      
       &lt;div class=&quot;comment-form&quot;&gt;
-        &lt;wa-textarea
-          label=&quot;Add a comment&quot;
-          [(ngModel)]=&quot;newCommentText&quot;
+        &lt;wa-textarea 
+          label=&quot;Add a comment&quot; 
+          [(ngModel)]=&quot;newCommentText&quot; 
           placeholder=&quot;What are your thoughts?&quot;&gt;
         &lt;/wa-textarea&gt;
-
-        &lt;button
-          (click)=&quot;addComment()&quot;
+        
+        &lt;button 
+          (click)=&quot;addComment()&quot; 
           [disabled]=&quot;!newCommentText.trim()&quot;&gt;
           Post Comment
         &lt;/button&gt;
       &lt;/div&gt;
-
+      
       &lt;div class=&quot;comments-list&quot;&gt;
         &lt;div class=&quot;comment&quot; *ngFor=&quot;let comment of comments&quot;&gt;
           &lt;div class=&quot;comment-header&quot;&gt;
             &lt;strong class=&quot;author&quot;&gt;{{ comment.author }}&lt;/strong&gt;
             &lt;span class=&quot;timestamp&quot;&gt;
-              &lt;wa-relative-time
-                [ngModel]=&quot;comment.timestamp&quot;
-                format=&quot;short&quot;
+              &lt;wa-relative-time 
+                [ngModel]=&quot;comment.timestamp&quot; 
+                format=&quot;short&quot; 
                 [sync]=&quot;true&quot;&gt;
               &lt;/wa-relative-time&gt;
             &lt;/span&gt;
           &lt;/div&gt;
-
+          
           &lt;div class=&quot;comment-content&quot;&gt;
             {{ comment.content }}
           &lt;/div&gt;
-
+          
           &lt;div class=&quot;comment-actions&quot;&gt;
             &lt;button class=&quot;like-button&quot; (click)=&quot;likeComment(comment)&quot;&gt;
               Like ({{ comment.likes }})
@@ -368,42 +367,42 @@ interface Comment {
       max-width: 800px;
       margin: 0 auto;
     }
-
+    
     .comment-form {
       margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
+    
     .comments-list {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
-
+    
     .comment {
       padding: 15px;
       border: 1px solid #e0e0e0;
       border-radius: 8px;
       background-color: #f9f9f9;
     }
-
+    
     .comment-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
     }
-
+    
     .timestamp {
       color: #757575;
       font-size: 0.9em;
     }
-
+    
     .comment-content {
       margin-bottom: 10px;
     }
-
+    
     .comment-actions {
       display: flex;
       gap: 10px;
@@ -434,12 +433,12 @@ export class CommentsComponent {
       likes: 1
     }
   ];
-
+  
   newCommentText = &#39;&#39;;
-
+  
   addComment(): void {
     if (!this.newCommentText.trim()) return;
-
+    
     const newComment: Comment = {
       id: this.comments.length + 1,
       author: &#39;Current User&#39;, // In a real app, this would be the logged-in user
@@ -447,11 +446,11 @@ export class CommentsComponent {
       timestamp: new Date(),
       likes: 0
     };
-
+    
     this.comments.unshift(newComment);
     this.newCommentText = &#39;&#39;;
   }
-
+  
   likeComment(comment: Comment): void {
     comment.likes++;
   }
@@ -468,7 +467,7 @@ export class CommentsComponent {
   // In your component
   const pastDate = new Date();
   pastDate.setHours(pastDate.getHours() - 2); // 2 hours ago
-
+  
   const futureDate = new Date();
   futureDate.setHours(futureDate.getHours() + 2); // 2 hours from now
 &lt;/script&gt;
@@ -478,35 +477,35 @@ export class CommentsComponent {
   &lt;wa-card-header&gt;
     &lt;h3&gt;Event Details&lt;/h3&gt;
   &lt;/wa-card-header&gt;
-
+  
   &lt;wa-card-content&gt;
     &lt;div class=&quot;event-info&quot;&gt;
       &lt;h4&gt;Annual Conference&lt;/h4&gt;
       &lt;p&gt;Join us for our annual industry conference with speakers from around the world.&lt;/p&gt;
-
+      
       &lt;div class=&quot;event-timing&quot;&gt;
         &lt;div class=&quot;timing-item&quot;&gt;
           &lt;wa-icon name=&quot;calendar&quot;&gt;&lt;/wa-icon&gt;
           &lt;span&gt;{{ eventDate | date:&#39;fullDate&#39; }}&lt;/span&gt;
         &lt;/div&gt;
-
+        
         &lt;div class=&quot;timing-item&quot;&gt;
           &lt;wa-icon name=&quot;clock&quot;&gt;&lt;/wa-icon&gt;
           &lt;span&gt;{{ eventDate | date:&#39;shortTime&#39; }}&lt;/span&gt;
         &lt;/div&gt;
-
+        
         &lt;div class=&quot;timing-item highlight&quot;&gt;
           &lt;wa-icon name=&quot;time&quot;&gt;&lt;/wa-icon&gt;
-          &lt;wa-relative-time
-            [ngModel]=&quot;eventDate&quot;
-            format=&quot;long&quot;
+          &lt;wa-relative-time 
+            [ngModel]=&quot;eventDate&quot; 
+            format=&quot;long&quot; 
             [sync]=&quot;true&quot;&gt;
           &lt;/wa-relative-time&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/wa-card-content&gt;
-
+  
   &lt;wa-card-footer&gt;
     &lt;wa-button&gt;Register Now&lt;/wa-button&gt;
   &lt;/wa-card-footer&gt;
@@ -520,26 +519,26 @@ export class CommentsComponent {
   template: `
     &lt;div class=&quot;countdown&quot;&gt;
       &lt;h2&gt;Event Countdown&lt;/h2&gt;
-
+      
       &lt;div class=&quot;time-display&quot;&gt;
         &lt;p&gt;Event starts: {{ eventDate | date:&#39;medium&#39; }}&lt;/p&gt;
         &lt;p class=&quot;relative-time&quot;&gt;
-          &lt;wa-relative-time
-            [ngModel]=&quot;eventDate&quot;
-            format=&quot;long&quot;
-            numeric=&quot;always&quot;
+          &lt;wa-relative-time 
+            [ngModel]=&quot;eventDate&quot; 
+            format=&quot;long&quot; 
+            numeric=&quot;always&quot; 
             [sync]=&quot;true&quot;&gt;
           &lt;/wa-relative-time&gt;
         &lt;/p&gt;
       &lt;/div&gt;
-
+      
       &lt;div class=&quot;manual-update&quot; *ngIf=&quot;!autoUpdate&quot;&gt;
         &lt;button (click)=&quot;updateTime()&quot;&gt;Update Time&lt;/button&gt;
         &lt;p&gt;Last updated: {{ lastUpdated | date:&#39;medium&#39; }}&lt;/p&gt;
       &lt;/div&gt;
-
-      &lt;wa-checkbox
-        label=&quot;Auto-update&quot;
+      
+      &lt;wa-checkbox 
+        label=&quot;Auto-update&quot; 
         [(ngModel)]=&quot;autoUpdate&quot;&gt;
       &lt;/wa-checkbox&gt;
     &lt;/div&gt;
@@ -550,19 +549,19 @@ export class CountdownComponent implements OnInit, OnDestroy {
   lastUpdated = new Date();
   autoUpdate = true;
   updateInterval: any;
-
+  
   ngOnInit(): void {
     // Set event date to 7 days in the future
     this.eventDate = new Date();
     this.eventDate.setDate(this.eventDate.getDate() + 7);
-
+    
     this.startAutoUpdate();
   }
-
+  
   ngOnDestroy(): void {
     this.stopAutoUpdate();
   }
-
+  
   startAutoUpdate(): void {
     if (this.autoUpdate) {
       this.updateInterval = setInterval(() =&gt; {
@@ -570,13 +569,13 @@ export class CountdownComponent implements OnInit, OnDestroy {
       }, 60000); // Update every minute
     }
   }
-
+  
   stopAutoUpdate(): void {
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
     }
   }
-
+  
   updateTime(): void {
     this.lastUpdated = new Date();
     // The relative-time component will update automatically if sync is true
@@ -588,14 +587,14 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

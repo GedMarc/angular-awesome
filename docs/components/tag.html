@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -171,31 +171,31 @@ import { WaTagDirective } from 'angular-awesome/tag';</pre>
 </code></pre>
 <h2>Combined Examples</h2>
 <pre><code class="language-html">&lt;!-- Success pill tag with filled appearance --&gt;
-&lt;wa-tag
-  ngModel
-  variant=&quot;success&quot;
-  appearance=&quot;filled&quot;
+&lt;wa-tag 
+  ngModel 
+  variant=&quot;success&quot; 
+  appearance=&quot;filled&quot; 
   [pill]=&quot;true&quot;
 &gt;
   Success
 &lt;/wa-tag&gt;
 
 &lt;!-- Warning removable tag with medium size --&gt;
-&lt;wa-tag
-  ngModel
-  variant=&quot;warning&quot;
-  size=&quot;medium&quot;
-  [removable]=&quot;true&quot;
+&lt;wa-tag 
+  ngModel 
+  variant=&quot;warning&quot; 
+  size=&quot;medium&quot; 
+  [removable]=&quot;true&quot; 
   (waRemove)=&quot;handleRemove($event)&quot;
 &gt;
   Warning
 &lt;/wa-tag&gt;
 
 &lt;!-- Danger outlined accent tag --&gt;
-&lt;wa-tag
-  ngModel
-  variant=&quot;danger&quot;
-  appearance=&quot;outlined accent&quot;
+&lt;wa-tag 
+  ngModel 
+  variant=&quot;danger&quot; 
+  appearance=&quot;outlined accent&quot; 
   size=&quot;large&quot;
 &gt;
   Danger
@@ -209,17 +209,17 @@ import { WaTagDirective } from &#39;@angular-awesome/directives/tag&#39;;
   selector: &#39;app-tag-demo&#39;,
   template: `
     &lt;div class=&quot;tag-container&quot;&gt;
-      &lt;wa-tag
-        *ngFor=&quot;let tag of tags&quot;
+      &lt;wa-tag 
+        *ngFor=&quot;let tag of tags&quot; 
         ngModel
-        [variant]=&quot;tag.variant&quot;
+        [variant]=&quot;tag.variant&quot; 
         [appearance]=&quot;tag.appearance&quot;
         [removable]=&quot;true&quot;
         (waRemove)=&quot;removeTag(tag)&quot;
       &gt;
         {{ tag.label }}
       &lt;/wa-tag&gt;
-
+      
       &lt;button (click)=&quot;addTag()&quot;&gt;Add Tag&lt;/button&gt;
     &lt;/div&gt;
   `,
@@ -232,15 +232,15 @@ export class TagDemoComponent {
     { id: 2, label: &#39;React&#39;, variant: &#39;neutral&#39;, appearance: &#39;outlined&#39; },
     { id: 3, label: &#39;Vue&#39;, variant: &#39;success&#39;, appearance: &#39;accent&#39; }
   ];
-
+  
   removeTag(tagToRemove: any) {
     this.tags = this.tags.filter(tag =&gt; tag.id !== tagToRemove.id);
   }
-
+  
   addTag() {
     const variants = [&#39;brand&#39;, &#39;neutral&#39;, &#39;success&#39;, &#39;warning&#39;, &#39;danger&#39;];
     const appearances = [&#39;accent&#39;, &#39;outlined accent&#39;, &#39;filled&#39;, &#39;outlined&#39;, &#39;filled-outlined&#39;];
-
+    
     this.tags.push({
       id: this.tags.length + 1,
       label: `Tag ${this.tags.length + 1}`,
@@ -266,8 +266,8 @@ interface FilterTag {
     &lt;div class=&quot;filter-container&quot;&gt;
       &lt;h3&gt;Filter by:&lt;/h3&gt;
       &lt;div class=&quot;tags&quot;&gt;
-        &lt;wa-tag
-          *ngFor=&quot;let tag of filterTags&quot;
+        &lt;wa-tag 
+          *ngFor=&quot;let tag of filterTags&quot; 
           ngModel
           [variant]=&quot;tag.selected ? &#39;brand&#39; : &#39;neutral&#39;&quot;
           [appearance]=&quot;tag.selected ? &#39;filled&#39; : &#39;outlined&#39;&quot;
@@ -276,7 +276,7 @@ interface FilterTag {
           {{ tag.label }}
         &lt;/wa-tag&gt;
       &lt;/div&gt;
-
+      
       &lt;div class=&quot;results&quot; *ngIf=&quot;selectedTags.length &gt; 0&quot;&gt;
         &lt;p&gt;Filtered by: {{ selectedTags.join(&#39;, &#39;) }}&lt;/p&gt;
       &lt;/div&gt;
@@ -294,13 +294,13 @@ export class TagFilterComponent {
     { id: 5, label: &#39;Vue&#39;, selected: false },
     { id: 6, label: &#39;Node.js&#39;, selected: false }
   ];
-
+  
   get selectedTags(): string[] {
     return this.filterTags
       .filter(tag =&gt; tag.selected)
       .map(tag =&gt; tag.label);
   }
-
+  
   toggleTag(tag: FilterTag) {
     tag.selected = !tag.selected;
   }
@@ -311,14 +311,14 @@ export class TagFilterComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

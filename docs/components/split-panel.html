@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -193,9 +193,9 @@ import { WaSplitPanelDirective } from 'angular-awesome/split-panel';</pre>
 &lt;/wa-split-panel&gt;
 
 &lt;!-- Combined custom styling --&gt;
-&lt;wa-split-panel
-  [dividerColor]=&quot;&#39;#ff4081&#39;&quot;
-  [dividerWidth]=&quot;&#39;6px&#39;&quot;
+&lt;wa-split-panel 
+  [dividerColor]=&quot;&#39;#ff4081&#39;&quot; 
+  [dividerWidth]=&quot;&#39;6px&#39;&quot; 
   [dividerHitArea]=&quot;&#39;16px&#39;&quot;
   [min]=&quot;&#39;150px&#39;&quot;
   [max]=&quot;&#39;80%&#39;&quot;&gt;
@@ -231,44 +231,44 @@ onReposition(event: CustomEvent): void {
   selector: &#39;app-split-panel-demo&#39;,
   template: `
     &lt;div class=&quot;controls&quot;&gt;
-      &lt;wa-checkbox
-        [(ngModel)]=&quot;isVertical&quot;
+      &lt;wa-checkbox 
+        [(ngModel)]=&quot;isVertical&quot; 
         label=&quot;Vertical Split&quot;&gt;
       &lt;/wa-checkbox&gt;
-
-      &lt;wa-select
-        [(ngModel)]=&quot;primaryPanel&quot;
+      
+      &lt;wa-select 
+        [(ngModel)]=&quot;primaryPanel&quot; 
         label=&quot;Primary Panel&quot;&gt;
         &lt;wa-option value=&quot;start&quot;&gt;Start&lt;/wa-option&gt;
         &lt;wa-option value=&quot;end&quot;&gt;End&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
-      &lt;wa-slider
-        [(ngModel)]=&quot;panelPosition&quot;
-        label=&quot;Position&quot;
-        [min]=&quot;0&quot;
-        [max]=&quot;100&quot;
+      
+      &lt;wa-slider 
+        [(ngModel)]=&quot;panelPosition&quot; 
+        label=&quot;Position&quot; 
+        [min]=&quot;0&quot; 
+        [max]=&quot;100&quot; 
         [step]=&quot;1&quot;
         (inputEvent)=&quot;updatePosition()&quot;&gt;
       &lt;/wa-slider&gt;
-
-      &lt;wa-input
-        type=&quot;color&quot;
-        [(ngModel)]=&quot;dividerColorValue&quot;
+      
+      &lt;wa-input 
+        type=&quot;color&quot; 
+        [(ngModel)]=&quot;dividerColorValue&quot; 
         label=&quot;Divider Color&quot;&gt;
       &lt;/wa-input&gt;
-
-      &lt;wa-checkbox
-        [(ngModel)]=&quot;isPanelDisabled&quot;
+      
+      &lt;wa-checkbox 
+        [(ngModel)]=&quot;isPanelDisabled&quot; 
         label=&quot;Disable Resizing&quot;&gt;
       &lt;/wa-checkbox&gt;
     &lt;/div&gt;
-
-    &lt;wa-split-panel
-      [orientation]=&quot;isVertical ? &#39;vertical&#39; : &#39;horizontal&#39;&quot;
-      [primary]=&quot;primaryPanel&quot;
-      [position]=&quot;panelPosition&quot;
-      [dividerColor]=&quot;dividerColorValue&quot;
+    
+    &lt;wa-split-panel 
+      [orientation]=&quot;isVertical ? &#39;vertical&#39; : &#39;horizontal&#39;&quot; 
+      [primary]=&quot;primaryPanel&quot; 
+      [position]=&quot;panelPosition&quot; 
+      [dividerColor]=&quot;dividerColorValue&quot; 
       [disabled]=&quot;isPanelDisabled&quot;
       (repositionEvent)=&quot;onPanelReposition($event)&quot;&gt;
       &lt;div slot=&quot;start&quot; class=&quot;panel-content&quot;&gt;
@@ -289,7 +289,7 @@ onReposition(event: CustomEvent): void {
       flex-wrap: wrap;
       gap: 16px;
     }
-
+    
     .panel-content {
       padding: 16px;
       height: 100%;
@@ -303,11 +303,11 @@ export class SplitPanelDemoComponent {
   panelPosition = 50;
   dividerColorValue = &#39;#cccccc&#39;;
   isPanelDisabled = false;
-
+  
   updatePosition(): void {
     console.log(`Panel position updated to ${this.panelPosition}%`);
   }
-
+  
   onPanelReposition(event: CustomEvent): void {
     this.panelPosition = event.detail.position;
     console.log(&#39;Panel repositioned:&#39;, event.detail);
@@ -329,11 +329,11 @@ export class SplitPanelDemoComponent {
           &lt;button&gt;Share&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-
-      &lt;wa-split-panel
-        [position]=&quot;20&quot;
-        [min]=&quot;&#39;150px&#39;&quot;
-        [dividerColor]=&quot;&#39;#444&#39;&quot;
+      
+      &lt;wa-split-panel 
+        [position]=&quot;20&quot; 
+        [min]=&quot;&#39;150px&#39;&quot; 
+        [dividerColor]=&quot;&#39;#444&#39;&quot; 
         [dividerWidth]=&quot;&#39;1px&#39;&quot;
         class=&quot;main-split&quot;&gt;
         &lt;!-- File Explorer --&gt;
@@ -342,7 +342,7 @@ export class SplitPanelDemoComponent {
             &lt;h3&gt;Files&lt;/h3&gt;
             &lt;button class=&quot;icon-button&quot;&gt;+&lt;/button&gt;
           &lt;/div&gt;
-
+          
           &lt;div class=&quot;file-list&quot;&gt;
             &lt;div class=&quot;file active&quot;&gt;index.html&lt;/div&gt;
             &lt;div class=&quot;file&quot;&gt;styles.css&lt;/div&gt;
@@ -350,13 +350,13 @@ export class SplitPanelDemoComponent {
             &lt;div class=&quot;file&quot;&gt;README.md&lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-
+        
         &lt;!-- Editor and Preview --&gt;
         &lt;div slot=&quot;end&quot; class=&quot;editor-preview-container&quot;&gt;
-          &lt;wa-split-panel
-            orientation=&quot;vertical&quot;
-            [position]=&quot;60&quot;
-            [dividerColor]=&quot;&#39;#444&#39;&quot;
+          &lt;wa-split-panel 
+            orientation=&quot;vertical&quot; 
+            [position]=&quot;60&quot; 
+            [dividerColor]=&quot;&#39;#444&#39;&quot; 
             [dividerWidth]=&quot;&#39;1px&#39;&quot;&gt;
             &lt;!-- Code Editor --&gt;
             &lt;div slot=&quot;start&quot; class=&quot;code-editor&quot;&gt;
@@ -366,7 +366,7 @@ export class SplitPanelDemoComponent {
                   &lt;div class=&quot;tab&quot;&gt;styles.css&lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
-
+              
               &lt;div class=&quot;editor-content&quot;&gt;
                 &lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html&amp;gt;
@@ -382,14 +382,14 @@ export class SplitPanelDemoComponent {
 &amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
               &lt;/div&gt;
             &lt;/div&gt;
-
+            
             &lt;!-- Preview --&gt;
             &lt;div slot=&quot;end&quot; class=&quot;preview&quot;&gt;
               &lt;div class=&quot;panel-header&quot;&gt;
                 &lt;h3&gt;Preview&lt;/h3&gt;
                 &lt;button class=&quot;icon-button&quot;&gt;↻&lt;/button&gt;
               &lt;/div&gt;
-
+              
               &lt;div class=&quot;preview-content&quot;&gt;
                 &lt;div class=&quot;preview-frame&quot;&gt;
                   &lt;h1&gt;Hello, World!&lt;/h1&gt;
@@ -400,7 +400,7 @@ export class SplitPanelDemoComponent {
           &lt;/wa-split-panel&gt;
         &lt;/div&gt;
       &lt;/wa-split-panel&gt;
-
+      
       &lt;div class=&quot;status-bar&quot;&gt;
         &lt;div&gt;Ready&lt;/div&gt;
         &lt;div&gt;HTML&lt;/div&gt;
@@ -417,7 +417,7 @@ export class SplitPanelDemoComponent {
       border-radius: 4px;
       overflow: hidden;
     }
-
+    
     .toolbar {
       display: flex;
       justify-content: space-between;
@@ -426,22 +426,22 @@ export class SplitPanelDemoComponent {
       background-color: #f5f5f5;
       border-bottom: 1px solid #ddd;
     }
-
+    
     .logo {
       font-weight: bold;
       font-size: 18px;
     }
-
+    
     .actions {
       display: flex;
       gap: 8px;
     }
-
+    
     .main-split {
       flex: 1;
       overflow: hidden;
     }
-
+    
     .panel-header {
       display: flex;
       justify-content: space-between;
@@ -450,61 +450,61 @@ export class SplitPanelDemoComponent {
       background-color: #f5f5f5;
       border-bottom: 1px solid #ddd;
     }
-
+    
     .file-explorer {
       height: 100%;
       display: flex;
       flex-direction: column;
       background-color: #fafafa;
     }
-
+    
     .file-list {
       flex: 1;
       overflow: auto;
     }
-
+    
     .file {
       padding: 8px 16px;
       cursor: pointer;
     }
-
+    
     .file.active {
       background-color: #e3f2fd;
       color: #2196f3;
     }
-
+    
     .file:hover:not(.active) {
       background-color: #f5f5f5;
     }
-
+    
     .editor-preview-container {
       height: 100%;
     }
-
+    
     .code-editor {
       height: 100%;
       display: flex;
       flex-direction: column;
       background-color: #fafafa;
     }
-
+    
     .tabs {
       display: flex;
       gap: 2px;
     }
-
+    
     .tab {
       padding: 8px 16px;
       background-color: #f0f0f0;
       border-right: 1px solid #ddd;
       cursor: pointer;
     }
-
+    
     .tab.active {
       background-color: #fff;
       border-bottom: 2px solid #2196f3;
     }
-
+    
     .editor-content {
       flex: 1;
       overflow: auto;
@@ -512,26 +512,26 @@ export class SplitPanelDemoComponent {
       font-family: monospace;
       background-color: #fff;
     }
-
+    
     .preview {
       height: 100%;
       display: flex;
       flex-direction: column;
       background-color: #fff;
     }
-
+    
     .preview-content {
       flex: 1;
       overflow: auto;
       padding: 16px;
     }
-
+    
     .preview-frame {
       padding: 16px;
       border: 1px dashed #ddd;
       border-radius: 4px;
     }
-
+    
     .status-bar {
       display: flex;
       gap: 16px;
@@ -541,7 +541,7 @@ export class SplitPanelDemoComponent {
       font-size: 12px;
       color: #666;
     }
-
+    
     button {
       padding: 4px 12px;
       background-color: #2196f3;
@@ -550,7 +550,7 @@ export class SplitPanelDemoComponent {
       border-radius: 4px;
       cursor: pointer;
     }
-
+    
     .icon-button {
       width: 24px;
       height: 24px;
@@ -559,12 +559,12 @@ export class SplitPanelDemoComponent {
       align-items: center;
       justify-content: center;
     }
-
+    
     h3 {
       margin: 0;
       font-size: 14px;
     }
-
+    
     pre {
       margin: 0;
     }
@@ -592,7 +592,7 @@ export class CodeEditorComponent {
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-
+      
       &lt;div class=&quot;folder&quot;&gt;
         &lt;div class=&quot;folder-name&quot;&gt;
           &lt;span class=&quot;icon&quot;&gt;📁&lt;/span&gt; Images
@@ -610,13 +610,13 @@ export class CodeEditorComponent {
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-
+    
     &lt;!-- File Preview --&gt;
     &lt;div slot=&quot;end&quot; class=&quot;file-preview&quot;&gt;
       &lt;div *ngIf=&quot;!selectedFile&quot; class=&quot;no-selection&quot;&gt;
         &lt;p&gt;Select a file to preview&lt;/p&gt;
       &lt;/div&gt;
-
+      
       &lt;div *ngIf=&quot;selectedFile&quot; class=&quot;preview-content&quot;&gt;
         &lt;div class=&quot;preview-header&quot;&gt;
           &lt;h3&gt;{{ selectedFile }}&lt;/h3&gt;
@@ -625,7 +625,7 @@ export class CodeEditorComponent {
             &lt;button&gt;Share&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-
+        
         &lt;div class=&quot;preview-body&quot;&gt;
           &lt;!-- File preview would go here --&gt;
           &lt;div class=&quot;placeholder-preview&quot;&gt;
@@ -644,48 +644,48 @@ export class CodeEditorComponent {
     border-radius: 4px;
     overflow: hidden;
   }
-
+  
   .file-tree {
     height: 100%;
     overflow: auto;
     padding: 16px;
     background-color: #f5f5f5;
   }
-
+  
   .folder {
     margin-bottom: 8px;
   }
-
+  
   .folder-name {
     font-weight: bold;
     padding: 4px 0;
     cursor: pointer;
   }
-
+  
   .folder-contents {
     padding-left: 20px;
   }
-
+  
   .file {
     padding: 4px 0;
     cursor: pointer;
   }
-
+  
   .file:hover {
     color: #2196f3;
   }
-
+  
   .icon {
     margin-right: 4px;
   }
-
+  
   .file-preview {
     height: 100%;
     display: flex;
     flex-direction: column;
     background-color: white;
   }
-
+  
   .no-selection {
     display: flex;
     justify-content: center;
@@ -693,13 +693,13 @@ export class CodeEditorComponent {
     height: 100%;
     color: #999;
   }
-
+  
   .preview-content {
     display: flex;
     flex-direction: column;
     height: 100%;
   }
-
+  
   .preview-header {
     display: flex;
     justify-content: space-between;
@@ -707,18 +707,18 @@ export class CodeEditorComponent {
     padding: 16px;
     border-bottom: 1px solid #ddd;
   }
-
+  
   .actions {
     display: flex;
     gap: 8px;
   }
-
+  
   .preview-body {
     flex: 1;
     overflow: auto;
     padding: 16px;
   }
-
+  
   .placeholder-preview {
     display: flex;
     justify-content: center;
@@ -727,7 +727,7 @@ export class CodeEditorComponent {
     border: 1px dashed #ddd;
     border-radius: 4px;
   }
-
+  
   button {
     padding: 4px 12px;
     background-color: #2196f3;
@@ -736,7 +736,7 @@ export class CodeEditorComponent {
     border-radius: 4px;
     cursor: pointer;
   }
-
+  
   h3 {
     margin: 0;
   }
@@ -754,14 +754,14 @@ selectFile(filename: string): void {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

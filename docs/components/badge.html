@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -141,17 +141,17 @@ import { WaBadgeDirective } from 'angular-awesome/badge';</pre>
 &lt;wa-badge variant=&quot;success&quot; [fontSize]=&quot;&#39;var(--wa-font-size-s)&#39;&quot;&gt;✓&lt;/wa-badge&gt;
 
 &lt;!-- Custom colors --&gt;
-&lt;wa-badge
-  [backgroundColor]=&quot;&#39;#e6f7ff&#39;&quot;
-  [borderColor]=&quot;&#39;#1890ff&#39;&quot;
+&lt;wa-badge 
+  [backgroundColor]=&quot;&#39;#e6f7ff&#39;&quot; 
+  [borderColor]=&quot;&#39;#1890ff&#39;&quot; 
   [textColor]=&quot;&#39;#0050b3&#39;&quot;&gt;
   Custom
 &lt;/wa-badge&gt;
 
 &lt;!-- Custom pulse color --&gt;
-&lt;wa-badge
-  variant=&quot;danger&quot;
-  [pulse]=&quot;true&quot;
+&lt;wa-badge 
+  variant=&quot;danger&quot; 
+  [pulse]=&quot;true&quot; 
   [pulseColor]=&quot;&#39;rgba(255, 0, 0, 0.5)&#39;&quot;&gt;
   Alert
 &lt;/wa-badge&gt;
@@ -185,7 +185,7 @@ export class ExampleComponent {
 
     &lt;!-- Rendering a list of badges --&gt;
     &lt;div&gt;
-      &lt;wa-badge
+      &lt;wa-badge 
         *ngFor=&quot;let status of statuses&quot;
         [variant]=&quot;status.type&quot;
         [appearance]=&quot;status.appearance&quot;&gt;
@@ -210,14 +210,14 @@ export class ExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

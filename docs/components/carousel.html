@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -198,7 +198,7 @@ import { WaCarouselDirective } from 'angular-awesome/carousel';</pre>
 <pre><code class="language-html">&lt;wa-carousel navigation&gt;
   &lt;wa-icon slot=&quot;previous-icon&quot; name=&quot;chevron-left&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
   &lt;wa-icon slot=&quot;next-icon&quot; name=&quot;chevron-right&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
-
+  
   &lt;wa-carousel-item&gt;
     &lt;img src=&quot;https://example.com/image1.jpg&quot; alt=&quot;Slide 1&quot;&gt;
   &lt;/wa-carousel-item&gt;
@@ -244,7 +244,7 @@ import { WaCarouselDirective } from 'angular-awesome/carousel';</pre>
       &lt;/div&gt;
     &lt;/wa-card&gt;
   &lt;/wa-carousel-item&gt;
-
+  
   &lt;wa-carousel-item&gt;
     &lt;wa-card [withHeader]=&quot;true&quot; [withFooter]=&quot;true&quot;&gt;
       &lt;div slot=&quot;header&quot;&gt;Card 2 Header&lt;/div&gt;
@@ -254,7 +254,7 @@ import { WaCarouselDirective } from 'angular-awesome/carousel';</pre>
       &lt;/div&gt;
     &lt;/wa-card&gt;
   &lt;/wa-carousel-item&gt;
-
+  
   &lt;wa-carousel-item&gt;
     &lt;wa-card [withHeader]=&quot;true&quot; [withFooter]=&quot;true&quot;&gt;
       &lt;div slot=&quot;header&quot;&gt;Card 3 Header&lt;/div&gt;
@@ -267,8 +267,8 @@ import { WaCarouselDirective } from 'angular-awesome/carousel';</pre>
 &lt;/wa-carousel&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
-<pre><code class="language-html">&lt;wa-carousel
-  [navigation]=&quot;showNavigation&quot;
+<pre><code class="language-html">&lt;wa-carousel 
+  [navigation]=&quot;showNavigation&quot; 
   [pagination]=&quot;showPagination&quot;
   [loop]=&quot;enableLoop&quot;
   [autoplay]=&quot;enableAutoplay&quot;
@@ -278,7 +278,7 @@ import { WaCarouselDirective } from 'angular-awesome/carousel';</pre>
   [orientation]=&quot;carouselOrientation&quot;
   [mouseDragging]=&quot;enableMouseDrag&quot;
   (waSlideChange)=&quot;onSlideChange($event)&quot;&gt;
-
+  
   &lt;wa-carousel-item *ngFor=&quot;let slide of slides&quot;&gt;
     &lt;img [src]=&quot;slide.imageUrl&quot; [alt]=&quot;slide.caption&quot;&gt;
     &lt;div class=&quot;caption&quot;&gt;{{slide.caption}}&lt;/div&gt;
@@ -298,7 +298,7 @@ import { WaCarouselDirective } from &#39;./carousel.directive&#39;;
           &lt;img [src]=&quot;slide.imageUrl&quot; [alt]=&quot;slide.caption&quot;&gt;
         &lt;/wa-carousel-item&gt;
       &lt;/wa-carousel&gt;
-
+      
       &lt;div class=&quot;controls&quot;&gt;
         &lt;wa-button (click)=&quot;prevSlide()&quot;&gt;Previous&lt;/wa-button&gt;
         &lt;wa-button (click)=&quot;nextSlide()&quot;&gt;Next&lt;/wa-button&gt;
@@ -309,22 +309,22 @@ import { WaCarouselDirective } from &#39;./carousel.directive&#39;;
 })
 export class CarouselDemoComponent {
   @ViewChild(&#39;myCarousel&#39;) carousel!: WaCarouselDirective;
-
+  
   slides = [
     { imageUrl: &#39;https://example.com/image1.jpg&#39;, caption: &#39;Slide 1&#39; },
     { imageUrl: &#39;https://example.com/image2.jpg&#39;, caption: &#39;Slide 2&#39; },
     { imageUrl: &#39;https://example.com/image3.jpg&#39;, caption: &#39;Slide 3&#39; },
     { imageUrl: &#39;https://example.com/image4.jpg&#39;, caption: &#39;Slide 4&#39; }
   ];
-
+  
   nextSlide(): void {
     this.carousel.next();
   }
-
+  
   prevSlide(): void {
     this.carousel.previous();
   }
-
+  
   goToSlide(index: number): void {
     this.carousel.goToSlide(index);
   }
@@ -335,14 +335,14 @@ export class CarouselDemoComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

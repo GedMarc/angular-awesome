@@ -73,3 +73,8 @@ export * from './directives/layout-split/layout-split.directive';
 export * from './directives/layout-stack/layout-stack.directive';
 export * from './directives/text/text.directive';
 export * from './directives/variant/variant.directive';
+
+// Toasts
+export * from './services/toast/toast.types';
+export * from './services/toast/toast.service';
+export * from './directives/toast/toast-container.component';

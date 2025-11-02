@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -164,15 +164,15 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 </code></pre>
 <h2>Complete Example with All Slots</h2>
-<pre><code class="language-html">&lt;wa-card
-  appearance=&quot;outlined&quot;
-  [withHeader]=&quot;true&quot;
-  [withImage]=&quot;true&quot;
+<pre><code class="language-html">&lt;wa-card 
+  appearance=&quot;outlined&quot; 
+  [withHeader]=&quot;true&quot; 
+  [withImage]=&quot;true&quot; 
   [withFooter]=&quot;true&quot;&gt;
 
-  &lt;img
-    slot=&quot;image&quot;
-    src=&quot;https://example.com/cat.jpg&quot;
+  &lt;img 
+    slot=&quot;image&quot; 
+    src=&quot;https://example.com/cat.jpg&quot; 
     alt=&quot;Cat image&quot;&gt;
 
   &lt;div slot=&quot;header&quot;&gt;Cute Cat&lt;/div&gt;
@@ -196,10 +196,10 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
   }
 &lt;/style&gt;
 
-&lt;wa-card
-  class=&quot;custom-card&quot;
-  appearance=&quot;outlined&quot;
-  [withHeader]=&quot;true&quot;
+&lt;wa-card 
+  class=&quot;custom-card&quot; 
+  appearance=&quot;outlined&quot; 
+  [withHeader]=&quot;true&quot; 
   [withFooter]=&quot;true&quot;&gt;
 
   &lt;div slot=&quot;header&quot;&gt;Custom Styled Card&lt;/div&gt;
@@ -210,12 +210,12 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 
 &lt;!-- Using direct styling inputs --&gt;
-&lt;wa-card
-  appearance=&quot;outlined&quot;
-  [withHeader]=&quot;true&quot;
+&lt;wa-card 
+  appearance=&quot;outlined&quot; 
+  [withHeader]=&quot;true&quot; 
   [withFooter]=&quot;true&quot;
-  [color]=&quot;&#39;#333333&#39;&quot;
-  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
+  [color]=&quot;&#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot; 
   [fontSize]=&quot;&#39;1rem&#39;&quot;
   [borderRadius]=&quot;&#39;12px&#39;&quot;
   [borderColor]=&quot;&#39;#6200ee&#39;&quot;
@@ -231,11 +231,11 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 
 &lt;!-- Dynamic direct styling --&gt;
-&lt;wa-card
-  appearance=&quot;outlined&quot;
-  [withHeader]=&quot;true&quot;
-  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot;
-  [backgroundColor]=&quot;isDarkMode ? &#39;#333333&#39; : &#39;#ffffff&#39;&quot;
+&lt;wa-card 
+  appearance=&quot;outlined&quot; 
+  [withHeader]=&quot;true&quot; 
+  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;isDarkMode ? &#39;#333333&#39; : &#39;#ffffff&#39;&quot; 
   [borderColor]=&quot;isHighlighted ? &#39;#ff4081&#39; : &#39;#6200ee&#39;&quot;&gt;
 
   &lt;div slot=&quot;header&quot;&gt;Dynamic Styled Card&lt;/div&gt;
@@ -244,17 +244,17 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
-<pre><code class="language-html">&lt;wa-card
-  [appearance]=&quot;cardAppearance&quot;
-  [size]=&quot;cardSize&quot;
-  [withHeader]=&quot;hasHeader&quot;
-  [withImage]=&quot;hasImage&quot;
+<pre><code class="language-html">&lt;wa-card 
+  [appearance]=&quot;cardAppearance&quot; 
+  [size]=&quot;cardSize&quot; 
+  [withHeader]=&quot;hasHeader&quot; 
+  [withImage]=&quot;hasImage&quot; 
   [withFooter]=&quot;hasFooter&quot;&gt;
 
   &lt;!-- Image will be shown when hasImage is true --&gt;
-  &lt;img
-    slot=&quot;image&quot;
-    [src]=&quot;imageUrl&quot;
+  &lt;img 
+    slot=&quot;image&quot; 
+    [src]=&quot;imageUrl&quot; 
     [alt]=&quot;imageAlt&quot;&gt;
 
   &lt;!-- Header will be shown when hasHeader is true --&gt;
@@ -269,13 +269,13 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 
 &lt;!-- Using direct styling with Angular bindings --&gt;
-&lt;wa-card
-  [appearance]=&quot;cardAppearance&quot;
-  [size]=&quot;cardSize&quot;
-  [withHeader]=&quot;hasHeader&quot;
+&lt;wa-card 
+  [appearance]=&quot;cardAppearance&quot; 
+  [size]=&quot;cardSize&quot; 
+  [withHeader]=&quot;hasHeader&quot; 
   [withFooter]=&quot;hasFooter&quot;
-  [color]=&quot;cardColor&quot;
-  [backgroundColor]=&quot;cardBackgroundColor&quot;
+  [color]=&quot;cardColor&quot; 
+  [backgroundColor]=&quot;cardBackgroundColor&quot; 
   [fontSize]=&quot;cardFontSize&quot;
   [borderRadius]=&quot;cardBorderRadius&quot;
   [borderColor]=&quot;cardBorderColor&quot;
@@ -293,10 +293,10 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 &lt;/wa-card&gt;
 
 &lt;!-- Conditional styling based on component state --&gt;
-&lt;wa-card
-  [appearance]=&quot;cardAppearance&quot;
+&lt;wa-card 
+  [appearance]=&quot;cardAppearance&quot; 
   [withHeader]=&quot;true&quot;
-  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot;
+  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
   [backgroundColor]=&quot;isDarkMode ? &#39;#333333&#39; : &#39;#ffffff&#39;&quot;
   [borderColor]=&quot;isSelected ? accentColor : defaultBorderColor&quot;&gt;
 
@@ -310,14 +310,14 @@ import { WaCardDirective } from 'angular-awesome/card';</pre>
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

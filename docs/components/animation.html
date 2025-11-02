@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -118,18 +118,18 @@ import { WaAnimationDirective } from 'angular-awesome/animation';</pre>
 &lt;/wa-animation&gt;
 
 &lt;!-- Animation with duration and iterations --&gt;
-&lt;wa-animation
-  name=&quot;rubberBand&quot;
-  [duration]=&quot;1000&quot;
-  [iterations]=&quot;1&quot;
+&lt;wa-animation 
+  name=&quot;rubberBand&quot; 
+  [duration]=&quot;1000&quot; 
+  [iterations]=&quot;1&quot; 
   play&gt;
   &lt;wa-button variant=&quot;brand&quot;&gt;Click Me&lt;/wa-button&gt;
 &lt;/wa-animation&gt;
 
 &lt;!-- Animation with dynamic properties --&gt;
-&lt;wa-animation
-  [name]=&quot;animation&quot;
-  [duration]=&quot;2000&quot;
+&lt;wa-animation 
+  [name]=&quot;animation&quot; 
+  [duration]=&quot;2000&quot; 
   [easing]=&quot;&#39;ease-in-out&#39;&quot;&gt;
   &lt;div class=&quot;box&quot;&gt;&lt;/div&gt;
 &lt;/wa-animation&gt;
@@ -149,7 +149,7 @@ import { WaAnimationDirective } from 'angular-awesome/animation';</pre>
 })
 export class ExampleComponent {
   @ViewChild(&#39;myAnim&#39;) animRef!: ElementRef;
-
+  
   startAnim() {
     this.animRef.nativeElement.play = true;
   }
@@ -205,11 +205,11 @@ export class ExampleComponent {
   onStart() {
     console.log(&#39;Animation started&#39;);
   }
-
+  
   onFinish() {
     console.log(&#39;Animation completed&#39;);
   }
-
+  
   onCancel() {
     console.log(&#39;Animation cancelled&#39;);
   }
@@ -217,8 +217,8 @@ export class ExampleComponent {
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Custom styling using CSS variables --&gt;
-&lt;wa-animation
-  name=&quot;bounce&quot;
+&lt;wa-animation 
+  name=&quot;bounce&quot; 
   [controlBoxSize]=&quot;&#39;2.5rem&#39;&quot;
   [iconSize]=&quot;&#39;1.5rem&#39;&quot;
   play&gt;
@@ -226,8 +226,8 @@ export class ExampleComponent {
 &lt;/wa-animation&gt;
 
 &lt;!-- Using style binding for CSS variables --&gt;
-&lt;wa-animation
-  name=&quot;pulse&quot;
+&lt;wa-animation 
+  name=&quot;pulse&quot; 
   [style.--control-box-size]=&quot;&#39;2rem&#39;&quot;
   [style.--icon-size]=&quot;&#39;1.25rem&#39;&quot;
   play&gt;
@@ -236,9 +236,9 @@ export class ExampleComponent {
 </code></pre>
 <h2>Animation Direction and Timing</h2>
 <pre><code class="language-html">&lt;!-- Controlling animation direction and timing --&gt;
-&lt;wa-animation
-  name=&quot;fadeIn&quot;
-  [direction]=&quot;&#39;alternate&#39;&quot;
+&lt;wa-animation 
+  name=&quot;fadeIn&quot; 
+  [direction]=&quot;&#39;alternate&#39;&quot; 
   [iterations]=&quot;3&quot;
   [delay]=&quot;500&quot;
   [endDelay]=&quot;200&quot;
@@ -248,8 +248,8 @@ export class ExampleComponent {
 &lt;/wa-animation&gt;
 </code></pre>
 <h2>Dynamic Content</h2>
-<pre><code class="language-html">&lt;wa-animation
-  [name]=&quot;animationName&quot;
+<pre><code class="language-html">&lt;wa-animation 
+  [name]=&quot;animationName&quot; 
   [duration]=&quot;animationDuration&quot;
   [play]=&quot;isPlaying&quot;&gt;
   &lt;div class=&quot;box&quot;&gt;&lt;/div&gt;
@@ -265,7 +265,7 @@ export class ExampleComponent {
   animationName = &#39;bounce&#39;;
   animationDuration = 1000;
   isPlaying = false;
-
+  
   togglePlay() {
     this.isPlaying = !this.isPlaying;
   }
@@ -285,7 +285,7 @@ export class ExampleComponent {
 
     &lt;!-- Rendering a list of animations --&gt;
     &lt;div&gt;
-      &lt;wa-animation
+      &lt;wa-animation 
         *ngFor=&quot;let anim of animations&quot;
         [name]=&quot;anim.name&quot;
         [duration]=&quot;anim.duration&quot;
@@ -300,7 +300,7 @@ export class ExampleComponent {
 export class ExampleComponent {
   showAnimation = true;
   animationName = &#39;bounce&#39;;
-
+  
   animations = [
     { name: &#39;bounce&#39;, duration: 1000, autoplay: true, elementClass: &#39;box&#39; },
     { name: &#39;flip&#39;, duration: 1500, autoplay: false, elementClass: &#39;card&#39; },
@@ -322,9 +322,9 @@ export class ExampleComponent {
 export class ExampleComponent implements AfterViewInit {
   @ViewChild(&#39;anim&#39;) animRef!: ElementRef;
   @ViewChild(&#39;target&#39;) targetRef!: ElementRef;
-
+  
   private observer!: IntersectionObserver;
-
+  
   ngAfterViewInit() {
     this.observer = new IntersectionObserver((entries) =&gt; {
       entries.forEach(entry =&gt; {
@@ -333,10 +333,10 @@ export class ExampleComponent implements AfterViewInit {
         }
       });
     }, { threshold: 0.5 });
-
+    
     this.observer.observe(this.targetRef.nativeElement);
   }
-
+  
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
@@ -349,14 +349,14 @@ export class ExampleComponent implements AfterViewInit {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

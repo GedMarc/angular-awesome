@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -132,9 +132,9 @@ export class DialogExampleComponent {
 &lt;wa-button (click)=&quot;isNoHeaderOpen = true&quot;&gt;Open No Header Dialog&lt;/wa-button&gt;
 </code></pre>
 <h2>With Light Dismiss</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Light Dismiss Dialog&quot;
-  [(open)]=&quot;isLightDismissOpen&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Light Dismiss Dialog&quot; 
+  [(open)]=&quot;isLightDismissOpen&quot; 
   lightDismiss&gt;
   &lt;p&gt;Click outside this dialog to close it.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
@@ -144,14 +144,14 @@ export class DialogExampleComponent {
 </code></pre>
 <h2>With Custom Header Actions</h2>
 <pre><code class="language-html">&lt;wa-dialog label=&quot;Custom Header Dialog&quot; [(open)]=&quot;isCustomHeaderOpen&quot;&gt;
-  &lt;wa-button
-    appearance=&quot;plain&quot;
-    size=&quot;small&quot;
-    slot=&quot;header-actions&quot;
+  &lt;wa-button 
+    appearance=&quot;plain&quot; 
+    size=&quot;small&quot; 
+    slot=&quot;header-actions&quot; 
     aria-label=&quot;More information&quot;&gt;
     &lt;wa-icon name=&quot;info-circle&quot;&gt;&lt;/wa-icon&gt;
   &lt;/wa-button&gt;
-
+  
   &lt;p&gt;This dialog has custom actions in the header.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-dialog&gt;
@@ -181,14 +181,14 @@ export class DialogExampleComponent {
 }
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Event Dialog&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Event Dialog&quot; 
   [(open)]=&quot;isEventOpen&quot;
   (waShow)=&quot;onDialogShow()&quot;
   (waAfterShow)=&quot;onDialogAfterShow()&quot;
   (waHide)=&quot;onDialogHide($event)&quot;
   (waAfterHide)=&quot;onDialogAfterHide()&quot;&gt;
-
+  
   &lt;p&gt;This dialog demonstrates event handling.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-dialog&gt;
@@ -209,7 +209,7 @@ export class DialogExampleComponent {
 
   onDialogHide(event: { source: HTMLElement | &#39;overlay&#39; | &#39;escape&#39; | &#39;programmatic&#39; }) {
     console.log(&#39;Dialog is closing&#39;, event.source);
-
+    
     // Optionally prevent closing
     if (event.source === &#39;escape&#39; &amp;&amp; this.hasUnsavedChanges) {
       event.preventDefault();
@@ -223,8 +223,8 @@ export class DialogExampleComponent {
 }
 </code></pre>
 <h2>Custom Styling</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Styled Dialog&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Styled Dialog&quot; 
   [(open)]=&quot;isStyledOpen&quot;
   backgroundColor=&quot;#f8f9fa&quot;
   borderRadius=&quot;16px&quot;
@@ -233,7 +233,7 @@ export class DialogExampleComponent {
   width=&quot;600px&quot;
   showDuration=&quot;500ms&quot;
   hideDuration=&quot;300ms&quot;&gt;
-
+  
   &lt;p&gt;This dialog has custom styling applied.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-dialog&gt;
@@ -241,27 +241,27 @@ export class DialogExampleComponent {
 &lt;wa-button (click)=&quot;isStyledOpen = true&quot;&gt;Open Styled Dialog&lt;/wa-button&gt;
 </code></pre>
 <h2>Complex Dialog with Form</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Edit Profile&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Edit Profile&quot; 
   [(open)]=&quot;isFormOpen&quot;
   (waHide)=&quot;onFormDialogHide($event)&quot;&gt;
-
+  
   &lt;form #profileForm=&quot;ngForm&quot;&gt;
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
       &lt;wa-input id=&quot;name&quot; [(ngModel)]=&quot;profile.name&quot; name=&quot;name&quot; required&gt;&lt;/wa-input&gt;
     &lt;/div&gt;
-
+    
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
       &lt;wa-input id=&quot;email&quot; [(ngModel)]=&quot;profile.email&quot; name=&quot;email&quot; required type=&quot;email&quot;&gt;&lt;/wa-input&gt;
     &lt;/div&gt;
   &lt;/form&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button variant=&quot;secondary&quot; data-dialog=&quot;close&quot;&gt;Cancel&lt;/wa-button&gt;
-    &lt;wa-button
-      variant=&quot;primary&quot;
+    &lt;wa-button 
+      variant=&quot;primary&quot; 
       [disabled]=&quot;profileForm.invalid&quot;
       (click)=&quot;saveProfile(); isFormOpen = false;&quot;&gt;
       Save
@@ -284,7 +284,7 @@ export class DialogExampleComponent {
     if (this.hasUnsavedChanges &amp;&amp; (event.source === &#39;escape&#39; || event.source === &#39;overlay&#39;)) {
       // Prevent dialog from closing
       event.preventDefault();
-
+      
       // Show confirmation
       if (confirm(&#39;You have unsaved changes. Are you sure you want to close?&#39;)) {
         this.hasUnsavedChanges = false;
@@ -301,16 +301,16 @@ export class DialogExampleComponent {
 }
 </code></pre>
 <h2>Confirmation Dialog</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Confirm Action&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Confirm Action&quot; 
   [(open)]=&quot;isConfirmOpen&quot;&gt;
-
+  
   &lt;p&gt;Are you sure you want to delete this item? This action cannot be undone.&lt;/p&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button variant=&quot;secondary&quot; data-dialog=&quot;close&quot;&gt;Cancel&lt;/wa-button&gt;
-    &lt;wa-button
-      variant=&quot;danger&quot;
+    &lt;wa-button 
+      variant=&quot;danger&quot; 
       (click)=&quot;deleteItem(); isConfirmOpen = false;&quot;&gt;
       Delete
     &lt;/wa-button&gt;
@@ -320,10 +320,10 @@ export class DialogExampleComponent {
 &lt;wa-button variant=&quot;danger&quot; (click)=&quot;isConfirmOpen = true&quot;&gt;Delete Item&lt;/wa-button&gt;
 </code></pre>
 <h2>Accessibility Example</h2>
-<pre><code class="language-html">&lt;wa-dialog
+<pre><code class="language-html">&lt;wa-dialog 
   label=&quot;Accessible Dialog&quot;
   [(open)]=&quot;isAccessibleOpen&quot;&gt;
-
+  
   &lt;p&gt;This dialog follows accessibility best practices:&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;Proper labeling with the label attribute&lt;/li&gt;
@@ -331,7 +331,7 @@ export class DialogExampleComponent {
     &lt;li&gt;ESC key closes the dialog&lt;/li&gt;
     &lt;li&gt;First focusable element receives focus when opened&lt;/li&gt;
   &lt;/ul&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button autofocus data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
   &lt;/div&gt;
@@ -340,13 +340,13 @@ export class DialogExampleComponent {
 &lt;wa-button (click)=&quot;isAccessibleOpen = true&quot;&gt;Open Accessible Dialog&lt;/wa-button&gt;
 </code></pre>
 <h2>Dialog with Autofocus</h2>
-<pre><code class="language-html">&lt;wa-dialog
-  label=&quot;Autofocus Dialog&quot;
+<pre><code class="language-html">&lt;wa-dialog 
+  label=&quot;Autofocus Dialog&quot; 
   [(open)]=&quot;isAutofocusOpen&quot;&gt;
-
+  
   &lt;p&gt;The input field below will receive focus when the dialog opens:&lt;/p&gt;
   &lt;wa-input autofocus placeholder=&quot;This will be focused&quot;&gt;&lt;/wa-input&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button data-dialog=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
   &lt;/div&gt;
@@ -359,14 +359,14 @@ export class DialogExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

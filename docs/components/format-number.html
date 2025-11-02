@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -154,9 +154,9 @@ export class FormatNumberExampleComponent {
 &lt;wa-format-number [value]=&quot;1234.567&quot; [maximumFractionDigits]=&quot;2&quot;&gt;&lt;/wa-format-number&gt;
 
 &lt;!-- Fixed 2 fraction digits --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.5&quot;
-  [minimumFractionDigits]=&quot;2&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.5&quot; 
+  [minimumFractionDigits]=&quot;2&quot; 
   [maximumFractionDigits]=&quot;2&quot;&gt;
 &lt;/wa-format-number&gt;
 </code></pre>
@@ -172,9 +172,9 @@ export class FormatNumberExampleComponent {
 &lt;wa-format-number [value]=&quot;1234.56&quot; [maximumSignificantDigits]=&quot;3&quot;&gt;&lt;/wa-format-number&gt;
 
 &lt;!-- Between 2 and 4 significant digits --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.56&quot;
-  [minimumSignificantDigits]=&quot;2&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  [minimumSignificantDigits]=&quot;2&quot; 
   [maximumSignificantDigits]=&quot;4&quot;&gt;
 &lt;/wa-format-number&gt;
 </code></pre>
@@ -200,44 +200,44 @@ export class FormatNumberExampleComponent {
 </code></pre>
 <h2>Styling Examples</h2>
 <pre><code class="language-html">&lt;!-- Custom color --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.56&quot;
-  type=&quot;currency&quot;
-  currency=&quot;USD&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
   color=&quot;#3f51b5&quot;&gt;
 &lt;/wa-format-number&gt;
 
 &lt;!-- Custom font size --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.56&quot;
-  type=&quot;currency&quot;
-  currency=&quot;USD&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
   fontSize=&quot;1.5rem&quot;&gt;
 &lt;/wa-format-number&gt;
 
 &lt;!-- Bold text --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.56&quot;
-  type=&quot;currency&quot;
-  currency=&quot;USD&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
   fontWeight=&quot;bold&quot;&gt;
 &lt;/wa-format-number&gt;
 
 &lt;!-- Right-aligned text --&gt;
-&lt;wa-format-number
-  [value]=&quot;1234.56&quot;
-  type=&quot;currency&quot;
-  currency=&quot;USD&quot;
+&lt;wa-format-number 
+  [value]=&quot;1234.56&quot; 
+  type=&quot;currency&quot; 
+  currency=&quot;USD&quot; 
   textAlign=&quot;right&quot;&gt;
 &lt;/wa-format-number&gt;
 
 &lt;!-- Inline display --&gt;
 &lt;p&gt;
-  The total is
-  &lt;wa-format-number
-    [value]=&quot;1234.56&quot;
-    type=&quot;currency&quot;
-    currency=&quot;USD&quot;
+  The total is 
+  &lt;wa-format-number 
+    [value]=&quot;1234.56&quot; 
+    type=&quot;currency&quot; 
+    currency=&quot;USD&quot; 
     display=&quot;inline&quot;&gt;
   &lt;/wa-format-number&gt;
   including tax.
@@ -247,17 +247,17 @@ export class FormatNumberExampleComponent {
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;amount&quot;&gt;Amount:&lt;/label&gt;
-    &lt;input
-      type=&quot;number&quot;
-      id=&quot;amount&quot;
-      [(ngModel)]=&quot;amount&quot;
+    &lt;input 
+      type=&quot;number&quot; 
+      id=&quot;amount&quot; 
+      [(ngModel)]=&quot;amount&quot; 
       name=&quot;amount&quot;
       step=&quot;0.01&quot;&gt;
   &lt;/div&gt;
-
+  
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label&gt;Formatted Amount:&lt;/label&gt;
-    &lt;wa-format-number
+    &lt;wa-format-number 
       [value]=&quot;amount&quot;
       type=&quot;currency&quot;
       currency=&quot;USD&quot;&gt;
@@ -281,7 +281,7 @@ export class FormatNumberExampleComponent {
     &lt;tr *ngFor=&quot;let product of products&quot;&gt;
       &lt;td&gt;{{ product.name }}&lt;/td&gt;
       &lt;td&gt;
-        &lt;wa-format-number
+        &lt;wa-format-number 
           [value]=&quot;product.price&quot;
           type=&quot;currency&quot;
           currency=&quot;USD&quot;&gt;
@@ -289,7 +289,7 @@ export class FormatNumberExampleComponent {
       &lt;/td&gt;
       &lt;td&gt;{{ product.quantity }}&lt;/td&gt;
       &lt;td&gt;
-        &lt;wa-format-number
+        &lt;wa-format-number 
           [value]=&quot;product.price * product.quantity&quot;
           type=&quot;currency&quot;
           currency=&quot;USD&quot;&gt;
@@ -301,7 +301,7 @@ export class FormatNumberExampleComponent {
     &lt;tr&gt;
       &lt;td colspan=&quot;3&quot;&gt;Total&lt;/td&gt;
       &lt;td&gt;
-        &lt;wa-format-number
+        &lt;wa-format-number 
           [value]=&quot;calculateTotal()&quot;
           type=&quot;currency&quot;
           currency=&quot;USD&quot;
@@ -319,7 +319,7 @@ export class FormatNumberExampleComponent {
     { name: &#39;Product B&#39;, price: 29.99, quantity: 1 },
     { name: &#39;Product C&#39;, price: 9.99, quantity: 3 }
   ];
-
+  
   calculateTotal(): number {
     return this.products.reduce((sum, product) =&gt; sum + (product.price * product.quantity), 0);
   }
@@ -327,25 +327,25 @@ export class FormatNumberExampleComponent {
 </code></pre>
 <h2>With Dynamic Values</h2>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;input
-    type=&quot;range&quot;
-    [(ngModel)]=&quot;value&quot;
-    min=&quot;0&quot;
-    max=&quot;1000&quot;
+  &lt;input 
+    type=&quot;range&quot; 
+    [(ngModel)]=&quot;value&quot; 
+    min=&quot;0&quot; 
+    max=&quot;1000&quot; 
     step=&quot;10&quot;&gt;
-
+  
   &lt;p&gt;
     Raw value: {{ value }}
   &lt;/p&gt;
-
+  
   &lt;p&gt;
     Decimal: &lt;wa-format-number [value]=&quot;value&quot;&gt;&lt;/wa-format-number&gt;
   &lt;/p&gt;
-
+  
   &lt;p&gt;
     Currency: &lt;wa-format-number [value]=&quot;value&quot; type=&quot;currency&quot; currency=&quot;USD&quot;&gt;&lt;/wa-format-number&gt;
   &lt;/p&gt;
-
+  
   &lt;p&gt;
     Percentage: &lt;wa-format-number [value]=&quot;value / 1000&quot; type=&quot;percent&quot;&gt;&lt;/wa-format-number&gt;
   &lt;/p&gt;
@@ -355,7 +355,7 @@ export class FormatNumberExampleComponent {
 <pre><code class="language-html">&lt;!-- Format based on value --&gt;
 &lt;div *ngFor=&quot;let transaction of transactions&quot;&gt;
   &lt;span&gt;{{ transaction.description }}&lt;/span&gt;
-  &lt;wa-format-number
+  &lt;wa-format-number 
     [value]=&quot;transaction.amount&quot;
     type=&quot;currency&quot;
     currency=&quot;USD&quot;
@@ -378,16 +378,16 @@ export class FormatNumberExampleComponent {
   &lt;div class=&quot;category-name&quot;&gt;{{ category.name }}&lt;/div&gt;
   &lt;div class=&quot;amounts&quot;&gt;
     &lt;div class=&quot;spent&quot;&gt;
-      Spent:
-      &lt;wa-format-number
+      Spent: 
+      &lt;wa-format-number 
         [value]=&quot;category.spent&quot;
         type=&quot;currency&quot;
         currency=&quot;USD&quot;&gt;
       &lt;/wa-format-number&gt;
     &lt;/div&gt;
     &lt;div class=&quot;budget&quot;&gt;
-      Budget:
-      &lt;wa-format-number
+      Budget: 
+      &lt;wa-format-number 
         [value]=&quot;category.budget&quot;
         type=&quot;currency&quot;
         currency=&quot;USD&quot;&gt;
@@ -395,7 +395,7 @@ export class FormatNumberExampleComponent {
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;percentage&quot;&gt;
-    &lt;wa-format-number
+    &lt;wa-format-number 
       [value]=&quot;category.spent / category.budget&quot;
       type=&quot;percent&quot;
       [maximumFractionDigits]=&quot;0&quot;&gt;
@@ -418,14 +418,14 @@ export class FormatNumberExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular Awesome - Variant Component</title>
+    <title>Angular Awesome - Toast Component</title>
     <link rel="stylesheet" href="../includes/styles.css">
     <!-- Syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
@@ -87,8 +87,8 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Variant Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
-                <p class="subtitle">- Purpose: make it easy to toggle color variants on arbitrary elements, mirroring component variant behavior.</p>
+                <h1>Toast Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle">Toasts are small, contextual notifications that appear in a corner of the screen and disappear automatically or can be dismissed by the user. This implementation supports:</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
@@ -102,43 +102,84 @@
 
       <section>
         <h2>Import</h2>
-        <p>Import the variant directive from the angular-awesome package:</p>
-        <pre>// Import the variant directive
-import { WaVariantDirective } from 'angular-awesome/variant';</pre>
+        <p>Import the toast directive from the angular-awesome package:</p>
+        <pre>// Import the toast directive
+import { WaToastDirective } from 'angular-awesome/toast';</pre>
       </section>
 
       <section>
         <h2>Examples</h2>
-        <h1>Color Variants Utility</h1>
-<p>Some Web Awesome components, like <code>&lt;wa-button&gt;</code>, allow you to change the color by using a <code>variant</code> attribute. You can create the same effect on any element by using the color variant utility classes, or via the Angular helper directive:</p>
-<ul>
-<li><code>.wa-brand</code></li>
-<li><code>.wa-neutral</code></li>
-<li><code>.wa-success</code></li>
-<li><code>.wa-warning</code></li>
-<li><code>.wa-danger</code></li>
-</ul>
-<p>With Angular, prefer the <code>waVariant</code> directive for a type-safe API:</p>
-<pre><code class="language-html">&lt;p [waVariant]=&quot;&#39;brand&#39;&quot;&gt;Brand variant via directive&lt;/p&gt;
-&lt;p [waVariant]=&quot;&#39;success&#39;&quot;&gt;Success variant via directive&lt;/p&gt;
-&lt;p waWarning&gt;Warning variant via shorthand&lt;/p&gt;
+        <h1>Toasts Examples</h1>
+<p>This page shows how to use the Toasts system built on top of <code>wa-callout</code> via the <code>WaToastService</code> and the <code>wa-toast-container</code> component.</p>
+<h2>Basic Setup</h2>
+<p>Add the container once near the application root (e.g., in <code>app.component.html</code>). It will position the stack and render incoming toasts.</p>
+<pre><code class="language-html">&lt;!-- app.component.html --&gt;
+&lt;wa-toast-container position=&quot;top-right&quot;&gt;&lt;/wa-toast-container&gt;
 </code></pre>
-<p>These classes define generic color tokens modeled after Semantic Colors without the group identifier (brand, neutral, success, warning, danger). Styles can use the generic tokens like <code>--wa-color-fill-loud</code> instead of <code>--wa-color-brand-fill-loud</code>.</p>
-<p>For example, a custom <code>.callout</code> class with color variants can be written as:</p>
-<pre><code class="language-html">&lt;p class=&quot;callout&quot;&gt;This is a callout.&lt;/p&gt;
-&lt;p class=&quot;callout&quot; waBrand&gt;This is a callout.&lt;/p&gt;
-&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;success&#39;&quot;&gt;This is a callout.&lt;/p&gt;
-&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;warning&#39;&quot;&gt;This is a callout.&lt;/p&gt;
-&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;danger&#39;&quot;&gt;This is a callout.&lt;/p&gt;
+<p>Optionally configure defaults during bootstrap:</p>
+<pre><code class="language-ts">// main.ts (bootstrapApplication)
+import { provideWaToasts } from &#39;angular-awesome&#39;;
 
-&lt;style&gt;
-  .callout {
-    background-color: var(--wa-color-fill-quiet);
-    border: 1px solid var(--wa-color-border-quiet);
-    color: var(--wa-color-on-quiet);
-    padding: var(--wa-space-m) var(--wa-space-l);
+bootstrapApplication(AppComponent, {
+  providers: [
+    ...provideWaToasts({ position: &#39;bottom-left&#39;, max: 3, duration: 4000, newestOnTop: true, gap: 12, zIndex: 10000 })
+  ]
+});
+</code></pre>
+<h2>Showing Toasts</h2>
+<p>Inject <code>WaToastService</code> and call <code>show</code> or convenience helpers like <code>success</code>, <code>warning</code>, <code>danger</code>, <code>brand</code>, or <code>neutral</code>.</p>
+<pre><code class="language-ts">import { Component } from &#39;@angular/core&#39;;
+import { WaToastService } from &#39;angular-awesome&#39;;
+
+@Component({
+  selector: &#39;demo-toasts&#39;,
+  template: `
+    &lt;button (click)=&quot;saved()&quot;&gt;Save&lt;/button&gt;
+    &lt;button (click)=&quot;sync()&quot;&gt;Sync&lt;/button&gt;
+  `
+})
+export class DemoToastsComponent {
+  constructor(private toasts: WaToastService) {}
+
+  saved() {
+    this.toasts.success(&#39;Profile saved&#39;, { closable: true });
   }
-&lt;/style&gt;
+
+  sync() {
+    const id = this.toasts.show(&#39;Sync in progress…&#39;, { variant: &#39;neutral&#39;, duration: 0 });
+    // simulate later update
+    setTimeout(() =&gt; this.toasts.update(id, { message: &#39;Sync complete&#39;, variant: &#39;success&#39;, duration: 3000 }), 1500);
+  }
+}
+</code></pre>
+<h2>Positioning</h2>
+<p>Change where the container renders on the screen with the <code>position</code> input:</p>
+<pre><code class="language-html">&lt;wa-toast-container position=&quot;bottom-center&quot;&gt;&lt;/wa-toast-container&gt;
+</code></pre>
+<p>Supported positions: <code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>top-center</code>, <code>bottom-center</code>.</p>
+<h2>Closable and Auto-dismiss</h2>
+<ul>
+<li>By default, toasts are closable and auto-dismiss after the configured <code>duration</code> (default 5000ms).</li>
+<li>Set <code>duration: 0</code> or a negative value to make a toast sticky until it is explicitly closed.</li>
+</ul>
+<pre><code class="language-ts">this.toasts.show(&#39;Sticky notice&#39;, { duration: 0 });
+</code></pre>
+<h2>Max Visible and Queueing</h2>
+<p>Control concurrent visibility via <code>max</code>. Excess toasts are queued FIFO and shown when space frees up.</p>
+<pre><code class="language-ts">// Provide defaults
+...provideWaToasts({ max: 2 });
+
+// Enqueue several toasts quickly
+this.toasts.success(&#39;T1&#39;);
+this.toasts.success(&#39;T2&#39;);
+this.toasts.success(&#39;T3 (queued)&#39;);
+</code></pre>
+<h2>Appearance and Size</h2>
+<p>Toast visuals reuse <code>wa-callout</code> tokens:</p>
+<pre><code class="language-ts">this.toasts.show(&#39;Filled outlined large&#39;, {
+  appearance: &#39;filled-outlined&#39;,
+  size: &#39;large&#39;
+});
 </code></pre>
 
       </section>

@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -164,9 +164,9 @@ export class DrawerExampleComponent {
 &lt;wa-button (click)=&quot;isNoHeaderOpen = true&quot;&gt;Open No Header Drawer&lt;/wa-button&gt;
 </code></pre>
 <h2>With Light Dismiss</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Light Dismiss Drawer&quot;
-  [(open)]=&quot;isLightDismissOpen&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Light Dismiss Drawer&quot; 
+  [(open)]=&quot;isLightDismissOpen&quot; 
   lightDismiss&gt;
   &lt;p&gt;Click outside this drawer to close it.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
@@ -176,14 +176,14 @@ export class DrawerExampleComponent {
 </code></pre>
 <h2>With Custom Header Actions</h2>
 <pre><code class="language-html">&lt;wa-drawer label=&quot;Custom Header Drawer&quot; [(open)]=&quot;isCustomHeaderOpen&quot;&gt;
-  &lt;wa-button
-    appearance=&quot;plain&quot;
-    size=&quot;small&quot;
-    slot=&quot;header-actions&quot;
+  &lt;wa-button 
+    appearance=&quot;plain&quot; 
+    size=&quot;small&quot; 
+    slot=&quot;header-actions&quot; 
     aria-label=&quot;More information&quot;&gt;
     &lt;wa-icon name=&quot;info-circle&quot;&gt;&lt;/wa-icon&gt;
   &lt;/wa-button&gt;
-
+  
   &lt;p&gt;This drawer has custom actions in the header.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-drawer&gt;
@@ -196,7 +196,7 @@ export class DrawerExampleComponent {
     &lt;wa-icon name=&quot;settings&quot;&gt;&lt;/wa-icon&gt;
     &lt;span&gt;Custom Label with Icon&lt;/span&gt;
   &lt;/div&gt;
-
+  
   &lt;p&gt;This drawer has a custom label with an icon.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-drawer&gt;
@@ -226,8 +226,8 @@ export class DrawerExampleComponent {
 }
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Event Drawer&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Event Drawer&quot; 
   [(open)]=&quot;isEventOpen&quot;
   (showEvent)=&quot;onDrawerShow($event)&quot;
   (afterShowEvent)=&quot;onDrawerAfterShow($event)&quot;
@@ -235,7 +235,7 @@ export class DrawerExampleComponent {
   (afterHideEvent)=&quot;onDrawerAfterHide($event)&quot;
   (focusEvent)=&quot;onDrawerFocus($event)&quot;
   (blurEvent)=&quot;onDrawerBlur($event)&quot;&gt;
-
+  
   &lt;p&gt;This drawer demonstrates event handling.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-drawer&gt;
@@ -256,7 +256,7 @@ export class DrawerExampleComponent {
 
   onDrawerHide(event: CustomEvent) {
     console.log(&#39;Drawer is closing&#39;, event);
-
+    
     // Optionally prevent closing
     if (this.hasUnsavedChanges) {
       event.preventDefault();
@@ -278,8 +278,8 @@ export class DrawerExampleComponent {
 }
 </code></pre>
 <h2>Custom Styling</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Styled Drawer&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Styled Drawer&quot; 
   [(open)]=&quot;isStyledOpen&quot;
   backgroundColor=&quot;#f8f9fa&quot;
   boxShadow=&quot;0 0 20px rgba(0,0,0,0.15)&quot;
@@ -287,7 +287,7 @@ export class DrawerExampleComponent {
   size=&quot;400px&quot;
   showDuration=&quot;500ms&quot;
   hideDuration=&quot;300ms&quot;&gt;
-
+  
   &lt;p&gt;This drawer has custom styling applied.&lt;/p&gt;
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-drawer&gt;
@@ -295,27 +295,27 @@ export class DrawerExampleComponent {
 &lt;wa-button (click)=&quot;isStyledOpen = true&quot;&gt;Open Styled Drawer&lt;/wa-button&gt;
 </code></pre>
 <h2>Complex Drawer with Form</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Edit Profile&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Edit Profile&quot; 
   [(open)]=&quot;isFormOpen&quot;
   (hideEvent)=&quot;onFormDrawerHide($event)&quot;&gt;
-
+  
   &lt;form #profileForm=&quot;ngForm&quot;&gt;
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
       &lt;wa-input id=&quot;name&quot; [(ngModel)]=&quot;profile.name&quot; name=&quot;name&quot; required&gt;&lt;/wa-input&gt;
     &lt;/div&gt;
-
+    
     &lt;div class=&quot;form-group&quot;&gt;
       &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
       &lt;wa-input id=&quot;email&quot; [(ngModel)]=&quot;profile.email&quot; name=&quot;email&quot; required type=&quot;email&quot;&gt;&lt;/wa-input&gt;
     &lt;/div&gt;
   &lt;/form&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button variant=&quot;secondary&quot; data-drawer=&quot;close&quot;&gt;Cancel&lt;/wa-button&gt;
-    &lt;wa-button
-      variant=&quot;primary&quot;
+    &lt;wa-button 
+      variant=&quot;primary&quot; 
       [disabled]=&quot;profileForm.invalid&quot;
       (click)=&quot;saveProfile(); isFormOpen = false;&quot;&gt;
       Save
@@ -338,7 +338,7 @@ export class DrawerExampleComponent {
     if (this.hasUnsavedChanges) {
       // Prevent drawer from closing
       event.preventDefault();
-
+      
       // Show confirmation
       if (confirm(&#39;You have unsaved changes. Are you sure you want to close?&#39;)) {
         this.hasUnsavedChanges = false;
@@ -355,12 +355,12 @@ export class DrawerExampleComponent {
 }
 </code></pre>
 <h2>Navigation Drawer</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Navigation&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Navigation&quot; 
   [(open)]=&quot;isNavOpen&quot;
   placement=&quot;start&quot;
   size=&quot;250px&quot;&gt;
-
+  
   &lt;div class=&quot;navigation-items&quot;&gt;
     &lt;wa-dropdown-item (click)=&quot;navigate(&#39;home&#39;); isNavOpen = false;&quot;&gt;
       &lt;wa-icon name=&quot;home&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
@@ -400,13 +400,13 @@ export class DrawerExampleComponent {
 }
 </code></pre>
 <h2>Drawer with Autofocus</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Autofocus Drawer&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Autofocus Drawer&quot; 
   [(open)]=&quot;isAutofocusOpen&quot;&gt;
-
+  
   &lt;p&gt;The input field below will receive focus when the drawer opens:&lt;/p&gt;
   &lt;wa-input autofocus placeholder=&quot;This will be focused&quot;&gt;&lt;/wa-input&gt;
-
+  
   &lt;div slot=&quot;footer&quot;&gt;
     &lt;wa-button data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
   &lt;/div&gt;
@@ -415,15 +415,15 @@ export class DrawerExampleComponent {
 &lt;wa-button (click)=&quot;isAutofocusOpen = true&quot;&gt;Open Autofocus Drawer&lt;/wa-button&gt;
 </code></pre>
 <h2>Responsive Drawer</h2>
-<pre><code class="language-html">&lt;wa-drawer
-  label=&quot;Responsive Drawer&quot;
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Responsive Drawer&quot; 
   [(open)]=&quot;isResponsiveOpen&quot;
   [placement]=&quot;isMobile ? &#39;bottom&#39; : &#39;end&#39;&quot;
   [size]=&quot;isMobile ? &#39;80%&#39; : &#39;400px&#39;&quot;&gt;
-
+  
   &lt;p&gt;This drawer adapts to screen size.&lt;/p&gt;
   &lt;p&gt;Current mode: {{ isMobile ? &#39;Mobile (bottom)&#39; : &#39;Desktop (end)&#39; }}&lt;/p&gt;
-
+  
   &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
 &lt;/wa-drawer&gt;
 
@@ -433,7 +433,7 @@ export class DrawerExampleComponent {
 export class DrawerExampleComponent {
   isResponsiveOpen = false;
   isMobile = window.innerWidth &lt; 768;
-
+  
   @HostListener(&#39;window:resize&#39;)
   onResize() {
     this.isMobile = window.innerWidth &lt; 768;
@@ -445,14 +445,14 @@ export class DrawerExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

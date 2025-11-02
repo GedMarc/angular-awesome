@@ -88,14 +88,13 @@
         <div class="main-content">
             <header>
                 <h1>Page Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
-                <p class="subtitle">The <wa-page> component is a comprehensive layout container that structures web pages with rich support for slots and responsive navigation. The Angular wrapper must support full slot projection, input bindings for layout control, and imperative methods for toggling the navigation drawer.
-</p>
+                <p class="subtitle">The <wa-page> component is a comprehensive layout container that structures web pages with rich support for slots and responsive navigation. The Angular wrapper must support full slot projection, input bindings for layout control, and imperative methods for toggling the navigation drawer.</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -116,11 +115,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page Title&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content goes here.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -131,7 +130,7 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Navigation&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;nav waPageNavigation&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -140,11 +139,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with navigation.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -155,11 +154,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;div waPageBanner&gt;
     &lt;p&gt;Important announcement or promotional content&lt;/p&gt;
   &lt;/div&gt;
-
+  
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Banner and Subheader&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;div waPageSubheader&gt;
     &lt;nav&gt;
       &lt;ul&gt;
@@ -168,11 +167,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;/ul&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with banner and subheader.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -183,11 +182,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Aside&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with aside section.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;aside waPageAside&gt;
     &lt;h2&gt;Related Information&lt;/h2&gt;
     &lt;ul&gt;
@@ -196,7 +195,7 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;Related item 3&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/aside&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -207,7 +206,7 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Menu&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;div waPageMenu&gt;
     &lt;h2&gt;Menu&lt;/h2&gt;
     &lt;ul&gt;
@@ -216,19 +215,19 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 3&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/div&gt;
-
+  
   &lt;header waPageMainHeader&gt;
     &lt;h2&gt;Main Content Header&lt;/h2&gt;
   &lt;/header&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with menu and main header/footer.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageMainFooter&gt;
     &lt;p&gt;Main content footer&lt;/p&gt;
   &lt;/footer&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Page footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -237,11 +236,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
 <h2>With Skip to Content Link</h2>
 <pre><code class="language-html">&lt;wa-page&gt;
   &lt;a href=&quot;#main-content&quot; waPageSkipToContent&gt;Skip to content&lt;/a&gt;
-
+  
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Accessible Page&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;nav waPageNavigation&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -250,11 +249,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-
+  
   &lt;main id=&quot;main-content&quot;&gt;
     &lt;p&gt;Main content with skip to content link for accessibility.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -265,11 +264,11 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Navigation Header/Footer&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;header waPageNavigationHeader&gt;
     &lt;h2&gt;Navigation Header&lt;/h2&gt;
   &lt;/header&gt;
-
+  
   &lt;nav waPageNavigation&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -278,15 +277,15 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-
+  
   &lt;footer waPageNavigationFooter&gt;
     &lt;p&gt;Navigation Footer&lt;/p&gt;
   &lt;/footer&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with navigation header and footer.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Page footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -302,13 +301,13 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
   [subheaderHeight]=&quot;&#39;40px&#39;&quot;
 &gt;
   &lt;div waPageBanner&gt;Banner content&lt;/div&gt;
-
+  
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Custom Styled Page&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;div waPageSubheader&gt;Subheader content&lt;/div&gt;
-
+  
   &lt;nav waPageNavigation&gt;
     &lt;ul&gt;
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -317,7 +316,7 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-
+  
   &lt;div waPageMenu&gt;
     &lt;h2&gt;Menu&lt;/h2&gt;
     &lt;ul&gt;
@@ -326,16 +325,16 @@ import { WaPageDirective } from 'angular-awesome/page';</pre>
       &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu Item 3&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/div&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with custom dimensions.&lt;/p&gt;
   &lt;/main&gt;
-
+  
   &lt;aside waPageAside&gt;
     &lt;h2&gt;Aside Content&lt;/h2&gt;
     &lt;p&gt;Sidebar content here.&lt;/p&gt;
   &lt;/aside&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -360,7 +359,7 @@ import { WaPageComponent } from &#39;@angular-awesome/directives/page&#39;;
         &lt;/button&gt;
         &lt;h1&gt;Responsive Page&lt;/h1&gt;
       &lt;/header&gt;
-
+      
       &lt;nav waPageNavigation&gt;
         &lt;ul&gt;
           &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -369,13 +368,13 @@ import { WaPageComponent } from &#39;@angular-awesome/directives/page&#39;;
           &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/nav&gt;
-
+      
       &lt;main&gt;
         &lt;p&gt;This page has responsive navigation that can be toggled on mobile devices.&lt;/p&gt;
         &lt;p&gt;Current view: {{ currentView }}&lt;/p&gt;
         &lt;button (click)=&quot;toggleNavigation()&quot;&gt;Toggle Navigation&lt;/button&gt;
       &lt;/main&gt;
-
+      
       &lt;footer waPageFooter&gt;
         &lt;p&gt;Footer content&lt;/p&gt;
       &lt;/footer&gt;
@@ -386,16 +385,16 @@ import { WaPageComponent } from &#39;@angular-awesome/directives/page&#39;;
 })
 export class ResponsivePageDemoComponent {
   isNavOpen = false;
-
+  
   get currentView(): string {
     const pageElement = document.querySelector(&#39;wa-page&#39;);
     return pageElement?.getAttribute(&#39;view&#39;) || &#39;unknown&#39;;
   }
-
+  
   toggleNavigation() {
     this.isNavOpen = !this.isNavOpen;
   }
-
+  
   closeNavOnMobile(event: MouseEvent) {
     // Close navigation when clicking outside on mobile
     if (this.currentView === &#39;mobile&#39; &amp;&amp; this.isNavOpen) {
@@ -412,12 +411,12 @@ export class ResponsivePageDemoComponent {
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Non-Sticky Header&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;This page has a header that doesn&#39;t stick to the top when scrolling.&lt;/p&gt;
     &lt;!-- Add lots of content to enable scrolling --&gt;
   &lt;/main&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -428,12 +427,12 @@ export class ResponsivePageDemoComponent {
   &lt;header waPageHeader&gt;
     &lt;h1&gt;Page with Dialog&lt;/h1&gt;
   &lt;/header&gt;
-
+  
   &lt;main&gt;
     &lt;p&gt;Main content with dialog integration.&lt;/p&gt;
     &lt;button (click)=&quot;openDialog()&quot;&gt;Open Dialog&lt;/button&gt;
   &lt;/main&gt;
-
+  
   &lt;div waPageDialogWrapper&gt;
     &lt;!-- Dialogs will be rendered here --&gt;
     &lt;wa-dialog id=&quot;example-dialog&quot; label=&quot;Example Dialog&quot;&gt;
@@ -441,7 +440,7 @@ export class ResponsivePageDemoComponent {
       &lt;button slot=&quot;footer&quot; (click)=&quot;closeDialog()&quot;&gt;Close&lt;/button&gt;
     &lt;/wa-dialog&gt;
   &lt;/div&gt;
-
+  
   &lt;footer waPageFooter&gt;
     &lt;p&gt;Footer content&lt;/p&gt;
   &lt;/footer&gt;
@@ -463,14 +462,14 @@ function closeDialog() {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

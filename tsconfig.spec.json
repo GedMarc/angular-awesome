@@ -9,10 +9,9 @@
     ]
   },
   "include": [
-    "src/checkbox-test-main.ts",
-    "src/directives/checkbox/checkbox.browserstack.spec.ts",
-    "src/directives/color-picker/color-picker.browserstack.spec.ts",
-    "src/directives/select/select.browserstack.spec.ts",
+    "src/test-main.ts",
+    "src/services/toast/toast.service.spec.ts",
+    "src/directives/toast/toast-container.component.spec.ts",
     "src/**/*.d.ts"
   ]
 }

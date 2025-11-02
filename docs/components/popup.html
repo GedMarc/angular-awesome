@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -285,10 +285,10 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
   &lt;!-- Arrow with custom styling --&gt;
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;styled-arrow-anchor&quot;&gt;Styled Arrow&lt;/button&gt;
-    &lt;wa-popup
-      anchor=&quot;styled-arrow-anchor&quot;
-      arrow
-      distance=&quot;8&quot;
+    &lt;wa-popup 
+      anchor=&quot;styled-arrow-anchor&quot; 
+      arrow 
+      distance=&quot;8&quot; 
       active
       style=&quot;--arrow-color: #ff5722; --arrow-size: 12px;&quot;
     &gt;
@@ -301,7 +301,7 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
 <p>When the popup doesn&#39;t have enough room in its preferred placement, it can automatically flip to keep it in view and visually connected to its anchor. To enable this, use the <code>flip</code> attribute. By default, the popup will flip to the opposite placement, but you can configure preferred fallback placements using <code>flip-fallback-placement</code> and <code>flip-fallback-strategy</code>.</p>
 <pre><code class="language-html">&lt;div class=&quot;flip-examples&quot; style=&quot;overflow: auto; height: 300px; padding: 100px 20px;&quot;&gt;
   &lt;p&gt;Scroll the container to see how the popup flips to prevent clipping.&lt;/p&gt;
-
+  
   &lt;div class=&quot;example&quot; style=&quot;margin-bottom: 200px;&quot;&gt;
     &lt;button id=&quot;flip-anchor&quot;&gt;Flip Enabled&lt;/button&gt;
     &lt;wa-popup anchor=&quot;flip-anchor&quot; placement=&quot;bottom&quot; flip active&gt;
@@ -310,7 +310,7 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
       &lt;/div&gt;
     &lt;/wa-popup&gt;
   &lt;/div&gt;
-
+  
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;no-flip-anchor&quot;&gt;No Flip&lt;/button&gt;
     &lt;wa-popup anchor=&quot;no-flip-anchor&quot; placement=&quot;bottom&quot; active&gt;
@@ -325,14 +325,14 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
 <p>While using the <code>flip</code> attribute, you can customize the placement of the popup when the preferred placement doesn&#39;t have room. For this, use <code>flip-fallback-placements</code> and <code>flip-fallback-strategy</code>.</p>
 <pre><code class="language-html">&lt;div class=&quot;flip-fallback-examples&quot; style=&quot;overflow: auto; height: 300px; padding: 100px 20px;&quot;&gt;
   &lt;p&gt;Scroll the container to see how the popup changes its fallback placement to prevent clipping.&lt;/p&gt;
-
+  
   &lt;div class=&quot;example&quot; style=&quot;margin-bottom: 200px;&quot;&gt;
     &lt;button id=&quot;fallback-anchor&quot;&gt;With Fallbacks&lt;/button&gt;
-    &lt;wa-popup
-      anchor=&quot;fallback-anchor&quot;
-      placement=&quot;bottom&quot;
-      flip
-      flip-fallback-placements=&quot;right left top-start&quot;
+    &lt;wa-popup 
+      anchor=&quot;fallback-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      flip 
+      flip-fallback-placements=&quot;right left top-start&quot; 
       flip-fallback-strategy=&quot;best-fit&quot;
       active
     &gt;
@@ -347,7 +347,7 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
 <p>When a popup is longer than its anchor, it risks overflowing. In this case, use the <code>shift</code> attribute to shift the popup along its axis and back into view. You can customize the shift behavior using <code>shift-boundary</code> and <code>shift-padding</code>.</p>
 <pre><code class="language-html">&lt;div class=&quot;shift-examples&quot; style=&quot;overflow: auto; width: 300px;&quot;&gt;
   &lt;p&gt;Toggle the switch to see the difference.&lt;/p&gt;
-
+  
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;shift-anchor&quot; style=&quot;margin-left: 5px;&quot;&gt;Shift Enabled&lt;/button&gt;
     &lt;wa-popup anchor=&quot;shift-anchor&quot; placement=&quot;bottom&quot; shift active&gt;
@@ -356,7 +356,7 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
       &lt;/div&gt;
     &lt;/wa-popup&gt;
   &lt;/div&gt;
-
+  
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;no-shift-anchor&quot; style=&quot;margin-left: 5px;&quot;&gt;No Shift&lt;/button&gt;
     &lt;wa-popup anchor=&quot;no-shift-anchor&quot; placement=&quot;bottom&quot; active&gt;
@@ -371,7 +371,7 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
 <p>Use the <code>auto-size</code> attribute to tell the popup to resize when necessary to prevent it from overflowing. Possible values are <code>horizontal</code>, <code>vertical</code>, and <code>both</code>. You can use <code>auto-size-boundary</code> and <code>auto-size-padding</code> to customize the behavior of this option.</p>
 <pre><code class="language-html">&lt;div class=&quot;auto-size-examples&quot; style=&quot;overflow: auto; width: 300px; height: 300px;&quot;&gt;
   &lt;p&gt;Scroll the container to see the popup resize as its available space changes.&lt;/p&gt;
-
+  
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;auto-size-anchor&quot; style=&quot;margin: 50px;&quot;&gt;Auto-size&lt;/button&gt;
     &lt;wa-popup anchor=&quot;auto-size-anchor&quot; placement=&quot;bottom&quot; auto-size=&quot;both&quot; active&gt;
@@ -387,11 +387,11 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
 <pre><code class="language-html">&lt;div class=&quot;hover-bridge-examples&quot;&gt;
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;hover-bridge-anchor&quot;&gt;With Hover Bridge&lt;/button&gt;
-    &lt;wa-popup
-      anchor=&quot;hover-bridge-anchor&quot;
-      placement=&quot;bottom&quot;
-      distance=&quot;15&quot;
-      hover-bridge
+    &lt;wa-popup 
+      anchor=&quot;hover-bridge-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      distance=&quot;15&quot; 
+      hover-bridge 
       active
     &gt;
       &lt;div class=&quot;popup-content&quot;&gt;
@@ -399,13 +399,13 @@ import { WaPopupDirective } from 'angular-awesome/popup';</pre>
       &lt;/div&gt;
     &lt;/wa-popup&gt;
   &lt;/div&gt;
-
+  
   &lt;div class=&quot;example&quot;&gt;
     &lt;button id=&quot;no-hover-bridge-anchor&quot;&gt;Without Hover Bridge&lt;/button&gt;
-    &lt;wa-popup
-      anchor=&quot;no-hover-bridge-anchor&quot;
-      placement=&quot;bottom&quot;
-      distance=&quot;15&quot;
+    &lt;wa-popup 
+      anchor=&quot;no-hover-bridge-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      distance=&quot;15&quot; 
       active
     &gt;
       &lt;div class=&quot;popup-content&quot;&gt;
@@ -445,7 +445,7 @@ import { WaPopupDirective } from &#39;@angular-awesome/directives/popup&#39;;
   selector: &#39;app-popup-events-demo&#39;,
   template: `
     &lt;button #eventAnchor&gt;Click for Events&lt;/button&gt;
-    &lt;wa-popup
+    &lt;wa-popup 
       #eventPopup
       [anchor]=&quot;eventAnchor&quot;
       (waReposition)=&quot;onReposition($event)&quot;
@@ -454,7 +454,7 @@ import { WaPopupDirective } from &#39;@angular-awesome/directives/popup&#39;;
         This popup triggers events when repositioned.
       &lt;/div&gt;
     &lt;/wa-popup&gt;
-
+    
     &lt;div class=&quot;event-log&quot;&gt;
       &lt;p&gt;Repositioned: {{ repositionCount }} times&lt;/p&gt;
       &lt;button (click)=&quot;togglePopup()&quot;&gt;Toggle Popup&lt;/button&gt;
@@ -466,18 +466,18 @@ import { WaPopupDirective } from &#39;@angular-awesome/directives/popup&#39;;
 export class PopupEventsDemoComponent implements AfterViewInit {
   @ViewChild(&#39;eventPopup&#39;) popup!: ElementRef;
   @ViewChild(&#39;eventAnchor&#39;) anchor!: ElementRef;
-
+  
   repositionCount = 0;
-
+  
   ngAfterViewInit() {
     // Initial setup
   }
-
+  
   togglePopup() {
     const popupEl = this.popup.nativeElement;
     popupEl.active = !popupEl.active;
   }
-
+  
   onReposition(event: CustomEvent) {
     this.repositionCount++;
     console.log(&#39;Popup repositioned&#39;);
@@ -487,7 +487,7 @@ export class PopupEventsDemoComponent implements AfterViewInit {
 <h2>Combining Features</h2>
 <pre><code class="language-html">&lt;div class=&quot;combined-examples&quot;&gt;
   &lt;button id=&quot;combined-anchor&quot;&gt;Advanced Popup&lt;/button&gt;
-  &lt;wa-popup
+  &lt;wa-popup 
     anchor=&quot;combined-anchor&quot;
     placement=&quot;bottom&quot;
     arrow
@@ -521,14 +521,14 @@ export class PopupEventsDemoComponent implements AfterViewInit {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

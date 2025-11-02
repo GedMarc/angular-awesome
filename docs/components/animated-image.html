@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -113,15 +113,15 @@ import { WaAnimatedImageDirective } from 'angular-awesome/animated-image';</pre>
 <p>The <code>WaAnimatedImageDirective</code> is an Angular wrapper for the Web Awesome <code>&lt;wa-animated-image&gt;</code> web component. It provides a declarative way to use animated images in Angular applications with full support for Angular&#39;s binding syntax.</p>
 <h2>Basic Usage</h2>
 <pre><code class="language-html">&lt;!-- Basic animated image with required attributes --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
   alt=&quot;Loading animation&quot;&gt;
 &lt;/wa-animated-image&gt;
 
 &lt;!-- Animated image that plays automatically --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/walk.gif&quot;
-  alt=&quot;Walking animation&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/walk.gif&quot; 
+  alt=&quot;Walking animation&quot; 
   [play]=&quot;true&quot;&gt;
 &lt;/wa-animated-image&gt;
 </code></pre>
@@ -134,39 +134,39 @@ import { WaAnimatedImageDirective } from 'angular-awesome/animated-image';</pre>
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Custom icon size --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
-  alt=&quot;Loading animation&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
+  alt=&quot;Loading animation&quot; 
   [iconSize]=&quot;&#39;1.5rem&#39;&quot;&gt;
 &lt;/wa-animated-image&gt;
 
 &lt;!-- Custom control box size --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
-  alt=&quot;Loading animation&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
+  alt=&quot;Loading animation&quot; 
   [controlBoxSize]=&quot;&#39;2.5rem&#39;&quot;&gt;
 &lt;/wa-animated-image&gt;
 </code></pre>
 <h2>Using CSS Variables</h2>
 <pre><code class="language-html">&lt;!-- Using style binding for CSS variables --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
   alt=&quot;Loading animation&quot;
   [style.--icon-size]=&quot;&#39;1.25rem&#39;&quot;
   [style.--control-box-size]=&quot;&#39;2rem&#39;&quot;&gt;
 &lt;/wa-animated-image&gt;
 
 &lt;!-- Custom sizing of the image itself --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
   alt=&quot;Loading animation&quot;
   style=&quot;width: 160px; height: 160px&quot;&gt;
 &lt;/wa-animated-image&gt;
 </code></pre>
 <h2>Event Handling</h2>
 <pre><code class="language-html">&lt;!-- Handling load and error events --&gt;
-&lt;wa-animated-image
-  src=&quot;assets/animations/loading.gif&quot;
+&lt;wa-animated-image 
+  src=&quot;assets/animations/loading.gif&quot; 
   alt=&quot;Loading animation&quot;
   (wa-load)=&quot;onImageLoaded($event)&quot;
   (wa-error)=&quot;onImageError($event)&quot;&gt;
@@ -182,15 +182,15 @@ export class ExampleComponent {
   onImageLoaded(event: Event) {
     console.log(&#39;Image loaded successfully&#39;, event);
   }
-
+  
   onImageError(event: Event) {
     console.error(&#39;Image failed to load&#39;, event);
   }
 }
 </code></pre>
 <h2>Dynamic Content</h2>
-<pre><code class="language-html">&lt;wa-animated-image
-  [src]=&quot;animationSrc&quot;
+<pre><code class="language-html">&lt;wa-animated-image 
+  [src]=&quot;animationSrc&quot; 
   [alt]=&quot;animationAlt&quot;
   [play]=&quot;isPlaying&quot;&gt;
 &lt;/wa-animated-image&gt;
@@ -205,7 +205,7 @@ export class ExampleComponent {
   animationSrc = &#39;assets/animations/loading.gif&#39;;
   animationAlt = &#39;Loading animation&#39;;
   isPlaying = false;
-
+  
   togglePlay() {
     this.isPlaying = !this.isPlaying;
   }
@@ -223,7 +223,7 @@ export class ExampleComponent {
 
     &lt;!-- Rendering a list of animations --&gt;
     &lt;div&gt;
-      &lt;wa-animated-image
+      &lt;wa-animated-image 
         *ngFor=&quot;let animation of animations&quot;
         [src]=&quot;animation.src&quot;
         [alt]=&quot;animation.alt&quot;
@@ -238,7 +238,7 @@ export class ExampleComponent {
   showAnimation = true;
   animationSrc = &#39;assets/animations/loading.gif&#39;;
   animationAlt = &#39;Loading animation&#39;;
-
+  
   animations = [
     { src: &#39;assets/animations/walk.gif&#39;, alt: &#39;Walking animation&#39;, autoplay: true },
     { src: &#39;assets/animations/jump.gif&#39;, alt: &#39;Jumping animation&#39;, autoplay: false },
@@ -251,14 +251,14 @@ export class ExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

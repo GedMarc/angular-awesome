@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -114,70 +114,70 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 <pre><code class="language-html">&lt;wa-slider label=&quot;Basic Slider&quot;&gt;&lt;/wa-slider&gt;
 </code></pre>
 <h2>Min, Max, and Step Values</h2>
-<pre><code class="language-html">&lt;wa-slider
-  label=&quot;Custom Range&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
+<pre><code class="language-html">&lt;wa-slider 
+  label=&quot;Custom Range&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
   [step]=&quot;5&quot;&gt;
 &lt;/wa-slider&gt;
 
-&lt;wa-slider
-  label=&quot;Percentage&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
+&lt;wa-slider 
+  label=&quot;Percentage&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
   [step]=&quot;1&quot;&gt;
 &lt;/wa-slider&gt;
 
-&lt;wa-slider
-  label=&quot;Temperature&quot;
-  [min]=&quot;-20&quot;
-  [max]=&quot;40&quot;
+&lt;wa-slider 
+  label=&quot;Temperature&quot; 
+  [min]=&quot;-20&quot; 
+  [max]=&quot;40&quot; 
   [step]=&quot;0.5&quot;&gt;
 &lt;/wa-slider&gt;
 
-&lt;wa-slider
-  label=&quot;Fine Control&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;1&quot;
+&lt;wa-slider 
+  label=&quot;Fine Control&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;1&quot; 
   [step]=&quot;0.01&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Showing Tooltips</h2>
 <pre><code class="language-html">&lt;!-- With tooltip (shows value when focused or dragged) --&gt;
-&lt;wa-slider
-  label=&quot;With Tooltip&quot;
+&lt;wa-slider 
+  label=&quot;With Tooltip&quot; 
   [withTooltip]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Custom tooltip placement --&gt;
-&lt;wa-slider
-  label=&quot;Tooltip on Bottom&quot;
+&lt;wa-slider 
+  label=&quot;Tooltip on Bottom&quot; 
   [withTooltip]=&quot;true&quot;
   tooltipPlacement=&quot;bottom&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Custom tooltip distance --&gt;
-&lt;wa-slider
-  label=&quot;Custom Tooltip Distance&quot;
+&lt;wa-slider 
+  label=&quot;Custom Tooltip Distance&quot; 
   [withTooltip]=&quot;true&quot;
   [tooltipDistance]=&quot;12&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Showing Markers</h2>
 <pre><code class="language-html">&lt;!-- With markers at each step --&gt;
-&lt;wa-slider
-  label=&quot;With Markers&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;8&quot;
-  [step]=&quot;1&quot;
+&lt;wa-slider 
+  label=&quot;With Markers&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;8&quot; 
+  [step]=&quot;1&quot; 
   [withMarkers]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>With Hint</h2>
-<pre><code class="language-html">&lt;wa-slider
-  label=&quot;Volume&quot;
+<pre><code class="language-html">&lt;wa-slider 
+  label=&quot;Volume&quot; 
   hint=&quot;Adjust the volume level&quot;
-  [min]=&quot;0&quot;
+  [min]=&quot;0&quot; 
   [max]=&quot;100&quot;&gt;
 &lt;/wa-slider&gt;
 
@@ -190,76 +190,76 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 </code></pre>
 <h2>Different Sizes</h2>
 <pre><code class="language-html">&lt;!-- Small size --&gt;
-&lt;wa-slider
-  label=&quot;Small Slider&quot;
+&lt;wa-slider 
+  label=&quot;Small Slider&quot; 
   size=&quot;small&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Medium size (default) --&gt;
-&lt;wa-slider
-  label=&quot;Medium Slider&quot;
+&lt;wa-slider 
+  label=&quot;Medium Slider&quot; 
   size=&quot;medium&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Large size --&gt;
-&lt;wa-slider
-  label=&quot;Large Slider&quot;
+&lt;wa-slider 
+  label=&quot;Large Slider&quot; 
   size=&quot;large&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Range Selection</h2>
 <pre><code class="language-html">&lt;!-- Range slider with dual thumbs --&gt;
-&lt;wa-slider
-  label=&quot;Price Range&quot;
-  [range]=&quot;true&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
-  [minValue]=&quot;20&quot;
+&lt;wa-slider 
+  label=&quot;Price Range&quot; 
+  [range]=&quot;true&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
+  [minValue]=&quot;20&quot; 
   [maxValue]=&quot;80&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Range slider with tooltip --&gt;
-&lt;wa-slider
-  label=&quot;Temperature Range&quot;
-  [range]=&quot;true&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
-  [minValue]=&quot;30&quot;
-  [maxValue]=&quot;70&quot;
+&lt;wa-slider 
+  label=&quot;Temperature Range&quot; 
+  [range]=&quot;true&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
+  [minValue]=&quot;30&quot; 
+  [maxValue]=&quot;70&quot; 
   [withTooltip]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Vertical Orientation</h2>
 <pre><code class="language-html">&lt;!-- Vertical slider --&gt;
-&lt;wa-slider
-  label=&quot;Volume&quot;
-  orientation=&quot;vertical&quot;
-  [value]=&quot;65&quot;
+&lt;wa-slider 
+  label=&quot;Volume&quot; 
+  orientation=&quot;vertical&quot; 
+  [value]=&quot;65&quot; 
   style=&quot;height: 200px; width: 80px;&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Vertical range slider --&gt;
-&lt;wa-slider
-  label=&quot;Temperature Range&quot;
-  orientation=&quot;vertical&quot;
-  [range]=&quot;true&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
-  [minValue]=&quot;30&quot;
-  [maxValue]=&quot;70&quot;
-  [withTooltip]=&quot;true&quot;
-  tooltipPlacement=&quot;right&quot;
+&lt;wa-slider 
+  label=&quot;Temperature Range&quot; 
+  orientation=&quot;vertical&quot; 
+  [range]=&quot;true&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
+  [minValue]=&quot;30&quot; 
+  [maxValue]=&quot;70&quot; 
+  [withTooltip]=&quot;true&quot; 
+  tooltipPlacement=&quot;right&quot; 
   style=&quot;height: 300px; width: 80px;&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Adding References</h2>
 <pre><code class="language-html">&lt;!-- With reference labels --&gt;
-&lt;wa-slider
-  label=&quot;Speed&quot;
-  [min]=&quot;1&quot;
-  [max]=&quot;5&quot;
-  [value]=&quot;3&quot;
-  [withMarkers]=&quot;true&quot;
+&lt;wa-slider 
+  label=&quot;Speed&quot; 
+  [min]=&quot;1&quot; 
+  [max]=&quot;5&quot; 
+  [value]=&quot;3&quot; 
+  [withMarkers]=&quot;true&quot; 
   hint=&quot;Controls the speed of the thing you&#39;re currently doing&quot;&gt;
   &lt;span slot=&quot;reference&quot;&gt;Slow&lt;/span&gt;
   &lt;span slot=&quot;reference&quot;&gt;Medium&lt;/span&gt;
@@ -268,14 +268,14 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 </code></pre>
 <h2>Indicator Offset</h2>
 <pre><code class="language-html">&lt;!-- With indicator offset --&gt;
-&lt;wa-slider
-  label=&quot;User Friendliness&quot;
-  hint=&quot;Did you find our product easy to use?&quot;
-  [min]=&quot;-5&quot;
-  [max]=&quot;5&quot;
-  [value]=&quot;0&quot;
-  [indicatorOffset]=&quot;0&quot;
-  [withMarkers]=&quot;true&quot;
+&lt;wa-slider 
+  label=&quot;User Friendliness&quot; 
+  hint=&quot;Did you find our product easy to use?&quot; 
+  [min]=&quot;-5&quot; 
+  [max]=&quot;5&quot; 
+  [value]=&quot;0&quot; 
+  [indicatorOffset]=&quot;0&quot; 
+  [withMarkers]=&quot;true&quot; 
   [withTooltip]=&quot;true&quot;&gt;
   &lt;span slot=&quot;reference&quot;&gt;Easy&lt;/span&gt;
   &lt;span slot=&quot;reference&quot;&gt;Moderate&lt;/span&gt;
@@ -284,26 +284,26 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 </code></pre>
 <h2>Disabled and Read-only States</h2>
 <pre><code class="language-html">&lt;!-- Disabled slider --&gt;
-&lt;wa-slider
-  label=&quot;Disabled Slider&quot;
-  [disabled]=&quot;true&quot;
+&lt;wa-slider 
+  label=&quot;Disabled Slider&quot; 
+  [disabled]=&quot;true&quot; 
   [value]=&quot;50&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Read-only slider --&gt;
-&lt;wa-slider
-  label=&quot;Read-only Slider&quot;
-  [readonly]=&quot;true&quot;
+&lt;wa-slider 
+  label=&quot;Read-only Slider&quot; 
+  [readonly]=&quot;true&quot; 
   [value]=&quot;50&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Required Slider</h2>
 <pre><code class="language-html">&lt;form action=&quot;about:blank&quot; target=&quot;_blank&quot; method=&quot;get&quot;&gt;
-  &lt;wa-slider
-    name=&quot;slide&quot;
-    label=&quot;Required Slider&quot;
-    [min]=&quot;0&quot;
-    [max]=&quot;10&quot;
+  &lt;wa-slider 
+    name=&quot;slide&quot; 
+    label=&quot;Required Slider&quot; 
+    [min]=&quot;0&quot; 
+    [max]=&quot;10&quot; 
     [required]=&quot;true&quot;&gt;
   &lt;/wa-slider&gt;
   &lt;br /&gt;
@@ -312,35 +312,35 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Custom track size --&gt;
-&lt;wa-slider
-  label=&quot;Custom Track Size&quot;
+&lt;wa-slider 
+  label=&quot;Custom Track Size&quot; 
   [trackSize]=&quot;&#39;0.75em&#39;&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Custom marker size --&gt;
-&lt;wa-slider
-  label=&quot;Custom Markers&quot;
-  [withMarkers]=&quot;true&quot;
-  [markerWidth]=&quot;&#39;0.25em&#39;&quot;
+&lt;wa-slider 
+  label=&quot;Custom Markers&quot; 
+  [withMarkers]=&quot;true&quot; 
+  [markerWidth]=&quot;&#39;0.25em&#39;&quot; 
   [markerHeight]=&quot;&#39;0.25em&#39;&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;!-- Custom thumb size --&gt;
-&lt;wa-slider
-  label=&quot;Custom Thumb Size&quot;
-  [thumbWidth]=&quot;&#39;1.5em&#39;&quot;
+&lt;wa-slider 
+  label=&quot;Custom Thumb Size&quot; 
+  [thumbWidth]=&quot;&#39;1.5em&#39;&quot; 
   [thumbHeight]=&quot;&#39;1.5em&#39;&quot;&gt;
 &lt;/wa-slider&gt;
 </code></pre>
 <h2>Value Formatting</h2>
 <pre><code class="language-html">&lt;!-- Percentage formatter --&gt;
-&lt;wa-slider
-  id=&quot;slider__percent&quot;
-  label=&quot;Percentage&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;1&quot;
-  [step]=&quot;0.01&quot;
-  [value]=&quot;0.5&quot;
+&lt;wa-slider 
+  id=&quot;slider__percent&quot; 
+  label=&quot;Percentage&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;1&quot; 
+  [step]=&quot;0.01&quot; 
+  [value]=&quot;0.5&quot; 
   [withTooltip]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 
@@ -354,21 +354,21 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 &lt;/script&gt;
 
 &lt;!-- Duration formatter --&gt;
-&lt;wa-slider
-  id=&quot;slider__duration&quot;
-  label=&quot;Duration&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;24&quot;
-  [value]=&quot;12&quot;
+&lt;wa-slider 
+  id=&quot;slider__duration&quot; 
+  label=&quot;Duration&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;24&quot; 
+  [value]=&quot;12&quot; 
   [withTooltip]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 
 &lt;script&gt;
   const durationSlider = document.getElementById(&#39;slider__duration&#39;);
-  const durationFormatter = new Intl.NumberFormat(&#39;en-US&#39;, {
-    style: &#39;unit&#39;,
-    unit: &#39;hour&#39;,
-    unitDisplay: &#39;long&#39;
+  const durationFormatter = new Intl.NumberFormat(&#39;en-US&#39;, { 
+    style: &#39;unit&#39;, 
+    unit: &#39;hour&#39;, 
+    unitDisplay: &#39;long&#39; 
   });
 
   customElements.whenDefined(&#39;wa-slider&#39;).then(() =&gt; {
@@ -377,12 +377,12 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 &lt;/script&gt;
 
 &lt;!-- Currency formatter --&gt;
-&lt;wa-slider
-  id=&quot;slider__currency&quot;
-  label=&quot;Currency&quot;
-  [min]=&quot;0&quot;
-  [max]=&quot;100&quot;
-  [value]=&quot;50&quot;
+&lt;wa-slider 
+  id=&quot;slider__currency&quot; 
+  label=&quot;Currency&quot; 
+  [min]=&quot;0&quot; 
+  [max]=&quot;100&quot; 
+  [value]=&quot;50&quot; 
   [withTooltip]=&quot;true&quot;&gt;
 &lt;/wa-slider&gt;
 
@@ -401,11 +401,11 @@ import { WaSliderDirective } from 'angular-awesome/slider';</pre>
 &lt;/script&gt;
 </code></pre>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-slider
-  label=&quot;Interactive Slider&quot;
-  (inputEvent)=&quot;onSliderInput($event)&quot;
-  (changeEvent)=&quot;onSliderChange($event)&quot;
-  (focusEvent)=&quot;onSliderFocus()&quot;
+<pre><code class="language-html">&lt;wa-slider 
+  label=&quot;Interactive Slider&quot; 
+  (inputEvent)=&quot;onSliderInput($event)&quot; 
+  (changeEvent)=&quot;onSliderChange($event)&quot; 
+  (focusEvent)=&quot;onSliderFocus()&quot; 
   (blurEvent)=&quot;onSliderBlur()&quot;
   (invalidEvent)=&quot;onSliderInvalid($event)&quot;&gt;
 &lt;/wa-slider&gt;
@@ -439,12 +439,12 @@ function onSliderInvalid(event: CustomEvent): void {
 @Component({
   selector: &#39;app-slider-demo&#39;,
   template: `
-    &lt;wa-slider
-      [label]=&quot;sliderLabel&quot;
-      [min]=&quot;sliderMin&quot;
-      [max]=&quot;sliderMax&quot;
-      [step]=&quot;sliderStep&quot;
-      [value]=&quot;sliderValue&quot;
+    &lt;wa-slider 
+      [label]=&quot;sliderLabel&quot; 
+      [min]=&quot;sliderMin&quot; 
+      [max]=&quot;sliderMax&quot; 
+      [step]=&quot;sliderStep&quot; 
+      [value]=&quot;sliderValue&quot; 
       [disabled]=&quot;isDisabled&quot;
       [withTooltip]=&quot;showTooltip&quot;
       [withMarkers]=&quot;showMarkers&quot;
@@ -452,25 +452,25 @@ function onSliderInvalid(event: CustomEvent): void {
       [size]=&quot;sliderSize&quot;
       (inputEvent)=&quot;onSliderInput($event)&quot;&gt;
     &lt;/wa-slider&gt;
-
+    
     &lt;div&gt;Current value: {{ sliderValue }}&lt;/div&gt;
-
+    
     &lt;div class=&quot;controls&quot;&gt;
       &lt;button (click)=&quot;isDisabled = !isDisabled&quot;&gt;
         {{ isDisabled ? &#39;Enable&#39; : &#39;Disable&#39; }} Slider
       &lt;/button&gt;
-
+      
       &lt;wa-select [(ngModel)]=&quot;orientation&quot; label=&quot;Orientation&quot;&gt;
         &lt;wa-option value=&quot;horizontal&quot;&gt;Horizontal&lt;/wa-option&gt;
         &lt;wa-option value=&quot;vertical&quot;&gt;Vertical&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
+      
       &lt;wa-select [(ngModel)]=&quot;sliderSize&quot; label=&quot;Size&quot;&gt;
         &lt;wa-option value=&quot;small&quot;&gt;Small&lt;/wa-option&gt;
         &lt;wa-option value=&quot;medium&quot;&gt;Medium&lt;/wa-option&gt;
         &lt;wa-option value=&quot;large&quot;&gt;Large&lt;/wa-option&gt;
       &lt;/wa-select&gt;
-
+      
       &lt;wa-checkbox [(ngModel)]=&quot;showTooltip&quot; label=&quot;Show Tooltip&quot;&gt;&lt;/wa-checkbox&gt;
       &lt;wa-checkbox [(ngModel)]=&quot;showMarkers&quot; label=&quot;Show Markers&quot;&gt;&lt;/wa-checkbox&gt;
     &lt;/div&gt;
@@ -487,7 +487,7 @@ export class SliderDemoComponent {
   showMarkers = false;
   orientation = &#39;horizontal&#39;;
   sliderSize = &#39;medium&#39;;
-
+  
   onSliderInput(event: Event): void {
     this.sliderValue = parseFloat((event.target as HTMLInputElement).value);
   }
@@ -495,31 +495,31 @@ export class SliderDemoComponent {
 </code></pre>
 <h2>Using with ngModel</h2>
 <pre><code class="language-html">&lt;form #sliderForm=&quot;ngForm&quot;&gt;
-  &lt;wa-slider
-    label=&quot;Volume&quot;
-    name=&quot;volume&quot;
-    [(ngModel)]=&quot;volumeLevel&quot;
-    [min]=&quot;0&quot;
-    [max]=&quot;100&quot;
+  &lt;wa-slider 
+    label=&quot;Volume&quot; 
+    name=&quot;volume&quot; 
+    [(ngModel)]=&quot;volumeLevel&quot; 
+    [min]=&quot;0&quot; 
+    [max]=&quot;100&quot; 
     [step]=&quot;1&quot;
     [withTooltip]=&quot;true&quot;&gt;
   &lt;/wa-slider&gt;
-
+  
   &lt;div&gt;Current volume: {{ volumeLevel }}%&lt;/div&gt;
 &lt;/form&gt;
 </code></pre>
 <h2>Using with Range Slider and ngModel</h2>
 <pre><code class="language-html">&lt;form #rangeForm=&quot;ngForm&quot;&gt;
-  &lt;wa-slider
-    label=&quot;Price Range&quot;
-    name=&quot;priceRange&quot;
+  &lt;wa-slider 
+    label=&quot;Price Range&quot; 
+    name=&quot;priceRange&quot; 
     [range]=&quot;true&quot;
-    [min]=&quot;0&quot;
-    [max]=&quot;1000&quot;
-    [(ngModel)]=&quot;priceRange&quot;
+    [min]=&quot;0&quot; 
+    [max]=&quot;1000&quot; 
+    [(ngModel)]=&quot;priceRange&quot; 
     [withTooltip]=&quot;true&quot;&gt;
   &lt;/wa-slider&gt;
-
+  
   &lt;div&gt;Min price: ${{ priceRange?.min }}&lt;/div&gt;
   &lt;div&gt;Max price: ${{ priceRange?.max }}&lt;/div&gt;
 &lt;/form&gt;
@@ -535,54 +535,54 @@ priceRange = { min: 200, max: 800 };
   template: `
     &lt;div class=&quot;image-editor&quot;&gt;
       &lt;h2&gt;Image Editor&lt;/h2&gt;
-
+      
       &lt;div class=&quot;editor-container&quot;&gt;
         &lt;div class=&quot;controls-panel&quot;&gt;
-          &lt;wa-slider
-            label=&quot;Brightness&quot;
-            [min]=&quot;-100&quot;
-            [max]=&quot;100&quot;
-            [step]=&quot;1&quot;
+          &lt;wa-slider 
+            label=&quot;Brightness&quot; 
+            [min]=&quot;-100&quot; 
+            [max]=&quot;100&quot; 
+            [step]=&quot;1&quot; 
             [(ngModel)]=&quot;brightness&quot;
             [withTooltip]=&quot;true&quot;
             (inputEvent)=&quot;updateImage()&quot;&gt;
           &lt;/wa-slider&gt;
-
-          &lt;wa-slider
-            label=&quot;Contrast&quot;
-            [min]=&quot;-100&quot;
-            [max]=&quot;100&quot;
-            [step]=&quot;1&quot;
+          
+          &lt;wa-slider 
+            label=&quot;Contrast&quot; 
+            [min]=&quot;-100&quot; 
+            [max]=&quot;100&quot; 
+            [step]=&quot;1&quot; 
             [(ngModel)]=&quot;contrast&quot;
             [withTooltip]=&quot;true&quot;
             (inputEvent)=&quot;updateImage()&quot;&gt;
           &lt;/wa-slider&gt;
-
-          &lt;wa-slider
-            label=&quot;Saturation&quot;
-            [min]=&quot;-100&quot;
-            [max]=&quot;100&quot;
-            [step]=&quot;1&quot;
+          
+          &lt;wa-slider 
+            label=&quot;Saturation&quot; 
+            [min]=&quot;-100&quot; 
+            [max]=&quot;100&quot; 
+            [step]=&quot;1&quot; 
             [(ngModel)]=&quot;saturation&quot;
             [withTooltip]=&quot;true&quot;
             (inputEvent)=&quot;updateImage()&quot;&gt;
           &lt;/wa-slider&gt;
-
-          &lt;wa-slider
-            label=&quot;Blur&quot;
-            [min]=&quot;0&quot;
-            [max]=&quot;20&quot;
-            [step]=&quot;0.1&quot;
+          
+          &lt;wa-slider 
+            label=&quot;Blur&quot; 
+            [min]=&quot;0&quot; 
+            [max]=&quot;20&quot; 
+            [step]=&quot;0.1&quot; 
             [(ngModel)]=&quot;blur&quot;
             [withTooltip]=&quot;true&quot;
             (inputEvent)=&quot;updateImage()&quot;&gt;
           &lt;/wa-slider&gt;
-
-          &lt;wa-slider
-            label=&quot;Hue Rotate&quot;
-            [min]=&quot;0&quot;
-            [max]=&quot;360&quot;
-            [step]=&quot;1&quot;
+          
+          &lt;wa-slider 
+            label=&quot;Hue Rotate&quot; 
+            [min]=&quot;0&quot; 
+            [max]=&quot;360&quot; 
+            [step]=&quot;1&quot; 
             [(ngModel)]=&quot;hueRotate&quot;
             [withTooltip]=&quot;true&quot;
             [withMarkers]=&quot;true&quot;
@@ -592,14 +592,14 @@ priceRange = { min: 200, max: 800 };
             &lt;span slot=&quot;reference&quot;&gt;180°&lt;/span&gt;
             &lt;span slot=&quot;reference&quot;&gt;360°&lt;/span&gt;
           &lt;/wa-slider&gt;
-
+          
           &lt;button (click)=&quot;resetFilters()&quot;&gt;Reset All&lt;/button&gt;
         &lt;/div&gt;
-
+        
         &lt;div class=&quot;image-preview&quot;&gt;
-          &lt;img
-            [src]=&quot;imageUrl&quot;
-            [style.filter]=&quot;getFilterString()&quot;
+          &lt;img 
+            [src]=&quot;imageUrl&quot; 
+            [style.filter]=&quot;getFilterString()&quot; 
             alt=&quot;Edited image&quot;&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -609,20 +609,20 @@ priceRange = { min: 200, max: 800 };
     .image-editor {
       padding: 20px;
     }
-
+    
     .editor-container {
       display: flex;
       gap: 20px;
       margin-top: 20px;
     }
-
+    
     .controls-panel {
       width: 300px;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-
+    
     .image-preview {
       flex: 1;
       display: flex;
@@ -632,7 +632,7 @@ priceRange = { min: 200, max: 800 };
       border-radius: 8px;
       overflow: hidden;
     }
-
+    
     .image-preview img {
       max-width: 100%;
       max-height: 500px;
@@ -646,12 +646,12 @@ export class ImageEditorComponent {
   saturation = 0;
   blur = 0;
   hueRotate = 0;
-
+  
   updateImage(): void {
     // The image updates automatically via the style binding
     console.log(&#39;Image filters updated&#39;);
   }
-
+  
   resetFilters(): void {
     this.brightness = 0;
     this.contrast = 0;
@@ -660,13 +660,13 @@ export class ImageEditorComponent {
     this.hueRotate = 0;
     this.updateImage();
   }
-
+  
   getFilterString(): string {
     return `
-      brightness(${100 + this.brightness}%)
-      contrast(${100 + this.contrast}%)
-      saturate(${100 + this.saturation}%)
-      blur(${this.blur}px)
+      brightness(${100 + this.brightness}%) 
+      contrast(${100 + this.contrast}%) 
+      saturate(${100 + this.saturation}%) 
+      blur(${this.blur}px) 
       hue-rotate(${this.hueRotate}deg)
     `;
   }
@@ -677,14 +677,14 @@ export class ImageEditorComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>

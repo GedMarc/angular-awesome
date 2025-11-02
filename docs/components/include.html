@@ -94,7 +94,7 @@
 
             <main>
                 <!-- Page content goes here -->
-
+                
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -118,21 +118,21 @@ import { WaIncludeDirective } from 'angular-awesome/include';</pre>
 &lt;wa-include [src]=&quot;&#39;https://example.com/content.html&#39;&quot;&gt;&lt;/wa-include&gt;
 
 &lt;!-- Using &#39;no-cors&#39; mode --&gt;
-&lt;wa-include
-  [src]=&quot;&#39;https://example.com/content.html&#39;&quot;
+&lt;wa-include 
+  [src]=&quot;&#39;https://example.com/content.html&#39;&quot; 
   mode=&quot;no-cors&quot;&gt;
 &lt;/wa-include&gt;
 
 &lt;!-- Using &#39;same-origin&#39; mode --&gt;
-&lt;wa-include
-  [src]=&quot;&#39;templates/footer.html&#39;&quot;
+&lt;wa-include 
+  [src]=&quot;&#39;templates/footer.html&#39;&quot; 
   mode=&quot;same-origin&quot;&gt;
 &lt;/wa-include&gt;
 </code></pre>
 <h2>Allowing Scripts</h2>
 <p>By default, scripts in included content are not executed. You can enable script execution with the <code>allowScripts</code> attribute:</p>
-<pre><code class="language-html">&lt;wa-include
-  [src]=&quot;&#39;templates/interactive-widget.html&#39;&quot;
+<pre><code class="language-html">&lt;wa-include 
+  [src]=&quot;&#39;templates/interactive-widget.html&#39;&quot; 
   [allowScripts]=&quot;true&quot;&gt;
 &lt;/wa-include&gt;
 </code></pre>
@@ -140,7 +140,7 @@ import { WaIncludeDirective } from 'angular-awesome/include';</pre>
 <p>⚠️ <strong>Security Warning</strong>: Only enable script execution for trusted content sources. Allowing scripts from untrusted sources can lead to cross-site scripting (XSS) vulnerabilities.</p>
 </blockquote>
 <h2>Event Handling</h2>
-<pre><code class="language-html">&lt;wa-include
+<pre><code class="language-html">&lt;wa-include 
   [src]=&quot;&#39;templates/content.html&#39;&quot;
   (waLoad)=&quot;onContentLoaded()&quot;
   (waError)=&quot;onLoadError($event)&quot;&gt;
@@ -195,7 +195,7 @@ export class IncludeExampleComponent {
 &lt;/ng-container&gt;
 
 &lt;ng-template #content&gt;
-  &lt;wa-include
+  &lt;wa-include 
     [src]=&quot;contentUrl&quot;
     (waLoad)=&quot;isLoading = false&quot;
     (waError)=&quot;handleError($event)&quot;&gt;
@@ -235,7 +235,7 @@ export class IncludeExampleComponent {
 </code></pre>
 <h3>Including External Content</h3>
 <pre><code class="language-html">&lt;!-- Including content from another domain --&gt;
-&lt;wa-include
+&lt;wa-include 
   [src]=&quot;&#39;https://trusted-domain.com/widget.html&#39;&quot;
   mode=&quot;cors&quot;
   [allowScripts]=&quot;false&quot;
@@ -276,7 +276,7 @@ export class IncludeExampleComponent {
 </code></pre>
 <h2>Error Handling with Fallback Content</h2>
 <pre><code class="language-html">&lt;ng-container *ngIf=&quot;!loadError; else errorTemplate&quot;&gt;
-  &lt;wa-include
+  &lt;wa-include 
     [src]=&quot;contentUrl&quot;
     (waError)=&quot;loadError = true&quot;&gt;
   &lt;/wa-include&gt;
@@ -311,8 +311,8 @@ export class IncludeExampleComponent {
 <li><strong>Consider Content Security Policy (CSP)</strong> settings for your application.</li>
 </ol>
 <pre><code class="language-html">&lt;!-- Example with security best practices --&gt;
-&lt;wa-include
-  [src]=&quot;sanitizedUrl&quot;
+&lt;wa-include 
+  [src]=&quot;sanitizedUrl&quot; 
   mode=&quot;same-origin&quot;
   [allowScripts]=&quot;false&quot;&gt;
 &lt;/wa-include&gt;
@@ -335,14 +335,14 @@ export class SecureIncludeExampleComponent {
 
       <section>
         <h2>API Reference</h2>
-
+        
       </section>
 
       <section>
         <h2>Styling</h2>
-
+        
       </section>
-
+    
             </main>
 
             <footer>
