@@ -174,10 +174,6 @@ Prerequisites:
 
 Run:
 - Set environment variables and run the BrowserStack test script:
-  - PowerShell (Windows):
-    $env:BROWSERSTACK_USERNAME="marcmagon1"; $env:BROWSERSTACK_ACCESS_KEY="P7pnVbL7JBJ732Spjr39"; npm run test:bs
-  - Bash:
-    BROWSERSTACK_USERNAME="marcmagon1" BROWSERSTACK_ACCESS_KEY="P7pnVbL7JBJ732Spjr39" npm run test:bs
 
 Notes:
 - If you don’t set env vars, karma.conf.js will fall back to the above defaults when BS=true.
