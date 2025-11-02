@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Include Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Include Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-include> provides include functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the include directive from the angular-awesome package:</p>
+        <pre>// Import the include directive
+import { WaIncludeDirective } from 'angular-awesome/include';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Include Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-include [src]=&quot;&#39;templates/header.html&#39;&quot;&gt;&lt;/wa-include&gt;
+</code></pre>
+<h2>With Different CORS Modes</h2>
+<pre><code class="language-html">&lt;!-- Default mode is &#39;cors&#39; --&gt;
+&lt;wa-include [src]=&quot;&#39;https://example.com/content.html&#39;&quot;&gt;&lt;/wa-include&gt;
+
+&lt;!-- Using &#39;no-cors&#39; mode --&gt;
+&lt;wa-include 
+  [src]=&quot;&#39;https://example.com/content.html&#39;&quot; 
+  mode=&quot;no-cors&quot;&gt;
+&lt;/wa-include&gt;
+
+&lt;!-- Using &#39;same-origin&#39; mode --&gt;
+&lt;wa-include 
+  [src]=&quot;&#39;templates/footer.html&#39;&quot; 
+  mode=&quot;same-origin&quot;&gt;
+&lt;/wa-include&gt;
+</code></pre>
+<h2>Allowing Scripts</h2>
+<p>By default, scripts in included content are not executed. You can enable script execution with the <code>allowScripts</code> attribute:</p>
+<pre><code class="language-html">&lt;wa-include 
+  [src]=&quot;&#39;templates/interactive-widget.html&#39;&quot; 
+  [allowScripts]=&quot;true&quot;&gt;
+&lt;/wa-include&gt;
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>Security Warning</strong>: Only enable script execution for trusted content sources. Allowing scripts from untrusted sources can lead to cross-site scripting (XSS) vulnerabilities.</p>
+</blockquote>
+<h2>Event Handling</h2>
+<pre><code class="language-html">&lt;wa-include 
+  [src]=&quot;&#39;templates/content.html&#39;&quot;
+  (waLoad)=&quot;onContentLoaded()&quot;
+  (waError)=&quot;onLoadError($event)&quot;&gt;
+&lt;/wa-include&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  onContentLoaded(): void {
+    console.log(&#39;Content loaded successfully!&#39;);
+  }
+
+  onLoadError(error: { status: number }): void {
+    console.error(&#39;Failed to load content:&#39;, error.status);
+    // Handle different error codes
+    if (error.status === 404) {
+      // Handle not found error
+    } else if (error.status === 403) {
+      // Handle forbidden error
+    }
+  }
+}
+</code></pre>
+<h2>Dynamic Source</h2>
+<pre><code class="language-html">&lt;wa-include [src]=&quot;dynamicContentUrl&quot;&gt;&lt;/wa-include&gt;
+
+&lt;div class=&quot;controls&quot;&gt;
+  &lt;wa-button (click)=&quot;loadHeader()&quot;&gt;Load Header&lt;/wa-button&gt;
+  &lt;wa-button (click)=&quot;loadFooter()&quot;&gt;Load Footer&lt;/wa-button&gt;
+  &lt;wa-button (click)=&quot;loadSidebar()&quot;&gt;Load Sidebar&lt;/wa-button&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  dynamicContentUrl = &#39;templates/default.html&#39;;
+
+  loadHeader(): void {
+    this.dynamicContentUrl = &#39;templates/header.html&#39;;
+  }
+
+  loadFooter(): void {
+    this.dynamicContentUrl = &#39;templates/footer.html&#39;;
+  }
+
+  loadSidebar(): void {
+    this.dynamicContentUrl = &#39;templates/sidebar.html&#39;;
+  }
+}
+</code></pre>
+<h2>Loading State Handling</h2>
+<pre><code class="language-html">&lt;ng-container *ngIf=&quot;isLoading; else content&quot;&gt;
+  &lt;div class=&quot;loading-spinner&quot;&gt;Loading...&lt;/div&gt;
+&lt;/ng-container&gt;
+
+&lt;ng-template #content&gt;
+  &lt;wa-include 
+    [src]=&quot;contentUrl&quot;
+    (waLoad)=&quot;isLoading = false&quot;
+    (waError)=&quot;handleError($event)&quot;&gt;
+  &lt;/wa-include&gt;
+&lt;/ng-template&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  contentUrl = &#39;templates/content.html&#39;;
+  isLoading = true;
+  errorMessage = &#39;&#39;;
+
+  handleError(error: { status: number }): void {
+    this.isLoading = false;
+    this.errorMessage = `Failed to load content: ${error.status}`;
+  }
+}
+</code></pre>
+<h2>Common Use Cases</h2>
+<h3>Including Partial Views</h3>
+<pre><code class="language-html">&lt;!-- Page layout with included partials --&gt;
+&lt;header&gt;
+  &lt;wa-include [src]=&quot;&#39;partials/header.html&#39;&quot;&gt;&lt;/wa-include&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+  &lt;wa-include [src]=&quot;&#39;partials/navigation.html&#39;&quot;&gt;&lt;/wa-include&gt;
+&lt;/nav&gt;
+
+&lt;main&gt;
+  &lt;wa-include [src]=&quot;currentView&quot;&gt;&lt;/wa-include&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;wa-include [src]=&quot;&#39;partials/footer.html&#39;&quot;&gt;&lt;/wa-include&gt;
+&lt;/footer&gt;
+</code></pre>
+<h3>Including External Content</h3>
+<pre><code class="language-html">&lt;!-- Including content from another domain --&gt;
+&lt;wa-include 
+  [src]=&quot;&#39;https://trusted-domain.com/widget.html&#39;&quot;
+  mode=&quot;cors&quot;
+  [allowScripts]=&quot;false&quot;
+  (waError)=&quot;handleExternalContentError($event)&quot;&gt;
+&lt;/wa-include&gt;
+</code></pre>
+<h3>Including Templates Based on User Preferences</h3>
+<pre><code class="language-html">&lt;wa-include [src]=&quot;getUserThemeTemplate()&quot;&gt;&lt;/wa-include&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  userTheme = &#39;light&#39;;
+
+  getUserThemeTemplate(): string {
+    return `templates/${this.userTheme}-theme.html`;
+  }
+
+  setTheme(theme: &#39;light&#39; | &#39;dark&#39;): void {
+    this.userTheme = theme;
+  }
+}
+</code></pre>
+<h3>Including Localized Content</h3>
+<pre><code class="language-html">&lt;wa-include [src]=&quot;getLocalizedTemplate()&quot;&gt;&lt;/wa-include&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  currentLocale = &#39;en-US&#39;;
+
+  getLocalizedTemplate(): string {
+    return `templates/${this.currentLocale}/content.html`;
+  }
+
+  setLocale(locale: string): void {
+    this.currentLocale = locale;
+  }
+}
+</code></pre>
+<h2>Error Handling with Fallback Content</h2>
+<pre><code class="language-html">&lt;ng-container *ngIf=&quot;!loadError; else errorTemplate&quot;&gt;
+  &lt;wa-include 
+    [src]=&quot;contentUrl&quot;
+    (waError)=&quot;loadError = true&quot;&gt;
+  &lt;/wa-include&gt;
+&lt;/ng-container&gt;
+
+&lt;ng-template #errorTemplate&gt;
+  &lt;div class=&quot;error-message&quot;&gt;
+    &lt;p&gt;Sorry, we couldn&#39;t load the requested content.&lt;/p&gt;
+    &lt;wa-button (click)=&quot;retryLoad()&quot;&gt;Retry&lt;/wa-button&gt;
+  &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class IncludeExampleComponent {
+  contentUrl = &#39;templates/content.html&#39;;
+  loadError = false;
+
+  retryLoad(): void {
+    this.loadError = false;
+    // Optionally force a refresh by changing the URL slightly
+    this.contentUrl = `templates/content.html?t=${Date.now()}`;
+  }
+}
+</code></pre>
+<h2>Security Considerations</h2>
+<p>When using the include directive, keep these security best practices in mind:</p>
+<ol>
+<li><strong>Only include content from trusted sources</strong> to prevent XSS attacks.</li>
+<li><strong>Disable scripts</strong> (<code>[allowScripts]=&quot;false&quot;</code>) when including content from external sources.</li>
+<li><strong>Use CORS appropriately</strong> to control which domains can provide content.</li>
+<li><strong>Validate and sanitize</strong> any dynamic URLs before using them as the <code>src</code> attribute.</li>
+<li><strong>Consider Content Security Policy (CSP)</strong> settings for your application.</li>
+</ol>
+<pre><code class="language-html">&lt;!-- Example with security best practices --&gt;
+&lt;wa-include 
+  [src]=&quot;sanitizedUrl&quot; 
+  mode=&quot;same-origin&quot;
+  [allowScripts]=&quot;false&quot;&gt;
+&lt;/wa-include&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+import { DomSanitizer, SafeUrl } from &#39;@angular/platform-browser&#39;;
+
+export class SecureIncludeExampleComponent {
+  rawUrl = &#39;templates/content.html&#39;;
+  sanitizedUrl: SafeUrl;
+
+  constructor(private sanitizer: DomSanitizer) {
+    // Sanitize URLs before using them
+    this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.rawUrl);
+  }
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - ColorPicker Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>ColorPicker Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-color-picker> provides color picker functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the colorPicker directive from the angular-awesome package:</p>
+        <pre>// Import the colorPicker directive
+import { WaColorPickerDirective } from 'angular-awesome/color-picker';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Color Picker Examples</h1>
+<p>Color pickers allow the user to select a color.</p>
+<p>Select a color
+<wa-color-picker label="Select a color"></wa-color-picker></p>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-color-picker label=&quot;Choose a color&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Formats</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-grid&quot; style=&quot;--min-column-size: 12ch;&quot;&gt;
+  &lt;wa-color-picker format=&quot;hex&quot; value=&quot;#4a90e2&quot; label=&quot;Pick a hex color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;rgb&quot; value=&quot;rgb(80, 227, 194)&quot; label=&quot;Pick an RGB color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;hsl&quot; value=&quot;hsl(290, 87%, 47%)&quot; label=&quot;Pick an HSL color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;hsv&quot; value=&quot;hsv(55, 89%, 97%)&quot; label=&quot;Pick an HSV color&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Opacity</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker value=&quot;#f5a623ff&quot; opacity label=&quot;Select a color&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Initial Value</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker value=&quot;#4a90e2&quot; label=&quot;Select a color&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>With Different Sizes</h2>
+<pre><code class="language-html">&lt;wa-color-picker label=&quot;Small Color Picker&quot; size=&quot;small&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;wa-color-picker label=&quot;Medium Color Picker&quot; size=&quot;medium&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;wa-color-picker label=&quot;Large Color Picker&quot; size=&quot;large&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Swatches</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker
+  label=&quot;Select a color&quot;
+  swatches=&quot;
+    #d0021b; #f5a623; #f8e71c; #8b572a; #7ed321; #417505; #bd10e0; #9013fe;
+    #4a90e2; #50e3c2; #b8e986; #000; #444; #888; #ccc; #fff;
+  &quot;
+&gt;&lt;/wa-color-picker&gt;
+
+&lt;!-- Using an array --&gt;
+&lt;wa-color-picker 
+  label=&quot;With Swatches Array&quot; 
+  [swatches]=&quot;[&#39;#d0021b&#39;,&#39;#f5a623&#39;,&#39;#f8e71c&#39;,&#39;#8b572a&#39;,&#39;#7ed321&#39;,&#39;#417505&#39;,&#39;#bd10e0&#39;,&#39;#9013fe&#39;,&#39;#4a90e2&#39;,&#39;#50e3c2&#39;,&#39;#b8e986&#39;,&#39;#000&#39;,&#39;#444&#39;,&#39;#888&#39;,&#39;#ccc&#39;,&#39;#fff&#39;]&quot;&gt;
+&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>With Hints</h2>
+<pre><code class="language-html">&lt;wa-color-picker 
+  label=&quot;With Hint Text&quot; 
+  hint=&quot;Select a color for your profile theme&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Using HTML in hint --&gt;
+&lt;wa-color-picker label=&quot;With HTML Hint&quot;&gt;
+  &lt;div slot=&quot;hint&quot;&gt;
+    Select a color for your &lt;strong&gt;profile theme&lt;/strong&gt;
+  &lt;/div&gt;
+&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Disabled and Required States</h2>
+<pre><code class="language-html">&lt;wa-color-picker label=&quot;Disabled Color Picker&quot; [disabled]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;wa-color-picker label=&quot;Required Color Picker&quot; [required]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Format Toggle Control</h2>
+<pre><code class="language-html">&lt;!-- Allow format toggle (default) --&gt;
+&lt;wa-color-picker label=&quot;With Format Toggle&quot;&gt;&lt;/wa-color-picker&gt;
+
+&lt;!-- Disable format toggle --&gt;
+&lt;wa-color-picker label=&quot;No Format Toggle&quot; without-format-toggle&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Uppercase HEX Values</h2>
+<pre><code class="language-html">&lt;wa-color-picker label=&quot;Uppercase HEX&quot; format=&quot;hex&quot; [uppercase]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Using direct styling inputs --&gt;
+&lt;wa-color-picker 
+  label=&quot;Styled Color Picker&quot; 
+  [color]=&quot;&#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot; 
+  [fontSize]=&quot;&#39;16px&#39;&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Dynamic direct styling --&gt;
+&lt;wa-color-picker 
+  label=&quot;Dynamic Styled Color Picker&quot; 
+  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;isDarkMode ? &#39;#333333&#39; : &#39;#ffffff&#39;&quot; 
+  [fontSize]=&quot;isLarge ? &#39;18px&#39; : &#39;14px&#39;&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Using CSS custom properties --&gt;
+&lt;wa-color-picker 
+  label=&quot;Custom Properties Styling&quot; 
+  [swatchSize]=&quot;&#39;24px&#39;&quot; 
+  [swatchSpacing]=&quot;&#39;8px&#39;&quot; 
+  [borderRadius]=&quot;&#39;8px&#39;&quot; 
+  [dropdownWidth]=&quot;&#39;300px&#39;&quot; 
+  [dropdownHeight]=&quot;&#39;250px&#39;&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Combining direct styling and CSS custom properties --&gt;
+&lt;wa-color-picker 
+  label=&quot;Combined Styling&quot; 
+  [color]=&quot;&#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot; 
+  [fontSize]=&quot;&#39;16px&#39;&quot;
+  [swatchSize]=&quot;&#39;20px&#39;&quot; 
+  [borderRadius]=&quot;&#39;4px&#39;&quot;&gt;
+&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-html">&lt;wa-color-picker 
+  [label]=&quot;pickerLabel&quot; 
+  [hint]=&quot;pickerHint&quot; 
+  [value]=&quot;selectedColor&quot; 
+  [format]=&quot;colorFormat&quot; 
+  [opacity]=&quot;showOpacity&quot; 
+  [size]=&quot;pickerSize&quot; 
+  [disabled]=&quot;isDisabled&quot; 
+  [required]=&quot;isRequired&quot;
+  (change)=&quot;onColorChange($event)&quot; 
+  (input)=&quot;onColorInput($event)&quot; 
+  (focusEvent)=&quot;onPickerFocus()&quot; 
+  (blurEvent)=&quot;onPickerBlur()&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Using CSS custom properties with Angular bindings --&gt;
+&lt;wa-color-picker 
+  [label]=&quot;pickerLabel&quot; 
+  [value]=&quot;selectedColor&quot; 
+  [swatchSize]=&quot;customSwatchSize&quot; 
+  [swatchSpacing]=&quot;customSwatchSpacing&quot; 
+  [borderRadius]=&quot;customBorderRadius&quot; 
+  [dropdownWidth]=&quot;customDropdownWidth&quot; 
+  [dropdownHeight]=&quot;customDropdownHeight&quot;
+  (change)=&quot;onColorChange($event)&quot;&gt;
+&lt;/wa-color-picker&gt;
+
+&lt;!-- Conditional CSS custom properties --&gt;
+&lt;wa-color-picker 
+  [label]=&quot;pickerLabel&quot; 
+  [value]=&quot;selectedColor&quot; 
+  [swatchSize]=&quot;isCompactMode ? &#39;16px&#39; : &#39;24px&#39;&quot; 
+  [dropdownWidth]=&quot;isCompactMode ? &#39;250px&#39; : &#39;350px&#39;&quot;
+  [borderRadius]=&quot;isRounded ? &#39;12px&#39; : &#39;4px&#39;&quot;&gt;
+&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Using with ngModel</h2>
+<pre><code class="language-html">&lt;form #colorForm=&quot;ngForm&quot;&gt;
+  &lt;wa-color-picker 
+    label=&quot;Choose Theme Color&quot; 
+    name=&quot;themeColor&quot; 
+    [(ngModel)]=&quot;themeColor&quot; 
+    required&gt;
+  &lt;/wa-color-picker&gt;
+
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;colorForm.invalid&quot;&gt;Save&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Accessing Methods Programmatically</h2>
+<pre><code class="language-typescript">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaColorPickerDirective } from &#39;./color-picker.directive&#39;;
+
+@Component({
+  selector: &#39;app-color-picker-demo&#39;,
+  template: `
+    &lt;wa-color-picker #colorPicker label=&quot;Programmatic Control&quot;&gt;&lt;/wa-color-picker&gt;
+    &lt;button (click)=&quot;focusPicker()&quot;&gt;Focus&lt;/button&gt;
+    &lt;button (click)=&quot;getHexValue()&quot;&gt;Get HEX&lt;/button&gt;
+    &lt;button (click)=&quot;getRgbValue()&quot;&gt;Get RGB&lt;/button&gt;
+  `
+})
+export class ColorPickerDemoComponent {
+  @ViewChild(&#39;colorPicker&#39;) colorPicker!: WaColorPickerDirective;
+
+  focusPicker(): void {
+    this.colorPicker.focus();
+  }
+
+  getHexValue(): void {
+    const hexValue = this.colorPicker.getFormattedValue(&#39;hex&#39;);
+    console.log(&#39;HEX value:&#39;, hexValue);
+  }
+
+  getRgbValue(): void {
+    const rgbValue = this.colorPicker.getFormattedValue(&#39;rgb&#39;);
+    console.log(&#39;RGB value:&#39;, rgbValue);
+  }
+}
+</code></pre>
+<h2>Using Custom HTML Labels</h2>
+<pre><code class="language-html">&lt;wa-color-picker&gt;
+  &lt;div slot=&quot;label&quot;&gt;
+    Choose &lt;strong&gt;Brand Color&lt;/strong&gt; &lt;wa-icon name=&quot;palette&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/div&gt;
+&lt;/wa-color-picker&gt;
+</code></pre>
+<h2>Form Integration</h2>
+<pre><code class="language-html">&lt;!-- In a larger form --&gt;
+&lt;form #productForm=&quot;ngForm&quot; (ngSubmit)=&quot;saveProduct()&quot;&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;wa-input 
+      label=&quot;Product Name&quot; 
+      name=&quot;productName&quot; 
+      [(ngModel)]=&quot;product.name&quot; 
+      required&gt;
+    &lt;/wa-input&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;wa-color-picker 
+      label=&quot;Product Color&quot; 
+      name=&quot;productColor&quot; 
+      [(ngModel)]=&quot;product.color&quot; 
+      [opacity]=&quot;true&quot; 
+      required&gt;
+    &lt;/wa-color-picker&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;wa-color-picker 
+      label=&quot;Secondary Color&quot; 
+      name=&quot;secondaryColor&quot; 
+      [(ngModel)]=&quot;product.secondaryColor&quot;&gt;
+    &lt;/wa-color-picker&gt;
+  &lt;/div&gt;
+
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;productForm.invalid&quot;&gt;Save Product&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Real-World Example: Theme Customizer</h2>
+<pre><code class="language-html">&lt;div class=&quot;theme-customizer&quot;&gt;
+  &lt;h2&gt;Theme Customizer&lt;/h2&gt;
+
+  &lt;wa-color-picker 
+    label=&quot;Primary Color&quot; 
+    name=&quot;primaryColor&quot; 
+    [(ngModel)]=&quot;theme.primaryColor&quot; 
+    [swatches]=&quot;brandColors&quot;
+    [swatchSize]=&quot;&#39;24px&#39;&quot;
+    [swatchSpacing]=&quot;&#39;8px&#39;&quot;
+    [borderRadius]=&quot;&#39;8px&#39;&quot;
+    (change)=&quot;updateTheme()&quot;&gt;
+  &lt;/wa-color-picker&gt;
+
+  &lt;wa-color-picker 
+    label=&quot;Secondary Color&quot; 
+    name=&quot;secondaryColor&quot; 
+    [(ngModel)]=&quot;theme.secondaryColor&quot; 
+    [swatches]=&quot;brandColors&quot;
+    [swatchSize]=&quot;&#39;24px&#39;&quot;
+    [swatchSpacing]=&quot;&#39;8px&#39;&quot;
+    [borderRadius]=&quot;&#39;8px&#39;&quot;
+    (change)=&quot;updateTheme()&quot;&gt;
+  &lt;/wa-color-picker&gt;
+
+  &lt;wa-color-picker 
+    label=&quot;Background Color&quot; 
+    name=&quot;backgroundColor&quot; 
+    [(ngModel)]=&quot;theme.backgroundColor&quot; 
+    [opacity]=&quot;true&quot;
+    [dropdownWidth]=&quot;&#39;300px&#39;&quot;
+    [dropdownHeight]=&quot;&#39;250px&#39;&quot;
+    [borderRadius]=&quot;&#39;8px&#39;&quot;
+    (change)=&quot;updateTheme()&quot;&gt;
+  &lt;/wa-color-picker&gt;
+
+  &lt;wa-color-picker 
+    label=&quot;Text Color&quot; 
+    name=&quot;textColor&quot; 
+    [(ngModel)]=&quot;theme.textColor&quot;
+    [borderRadius]=&quot;&#39;8px&#39;&quot; 
+    (change)=&quot;updateTheme()&quot;&gt;
+  &lt;/wa-color-picker&gt;
+
+  &lt;div class=&quot;preview&quot; [style.backgroundColor]=&quot;theme.backgroundColor&quot;&gt;
+    &lt;h3 [style.color]=&quot;theme.textColor&quot;&gt;Theme Preview&lt;/h3&gt;
+    &lt;wa-button [style.--background-color]=&quot;theme.primaryColor&quot;&gt;Primary Button&lt;/wa-button&gt;
+    &lt;wa-button [style.--background-color]=&quot;theme.secondaryColor&quot;&gt;Secondary Button&lt;/wa-button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

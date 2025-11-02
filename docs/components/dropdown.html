@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Dropdown Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Dropdown Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-dropdown> provides dropdown functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the dropdown directive from the angular-awesome package:</p>
+        <pre>// Import the dropdown directive
+import { WaDropdownDirective } from 'angular-awesome/dropdown';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Dropdown Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Dropdown&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With Different Placements</h2>
+<pre><code class="language-html">&lt;!-- Bottom placement (default) --&gt;
+&lt;wa-dropdown placement=&quot;bottom&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;!-- Bottom-start placement --&gt;
+&lt;wa-dropdown placement=&quot;bottom-start&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom Start&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;!-- Bottom-end placement --&gt;
+&lt;wa-dropdown placement=&quot;bottom-end&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Bottom End&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;!-- Top placement --&gt;
+&lt;wa-dropdown placement=&quot;top&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Top&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;!-- Left placement --&gt;
+&lt;wa-dropdown placement=&quot;left&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Left&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;!-- Right placement --&gt;
+&lt;wa-dropdown placement=&quot;right&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Right&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>Disabled Dropdown</h2>
+<pre><code class="language-html">&lt;wa-dropdown disabled&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Disabled Dropdown&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>Stay Open On Select</h2>
+<pre><code class="language-html">&lt;wa-dropdown stayOpenOnSelect&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Stay Open On Select&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With Distance and Skidding</h2>
+<pre><code class="language-html">&lt;wa-dropdown [distance]=&quot;10&quot; [skidding]=&quot;5&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Offset&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>Sync Width with Trigger</h2>
+<pre><code class="language-html">&lt;wa-dropdown sync=&quot;width&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Sync Width&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-dropdown [boxShadow]=&quot;&#39;0 4px 8px rgba(0,0,0,0.2)&#39;&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Styling&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With ngModel Binding</h2>
+<pre><code class="language-html">&lt;wa-dropdown [(ngModel)]=&quot;selectedItem&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedItem || &#39;Select an item&#39; }}&lt;/wa-button&gt;
+  &lt;wa-dropdown-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  selectedItem: string;
+}
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-html">&lt;wa-dropdown
+  (showEvent)=&quot;onShow()&quot;
+  (afterShowEvent)=&quot;onAfterShow()&quot;
+  (hideEvent)=&quot;onHide()&quot;
+  (afterHideEvent)=&quot;onAfterHide()&quot;
+  (selectEvent)=&quot;onSelect($event)&quot;&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Event Handling&lt;/wa-button&gt;
+  &lt;wa-dropdown-item value=&quot;item1&quot;&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item2&quot;&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item value=&quot;item3&quot;&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  onShow() {
+    console.log(&#39;Dropdown is opening&#39;);
+  }
+
+  onAfterShow() {
+    console.log(&#39;Dropdown has opened&#39;);
+  }
+
+  onHide() {
+    console.log(&#39;Dropdown is closing&#39;);
+  }
+
+  onAfterHide() {
+    console.log(&#39;Dropdown has closed&#39;);
+  }
+
+  onSelect(event: { item: HTMLElement }) {
+    console.log(&#39;Selected item:&#39;, event.item.textContent);
+    console.log(&#39;Selected value:&#39;, event.item.getAttribute(&#39;value&#39;));
+  }
+}
+</code></pre>
+<h2>Programmatic Control</h2>
+<pre><code class="language-html">&lt;wa-dropdown #myDropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Programmatic Control&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+
+&lt;wa-button (click)=&quot;openDropdown()&quot;&gt;Open Dropdown&lt;/wa-button&gt;
+&lt;wa-button (click)=&quot;closeDropdown()&quot;&gt;Close Dropdown&lt;/wa-button&gt;
+&lt;wa-button (click)=&quot;repositionDropdown()&quot;&gt;Reposition Dropdown&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  @ViewChild(&#39;myDropdown&#39;) dropdownRef: ElementRef;
+
+  openDropdown() {
+    this.dropdownRef.nativeElement.show();
+  }
+
+  closeDropdown() {
+    this.dropdownRef.nativeElement.hide();
+  }
+
+  repositionDropdown() {
+    this.dropdownRef.nativeElement.reposition();
+  }
+}
+</code></pre>
+<h2>With Divider</h2>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;With Divider&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;wa-divider&gt;&lt;/wa-divider&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With Icons</h2>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;With Icons&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;cut&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Cut
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;copy&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Copy
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    &lt;wa-icon name=&quot;paste&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Paste
+  &lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With Submenu</h2>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;With Submenu&lt;/wa-button&gt;
+  &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;
+    More Options
+    &lt;wa-dropdown slot=&quot;submenu&quot;&gt;
+      &lt;wa-dropdown-item&gt;Submenu Item 1&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item&gt;Submenu Item 2&lt;/wa-dropdown-item&gt;
+    &lt;/wa-dropdown&gt;
+  &lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h2>With Custom Containing Element</h2>
+<pre><code class="language-html">&lt;div #container class=&quot;dropdown-container&quot;&gt;
+  &lt;wa-dropdown [containingElement]=&quot;container&quot;&gt;
+    &lt;wa-button slot=&quot;trigger&quot;&gt;Custom Containing Element&lt;/wa-button&gt;
+    &lt;wa-dropdown-item&gt;Item 1&lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item&gt;Item 2&lt;/wa-dropdown-item&gt;
+  &lt;/wa-dropdown&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  @ViewChild(&#39;container&#39;) containerRef: ElementRef;
+}
+</code></pre>
+<h2>Dropdown in a Form</h2>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;country&quot;&gt;Select Country&lt;/label&gt;
+    &lt;wa-dropdown [(ngModel)]=&quot;selectedCountry&quot; name=&quot;country&quot;&gt;
+      &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedCountry || &#39;Select a country&#39; }}&lt;/wa-button&gt;
+      &lt;wa-dropdown-item value=&quot;us&quot;&gt;United States&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;ca&quot;&gt;Canada&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;mx&quot;&gt;Mexico&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;uk&quot;&gt;United Kingdom&lt;/wa-dropdown-item&gt;
+    &lt;/wa-dropdown&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;language&quot;&gt;Select Language&lt;/label&gt;
+    &lt;wa-dropdown [(ngModel)]=&quot;selectedLanguage&quot; name=&quot;language&quot;&gt;
+      &lt;wa-button slot=&quot;trigger&quot;&gt;{{ selectedLanguage || &#39;Select a language&#39; }}&lt;/wa-button&gt;
+      &lt;wa-dropdown-item value=&quot;en&quot;&gt;English&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;fr&quot;&gt;French&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;es&quot;&gt;Spanish&lt;/wa-dropdown-item&gt;
+      &lt;wa-dropdown-item value=&quot;de&quot;&gt;German&lt;/wa-dropdown-item&gt;
+    &lt;/wa-dropdown&gt;
+  &lt;/div&gt;
+  
+  &lt;wa-button type=&quot;submit&quot;&gt;Submit&lt;/wa-button&gt;
+&lt;/form&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  selectedCountry: string;
+  selectedLanguage: string;
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

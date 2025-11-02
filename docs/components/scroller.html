@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Scroller Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Scroller Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-scroller> provides scroller functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the scroller directive from the angular-awesome package:</p>
+        <pre>// Import the scroller directive
+import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Scroller Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper&gt;
+  &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
+    This content will be scrollable if it exceeds the container width.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Vertical Scrolling</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper orientation=&quot;vertical&quot; style=&quot;height: 200px;&quot;&gt;
+  &lt;div style=&quot;padding: 20px;&quot;&gt;
+    &lt;p&gt;This content will scroll vertically when it exceeds the container height.&lt;/p&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+    &lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.&lt;/p&gt;
+    &lt;p&gt;Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.&lt;/p&gt;
+    &lt;p&gt;Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.&lt;/p&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+    &lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Horizontal Scrolling</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper orientation=&quot;horizontal&quot;&gt;
+  &lt;div style=&quot;display: flex; gap: 20px; padding: 20px;&quot;&gt;
+    &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
+      Card 1
+    &lt;/div&gt;
+    &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
+      Card 2
+    &lt;/div&gt;
+    &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
+      Card 3
+    &lt;/div&gt;
+    &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
+      Card 4
+    &lt;/div&gt;
+    &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
+      Card 5
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Without Scrollbar</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper [withoutScrollbar]=&quot;true&quot;&gt;
+  &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
+    This content will be scrollable but without a visible scrollbar.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Without Shadow</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper [withoutShadow]=&quot;true&quot;&gt;
+  &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
+    This content will be scrollable but without the shadow indicators at the edges.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Custom Shadow Styling</h2>
+<pre><code class="language-html">&lt;wa-scroller-wrapper 
+  [shadowColor]=&quot;&#39;rgba(0, 0, 255, 0.3)&#39;&quot; 
+  [shadowSize]=&quot;&#39;30px&#39;&quot;&gt;
+  &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
+    This content has custom shadow color and size.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  &lt;/div&gt;
+&lt;/wa-scroller-wrapper&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-scroller-demo&#39;,
+  template: `
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;wa-select [(ngModel)]=&quot;scrollerOrientation&quot; label=&quot;Orientation&quot;&gt;
+        &lt;wa-option value=&quot;horizontal&quot;&gt;Horizontal&lt;/wa-option&gt;
+        &lt;wa-option value=&quot;vertical&quot;&gt;Vertical&lt;/wa-option&gt;
+      &lt;/wa-select&gt;
+      
+      &lt;wa-checkbox [(ngModel)]=&quot;hideScrollbar&quot; label=&quot;Hide Scrollbar&quot;&gt;&lt;/wa-checkbox&gt;
+      &lt;wa-checkbox [(ngModel)]=&quot;hideShadow&quot; label=&quot;Hide Shadow&quot;&gt;&lt;/wa-checkbox&gt;
+    &lt;/div&gt;
+    
+    &lt;wa-scroller-wrapper 
+      [orientation]=&quot;scrollerOrientation&quot; 
+      [withoutScrollbar]=&quot;hideScrollbar&quot; 
+      [withoutShadow]=&quot;hideShadow&quot;
+      [shadowColor]=&quot;shadowColor&quot;
+      [shadowSize]=&quot;shadowSize&quot;
+      [style.height]=&quot;scrollerOrientation === &#39;vertical&#39; ? &#39;200px&#39; : &#39;auto&#39;&quot;&gt;
+      
+      &lt;div [style.width]=&quot;scrollerOrientation === &#39;horizontal&#39; ? &#39;1000px&#39; : &#39;auto&#39;&quot; 
+           [style.padding]=&quot;&#39;20px&#39;&quot;&gt;
+        &lt;ng-container *ngIf=&quot;scrollerOrientation === &#39;horizontal&#39;&quot;&gt;
+          &lt;div style=&quot;display: flex; gap: 20px;&quot;&gt;
+            &lt;div *ngFor=&quot;let item of items&quot; 
+                 style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; 
+                        display: flex; align-items: center; justify-content: center;&quot;&gt;
+              {{ item }}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/ng-container&gt;
+        
+        &lt;ng-container *ngIf=&quot;scrollerOrientation === &#39;vertical&#39;&quot;&gt;
+          &lt;p *ngFor=&quot;let item of items&quot;&gt;
+            Item {{ item }} - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          &lt;/p&gt;
+        &lt;/ng-container&gt;
+      &lt;/div&gt;
+      
+    &lt;/wa-scroller-wrapper&gt;
+  `
+})
+export class ScrollerDemoComponent {
+  scrollerOrientation = &#39;horizontal&#39;;
+  hideScrollbar = false;
+  hideShadow = false;
+  shadowColor = &#39;rgba(0, 0, 0, 0.2)&#39;;
+  shadowSize = &#39;20px&#39;;
+  items = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;];
+}
+</code></pre>
+<h2>Real-World Example: Image Gallery</h2>
+<pre><code class="language-html">&lt;div class=&quot;image-gallery&quot;&gt;
+  &lt;h2&gt;Photo Gallery&lt;/h2&gt;
+  
+  &lt;wa-scroller-wrapper 
+    orientation=&quot;horizontal&quot; 
+    [shadowColor]=&quot;&#39;rgba(0, 0, 0, 0.3)&#39;&quot; 
+    [shadowSize]=&quot;&#39;40px&#39;&quot;&gt;
+    &lt;div class=&quot;gallery-container&quot;&gt;
+      &lt;div class=&quot;gallery-item&quot; *ngFor=&quot;let image of galleryImages&quot;&gt;
+        &lt;img [src]=&quot;image.url&quot; [alt]=&quot;image.caption&quot;&gt;
+        &lt;div class=&quot;caption&quot;&gt;{{ image.caption }}&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-scroller-wrapper&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  .image-gallery {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .gallery-container {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  .gallery-item {
+    min-width: 280px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .caption {
+    padding: 12px;
+    background-color: #f8f9fa;
+    font-size: 14px;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2>Real-World Example: Content Tabs with Horizontal Scrolling</h2>
+<pre><code class="language-html">&lt;div class=&quot;scrollable-tabs&quot;&gt;
+  &lt;wa-scroller-wrapper 
+    orientation=&quot;horizontal&quot; 
+    [withoutScrollbar]=&quot;true&quot;&gt;
+    &lt;div class=&quot;tabs-container&quot;&gt;
+      &lt;button 
+        class=&quot;tab-button&quot; 
+        *ngFor=&quot;let tab of tabs&quot; 
+        [class.active]=&quot;activeTab === tab.id&quot;
+        (click)=&quot;activeTab = tab.id&quot;&gt;
+        {{ tab.label }}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/wa-scroller-wrapper&gt;
+  
+  &lt;div class=&quot;tab-content&quot;&gt;
+    &lt;ng-container *ngFor=&quot;let tab of tabs&quot;&gt;
+      &lt;div *ngIf=&quot;activeTab === tab.id&quot;&gt;
+        &lt;h3&gt;{{ tab.label }}&lt;/h3&gt;
+        &lt;p&gt;{{ tab.content }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/ng-container&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  .scrollable-tabs {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .tabs-container {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    min-width: max-content;
+  }
+  
+  .tab-button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .tab-button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .tab-content {
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2>Real-World Example: Timeline</h2>
+<pre><code class="language-html">&lt;div class=&quot;timeline-container&quot;&gt;
+  &lt;h2&gt;Project Timeline&lt;/h2&gt;
+  
+  &lt;wa-scroller-wrapper 
+    orientation=&quot;horizontal&quot; 
+    [shadowSize]=&quot;&#39;50px&#39;&quot;&gt;
+    &lt;div class=&quot;timeline&quot;&gt;
+      &lt;div class=&quot;timeline-item&quot; *ngFor=&quot;let event of timelineEvents&quot;&gt;
+        &lt;div class=&quot;timeline-date&quot;&gt;{{ event.date }}&lt;/div&gt;
+        &lt;div class=&quot;timeline-connector&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;timeline-content&quot;&gt;
+          &lt;h3&gt;{{ event.title }}&lt;/h3&gt;
+          &lt;p&gt;{{ event.description }}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-scroller-wrapper&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  .timeline-container {
+    margin: 40px 0;
+  }
+  
+  .timeline {
+    display: flex;
+    padding: 40px 20px;
+    min-width: max-content;
+  }
+  
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    position: relative;
+  }
+  
+  .timeline-date {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .timeline-connector {
+    width: 100%;
+    height: 4px;
+    background-color: #e0e0e0;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .timeline-connector::before {
+    content: &#39;&#39;;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #007bff;
+    border-radius: 50%;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .timeline-content {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 180px;
+  }
+  
+  .timeline-content h3 {
+    margin-top: 0;
+    font-size: 16px;
+  }
+  
+  .timeline-content p {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+&lt;/style&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

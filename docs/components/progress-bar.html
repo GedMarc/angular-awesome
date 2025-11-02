@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - ProgressBar Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>ProgressBar Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-progress-bar> provides progress bar functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the progressBar directive from the angular-awesome package:</p>
+        <pre>// Import the progressBar directive
+import { WaProgressBarDirective } from 'angular-awesome/progress-bar';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Progress Bar Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-progress-bar value=&quot;50&quot;&gt;&lt;/wa-progress-bar&gt;
+</code></pre>
+<h2>With Label</h2>
+<pre><code class="language-html">&lt;wa-progress-bar value=&quot;75&quot; label=&quot;Loading...&quot;&gt;&lt;/wa-progress-bar&gt;
+</code></pre>
+<h2>Indeterminate State</h2>
+<pre><code class="language-html">&lt;wa-progress-bar [indeterminate]=&quot;true&quot;&gt;&lt;/wa-progress-bar&gt;
+&lt;wa-progress-bar [indeterminate]=&quot;true&quot; label=&quot;Processing...&quot;&gt;&lt;/wa-progress-bar&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Custom indicator color --&gt;
+&lt;wa-progress-bar 
+  value=&quot;60&quot; 
+  [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;
+&lt;/wa-progress-bar&gt;
+
+&lt;!-- Custom display --&gt;
+&lt;wa-progress-bar 
+  value=&quot;40&quot; 
+  [display]=&quot;&#39;inline-block&#39;&quot; 
+  [indicatorColor]=&quot;&#39;#ff9800&#39;&quot;&gt;
+&lt;/wa-progress-bar&gt;
+
+&lt;!-- Custom track height --&gt;
+&lt;wa-progress-bar 
+  value=&quot;75&quot; 
+  [trackHeight]=&quot;&#39;10px&#39;&quot;&gt;
+&lt;/wa-progress-bar&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-progress-demo&#39;,
+  template: `
+    &lt;wa-progress-bar 
+      [value]=&quot;progressValue&quot; 
+      [label]=&quot;progressLabel&quot;
+      [indeterminate]=&quot;isIndeterminate&quot;
+      [indicatorColor]=&quot;indicatorColor&quot;
+      (focusEvent)=&quot;onFocus()&quot;
+      (blurEvent)=&quot;onBlur()&quot;&gt;
+    &lt;/wa-progress-bar&gt;
+    
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;button (click)=&quot;incrementProgress()&quot;&gt;Increment&lt;/button&gt;
+      &lt;button (click)=&quot;resetProgress()&quot;&gt;Reset&lt;/button&gt;
+      &lt;button (click)=&quot;toggleIndeterminate()&quot;&gt;Toggle Indeterminate&lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class ProgressDemoComponent {
+  progressValue = 25;
+  progressLabel = &#39;Loading...&#39;;
+  isIndeterminate = false;
+  indicatorColor = &#39;#2196f3&#39;;
+  
+  incrementProgress(): void {
+    if (this.progressValue &lt; 100) {
+      this.progressValue += 10;
+      this.updateLabel();
+    }
+  }
+  
+  resetProgress(): void {
+    this.progressValue = 0;
+    this.updateLabel();
+  }
+  
+  toggleIndeterminate(): void {
+    this.isIndeterminate = !this.isIndeterminate;
+    this.progressLabel = this.isIndeterminate ? &#39;Processing...&#39; : &#39;Loading...&#39;;
+  }
+  
+  updateLabel(): void {
+    this.progressLabel = `Loading ${this.progressValue}%`;
+  }
+  
+  onFocus(): void {
+    console.log(&#39;Progress bar focused&#39;);
+  }
+  
+  onBlur(): void {
+    console.log(&#39;Progress bar blurred&#39;);
+  }
+}
+</code></pre>
+<h2>Using with ngModel</h2>
+<pre><code class="language-html">&lt;form #progressForm=&quot;ngForm&quot;&gt;
+  &lt;wa-progress-bar 
+    [(ngModel)]=&quot;downloadProgress&quot; 
+    name=&quot;downloadProgress&quot;&gt;
+  &lt;/wa-progress-bar&gt;
+  
+  &lt;div&gt;Current progress: {{ downloadProgress }}%&lt;/div&gt;
+  
+  &lt;input 
+    type=&quot;range&quot; 
+    min=&quot;0&quot; 
+    max=&quot;100&quot; 
+    [(ngModel)]=&quot;downloadProgress&quot; 
+    name=&quot;progressSlider&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Real-World Example: File Upload Progress</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { HttpClient, HttpEventType } from &#39;@angular/common/http&#39;;
+
+@Component({
+  selector: &#39;app-file-upload&#39;,
+  template: `
+    &lt;div class=&quot;upload-container&quot;&gt;
+      &lt;h2&gt;File Upload&lt;/h2&gt;
+      
+      &lt;input 
+        type=&quot;file&quot; 
+        (change)=&quot;onFileSelected($event)&quot; 
+        [disabled]=&quot;uploading&quot;&gt;
+      
+      &lt;div class=&quot;progress-container&quot; *ngIf=&quot;uploading&quot;&gt;
+        &lt;wa-progress-bar 
+          [value]=&quot;uploadProgress&quot; 
+          [label]=&quot;uploadProgressLabel&quot;
+          [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;
+        &lt;/wa-progress-bar&gt;
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;status&quot; *ngIf=&quot;uploadComplete&quot;&gt;
+        Upload complete!
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;error&quot; *ngIf=&quot;uploadError&quot;&gt;
+        {{ errorMessage }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  `
+})
+export class FileUploadComponent {
+  uploading = false;
+  uploadProgress = 0;
+  uploadProgressLabel = &#39;&#39;;
+  uploadComplete = false;
+  uploadError = false;
+  errorMessage = &#39;&#39;;
+  
+  constructor(private http: HttpClient) {}
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files &amp;&amp; fileInput.files.length &gt; 0) {
+      const file = fileInput.files[0];
+      this.uploadFile(file);
+    }
+  }
+  
+  uploadFile(file: File): void {
+    this.uploading = true;
+    this.uploadComplete = false;
+    this.uploadError = false;
+    this.uploadProgress = 0;
+    this.updateProgressLabel();
+    
+    const formData = new FormData();
+    formData.append(&#39;file&#39;, file);
+    
+    this.http.post(&#39;https://api.example.com/upload&#39;, formData, {
+      reportProgress: true,
+      observe: &#39;events&#39;
+    }).subscribe({
+      next: (event) =&gt; {
+        if (event.type === HttpEventType.UploadProgress) {
+          if (event.total) {
+            this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            this.updateProgressLabel();
+          }
+        } else if (event.type === HttpEventType.Response) {
+          this.uploading = false;
+          this.uploadComplete = true;
+        }
+      },
+      error: (error) =&gt; {
+        this.uploading = false;
+        this.uploadError = true;
+        this.errorMessage = &#39;Upload failed: &#39; + error.message;
+      }
+    });
+  }
+  
+  updateProgressLabel(): void {
+    this.uploadProgressLabel = `Uploading ${this.uploadProgress}%`;
+  }
+}
+</code></pre>
+<h2>Progress Bar with Custom Content</h2>
+<pre><code class="language-html">&lt;wa-progress-bar value=&quot;65&quot;&gt;
+  &lt;div slot=&quot;start&quot;&gt;
+    &lt;wa-icon name=&quot;download&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/div&gt;
+  Downloading 65%
+&lt;/wa-progress-bar&gt;
+</code></pre>
+<h2>Multiple Progress Bars for Different Tasks</h2>
+<pre><code class="language-html">&lt;div class=&quot;progress-container&quot;&gt;
+  &lt;div class=&quot;progress-item&quot;&gt;
+    &lt;div class=&quot;progress-label&quot;&gt;CPU Usage&lt;/div&gt;
+    &lt;wa-progress-bar 
+      value=&quot;85&quot; 
+      [indicatorColor]=&quot;&#39;#f44336&#39;&quot;&gt;
+    &lt;/wa-progress-bar&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;progress-item&quot;&gt;
+    &lt;div class=&quot;progress-label&quot;&gt;Memory Usage&lt;/div&gt;
+    &lt;wa-progress-bar 
+      value=&quot;60&quot; 
+      [indicatorColor]=&quot;&#39;#2196f3&#39;&quot;&gt;
+    &lt;/wa-progress-bar&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;progress-item&quot;&gt;
+    &lt;div class=&quot;progress-label&quot;&gt;Disk Usage&lt;/div&gt;
+    &lt;wa-progress-bar 
+      value=&quot;45&quot; 
+      [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;
+    &lt;/wa-progress-bar&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;progress-item&quot;&gt;
+    &lt;div class=&quot;progress-label&quot;&gt;Network&lt;/div&gt;
+    &lt;wa-progress-bar 
+      [indeterminate]=&quot;true&quot; 
+      [indicatorColor]=&quot;&#39;#ff9800&#39;&quot;&gt;
+    &lt;/wa-progress-bar&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

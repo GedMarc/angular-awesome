@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - LayoutFrame Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>LayoutFrame Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-layout-frame> provides layout frame functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the layoutFrame directive from the angular-awesome package:</p>
+        <pre>// Import the layoutFrame directive
+import { WaLayoutFrameDirective } from 'angular-awesome/layout-frame';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Frame Directive Examples</h1>
+<p>Frames are well-suited for images and image placeholders. Use <code>[waFrame]</code> to get typed hints and convenient options.</p>
+<h2>Basic frame</h2>
+<pre><code class="language-html">&lt;div waFrame style=&quot;max-inline-size: 20rem;&quot;&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Media card using flank + frame</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-flank&quot; style=&quot;--flank-size: 8rem;&quot;&gt;
+  &lt;div class=&quot;wa-frame wa-border-radius-m&quot;&gt;
+    &lt;img src=&quot;https://images.unsplash.com/photo-1523593288094-3ccfb6b2c192?q=20&quot; alt=&quot;&quot; /&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-flank:end&quot; style=&quot;--content-percentage: 70%&quot;&gt;
+    &lt;div class=&quot;wa-stack wa-gap-xs&quot;&gt;
+      &lt;h3&gt;The Lord of the Rings: The Fellowship of the Ring&lt;/h3&gt;
+      &lt;span&gt;J.R.R. Tolkien&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;wa-button id=&quot;options-menu&quot; appearance=&quot;plain&quot;&gt;
+      &lt;wa-icon name=&quot;ellipsis&quot; label=&quot;Options&quot;&gt;&lt;/wa-icon&gt;
+    &lt;/wa-button&gt;
+    &lt;wa-tooltip for=&quot;options-menu&quot;&gt;Options&lt;/wa-tooltip&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Grid of pet cards (landscape frames)</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-grid&quot; style=&quot;--min-column-size: 25ch;&quot;&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-frame:landscape&quot; slot=&quot;media&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?q=20&quot; alt=&quot;Grey and white tabby kitten&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;wa-stack wa-gap-xs&quot;&gt;
+      &lt;h3 class=&quot;wa-heading-s&quot;&gt;White-socks&lt;/h3&gt;
+      &lt;span class=&quot;wa-body-s&quot;&gt;Kitten &amp;bull; Male&lt;/span&gt;
+      &lt;div class=&quot;wa-flank:end wa-gap-xs&quot;&gt;
+        &lt;wa-button size=&quot;small&quot; appearance=&quot;filled&quot; variant=&quot;brand&quot;&gt;Adopt this pet&lt;/wa-button&gt;
+        &lt;wa-button id=&quot;fav-whitesocks&quot; appearance=&quot;plain&quot; size=&quot;small&quot;&gt;
+          &lt;wa-icon name=&quot;heart&quot; variant=&quot;regular&quot; label=&quot;Favorite&quot;&gt;&lt;/wa-icon&gt;
+        &lt;/wa-button&gt;
+        &lt;wa-tooltip for=&quot;fav-whitesocks&quot;&gt;Favorite&lt;/wa-tooltip&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-frame:landscape&quot; slot=&quot;header&quot;&gt;
+      &lt;div class=&quot;wa-stack wa-align-items-center wa-gap-xs wa-caption-m&quot;&gt;
+        &lt;wa-icon name=&quot;paw&quot;&gt;&lt;/wa-icon&gt;
+        &lt;span&gt;Photo coming soon&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;wa-stack wa-gap-xs&quot;&gt;
+      &lt;h3 class=&quot;wa-heading-s&quot;&gt;Bumpkin&lt;/h3&gt;
+      &lt;span class=&quot;wa-body-s&quot;&gt;Adult &amp;bull; Male&lt;/span&gt;
+      &lt;div class=&quot;wa-flank:end wa-gap-xs&quot;&gt;
+        &lt;wa-button size=&quot;small&quot; appearance=&quot;filled&quot; variant=&quot;brand&quot;&gt;Adopt this pet&lt;/wa-button&gt;
+        &lt;wa-button id=&quot;fav-bumpkin&quot; appearance=&quot;plain&quot; size=&quot;small&quot;&gt;
+          &lt;wa-icon name=&quot;heart&quot; variant=&quot;regular&quot; label=&quot;Favorite&quot;&gt;&lt;/wa-icon&gt;
+        &lt;/wa-button&gt;
+        &lt;wa-tooltip for=&quot;fav-bumpkin&quot;&gt;Favorite&lt;/wa-tooltip&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-frame:landscape&quot; slot=&quot;media&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1445499348736-29b6cdfc03b9?q=20&quot; alt=&quot;Diluted calico kitten&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;wa-stack wa-gap-xs&quot;&gt;
+      &lt;h3 class=&quot;wa-heading-s&quot;&gt;Swish-tail&lt;/h3&gt;
+      &lt;span class=&quot;wa-body-s&quot;&gt;Kitten &amp;bull; Female&lt;/span&gt;
+      &lt;div class=&quot;wa-flank:end wa-gap-xs&quot;&gt;
+        &lt;wa-button size=&quot;small&quot; appearance=&quot;filled&quot; variant=&quot;brand&quot;&gt;Adopt this pet&lt;/wa-button&gt;
+        &lt;wa-button id=&quot;fav-swishtail&quot; appearance=&quot;plain&quot; size=&quot;small&quot;&gt;
+          &lt;wa-icon name=&quot;heart&quot; variant=&quot;regular&quot; label=&quot;Favorite&quot;&gt;&lt;/wa-icon&gt;
+        &lt;/wa-button&gt;
+        &lt;wa-tooltip for=&quot;fav-swishtail&quot;&gt;Favorite&lt;/wa-tooltip&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-frame:landscape&quot; slot=&quot;media&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1517451330947-7809dead78d5?q=20&quot; alt=&quot;Short-haired tabby cat&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;wa-stack wa-gap-xs&quot;&gt;
+      &lt;h3 class=&quot;wa-heading-s&quot;&gt;Sharp-ears&lt;/h3&gt;
+      &lt;span class=&quot;wa-body-s&quot;&gt;Adult &amp;bull; Female&lt;/span&gt;
+      &lt;div class=&quot;wa-flank:end wa-gap-xs&quot;&gt;
+        &lt;wa-button size=&quot;small&quot; appearance=&quot;filled&quot; variant=&quot;brand&quot;&gt;Adopt this pet&lt;/wa-button&gt;
+        &lt;wa-button id=&quot;fav-sharpears&quot; appearance=&quot;plain&quot; size=&quot;small&quot;&gt;
+          &lt;wa-icon name=&quot;heart&quot; variant=&quot;regular&quot; label=&quot;Favorite&quot;&gt;&lt;/wa-icon&gt;
+        &lt;/wa-button&gt;
+        &lt;wa-tooltip for=&quot;fav-sharpears&quot;&gt;Favorite&lt;/wa-tooltip&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Aspect Ratio</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-grid&quot;&gt;
+  &lt;div class=&quot;wa-frame:landscape&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-frame:portrait&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-frame&quot; style=&quot;aspect-ratio: 4 / 3;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Border Radius</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-grid&quot;&gt;
+  &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-frame wa-border-radius-circle&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-frame&quot; style=&quot;border-radius: 50% 0%;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

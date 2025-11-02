@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - ProgressRing Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>ProgressRing Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-progress-ring> provides progress ring functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the progressRing directive from the angular-awesome package:</p>
+        <pre>// Import the progressRing directive
+import { WaProgressRingDirective } from 'angular-awesome/progress-ring';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Progress Ring Examples</h1>
+<p>Progress rings are used to show the progress of a determinate operation in a circular fashion.</p>
+<h2>Basic</h2>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;25&quot;&gt;&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Size</h2>
+<p>Use the <code>--size</code> custom property to set the diameter of the progress ring.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; style=&quot;--size: 200px;&quot;&gt;&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Track and Indicator Width</h2>
+<p>Use the <code>--track-width</code> and <code>--indicator-width</code> custom properties to set the width of the progress ring&#39;s track and indicator.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; style=&quot;--track-width: 6px; --indicator-width: 12px;&quot;&gt;&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Colors</h2>
+<p>To change the color, use the <code>--track-color</code> and <code>--indicator-color</code> custom properties.</p>
+<pre><code class="language-html">&lt;wa-progress-ring
+  value=&quot;50&quot;
+  style=&quot;
+    --track-color: pink;
+    --indicator-color: deeppink;
+  &quot;
+&gt;
+&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Labels</h2>
+<p>Use the default slot to show a label inside the progress ring.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; class=&quot;progress-ring-values&quot; style=&quot;margin-bottom: .5rem;&quot;&gt;50%&lt;/wa-progress-ring&gt;
+&lt;br /&gt;
+&lt;wa-button circle&gt;&lt;wa-icon name=&quot;minus&quot; variant=&quot;solid&quot; label=&quot;Decrease&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-button&gt;
+&lt;wa-button circle&gt;&lt;wa-icon name=&quot;plus&quot; variant=&quot;solid&quot; label=&quot;Increase&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-button&gt;
+
+&lt;script&gt;
+  const progressRing = document.querySelector(&#39;.progress-ring-values&#39;);
+  const subtractButton = progressRing.nextElementSibling.nextElementSibling;
+  const addButton = subtractButton.nextElementSibling;
+
+  addButton.addEventListener(&#39;click&#39;, () =&gt; {
+    const value = Math.min(100, (progressRing.value || 50) + 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+
+  subtractButton.addEventListener(&#39;click&#39;, () =&gt; {
+    const value = Math.max(0, (progressRing.value || 50) - 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+&lt;/script&gt;
+</code></pre>
+<hr>
+<h2>Angular bindings (alternative)</h2>
+<p>The same can be expressed using Angular inputs (mapped to CSS variables) and ngModel.</p>
+<pre><code class="language-html">&lt;!-- Different sizes via [size] input (maps to --size) --&gt;
+&lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;100px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;150px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;200px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+
+&lt;!-- Custom styling via inputs that map to CSS variables --&gt;
+&lt;wa-progress-ring value=&quot;40&quot; [trackWidth]=&quot;&#39;4px&#39;&quot; [trackColor]=&quot;&#39;#e0e0e0&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;65&quot; [indicatorWidth]=&quot;&#39;6px&#39;&quot; [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;80&quot; [indicatorTransitionDuration]=&quot;&#39;1.5s&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;70&quot; [size]=&quot;&#39;120px&#39;&quot; [trackWidth]=&quot;&#39;3px&#39;&quot; [trackColor]=&quot;&#39;#f5f5f5&#39;&quot; [indicatorWidth]=&quot;&#39;5px&#39;&quot; [indicatorColor]=&quot;&#39;#2196f3&#39;&quot; [indicatorTransitionDuration]=&quot;&#39;0.8s&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-progress-demo&#39;,
+  template: `
+    &lt;wa-progress-ring 
+      [value]=&quot;progressValue&quot; 
+      [label]=&quot;progressLabel&quot;
+      [size]=&quot;ringSize&quot;
+      [trackWidth]=&quot;trackWidth&quot;
+      [trackColor]=&quot;trackColor&quot;
+      [indicatorWidth]=&quot;indicatorWidth&quot;
+      [indicatorColor]=&quot;indicatorColor&quot;
+      [indicatorTransitionDuration]=&quot;transitionDuration&quot;
+      (focusEvent)=&quot;onFocus()&quot;
+      (blurEvent)=&quot;onBlur()&quot;&gt;
+    &lt;/wa-progress-ring&gt;
+    
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;button (click)=&quot;incrementProgress()&quot;&gt;Increment&lt;/button&gt;
+      &lt;button (click)=&quot;resetProgress()&quot;&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class ProgressRingDemoComponent {
+  progressValue = 25;
+  progressLabel = &#39;Loading...&#39;;
+  ringSize = &#39;120px&#39;;
+  trackWidth = &#39;4px&#39;;
+  trackColor = &#39;#e0e0e0&#39;;
+  indicatorWidth = &#39;4px&#39;;
+  indicatorColor = &#39;#2196f3&#39;;
+  transitionDuration = &#39;0.3s&#39;;
+  
+  incrementProgress(): void {
+    if (this.progressValue &lt; 100) {
+      this.progressValue += 10;
+      this.updateLabel();
+    }
+  }
+  
+  resetProgress(): void {
+    this.progressValue = 0;
+    this.updateLabel();
+  }
+  
+  updateLabel(): void {
+    this.progressLabel = `Loading ${this.progressValue}%`;
+  }
+  
+  onFocus(): void {
+    console.log(&#39;Progress ring focused&#39;);
+  }
+  
+  onBlur(): void {
+    console.log(&#39;Progress ring blurred&#39;);
+  }
+}
+</code></pre>
+<h2>Using with ngModel</h2>
+<pre><code class="language-html">&lt;form #progressForm=&quot;ngForm&quot;&gt;
+  &lt;wa-progress-ring 
+    [(ngModel)]=&quot;downloadProgress&quot; 
+    name=&quot;downloadProgress&quot;&gt;
+  &lt;/wa-progress-ring&gt;
+  
+  &lt;div&gt;Current progress: {{ downloadProgress }}%&lt;/div&gt;
+  
+  &lt;input 
+    type=&quot;range&quot; 
+    min=&quot;0&quot; 
+    max=&quot;100&quot; 
+    [(ngModel)]=&quot;downloadProgress&quot; 
+    name=&quot;progressSlider&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Real-World Example: File Upload with Progress Ring</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { HttpClient, HttpEventType } from &#39;@angular/common/http&#39;;
+
+@Component({
+  selector: &#39;app-file-upload&#39;,
+  template: `
+    &lt;div class=&quot;upload-container&quot;&gt;
+      &lt;h2&gt;File Upload&lt;/h2&gt;
+      
+      &lt;div class=&quot;upload-area&quot;&gt;
+        &lt;input 
+          type=&quot;file&quot; 
+          (change)=&quot;onFileSelected($event)&quot; 
+          [disabled]=&quot;uploading&quot;&gt;
+        
+        &lt;div class=&quot;progress-container&quot; *ngIf=&quot;uploading&quot;&gt;
+          &lt;wa-progress-ring 
+            [value]=&quot;uploadProgress&quot; 
+            [label]=&quot;uploadProgressLabel&quot;
+            [size]=&quot;&#39;150px&#39;&quot;
+            [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;
+            [indicatorTransitionDuration]=&quot;&#39;0.3s&#39;&quot;&gt;
+          &lt;/wa-progress-ring&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;status&quot; *ngIf=&quot;uploadComplete&quot;&gt;
+        Upload complete!
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;error&quot; *ngIf=&quot;uploadError&quot;&gt;
+        {{ errorMessage }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  `,
+  styles: [`
+    .upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .upload-area {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .progress-container {
+      margin-top: 20px;
+    }
+  `]
+})
+export class FileUploadComponent {
+  uploading = false;
+  uploadProgress = 0;
+  uploadProgressLabel = &#39;&#39;;
+  uploadComplete = false;
+  uploadError = false;
+  errorMessage = &#39;&#39;;
+  
+  constructor(private http: HttpClient) {}
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files &amp;&amp; fileInput.files.length &gt; 0) {
+      const file = fileInput.files[0];
+      this.uploadFile(file);
+    }
+  }
+  
+  uploadFile(file: File): void {
+    this.uploading = true;
+    this.uploadComplete = false;
+    this.uploadError = false;
+    this.uploadProgress = 0;
+    this.updateProgressLabel();
+    
+    const formData = new FormData();
+    formData.append(&#39;file&#39;, file);
+    
+    this.http.post(&#39;https://api.example.com/upload&#39;, formData, {
+      reportProgress: true,
+      observe: &#39;events&#39;
+    }).subscribe({
+      next: (event) =&gt; {
+        if (event.type === HttpEventType.UploadProgress) {
+          if (event.total) {
+            this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            this.updateProgressLabel();
+          }
+        } else if (event.type === HttpEventType.Response) {
+          this.uploading = false;
+          this.uploadComplete = true;
+        }
+      },
+      error: (error) =&gt; {
+        this.uploading = false;
+        this.uploadError = true;
+        this.errorMessage = &#39;Upload failed: &#39; + error.message;
+      }
+    });
+  }
+  
+  updateProgressLabel(): void {
+    this.uploadProgressLabel = `${this.uploadProgress}%`;
+  }
+}
+</code></pre>
+<h2>Multiple Progress Rings for Dashboard</h2>
+<pre><code class="language-html">&lt;div class=&quot;dashboard&quot;&gt;
+  &lt;div class=&quot;metric&quot;&gt;
+    &lt;h3&gt;CPU Usage&lt;/h3&gt;
+    &lt;wa-progress-ring 
+      value=&quot;85&quot; 
+      [size]=&quot;&#39;100px&#39;&quot; 
+      [indicatorColor]=&quot;&#39;#f44336&#39;&quot; 
+      label=&quot;85%&quot;&gt;
+    &lt;/wa-progress-ring&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;metric&quot;&gt;
+    &lt;h3&gt;Memory&lt;/h3&gt;
+    &lt;wa-progress-ring 
+      value=&quot;60&quot; 
+      [size]=&quot;&#39;100px&#39;&quot; 
+      [indicatorColor]=&quot;&#39;#2196f3&#39;&quot; 
+      label=&quot;60%&quot;&gt;
+    &lt;/wa-progress-ring&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;metric&quot;&gt;
+    &lt;h3&gt;Disk Space&lt;/h3&gt;
+    &lt;wa-progress-ring 
+      value=&quot;45&quot; 
+      [size]=&quot;&#39;100px&#39;&quot; 
+      [indicatorColor]=&quot;&#39;#4caf50&#39;&quot; 
+      label=&quot;45%&quot;&gt;
+    &lt;/wa-progress-ring&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;metric&quot;&gt;
+    &lt;h3&gt;Network&lt;/h3&gt;
+    &lt;wa-progress-ring 
+      value=&quot;30&quot; 
+      [size]=&quot;&#39;100px&#39;&quot; 
+      [indicatorColor]=&quot;&#39;#ff9800&#39;&quot; 
+      label=&quot;30%&quot;&gt;
+    &lt;/wa-progress-ring&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Progress Ring with Custom Content</h2>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;65&quot; [size]=&quot;&#39;150px&#39;&quot;&gt;
+  &lt;div style=&quot;display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;&quot;&gt;
+    &lt;strong style=&quot;font-size: 24px;&quot;&gt;65%&lt;/strong&gt;
+    &lt;span&gt;Complete&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Animated Progress Ring</h2>
+<pre><code class="language-typescript">import { Component, OnInit } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-animated-progress&#39;,
+  template: `
+    &lt;wa-progress-ring 
+      [value]=&quot;currentValue&quot; 
+      [size]=&quot;&#39;150px&#39;&quot; 
+      [indicatorColor]=&quot;&#39;#673ab7&#39;&quot; 
+      [indicatorTransitionDuration]=&quot;&#39;0.5s&#39;&quot;&gt;
+      &lt;div class=&quot;content&quot;&gt;
+        &lt;strong&gt;{{ currentValue }}%&lt;/strong&gt;
+      &lt;/div&gt;
+    &lt;/wa-progress-ring&gt;
+  `,
+  styles: [`
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      font-size: 24px;
+    }
+  `]
+})
+export class AnimatedProgressComponent implements OnInit {
+  currentValue = 0;
+  
+  ngOnInit(): void {
+    this.animateProgress();
+  }
+  
+  animateProgress(): void {
+    const interval = setInterval(() =&gt; {
+      if (this.currentValue &lt; 100) {
+        this.currentValue += 1;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
+  }
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Radio Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Radio Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-radio> provides radio functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the radio directive from the angular-awesome package:</p>
+        <pre>// Import the radio directive
+import { WaRadioDirective } from 'angular-awesome/radio';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Radio Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-radio-group label=&quot;Select an option&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>With Different Orientations</h2>
+<pre><code class="language-html">&lt;!-- Vertical orientation (default) --&gt;
+&lt;wa-radio-group label=&quot;Vertical Radio Group&quot; orientation=&quot;vertical&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Horizontal orientation --&gt;
+&lt;wa-radio-group label=&quot;Horizontal Radio Group&quot; orientation=&quot;horizontal&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Different Sizes</h2>
+<pre><code class="language-html">&lt;wa-radio-group label=&quot;Small Radio Group&quot; size=&quot;small&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;wa-radio-group label=&quot;Medium Radio Group&quot; size=&quot;medium&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;wa-radio-group label=&quot;Large Radio Group&quot; size=&quot;large&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>With Initial Value</h2>
+<pre><code class="language-html">&lt;wa-radio-group label=&quot;Select an option&quot; value=&quot;option2&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>With Hint</h2>
+<pre><code class="language-html">&lt;wa-radio-group 
+  label=&quot;Select an option&quot; 
+  hint=&quot;Please choose one of the following options&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Using HTML in hint --&gt;
+&lt;wa-radio-group label=&quot;Select an option&quot;&gt;
+  &lt;div slot=&quot;hint&quot;&gt;
+    Please choose &lt;strong&gt;one&lt;/strong&gt; of the following options
+  &lt;/div&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Required Radio Group</h2>
+<pre><code class="language-html">&lt;wa-radio-group 
+  label=&quot;Select an option&quot; 
+  [required]=&quot;true&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Disabled States</h2>
+<pre><code class="language-html">&lt;!-- Disabled radio group --&gt;
+&lt;wa-radio-group 
+  label=&quot;Disabled Radio Group&quot; 
+  [disabled]=&quot;true&quot; 
+  value=&quot;option1&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Individual disabled radio --&gt;
+&lt;wa-radio-group label=&quot;Partially Disabled Group&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot; [disabled]=&quot;true&quot;&gt;Option 2 (Disabled)&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Custom gap between radio buttons --&gt;
+&lt;wa-radio-group 
+  label=&quot;Custom Gap Radio Group&quot; 
+  [styleRadiosGap]=&quot;&#39;20px&#39;&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Custom radio styling --&gt;
+&lt;wa-radio-group label=&quot;Custom Styled Radios&quot;&gt;
+  &lt;wa-radio 
+    value=&quot;option1&quot; 
+    [styleBackgroundColor]=&quot;&#39;#f8f9fa&#39;&quot;
+    [styleBackgroundColorChecked]=&quot;&#39;#4caf50&#39;&quot;
+    [styleBorderColor]=&quot;&#39;#ced4da&#39;&quot;
+    [styleBorderColorChecked]=&quot;&#39;#4caf50&#39;&quot;
+    [styleCheckedIconColor]=&quot;&#39;#ffffff&#39;&quot;&gt;
+    Custom Styled Option
+  &lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Regular Option&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Custom checked icon scale --&gt;
+&lt;wa-radio-group label=&quot;Custom Checked Icon Scale&quot;&gt;
+  &lt;wa-radio 
+    value=&quot;small&quot; 
+    [styleCheckedIconScale]=&quot;&#39;0.6&#39;&quot;&gt;
+    Small Check Icon
+  &lt;/wa-radio&gt;
+  &lt;wa-radio 
+    value=&quot;medium&quot; 
+    [styleCheckedIconScale]=&quot;&#39;0.8&#39;&quot;&gt;
+    Medium Check Icon
+  &lt;/wa-radio&gt;
+  &lt;wa-radio 
+    value=&quot;large&quot; 
+    [styleCheckedIconScale]=&quot;&#39;1.0&#39;&quot;&gt;
+    Large Check Icon
+  &lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Radio Buttons</h2>
+<pre><code class="language-html">&lt;wa-radio-group label=&quot;Radio Buttons&quot;&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- With prefix and suffix --&gt;
+&lt;wa-radio-group label=&quot;Radio Buttons with Icons&quot;&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;home&quot; [withPrefix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;home&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Home
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;settings&quot; [withPrefix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;settings&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Settings
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot; value=&quot;profile&quot; [withPrefix]=&quot;true&quot; [withSuffix]=&quot;true&quot;&gt;
+    &lt;wa-icon name=&quot;user&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+    Profile
+    &lt;wa-badge slot=&quot;end&quot;&gt;New&lt;/wa-badge&gt;
+  &lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+
+&lt;!-- Custom styled radio buttons --&gt;
+&lt;wa-radio-group label=&quot;Custom Styled Radio Buttons&quot;&gt;
+  &lt;wa-radio appearance=&quot;button&quot;
+    value=&quot;option1&quot; 
+    [styleIndicatorColor]=&quot;&#39;#4caf50&#39;&quot;
+    [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
+    Green Option
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot;
+    value=&quot;option2&quot; 
+    [styleIndicatorColor]=&quot;&#39;#2196f3&#39;&quot;
+    [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
+    Blue Option
+  &lt;/wa-radio&gt;
+  &lt;wa-radio appearance=&quot;button&quot;
+    value=&quot;option3&quot; 
+    [styleIndicatorColor]=&quot;&#39;#f44336&#39;&quot;
+    [styleIndicatorWidth]=&quot;&#39;3px&#39;&quot;&gt;
+    Red Option
+  &lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-html">&lt;wa-radio-group 
+  label=&quot;Interactive Radio Group&quot; 
+  (input)=&quot;onRadioInput($event)&quot; 
+  (change)=&quot;onRadioChange($event)&quot; 
+  (focusEvent)=&quot;onRadioFocus()&quot; 
+  (blurEvent)=&quot;onRadioBlur()&quot;
+  (waInvalid)=&quot;onRadioInvalid($event)&quot;&gt;
+  &lt;wa-radio value=&quot;option1&quot;&gt;Option 1&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option2&quot;&gt;Option 2&lt;/wa-radio&gt;
+  &lt;wa-radio value=&quot;option3&quot;&gt;Option 3&lt;/wa-radio&gt;
+&lt;/wa-radio-group&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+onRadioInput(event: Event): void {
+  console.log(&#39;Radio input:&#39;, (event.target as HTMLInputElement).value);
+}
+
+onRadioChange(event: Event): void {
+  console.log(&#39;Radio change:&#39;, (event.target as HTMLInputElement).value);
+}
+
+onRadioFocus(): void {
+  console.log(&#39;Radio group focused&#39;);
+}
+
+onRadioBlur(): void {
+  console.log(&#39;Radio group blurred&#39;);
+}
+
+onRadioInvalid(event: CustomEvent): void {
+  console.log(&#39;Radio group invalid:&#39;, event.detail);
+}
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-radio-demo&#39;,
+  template: `
+    &lt;wa-radio-group 
+      [label]=&quot;groupLabel&quot; 
+      [value]=&quot;selectedValue&quot; 
+      [orientation]=&quot;groupOrientation&quot; 
+      [size]=&quot;groupSize&quot; 
+      [required]=&quot;isRequired&quot; 
+      [disabled]=&quot;isDisabled&quot;
+      (change)=&quot;onSelectionChange($event)&quot;&gt;
+      &lt;wa-radio *ngFor=&quot;let option of options&quot; [value]=&quot;option.value&quot; [disabled]=&quot;option.disabled&quot;&gt;
+        {{ option.label }}
+      &lt;/wa-radio&gt;
+    &lt;/wa-radio-group&gt;
+    
+    &lt;div&gt;Selected value: {{ selectedValue }}&lt;/div&gt;
+  `
+})
+export class RadioDemoComponent {
+  groupLabel = &#39;Select an option&#39;;
+  selectedValue = &#39;option1&#39;;
+  groupOrientation = &#39;vertical&#39;;
+  groupSize = &#39;medium&#39;;
+  isRequired = true;
+  isDisabled = false;
+  
+  options = [
+    { value: &#39;option1&#39;, label: &#39;Option 1&#39;, disabled: false },
+    { value: &#39;option2&#39;, label: &#39;Option 2&#39;, disabled: false },
+    { value: &#39;option3&#39;, label: &#39;Option 3&#39;, disabled: true }
+  ];
+  
+  onSelectionChange(event: Event): void {
+    this.selectedValue = (event.target as HTMLInputElement).value;
+    console.log(&#39;Selection changed:&#39;, this.selectedValue);
+  }
+}
+</code></pre>
+<h2>Using with ngModel</h2>
+<pre><code class="language-html">&lt;form #radioForm=&quot;ngForm&quot;&gt;
+  &lt;wa-radio-group 
+    label=&quot;Select your favorite color&quot; 
+    name=&quot;favoriteColor&quot; 
+    [(ngModel)]=&quot;favoriteColor&quot; 
+    required&gt;
+    &lt;wa-radio value=&quot;red&quot;&gt;Red&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;green&quot;&gt;Green&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;blue&quot;&gt;Blue&lt;/wa-radio&gt;
+  &lt;/wa-radio-group&gt;
+  
+  &lt;div&gt;Your favorite color is: {{ favoriteColor }}&lt;/div&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;radioForm.invalid&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Real-World Example: Survey Form</h2>
+<pre><code class="language-html">&lt;form #surveyForm=&quot;ngForm&quot; (ngSubmit)=&quot;submitSurvey()&quot;&gt;
+  &lt;h2&gt;Customer Satisfaction Survey&lt;/h2&gt;
+  
+  &lt;wa-radio-group 
+    label=&quot;How would you rate our service?&quot; 
+    name=&quot;serviceRating&quot; 
+    [(ngModel)]=&quot;survey.serviceRating&quot; 
+    required&gt;
+    &lt;wa-radio value=&quot;excellent&quot;&gt;Excellent&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;good&quot;&gt;Good&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;average&quot;&gt;Average&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;poor&quot;&gt;Poor&lt;/wa-radio&gt;
+  &lt;/wa-radio-group&gt;
+  
+  &lt;wa-radio-group 
+    label=&quot;How likely are you to recommend us to a friend?&quot; 
+    name=&quot;recommendation&quot; 
+    [(ngModel)]=&quot;survey.recommendation&quot; 
+    required&gt;
+    &lt;wa-radio value=&quot;veryLikely&quot;&gt;Very Likely&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;likely&quot;&gt;Likely&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;neutral&quot;&gt;Neutral&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;unlikely&quot;&gt;Unlikely&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;veryUnlikely&quot;&gt;Very Unlikely&lt;/wa-radio&gt;
+  &lt;/wa-radio-group&gt;
+  
+  &lt;wa-radio-group 
+    label=&quot;Which feature do you use most often?&quot; 
+    name=&quot;mostUsedFeature&quot; 
+    [(ngModel)]=&quot;survey.mostUsedFeature&quot; 
+    required&gt;
+    &lt;wa-radio value=&quot;feature1&quot;&gt;Feature 1&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;feature2&quot;&gt;Feature 2&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;feature3&quot;&gt;Feature 3&lt;/wa-radio&gt;
+    &lt;wa-radio value=&quot;other&quot;&gt;Other&lt;/wa-radio&gt;
+  &lt;/wa-radio-group&gt;
+  
+  &lt;wa-textarea 
+    label=&quot;Additional Comments&quot; 
+    name=&quot;comments&quot; 
+    [(ngModel)]=&quot;survey.comments&quot;&gt;
+  &lt;/wa-textarea&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;surveyForm.invalid&quot;&gt;Submit Survey&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

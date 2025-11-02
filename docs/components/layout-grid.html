@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - LayoutGrid Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>LayoutGrid Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle"><wa-layout-grid> provides layout grid functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the layoutGrid directive from the angular-awesome package:</p>
+        <pre>// Import the layoutGrid directive
+import { WaLayoutGridDirective } from 'angular-awesome/layout-grid';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Grid Directive Examples</h1>
+<p>Use <code>[waGrid]</code> to apply the Web Awesome grid primitive with typed options for sizing. Combine with <code>[waGap]</code> for spacing. Use <code>[waGridSpan]</code> on a child to span all columns.</p>
+<h2>Basic Grid</h2>
+<pre><code class="language-html">&lt;div waGrid&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Flower cards</h2>
+<pre><code class="language-html">&lt;div waGrid&gt;
+  &lt;div class=&quot;wa-stack wa-gap-s&quot;&gt;
+    &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1520763185298-1b434c919102?q=20&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    &lt;h3 class=&quot;wa-heading-s&quot;&gt;Tulip&lt;/h3&gt;
+    &lt;em&gt;Tulipa gesneriana&lt;/em&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-stack wa-gap-s&quot;&gt;
+    &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1591767134492-338e62f7b5a2?q=20&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    &lt;h3 class=&quot;wa-heading-s&quot;&gt;Peony&lt;/h3&gt;
+    &lt;em&gt;Paeonia officinalis&lt;/em&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-stack wa-gap-s&quot;&gt;
+    &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1590872000386-4348c6393115?q=20&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    &lt;h3 class=&quot;wa-heading-s&quot;&gt;Poppy&lt;/h3&gt;
+    &lt;em&gt;Papaver rhoeas&lt;/em&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-stack wa-gap-s&quot;&gt;
+    &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1516723338795-324c7c33f700?q=20&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    &lt;h3 class=&quot;wa-heading-s&quot;&gt;Sunflower&lt;/h3&gt;
+    &lt;em&gt;Helianthus annuus&lt;/em&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-stack wa-gap-s&quot;&gt;
+    &lt;div class=&quot;wa-frame wa-border-radius-l&quot;&gt;
+      &lt;img src=&quot;https://images.unsplash.com/photo-1563601841845-74a0a8ab7c8a?q=20&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    &lt;h3 class=&quot;wa-heading-s&quot;&gt;Daisy&lt;/h3&gt;
+    &lt;em&gt;Bellis perennis&lt;/em&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Metrics cards (custom min column size)</h2>
+<pre><code class="language-html">&lt;div waGrid [minColumnSize]=&quot;&#39;30ch&#39;&quot;&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-flank&quot;&gt;
+      &lt;wa-avatar shape=&quot;rounded&quot;&gt;
+        &lt;wa-icon slot=&quot;icon&quot; name=&quot;globe&quot;&gt;&lt;/wa-icon&gt;
+      &lt;/wa-avatar&gt;
+      &lt;div class=&quot;wa-stack wa-gap-3xs&quot;&gt;
+        &lt;span class=&quot;wa-caption-s&quot;&gt;Population (Zion)&lt;/span&gt;
+        &lt;span class=&quot;wa-cluster wa-gap-xs&quot;&gt;
+          &lt;span class=&quot;wa-heading-xl&quot;&gt;251,999&lt;/span&gt;
+          &lt;wa-badge variant=&quot;danger&quot;&gt;-3%&amp;nbsp;&lt;wa-icon name=&quot;arrow-trend-down&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-badge&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-flank&quot;&gt;
+      &lt;wa-avatar shape=&quot;rounded&quot;&gt;
+        &lt;wa-icon slot=&quot;icon&quot; name=&quot;brain-circuit&quot;&gt;&lt;/wa-icon&gt;
+      &lt;/wa-avatar&gt;
+      &lt;div class=&quot;wa-stack wa-gap-3xs&quot;&gt;
+        &lt;span class=&quot;wa-caption-s&quot;&gt;Minds Freed&lt;/span&gt;
+        &lt;span class=&quot;wa-cluster wa-gap-xs&quot;&gt;
+          &lt;span class=&quot;wa-heading-xl&quot;&gt;0.36%&lt;/span&gt;
+          &lt;wa-badge variant=&quot;success&quot;&gt;+0.03%&amp;nbsp;&lt;wa-icon name=&quot;arrow-trend-up&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-badge&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-flank&quot;&gt;
+      &lt;wa-avatar shape=&quot;rounded&quot;&gt;
+        &lt;wa-icon slot=&quot;icon&quot; name=&quot;robot&quot;&gt;&lt;/wa-icon&gt;
+      &lt;/wa-avatar&gt;
+      &lt;div class=&quot;wa-stack wa-gap-3xs&quot;&gt;
+        &lt;span class=&quot;wa-caption-s&quot;&gt;Agents Discovered&lt;/span&gt;
+        &lt;span class=&quot;wa-cluster wa-gap-xs&quot;&gt;
+          &lt;span class=&quot;wa-heading-xl&quot;&gt;3&lt;/span&gt;
+          &lt;wa-badge variant=&quot;neutral&quot;&gt;±0%&amp;nbsp;&lt;wa-icon name=&quot;wave-triangle&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-badge&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+  &lt;wa-card&gt;
+    &lt;div class=&quot;wa-flank&quot;&gt;
+      &lt;wa-avatar shape=&quot;rounded&quot;&gt;
+        &lt;wa-icon slot=&quot;icon&quot; name=&quot;spaghetti-monster-flying&quot;&gt;&lt;/wa-icon&gt;
+      &lt;/wa-avatar&gt;
+      &lt;div class=&quot;wa-stack wa-gap-3xs&quot;&gt;
+        &lt;span class=&quot;wa-caption-s&quot;&gt;Sentinels Controlled&lt;/span&gt;
+        &lt;span class=&quot;wa-cluster wa-gap-xs&quot;&gt;
+          &lt;span class=&quot;wa-heading-xl&quot;&gt;208&lt;/span&gt;
+          &lt;wa-badge variant=&quot;success&quot;&gt;+1%&amp;nbsp;&lt;wa-icon name=&quot;arrow-trend-up&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-badge&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/wa-card&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  wa-badge &gt; wa-icon { color: color-mix(in oklab, currentColor, transparent 40%); }
+&lt;/style&gt;
+</code></pre>
+<h2>Sizing</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;div waGrid [minColumnSize]=&quot;&#39;200px&#39;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div waGrid [minColumnSize]=&quot;&#39;6rem&#39;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Gap</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;div waGrid [waGap]=&quot;&#39;2xs&#39;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div waGrid [waGap]=&quot;&#39;2xl&#39;&quot;&gt;
+    &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Span Grid</h2>
+<pre><code class="language-html">&lt;div waGrid&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div waGridSpan&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Variant Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Variant Component <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
+                <p class="subtitle">- Purpose: make it easy to toggle color variants on arbitrary elements, mirroring component variant behavior.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the variant directive from the angular-awesome package:</p>
+        <pre>// Import the variant directive
+import { WaVariantDirective } from 'angular-awesome/variant';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Color Variants Utility</h1>
+<p>Some Web Awesome components, like <code>&lt;wa-button&gt;</code>, allow you to change the color by using a <code>variant</code> attribute. You can create the same effect on any element by using the color variant utility classes, or via the Angular helper directive:</p>
+<ul>
+<li><code>.wa-brand</code></li>
+<li><code>.wa-neutral</code></li>
+<li><code>.wa-success</code></li>
+<li><code>.wa-warning</code></li>
+<li><code>.wa-danger</code></li>
+</ul>
+<p>With Angular, prefer the <code>waVariant</code> directive for a type-safe API:</p>
+<pre><code class="language-html">&lt;p [waVariant]=&quot;&#39;brand&#39;&quot;&gt;Brand variant via directive&lt;/p&gt;
+&lt;p [waVariant]=&quot;&#39;success&#39;&quot;&gt;Success variant via directive&lt;/p&gt;
+&lt;p waWarning&gt;Warning variant via shorthand&lt;/p&gt;
+</code></pre>
+<p>These classes define generic color tokens modeled after Semantic Colors without the group identifier (brand, neutral, success, warning, danger). Styles can use the generic tokens like <code>--wa-color-fill-loud</code> instead of <code>--wa-color-brand-fill-loud</code>.</p>
+<p>For example, a custom <code>.callout</code> class with color variants can be written as:</p>
+<pre><code class="language-html">&lt;p class=&quot;callout&quot;&gt;This is a callout.&lt;/p&gt;
+&lt;p class=&quot;callout&quot; waBrand&gt;This is a callout.&lt;/p&gt;
+&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;success&#39;&quot;&gt;This is a callout.&lt;/p&gt;
+&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;warning&#39;&quot;&gt;This is a callout.&lt;/p&gt;
+&lt;p class=&quot;callout&quot; [waVariant]=&quot;&#39;danger&#39;&quot;&gt;This is a callout.&lt;/p&gt;
+
+&lt;style&gt;
+  .callout {
+    background-color: var(--wa-color-fill-quiet);
+    border: 1px solid var(--wa-color-border-quiet);
+    color: var(--wa-color-on-quiet);
+    padding: var(--wa-space-m) var(--wa-space-l);
+  }
+&lt;/style&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
