@@ -63,7 +63,7 @@ export class WaCarouselDirective implements OnInit {
     this.setAttr('orientation', this.orientation);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'slideChange', (event: CustomEvent<{ index: number }>) => {
+    this.renderer.listen(nativeEl, 'wa-slide-change', (event: CustomEvent<{ index: number }>) => {
       this.waSlideChange.emit(event.detail);
     });
   }

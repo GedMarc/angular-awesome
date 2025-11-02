@@ -25,6 +25,18 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
         }
         .subtitle {
             font-size: 1.2rem;
@@ -149,8 +161,9 @@
 </head>
 <body>
     <header>
-        <h1>Angular Awesome Components</h1>
+        <h1>Angular Awesome Components <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
         <p class="subtitle">Complete list of components and directives</p>
+        <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
         <p>
             <a href="index.html">Home</a> |
             <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a> |
@@ -374,6 +387,70 @@
                     <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/input" target="_blank">Source</a>
                 </div>
             </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutAlign <span class="tag">Utility</span></h3>
+                <p><wa-layout-align> provides layout align functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-align.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-align" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutCluster <span class="tag">Utility</span></h3>
+                <p><wa-layout-cluster> provides layout cluster functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-cluster.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-cluster" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutFlank <span class="tag">Utility</span></h3>
+                <p><wa-layout-flank> provides layout flank functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-flank.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-flank" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutFrame <span class="tag">Utility</span></h3>
+                <p><wa-layout-frame> provides layout frame functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-frame.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-frame" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutGap <span class="tag">Utility</span></h3>
+                <p><wa-layout-gap> provides layout gap functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-gap.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-gap" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutGrid <span class="tag">Utility</span></h3>
+                <p><wa-layout-grid> provides layout grid functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-grid.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-grid" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutSplit <span class="tag">Utility</span></h3>
+                <p><wa-layout-split> provides layout split functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-split.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-split" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>LayoutStack <span class="tag">Utility</span></h3>
+                <p><wa-layout-stack> provides layout stack functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/layout-stack.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/layout-stack" target="_blank">Source</a>
+                </div>
+            </div>
             <div class="component-card" data-category="layout">
                 <h3>Page <span class="tag">Layout</span></h3>
                 <p>The <wa-page> component is a comprehensive layout container that structures web pages with rich support for slots and responsive navigation. The Angular wrapper must support full slot projection, input bindings for layout control, and imperative methods for toggling the navigation drawer.</p>
@@ -518,6 +595,14 @@
                     <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/tag" target="_blank">Source</a>
                 </div>
             </div>
+            <div class="component-card" data-category="utility">
+                <h3>Text <span class="tag">Utility</span></h3>
+                <p><wa-text> provides text functionality for Angular applications.</p>
+                <div class="links">
+                    <a href="components/text.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/text" target="_blank">Source</a>
+                </div>
+            </div>
             <div class="component-card" data-category="feedback">
                 <h3>Tooltip <span class="tag">Feedback</span></h3>
                 <p><wa-tooltip> provides tooltip functionality for Angular applications.</p>
@@ -532,6 +617,14 @@
                 <div class="links">
                     <a href="components/tree.html">Documentation</a>
                     <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/tree" target="_blank">Source</a>
+                </div>
+            </div>
+            <div class="component-card" data-category="utility">
+                <h3>Variant <span class="tag">Utility</span></h3>
+                <p>- Purpose: make it easy to toggle color variants on arbitrary elements, mirroring component variant behavior.</p>
+                <div class="links">
+                    <a href="components/variant.html">Documentation</a>
+                    <a href="https://github.com/GedMarc/angular-awesome/tree/master/src/directives/variant" target="_blank">Source</a>
                 </div>
             </div>
         </div>

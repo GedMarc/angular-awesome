@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaButtonDirective
@@ -22,12 +23,17 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
 export class WaButtonDirective implements OnInit, OnChanges {
   // Appearance inputs
   @Input() variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'inherit' | string;
-  @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | string;
+  /**
+   * Appearance can be a single token or a space-separated combination of tokens.
+   * Strictly typed to known tokens only.
+   */
+  @Input() appearance?: Appearance;
   @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
 
   // Boolean inputs
   @Input() pill?: boolean | string;
   @Input() withCaret?: boolean | string;
+  @Input() caret?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() loading?: boolean | string;
 
@@ -75,7 +81,7 @@ export class WaButtonDirective implements OnInit, OnChanges {
 
     // Set standard attributes
     this.setAttr('variant', this.variant);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('size', this.size);
     this.setAttr('type', this.type);
     this.setAttr('name', this.name);
@@ -97,6 +103,7 @@ export class WaButtonDirective implements OnInit, OnChanges {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('pill', this.pill);
     this.setBooleanAttr('with-caret', this.withCaret);
+    this.setBooleanAttr('caret', this.caret);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('loading', this.loading);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);
@@ -107,7 +114,7 @@ export class WaButtonDirective implements OnInit, OnChanges {
     // Set up event listeners
     this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
     this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'waInvalid', (event) => this.waInvalid.emit(event));
+    this.renderer.listen(nativeEl, 'wa-invalid', (event) => this.waInvalid.emit(event));
 
     // Handle data-dialog at click time to avoid timing issues with Angular rendering
     this.renderer.listen(nativeEl, 'click', (event: Event) => {
@@ -202,9 +209,10 @@ export class WaButtonDirective implements OnInit, OnChanges {
       this.setOrRemoveAttr('variant', this.variant);
     }
     if ('appearance' in changes) {
-      this.setOrRemoveAttr('appearance', this.appearance);
+      const norm = normalizeAppearance(this.appearance);
+      this.setOrRemoveAttr('appearance', norm);
       // Also set the property to support web components that react to property changes but not attribute mutations
-      (this.el.nativeElement as any).appearance = this.appearance ?? null;
+      (this.el.nativeElement as any).appearance = norm ?? null;
     }
     if ('size' in changes) {
       this.setOrRemoveAttr('size', this.size);

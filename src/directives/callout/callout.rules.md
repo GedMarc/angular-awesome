@@ -15,7 +15,7 @@ This wrapper ensures Angular compatibility with proper type coercion and slot pr
 | Input      | Type     | Binding                        | Description                                                                 |
 |------------|----------|--------------------------------|-----------------------------------------------------------------------------|
 | `variant`  | `'brand' \| 'neutral' \| 'success' \| 'warning' \| 'danger' \| 'inherit'` | `[variant]` or string | Sets the semantic color theme. Default is `'inherit'`.                     |
-| `appearance` | `'accent' \| 'filled' \| 'outlined' \| 'plain' \| 'outlined filled' \| 'outlined accent'` | `[appearance]` or string | Visual appearance. Can be a space-separated combination. Default: `'outlined filled'`. |
+| `appearance` | `'accent' \| 'filled' \| 'outlined' \| 'plain' \| 'filled-outlined' \| 'outlined accent'` | `[appearance]` or string | Visual appearance. Use hyphenated tokens. Default: `'filled-outlined'`. |
 | `size`     | `'small' \| 'medium' \| 'large' \| 'inherit'` | `[size]` or string      | Affects spacing and icon size. Default is `'inherit'`.                     |
 
 > ✅ All inputs must support both string literals and Angular bindings.
@@ -43,7 +43,7 @@ This wrapper ensures Angular compatibility with proper type coercion and slot pr
 ## Example
 
 ```html
-<wa-callout variant="success" appearance="outlined filled" size="medium">
+<wa-callout variant="success" appearance="filled-outlined" size="medium">
   <wa-icon slot="icon" name="circle-check" variant="regular"></wa-icon>
   <strong>Success!</strong><br />
   Your changes have been saved.

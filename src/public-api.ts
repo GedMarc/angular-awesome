@@ -61,6 +61,8 @@ export { WaTabGroupComponent as WaTabGroupDirective } from './directives/tab-gro
 export * from './directives/page/page.component';
 export * from './directives/popup/popup.directive';
 export * from './directives/popover/popover.directive';
+export * from './directives/intersection-observer/intersection-observer.directive';
+export * from './directives/mutation-observer/mutation-observer.directive';
 export * from './directives/layout-gap/layout-gap.directive';
 export * from './directives/layout-align/layout-align.directive';
 export * from './directives/layout-cluster/layout-cluster.directive';
@@ -69,3 +71,5 @@ export * from './directives/layout-frame/layout-frame.directive';
 export * from './directives/layout-grid/layout-grid.directive';
 export * from './directives/layout-split/layout-split.directive';
 export * from './directives/layout-stack/layout-stack.directive';
+export * from './directives/text/text.directive';
+export * from './directives/variant/variant.directive';

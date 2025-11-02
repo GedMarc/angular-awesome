@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { SizeToken, VariantToken } from '../../types/tokens';
 
 /**
  * WaButtonGroupDirective
@@ -44,8 +45,8 @@ export class WaButtonGroupDirective implements OnInit {
   @Input() label?: string;
 
   // Appearance inputs that are inherited by contained buttons
-  @Input() size?: 'small' | 'medium' | 'large' | string;
-  @Input() variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | string;
+  @Input() size?: SizeToken | string;
+  @Input() variant?: VariantToken | string;
   @Input() orientation?: 'horizontal' | 'vertical' | string;
 
   // Injected services

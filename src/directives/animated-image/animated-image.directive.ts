@@ -22,7 +22,7 @@ import { Directive, Renderer2 } from '@angular/core';
 export class WaAnimatedImageDirective implements OnInit {
   @Input() src!: string;
   @Input() alt!: string;
-  @Input() play?: boolean | null;
+  @Input() play?: boolean | string | null;
   @Input() iconSize?: string;
   @Input() controlBoxSize?: string;
 
@@ -38,7 +38,7 @@ export class WaAnimatedImageDirective implements OnInit {
 
     this.setAttr('src', this.src);
     this.setAttr('alt', this.alt);
-    if (this.play) this.renderer.setAttribute(nativeEl, 'play', '');
+    this.setBooleanAttr('play', this.play);
 
     this.setStyle('--icon-size', this.iconSize);
     this.setStyle('--control-box-size', this.controlBoxSize);
@@ -57,6 +57,12 @@ export class WaAnimatedImageDirective implements OnInit {
   private setStyle(name: string, value: string | null | undefined) {
     if (value != null) {
       this.el.nativeElement.style.setProperty(name, value);
+    }
+  }
+
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
+    if (value === true || value === 'true' || value === '') {
+      this.renderer.setAttribute(this.el.nativeElement, name, '');
     }
   }
 }

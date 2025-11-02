@@ -5,12 +5,13 @@ Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://
 
 
 
-📦 Version: `1.1.0`
+📦 Version: `3.0.0`
 
 ### Version Compatibility
-- Versions 1.0.0 to 1.0.3 match to Web Awesome 3.0.0-alpha.13
-- Versions 1.0.4 match to Web Awesome 3.0.0-beta.1
-- Versions 2.0.0+ match to Web Awesome 3.0.0-beta.4
+- Current: 1.2.x is synced with Web Awesome 3.0.0 (stable).
+- 1.1.x matched Web Awesome 3.0.0-beta6
+- 1.0.4 matched Web Awesome 3.0.0-beta.1
+- 1.0.0 – 1.0.3 matched Web Awesome 3.0.0-alpha.13
 
 ### Component Removals
 - Removed the experimental `<wa-code-demo>` component
@@ -19,9 +20,9 @@ Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://
 - `<wa-radio-button>` was dropped; use `<wa-radio appearance="button">` instead
 
 ### What's New in 1.1.0
-- Major version update to align with Web Awesome 3.0.0-beta.4
-- Added all component removals from Web Awesome beta
-- Updated documentation to reflect the latest changes
+- Alignment with Web Awesome 3.0.0-beta6 (preparing for Web Awesome 1.0.0)
+- Added all component removals from recent Web Awesome betas
+- Regenerated documentation and examples to reflect latest changes
 - General bug fixes and improvements
 
 ### What's New in 1.0.3
@@ -53,8 +54,10 @@ This library makes it easy to use Web Awesome's rich set of components in Angula
 
 ### 1. Install the package
 
+Angular Awesome requires Web Awesome as a peer dependency. Install both:
+
 ```bash
-npm install angular-awesome
+npm install angular-awesome web-awesome@^3.0.0
 ```
 
 Make sure you’ve installed `@angular/core`, `@angular/forms`, and `@angular/common` version 19.2 or later.

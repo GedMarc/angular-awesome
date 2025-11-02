@@ -11,6 +11,7 @@ import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
 
 @Component({
   selector: 'wa-textarea',
@@ -31,7 +32,7 @@ import {
     '[attr.rows]': 'rows',
     '[attr.resize]': 'resize',
     '[attr.size]': 'size',
-    '[attr.appearance]': 'appearance',
+    '[attr.appearance]': 'normalizedAppearance',
     '[attr.name]': 'name',
     '[attr.required]': 'required || null',
     '[attr.minlength]': 'minlength',
@@ -61,13 +62,16 @@ import {
   }
 })
 export class WaTextareaComponent implements ControlValueAccessor {
+  get normalizedAppearance(): string | undefined {
+    return normalizeAppearance(this.appearance as any);
+  }
   @Input() label?: string;
   @Input() hint?: string;
   @Input() placeholder?: string;
   @Input() rows?: number;
   @Input() resize?: 'none' | 'vertical' | 'horizontal' | 'both' | 'auto';
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit';
-  @Input() appearance?: 'filled' | 'outlined';
+  @Input() size?: SizeToken | string;
+  @Input() appearance?: Appearance | string;
   @Input() name?: string;
   @Input() required?: boolean;
   @Input() minlength?: number;

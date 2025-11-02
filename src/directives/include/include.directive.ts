@@ -43,7 +43,10 @@ export class WaIncludeDirective implements OnInit {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('allow-scripts', this.allowScripts);
 
-    // Set up event listeners
+    // Set up event listeners (use hyphenated custom events per WebAwesome)
+    this.renderer.listen(nativeEl, 'wa-load', () => this.waLoad.emit());
+    this.renderer.listen(nativeEl, 'wa-error', (event: CustomEvent<{ status: number }>) => this.waError.emit(event.detail));
+    // Backwards compatibility with legacy camelCase events
     this.renderer.listen(nativeEl, 'waLoad', () => this.waLoad.emit());
     this.renderer.listen(nativeEl, 'waError', (event: CustomEvent<{ status: number }>) => this.waError.emit(event.detail));
   }

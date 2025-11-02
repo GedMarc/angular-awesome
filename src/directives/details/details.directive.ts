@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaDetailsDirective
@@ -24,7 +25,7 @@ export class WaDetailsDirective implements OnInit {
   // Details inputs
   @Input() summary?: string;
   @Input() disabled?: boolean | string;
-  @Input() appearance?: 'filled' | 'outlined' | 'plain' | string;
+  @Input() appearance?: Appearance | string;
   @Input() open?: boolean | string;
   @Input() iconPosition?: 'start' | 'end' | string;
   @Input() name?: string;
@@ -51,7 +52,7 @@ export class WaDetailsDirective implements OnInit {
 
     // Set standard attributes
     this.setAttr('summary', this.summary);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('icon-position', this.iconPosition);
     this.setAttr('name', this.name);
 
@@ -66,7 +67,12 @@ export class WaDetailsDirective implements OnInit {
     if (this.hideDuration) this.setCssVar('--hide-duration', this.hideDuration);
     if (this.display) this.setCssVar('--display', this.display);
 
-    // Set up event listeners
+    // Set up event listeners (use hyphenated custom events per WebAwesome)
+    this.renderer.listen(nativeEl, 'wa-show', (event) => this.waShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-hide', (event) => this.waHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event) => this.waAfterHide.emit(event));
+    // Backwards compatibility with legacy non-hyphenated events
     this.renderer.listen(nativeEl, 'show', (event) => this.waShow.emit(event));
     this.renderer.listen(nativeEl, 'aftershow', (event) => this.waAfterShow.emit(event));
     this.renderer.listen(nativeEl, 'hide', (event) => this.waHide.emit(event));

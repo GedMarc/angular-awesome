@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaCheckboxDirective
@@ -47,7 +48,7 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
   @Input() indeterminate?: boolean | string;
 
   // Appearance inputs
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // CSS custom property inputs
   @Input() backgroundColor?: string;

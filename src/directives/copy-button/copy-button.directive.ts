@@ -72,7 +72,10 @@ export class WaCopyButtonDirective implements OnInit {
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
 
-    // Set up event listeners
+    // Set up event listeners (use hyphenated custom events per WebAwesome)
+    this.renderer.listen(nativeEl, 'wa-copy', () => this.waCopy.emit());
+    this.renderer.listen(nativeEl, 'wa-error', (event: CustomEvent<Error>) => this.waError.emit(event.detail));
+    // Backwards compatibility with legacy camelCase events
     this.renderer.listen(nativeEl, 'waCopy', () => this.waCopy.emit());
     this.renderer.listen(nativeEl, 'waError', (event: CustomEvent<Error>) => this.waError.emit(event.detail));
   }

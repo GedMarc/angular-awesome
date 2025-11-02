@@ -1,6 +1,6 @@
 {
   "name": "angular-awesome",
-  "version": "1.1.0",
+  "version": "3.0.0",
   "private": false,
   "description": "Angular wrapper for the web awesome framework",
   "keywords": [
@@ -24,7 +24,7 @@
     "test:checkbox": "node scripts/run-checkbox-tests.js",
     "test:bs:checkbox": "cross-env BS=true node scripts/run-checkbox-tests.js",
     "test:bs": "cross-env BS=true ng test --watch=false",
-    "test:bs:win": "cross-env BS=true BROWSERSTACK_USERNAME=marcmagon1 BROWSERSTACK_ACCESS_KEY=P7pnVbL7JBJ732Spjr39 ng test --watch=false",
+    "test:bs:win": "cross-env BS=true BROWSERSTACK_USERNAME= BROWSERSTACK_ACCESS_KEY= ng test --watch=false",
     "docs:generate": "node docs/generate-docs.js",
     "docs:build": "npm run docs:generate && ng build",
     "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add",

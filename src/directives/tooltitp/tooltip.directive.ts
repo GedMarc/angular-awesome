@@ -17,15 +17,15 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
 
 
   @Input() for!: string;
-  @Input() placement: string = 'top';
-  @Input() disabled = false;
-  @Input() distance = 8;
-  @Input() skidding = 0;
-  @Input() open = false;
-  @Input() showDelay = 150;
-  @Input() hideDelay = 0;
+  @Input() placement: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string = 'top';
+  @Input() disabled?: boolean | string;
+  @Input() distance: number | string = 8;
+  @Input() skidding: number | string = 0;
+  @Input() open?: boolean | string;
+  @Input() showDelay: number | string = 150;
+  @Input() hideDelay: number | string = 0;
   @Input() trigger: string = 'hover focus';
-  @Input() withoutArrow = false;
+  @Input() withoutArrow?: boolean | string;
 
   // Styling Inputs (mapped to CSS custom properties)
   @Input() set backgroundColor(value: string) {
@@ -70,26 +70,35 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   private setProperties(): void {
     this.setAttr('for', this.for);
     this.setAttr('placement', this.placement);
-    this.setAttr('disabled', this.disabled);
-    this.setAttr('distance', this.distance);
-    this.setAttr('skidding', this.skidding);
-    this.setAttr('open', this.open);
-    this.setAttr('show-delay', this.showDelay);
-    this.setAttr('hide-delay', this.hideDelay);
+    this.setBooleanAttr('disabled', this.disabled);
+    this.setNumericAttr('distance', this.distance);
+    this.setNumericAttr('skidding', this.skidding);
+    this.setBooleanAttr('open', this.open);
+    this.setNumericAttr('show-delay', this.showDelay);
+    this.setNumericAttr('hide-delay', this.hideDelay);
     this.setAttr('trigger', this.trigger);
-    this.setAttr('without-arrow', this.withoutArrow);
+    this.setBooleanAttr('without-arrow', this.withoutArrow);
   }
 
   private setAttr(name: string, value: any): void {
     if (value !== undefined && value !== null) {
-      if (typeof value === 'boolean') {
-        if (value) {
-          this.renderer.setAttribute(this.el, name, '');
-        } else {
-          this.renderer.removeAttribute(this.el, name);
-        }
-      } else {
-        this.renderer.setAttribute(this.el, name, value.toString());
+      this.renderer.setAttribute(this.el, name, String(value));
+    }
+  }
+
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined): void {
+    if (value === true || value === 'true' || value === '') {
+      this.renderer.setAttribute(this.el, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el, name);
+    }
+  }
+
+  private setNumericAttr(name: string, value: number | string | null | undefined): void {
+    if (value !== undefined && value !== null) {
+      const n = typeof value === 'string' ? parseFloat(value) : value;
+      if (!isNaN(n as number)) {
+        this.renderer.setAttribute(this.el, name, String(n));
       }
     }
   }

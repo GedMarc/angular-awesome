@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaSelectWrapperComponent
@@ -33,12 +34,12 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   @Input() label?: string;
   @Input() hint?: string;
   @Input() placeholder?: string;
-  @Input() appearance?: 'outlined' | 'filled' | string;
+  @Input() appearance?: Appearance | string;
   @Input() pill?: boolean | string;
   @Input() withClear?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() multiple?: boolean | string;
-  @Input() size?: 'small' | 'medium' | 'large' | string;
+  @Input() size?: SizeToken | string;
   @Input() placement?: 'top' | 'bottom' | string;
   @Input() required?: boolean | string;
   @Input() maxOptionsVisible?: number | string;
@@ -139,9 +140,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     this.applyInputs();
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.inputEvent.emit(event);
-      // Read current value from the WC, not event.target (shadow DOM safety)
+    const handleValueRead = () => {
       const el: any = this.el.nativeElement;
       // Prefer attribute first; fallback to property
       let raw: any = el?.getAttribute?.('value');
@@ -158,24 +157,24 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       }
       const mapped = this.mapFromKeys(newValue);
       this.onChange(mapped);
+    };
+
+    // Listen to both standard and WebAwesome custom events
+    this.renderer.listen(nativeEl, 'input', (event: Event) => {
+      this.inputEvent.emit(event);
+      handleValueRead();
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
-      const el: any = this.el.nativeElement;
-      let raw: any = el?.getAttribute?.('value');
-      if (raw == null) {
-        raw = el?.value ?? '';
-      }
-      let newValue: string | string[] = raw;
-      if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
-        if (Array.isArray(newValue)) {
-          // keep array
-        } else {
-          newValue = String(newValue).split(' ').filter(v => v !== '');
-        }
-      }
-      const mapped = this.mapFromKeys(newValue);
-      this.onChange(mapped);
+      handleValueRead();
+    });
+    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      this.inputEvent.emit(event as unknown as Event);
+      handleValueRead();
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      this.changeEvent.emit(event as unknown as Event);
+      handleValueRead();
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
@@ -234,7 +233,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     this.setAttr('label', this.label);
     this.setAttr('hint', this.hint);
     this.setAttr('placeholder', this.placeholder);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance as any));
     this.setAttr('size', this.size);
     this.setAttr('placement', this.placement);
     this.setAttr('form', this.form);

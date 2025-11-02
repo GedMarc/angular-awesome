@@ -57,6 +57,10 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
 
   // Event outputs
   @Output() waReposition = new EventEmitter<CustomEvent>();
+  @Output() waShow = new EventEmitter<Event>();
+  @Output() waAfterShow = new EventEmitter<Event>();
+  @Output() waHide = new EventEmitter<Event>();
+  @Output() waAfterHide = new EventEmitter<Event>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -101,25 +105,39 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
     this.setNumericAttr('auto-size-padding', this.autoSizePadding);
 
     // Set up event listeners
+    // Reposition events (support both legacy and hyphenated)
     this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
+      this.waReposition.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
       this.waReposition.emit(event);
     });
 
     // Listen for show/hide from the web component to toggle content rendering
     // Support both generic and Web Awesome-prefixed events for compatibility
-    this.unlistenShow = this.renderer.listen(nativeEl, 'show', () => {
+    this.unlistenShow = this.renderer.listen(nativeEl, 'show', (event: Event) => {
       this.renderContentFromFragment();
+      this.waShow.emit(event);
     });
-    const unlistenShowWa = this.renderer.listen(nativeEl, 'wa-show', () => {
+    const unlistenShowWa = this.renderer.listen(nativeEl, 'wa-show', (event: Event) => {
       this.renderContentFromFragment();
+      this.waShow.emit(event);
     });
 
-    this.unlistenHide = this.renderer.listen(nativeEl, 'hide', () => {
+    this.unlistenHide = this.renderer.listen(nativeEl, 'hide', (event: Event) => {
       this.captureContentIntoFragment();
+      this.waHide.emit(event);
     });
-    const unlistenHideWa = this.renderer.listen(nativeEl, 'wa-hide', () => {
+    const unlistenHideWa = this.renderer.listen(nativeEl, 'wa-hide', (event: Event) => {
       this.captureContentIntoFragment();
+      this.waHide.emit(event);
     });
+
+    // After show/hide
+    this.renderer.listen(nativeEl, 'aftershow', (event: Event) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'afterhide', (event: Event) => this.waAfterHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.waAfterHide.emit(event));
 
     // If the popover starts active or `active` input is set, render content BEFORE enabling active
     const wantsActive = (this.active === true || this.active === 'true' || this.active === '');

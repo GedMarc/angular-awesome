@@ -40,8 +40,8 @@
 <!-- Outlined appearance -->
 <wa-tag appearance="outlined">Outlined</wa-tag>
 
-<!-- Outlined filled appearance (default) -->
-<wa-tag appearance="outlined filled">Outlined Filled</wa-tag>
+<!-- Filled-outlined appearance (default) -->
+<wa-tag appearance="filled-outlined">Filled–Outlined</wa-tag>
 ```
 
 ## Sizes
@@ -152,7 +152,7 @@ export class TagDemoComponent {
   
   addTag() {
     const variants = ['brand', 'neutral', 'success', 'warning', 'danger'];
-    const appearances = ['accent', 'outlined accent', 'filled', 'outlined', 'outlined filled'];
+    const appearances = ['accent', 'outlined accent', 'filled', 'outlined', 'filled-outlined'];
     
     this.tags.push({
       id: this.tags.length + 1,

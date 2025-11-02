@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaCardDirective
@@ -21,7 +22,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
 })
 export class WaCardDirective implements OnInit {
   // Appearance inputs
-  @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | string;
+  @Input() appearance?: Appearance | string;
 
   // Boolean inputs
   @Input() withHeader?: boolean | string;
@@ -48,7 +49,7 @@ export class WaCardDirective implements OnInit {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-header', this.withHeader);

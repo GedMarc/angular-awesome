@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaSwitchDirective
@@ -33,7 +34,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
   // Core input attributes
   @Input() disabled?: boolean | string;
   @Input() hint?: string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // Style inputs
   @Input() backgroundColor?: string;

@@ -14,17 +14,27 @@ import {Input, ElementRef, OnInit, OnChanges, SimpleChanges, inject} from '@angu
  * - Supports custom styling via CSS variables
  */
 import { Directive,  Renderer2 } from '@angular/core';
+import { VariantToken, normalizeAppearance } from '../../types/tokens';
+
+// Badge-specific appearance tokens and combinations (Web Awesome 3.0.0)
+// Support hyphenated combined token as well as legacy space-delimited for backwards-compat
+// Prefer using '<base>-outlined' going forward (e.g., 'filled-outlined')
+type BadgeAppearanceBase = 'accent' | 'filled' | 'tinted' | 'outlined' | 'text' | 'plain';
+export type BadgeAppearance =
+  | BadgeAppearanceBase
+  | `${BadgeAppearanceBase} outlined` // legacy form
+  | `${BadgeAppearanceBase}-outlined`; // new form
 
 @Directive({
   selector: 'wa-badge',
   standalone: true
 })
 export class WaBadgeDirective implements OnInit, OnChanges {
-  @Input() variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
+  @Input() variant: VariantToken = 'inherit';
   // Allowed appearances derived from Java enum: lowercased, underscores replaced with spaces
-  @Input() appearance: 'accent' | 'filled' | 'tinted' | 'outlined' | 'text' | 'plain' | 'filled outlined' | 'accent outlined' | 'plain outlined' | 'tinted outlined' | 'text outlined' = 'accent';
-  @Input() pill?: boolean | null;
-  @Input() pulse?: boolean | null;
+  @Input() appearance: BadgeAppearance = 'accent';
+  @Input() pill?: boolean | string | null;
+  @Input() pulse?: boolean | string | null;
   @Input() fontSize?: string;
 
   @Input() backgroundColor?: string;
@@ -48,7 +58,7 @@ export class WaBadgeDirective implements OnInit, OnChanges {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.setAttr('variant', this.variant);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance as any));
     this.setBoolAttr('pill', this.pill);
     this.setBoolAttr('pulse', this.pulse);
 
@@ -69,9 +79,9 @@ export class WaBadgeDirective implements OnInit, OnChanges {
     }
   }
 
-  private setBoolAttr(name: string, value: boolean | null | undefined) {
+  private setBoolAttr(name: string, value: boolean | string | null | undefined) {
     const nativeEl = this.el.nativeElement as HTMLElement;
-    if (value) {
+    if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(nativeEl, name, '');
     } else {
       this.renderer.removeAttribute(nativeEl, name);

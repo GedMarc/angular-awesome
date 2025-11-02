@@ -24,7 +24,7 @@ import { WaTagDirective } from './tag.component';
 })
 class TestHostComponent {
   variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
-  appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'outlined filled' = 'outlined filled';
+  appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'filled-outlined' = 'filled-outlined';
   size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
   pill = false;
   removable = false;

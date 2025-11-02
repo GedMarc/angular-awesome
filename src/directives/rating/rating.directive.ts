@@ -1,4 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaRatingDirective
@@ -33,7 +34,7 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   @Input() precision?: number | string;
   @Input() readonly?: boolean | string;
   @Input() disabled?: boolean | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // Direct styling inputs
   @Input() color?: string;

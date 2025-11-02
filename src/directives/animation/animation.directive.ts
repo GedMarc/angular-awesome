@@ -21,7 +21,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
 export class WaAnimationDirective implements OnInit {
   // Standard animation inputs
   @Input() name?: string;
-  @Input() play?: boolean | string;
+  @Input() play?: boolean | string | null;
   @Input() delay?: number;
   @Input() duration?: number;
   @Input() easing?: string;
@@ -54,7 +54,7 @@ export class WaAnimationDirective implements OnInit {
 
     // Set standard attributes
     this.setAttr('name', this.name);
-    if (this.play) this.renderer.setAttribute(nativeEl, 'play', '');
+    this.setBooleanAttr('play', this.play);
     this.setAttr('delay', this.delay?.toString());
     this.setAttr('duration', this.duration?.toString());
     this.setAttr('easing', this.easing);
@@ -96,6 +96,15 @@ export class WaAnimationDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    }
+  }
+
+  /**
+   * Sets a boolean attribute on the native element if the value is truthy (true | 'true' | '')
+   */
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
+    if (value === true || value === 'true' || value === '') {
+      this.renderer.setAttribute(this.el.nativeElement, name, '');
     }
   }
 

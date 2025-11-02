@@ -70,18 +70,18 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
     this.applyInputs();
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'waShow', () => {
+    this.renderer.listen(nativeEl, 'wa-show', () => {
       this.waShow.emit();
     });
-    this.renderer.listen(nativeEl, 'waAfterShow', () => {
+    this.renderer.listen(nativeEl, 'wa-after-show', () => {
       this.waAfterShow.emit();
       // Ensure two-way binding reflects final state after show
       this.openChange.emit(true);
     });
-    this.renderer.listen(nativeEl, 'waHide', (event: CustomEvent<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>) => {
+    this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>) => {
       this.waHide.emit(event.detail);
     });
-    this.renderer.listen(nativeEl, 'waAfterHide', () => {
+    this.renderer.listen(nativeEl, 'wa-after-hide', () => {
       this.waAfterHide.emit();
       // Ensure two-way binding reflects final state after hide
       this.openChange.emit(false);

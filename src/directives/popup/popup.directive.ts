@@ -91,6 +91,9 @@ export class WaPopupDirective implements OnInit {
     this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
       this.waReposition.emit(event);
     });
+    this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
+      this.waReposition.emit(event);
+    });
   }
 
   /**

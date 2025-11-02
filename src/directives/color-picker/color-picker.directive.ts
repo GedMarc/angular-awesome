@@ -1,5 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, inject, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**ple
  * WaColorPickerDirective
@@ -37,7 +38,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
   @Input() withoutFormatToggle?: boolean | string;
   @Input() opacity?: boolean | string;
   @Input() uppercase?: boolean | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
   @Input() disabled?: boolean | string;
   @Input() required?: boolean | string;
   @Input() name?: string | null;
@@ -130,9 +131,28 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
       }
       this.onChange(current);
     });
+    // Also listen for custom web component events
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      this.change.emit(event as any);
+      const el: any = this.el.nativeElement;
+      let current = el?.getAttribute?.('value');
+      if (current == null) {
+        current = el?.value ?? null;
+      }
+      this.onChange(current);
+    });
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.input.emit(event);
       // Prefer reading attribute first (WC often reflects to attr), then property
+      const el: any = this.el.nativeElement;
+      let current = el?.getAttribute?.('value');
+      if (current == null) {
+        current = el?.value ?? null;
+      }
+      this.onChange(current);
+    });
+    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      this.input.emit(event as any);
       const el: any = this.el.nativeElement;
       let current = el?.getAttribute?.('value');
       if (current == null) {

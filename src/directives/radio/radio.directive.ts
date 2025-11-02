@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaRadioGroupDirective
@@ -33,7 +34,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
   @Input() hint?: string;
   @Input() name?: string;
   @Input() orientation?: 'horizontal' | 'vertical' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
   @Input() required?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() withLabel?: boolean | string;

@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaCalloutDirective
@@ -19,9 +20,9 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
 })
 export class WaCalloutDirective implements OnInit {
   // Appearance inputs
-  @Input() variant?: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' | string;
-  @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | 'outlined filled' | 'outlined accent' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() variant?: VariantToken | string;
+  @Input() appearance?: Appearance | string;
+  @Input() size?: SizeToken | string;
 
   // Injected services
   private el = inject(ElementRef);
@@ -32,7 +33,7 @@ export class WaCalloutDirective implements OnInit {
 
     // Set standard attributes
     this.setAttr('variant', this.variant);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('size', this.size);
   }
 

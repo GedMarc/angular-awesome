@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaInputDirective
@@ -35,7 +36,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
   @Input() type?: string;
   @Input() value?: string | number | null;
   @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
-  @Input() appearance?: 'filled' | 'outlined' | string;
+  @Input() appearance?: Appearance | string;
   @Input() pill?: boolean | string;
   @Input() label?: string;
   @Input() hint?: string;
@@ -92,7 +93,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
     this.setAttr('type', this.type);
     this.setAttr('value', this.value?.toString());
     this.setAttr('size', this.size);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('label', this.label);
     this.setAttr('hint', this.hint);
     this.setAttr('placeholder', this.placeholder);
@@ -150,11 +151,11 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
       this.blurEvent.emit(event);
       this.onTouched();
     });
-    this.renderer.listen(nativeEl, 'waClear', (event: CustomEvent) => {
+    this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
       this.waClear.emit(event);
       this.onChange('');
     });
-    this.renderer.listen(nativeEl, 'waInvalid', (event: CustomEvent) => {
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
       this.waInvalid.emit(event);
     });
   }

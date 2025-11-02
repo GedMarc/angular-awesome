@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaSliderDirective
@@ -51,7 +52,7 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   @Input() minValue?: number;
   @Input() maxValue?: number;
   @Input() orientation?: 'horizontal' | 'vertical' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | string;
+  @Input() size?: SizeToken | string;
   @Input() indicatorOffset?: number;
   @Input() withMarkers?: boolean | string;
   @Input() withTooltip?: boolean | string;

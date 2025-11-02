@@ -25,6 +25,18 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
         }
         .subtitle {
             font-size: 1.2rem;
@@ -149,8 +161,9 @@
 </head>
 <body>
     <header>
-        <h1>Angular Awesome Components</h1>
+        <h1>Angular Awesome Components <span class="version-badge">Synced with Web Awesome 3.0.0-beta6</span></h1>
         <p class="subtitle">Complete list of components and directives</p>
+        <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
         <p>
             <a href="index.html">Home</a> |
             <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a> |
