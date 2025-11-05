@@ -16,11 +16,11 @@ import {
   standalone: true
 })
 export class WaTreeItemDirective implements OnChanges {
-  // Inputs
-  @Input() expanded = false;
-  @Input() selected = false;
-  @Input() disabled = false;
-  @Input() lazy = false;
+  // Inputs (boolean-like inputs accept boolean or string for plain attribute support)
+  @Input() expanded: boolean | string = false;
+  @Input() selected: boolean | string = false;
+  @Input() disabled: boolean | string = false;
+  @Input() lazy: boolean | string = false;
 
   /** Optional data payload bound to this tree item. Used for two-way binding via ngModel */
   @Input() data: any;
@@ -46,9 +46,13 @@ export class WaTreeItemDirective implements OnChanges {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  private isTruthy(value: boolean | string | null | undefined): boolean {
+    return value === '' || value === true || value === 'true';
+  }
+
   @HostListener('wa-expand')
   onExpand() {
-    if (!this.disabled) {
+    if (!this.isTruthy(this.disabled)) {
       this.expand.emit();
     }
   }
@@ -60,7 +64,7 @@ export class WaTreeItemDirective implements OnChanges {
 
   @HostListener('wa-collapse')
   onCollapse() {
-    if (!this.disabled) {
+    if (!this.isTruthy(this.disabled)) {
       this.collapse.emit();
     }
   }
@@ -72,7 +76,7 @@ export class WaTreeItemDirective implements OnChanges {
 
   @HostListener('wa-lazy-load')
   onLazyLoad() {
-    if (this.lazy && !this.disabled) {
+    if (this.isTruthy(this.lazy) && !this.isTruthy(this.disabled)) {
       this.lazyLoad.emit();
     }
   }
@@ -119,8 +123,9 @@ export class WaTreeItemDirective implements OnChanges {
    * Sets a boolean attribute on the native element if the value is truthy
    * For boolean attributes, the presence of the attribute (with empty value) indicates true
    */
-  private setBooleanAttr(name: string, value: boolean) {
-    if (value) {
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
+    const truthy = value === '' || value === true || value === 'true';
+    if (truthy) {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);

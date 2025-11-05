@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { WaSelectWrapperComponent, WaOptionComponent } from './select.directive';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
       [placement]="placement"
       [required]="required"
       [maxOptionsVisible]="maxOptionsVisible"
+      [maxSelected]="maxSelected"
       [form]="form"
       [backgroundColor]="backgroundColor"
       [borderColor]="borderColor"
@@ -62,6 +63,7 @@ class SelectTestHostComponent {
   placement?: 'top' | 'bottom' | string;
   required?: boolean | string;
   maxOptionsVisible?: number | string;
+  maxSelected?: number | string;
   form?: string;
   backgroundColor?: string;
   borderColor?: string;
@@ -347,6 +349,57 @@ describe('WaSelectWrapperComponent', () => {
       expect(selectElement.getAttribute('placement')).toBe(placement);
     });
   });
+
+  it('should enforce maxSelected when writing value in multiple mode', () => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 2;
+    hostFixture.detectChanges();
+
+    // writeValue with 3 selections should clamp to 2
+    selectComponent.writeValue(['option1', 'option2', 'option3']);
+    hostFixture.detectChanges();
+
+    expect(selectElement.getAttribute('value')).toBe('option1 option2');
+  });
+
+  it('should clamp selection to maxSelected on user change in multiple mode', () => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 2;
+    hostFixture.detectChanges();
+
+    // Simulate user selecting three values
+    selectElement.setAttribute('value', 'option1 option2 option3');
+    (selectElement as any).value = 'option1 option2 option3';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    // ngModel should receive the clamped array
+    expect(Array.isArray(hostComponent.value)).toBeTrue();
+    expect(hostComponent.value).toEqual(['option1', 'option2']);
+    // DOM should also be clamped
+    expect(selectElement.getAttribute('value')).toBe('option1 option2');
+  });
+
+  it('should clamp when value attribute changes externally (MutationObserver)', fakeAsync(() => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 1; // allow only one
+    hostFixture.detectChanges();
+
+    // External update: push two selected keys
+    selectElement.setAttribute('value', 'option2 option3');
+    (selectElement as any).value = 'option2 option3';
+
+    // Trigger attribute change observation
+    selectElement.setAttribute('value', 'option2 option3');
+
+    // Allow microtasks from MutationObserver callback to complete
+    flushMicrotasks();
+    hostFixture.detectChanges();
+
+    // Should be clamped to the first one only
+    expect(selectElement.getAttribute('value')).toBe('option2');
+    expect(hostComponent.value).toEqual(['option2']);
+  }));
 
   it('should update ngModel on change for single selection', () => {
     hostComponent.multiple = false;

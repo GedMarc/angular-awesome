@@ -88,13 +88,14 @@
         <div class="main-content">
             <header>
                 <h1>Button Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
-                <p class="subtitle"><wa-button> is an interactive element that represents an action. It supports multiple variants, appearances, and sizes. It can also render as a link when href is provided.</p>
+                <p class="subtitle"><wa-button> is an interactive element that represents an action. It supports multiple variants, appearances, and sizes. It can also render as a link when href is provided.
+</p>
                 <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
             </header>
 
             <main>
                 <!-- Page content goes here -->
-                
+
       <section>
         <h2>Overview</h2>
         <p></p>
@@ -134,7 +135,7 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 </code></pre>
 <h2>Boolean Attributes</h2>
 <pre><code class="language-html">&lt;wa-button pill&gt;Pill Button&lt;/wa-button&gt;
-&lt;wa-button with-caret&gt;Dropdown&lt;/wa-button&gt;
+&lt;wa-button caret&gt;Dropdown&lt;/wa-button&gt;
 &lt;wa-button disabled&gt;Disabled&lt;/wa-button&gt;
 &lt;wa-button loading&gt;Loading&lt;/wa-button&gt;
 </code></pre>
@@ -144,19 +145,19 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 &lt;/wa-button&gt;
 
 &lt;!-- Using direct styling with Angular bindings --&gt;
-&lt;wa-button 
-  [variant]=&quot;buttonVariant&quot; 
-  [color]=&quot;buttonColor&quot; 
-  [backgroundColor]=&quot;buttonBackgroundColor&quot; 
+&lt;wa-button
+  [variant]=&quot;buttonVariant&quot;
+  [color]=&quot;buttonColor&quot;
+  [backgroundColor]=&quot;buttonBackgroundColor&quot;
   [fontSize]=&quot;buttonFontSize&quot;
   (click)=&quot;handleClick()&quot;&gt;
   Styled Dynamic Button
 &lt;/wa-button&gt;
 
 &lt;!-- Conditional styling based on component state --&gt;
-&lt;wa-button 
-  [variant]=&quot;buttonVariant&quot; 
-  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
+&lt;wa-button
+  [variant]=&quot;buttonVariant&quot;
+  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot;
   [backgroundColor]=&quot;isHighlighted ? accentColor : defaultColor&quot;&gt;
   Context-Aware Button
 &lt;/wa-button&gt;
@@ -185,19 +186,19 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 &lt;/form&gt;
 </code></pre>
 <h2>Combined Examples</h2>
-<pre><code class="language-html">&lt;wa-button 
-  variant=&quot;success&quot; 
-  appearance=&quot;outlined&quot; 
-  size=&quot;large&quot; 
+<pre><code class="language-html">&lt;wa-button
+  variant=&quot;success&quot;
+  appearance=&quot;outlined&quot;
+  size=&quot;large&quot;
   [loading]=&quot;isSubmitting&quot;
   (click)=&quot;saveData()&quot;&gt;
   &lt;wa-icon slot=&quot;start&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
   Save Changes
 &lt;/wa-button&gt;
 
-&lt;wa-button 
-  variant=&quot;danger&quot; 
-  appearance=&quot;plain&quot; 
+&lt;wa-button
+  variant=&quot;danger&quot;
+  appearance=&quot;plain&quot;
   [disabled]=&quot;!canDelete&quot;
   (focus)=&quot;handleFocus()&quot;
   (blur)=&quot;handleBlur()&quot;&gt;
@@ -223,17 +224,17 @@ wa-button.custom-button:hover::part(base) {
 </code></pre>
 <h3>Direct Styling</h3>
 <pre><code class="language-html">&lt;!-- Using direct styling inputs --&gt;
-&lt;wa-button 
-  [color]=&quot;&#39;#ffffff&#39;&quot; 
-  [backgroundColor]=&quot;&#39;#4a90e2&#39;&quot; 
+&lt;wa-button
+  [color]=&quot;&#39;#ffffff&#39;&quot;
+  [backgroundColor]=&quot;&#39;#4a90e2&#39;&quot;
   [fontSize]=&quot;&#39;16px&#39;&quot;&gt;
   Directly Styled Button
 &lt;/wa-button&gt;
 
 &lt;!-- Dynamic direct styling --&gt;
-&lt;wa-button 
-  [color]=&quot;isActive ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
-  [backgroundColor]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#f0f0f0&#39;&quot; 
+&lt;wa-button
+  [color]=&quot;isActive ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot;
+  [backgroundColor]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#f0f0f0&#39;&quot;
   [fontSize]=&quot;isLarge ? &#39;18px&#39; : &#39;14px&#39;&quot;&gt;
   Dynamic Styled Button
 &lt;/wa-button&gt;
@@ -245,14 +246,14 @@ wa-button.custom-button:hover::part(base) {
 
       <section>
         <h2>API Reference</h2>
-        
+
       </section>
 
       <section>
         <h2>Styling</h2>
-        
+
       </section>
-    
+
             </main>
 
             <footer>

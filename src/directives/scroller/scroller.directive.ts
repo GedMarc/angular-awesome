@@ -1,22 +1,21 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges, inject } from '@angular/core';
 
 /**
- * WaScrollerWrapperDirective
+ * WaScrollerDirective
  *
- * Angular wrapper for the <wa-scroller> Web Component that allows declarative usage,
- * input binding, and integration with Angular templates.
+ * Angular directive that attaches directly to the <wa-scroller> Web Component,
+ * aligning with how other components are wrapped in this library.
  *
  * Features:
  * - Binds orientation, withoutScrollbar, and withoutShadow attributes
  * - Enables Angular-style class and style bindings
- * - Allows slot projection for content
  * - Supports custom styling via CSS variables
  */
 @Directive({
-  selector: 'wa-scroller-wrapper',
+  selector: 'wa-scroller, wa-scroller-wrapper',
   standalone: true
 })
-export class WaScrollerWrapperDirective implements OnInit {
+export class WaScrollerDirective implements OnInit, OnChanges {
   // Core input attributes
   @Input() orientation?: 'horizontal' | 'vertical' | string;
   @Input() withoutScrollbar?: boolean | string;
@@ -31,10 +30,18 @@ export class WaScrollerWrapperDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
     // Set string attributes
     this.setAttr('orientation', this.orientation);
 
-    // Set boolean attributes (only if true)
+    // Set boolean attributes (toggle on/off)
     this.setBooleanAttr('without-scrollbar', this.withoutScrollbar);
     this.setBooleanAttr('without-shadow', this.withoutShadow);
 
@@ -56,6 +63,8 @@ export class WaScrollerWrapperDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -65,6 +74,8 @@ export class WaScrollerWrapperDirective implements OnInit {
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setStyle(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeStyle(this.el.nativeElement, name);
     }
   }
 
@@ -73,8 +84,11 @@ export class WaScrollerWrapperDirective implements OnInit {
    * For boolean attributes, the presence of the attribute (with empty value) indicates true
    */
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
-    if (value === true || value === 'true' || value === '') {
+    const truthy = value === '' || value === true || value === 'true';
+    if (truthy) {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

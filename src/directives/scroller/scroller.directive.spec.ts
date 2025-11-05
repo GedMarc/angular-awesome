@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { WaScrollerWrapperDirective } from './scroller.directive';
+import { WaScrollerDirective } from './scroller.directive';
 
-// Create a test host component to test the scroller wrapper directive
+// Create a test host component to test the scroller directive
 @Component({
   template: `
-    <wa-scroller-wrapper
+    <wa-scroller
       [orientation]="orientation"
       [withoutScrollbar]="withoutScrollbar"
       [withoutShadow]="withoutShadow"
@@ -13,10 +13,10 @@ import { WaScrollerWrapperDirective } from './scroller.directive';
       [shadowSize]="shadowSize"
     >
       {{ content }}
-    </wa-scroller-wrapper>
+    </wa-scroller>
   `,
   standalone: true,
-  imports: [WaScrollerWrapperDirective]
+  imports: [WaScrollerDirective]
 })
 class TestHostComponent {
   orientation?: 'horizontal' | 'vertical' | string;
@@ -27,11 +27,11 @@ class TestHostComponent {
   content = 'Scrollable Content';
 }
 
-describe('WaScrollerWrapperDirective', () => {
+describe('WaScrollerDirective', () => {
   let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
   let scrollerElement: HTMLElement;
-  let scrollerDirective: WaScrollerWrapperDirective;
+  let scrollerDirective: WaScrollerDirective;
 
   beforeEach(async () => {
     // Mock the customElements API
@@ -50,12 +50,12 @@ describe('WaScrollerWrapperDirective', () => {
     hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
 
-    // Get the wa-scroller-wrapper element
-    scrollerElement = hostFixture.nativeElement.querySelector('wa-scroller-wrapper');
-    scrollerDirective = hostFixture.debugElement.query(sel => sel.nativeElement === scrollerElement).injector.get(WaScrollerWrapperDirective);
+    // Get the wa-scroller element
+    scrollerElement = hostFixture.nativeElement.querySelector('wa-scroller');
+    scrollerDirective = hostFixture.debugElement.query(sel => sel.nativeElement === scrollerElement).injector.get(WaScrollerDirective);
   });
 
-  it('should create the scroller wrapper directive', () => {
+  it('should create the scroller directive', () => {
     expect(hostComponent).toBeTruthy();
     expect(scrollerElement).toBeTruthy();
     expect(scrollerDirective).toBeTruthy();

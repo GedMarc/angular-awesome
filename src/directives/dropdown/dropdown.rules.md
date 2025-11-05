@@ -89,7 +89,7 @@ Also depends on the rules of:
   (selectEvent)="onSelect($event)"
   style="--box-shadow: 0 2px 6px rgba(0,0,0,0.1);"
 >
-  <wa-button slot="trigger" with-caret>Dropdown</wa-button>
+  <wa-button slot="trigger" caret>Dropdown</wa-button>
   <wa-dropdown-item value="cut">Cut</wa-dropdown-item>
   <wa-dropdown-item value="copy">Copy</wa-dropdown-item>
   <wa-dropdown-item value="paste">Paste</wa-dropdown-item>

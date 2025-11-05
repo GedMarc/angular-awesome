@@ -85,6 +85,46 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
   private isWriting = false;
   private attrObserver?: MutationObserver;
 
+  /**
+   * Safely determine the current checked state by preferring the property and
+   * falling back to attributes some environments/components use.
+   */
+  private getCurrentChecked(): boolean {
+    const el = this.el.nativeElement as HTMLElement & { checked?: boolean };
+    // Prefer native/WebComponent property
+    if (typeof (el as any).checked === 'boolean') {
+      return !!(el as any).checked;
+    }
+    // Fallbacks: boolean attribute, aria-checked, value="true"
+    if (el.hasAttribute('checked')) {
+      return true;
+    }
+    const ariaChecked = el.getAttribute('aria-checked');
+    if (ariaChecked === 'true') {
+      return true;
+    }
+    const valueAttr = el.getAttribute('value');
+    if (valueAttr != null && valueAttr.toLowerCase() === 'true') {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Safely derive the checked value from a change/input CustomEvent if available.
+   */
+  private getCheckedFromEvent(event: any): boolean | undefined {
+    // Direct boolean detail
+    if (event && typeof event.detail === 'boolean') {
+      return !!event.detail;
+    }
+    // Detail object with checked property
+    if (event && event.detail && typeof event.detail.checked === 'boolean') {
+      return !!event.detail.checked;
+    }
+    return undefined;
+  }
+
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
@@ -122,23 +162,38 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
       this.checkedChange.emit(event.detail);
       this.onChange(event.detail);
     });
+
+    // Standard DOM events
     this.renderer.listen(nativeEl, 'input', (event) => {
       this.input.emit(event);
       // Update model on input to reflect current checked state
-      const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
-      this.onChange(!!currentChecked);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
     });
+    this.renderer.listen(nativeEl, 'change', (event) => {
+      this.change.emit(event);
+      // Update model on change to reflect current checked state
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+    });
+
+    // WebAwesome custom events (some environments emit wa-input/wa-change)
+    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      this.input.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      this.change.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+    });
+
     this.renderer.listen(nativeEl, 'blur', (event) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'change', (event) => {
-      this.change.emit(event);
-      // Update model on change to reflect current checked state
-      const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
-      this.onChange(!!currentChecked);
-    });
     this.renderer.listen(nativeEl, 'wa-invalid', (event) => this.waInvalid.emit(event));
 
     // Fallback: ensure model sync on click toggle

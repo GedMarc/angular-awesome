@@ -121,7 +121,7 @@ describe('WaButtonDirective', () => {
     hostFixture.detectChanges();
 
     expect(buttonElement.hasAttribute('pill')).toBeTrue();
-    expect(buttonElement.hasAttribute('caret')).toBeTrue();
+    expect(buttonElement.hasAttribute('with-caret')).toBeTrue();
     expect(buttonElement.hasAttribute('disabled')).toBeTrue();
     expect(buttonElement.hasAttribute('loading')).toBeTrue();
   });
@@ -132,7 +132,7 @@ describe('WaButtonDirective', () => {
     hostFixture.detectChanges();
 
     expect(buttonElement.hasAttribute('pill')).toBeFalse();
-    expect(buttonElement.hasAttribute('caret')).toBeFalse();
+    expect(buttonElement.hasAttribute('with-caret')).toBeFalse();
   });
 
   it('should set link attributes correctly', () => {

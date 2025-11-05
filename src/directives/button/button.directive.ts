@@ -102,8 +102,9 @@ export class WaButtonDirective implements OnInit, OnChanges {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('pill', this.pill);
-    this.setBooleanAttr('with-caret', this.withCaret);
-    this.setBooleanAttr('caret', this.caret);
+    // Map both inputs `withCaret` and `caret` to the underlying `with-caret` attribute for the Web Component
+    this.setBooleanAttr('with-caret', (this.withCaret === true || this.withCaret === 'true' || this.withCaret === '' || this.caret === true || this.caret === 'true' || this.caret === ''));
+    // Do not set a standalone `caret` attribute on the element, as the Web Component uses `with-caret`
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('loading', this.loading);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);
@@ -216,6 +217,19 @@ export class WaButtonDirective implements OnInit, OnChanges {
     }
     if ('size' in changes) {
       this.setOrRemoveAttr('size', this.size);
+    }
+
+    // Map caret inputs to underlying with-caret attribute
+    if ('caret' in changes || 'withCaret' in changes) {
+      const v = (this.withCaret === true || this.withCaret === 'true' || this.withCaret === '' || this.caret === true || this.caret === 'true' || this.caret === '');
+      const el = this.el.nativeElement as HTMLElement;
+      if (v) {
+        this.renderer.setAttribute(el, 'with-caret', '');
+      } else {
+        this.renderer.removeAttribute(el, 'with-caret');
+      }
+      // Ensure no stray `caret` attribute remains
+      this.renderer.removeAttribute(el, 'caret');
     }
   }
 

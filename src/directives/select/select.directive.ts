@@ -43,6 +43,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   @Input() placement?: 'top' | 'bottom' | string;
   @Input() required?: boolean | string;
   @Input() maxOptionsVisible?: number | string;
+  // Maximum number of selections allowed when multiple is enabled
+  @Input() maxSelected?: number | string;
   @Input() form?: string;
   // Custom tag renderer for multiselect tags
   @Input() getTag?: any;
@@ -134,6 +136,19 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private isWriting = false;
   private attrObserver?: MutationObserver;
 
+  private parseMaxSelected(): number | undefined {
+    const v = this.maxSelected;
+    if (v == null) return undefined;
+    const num = typeof v === 'string' ? parseInt(v, 10) : v;
+    return isNaN(num as number) ? undefined : (num as number);
+  }
+
+  private getKeysFromValue(val: any | any[]): string[] {
+    if (val == null) return [];
+    const toKey = (v: any) => this.getKeyFor(v);
+    return Array.isArray(val) ? val.map(toKey) : [toKey(val)];
+  }
+
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
@@ -149,10 +164,26 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       }
       let newValue: string | string[] = raw;
       if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
-        if (Array.isArray(newValue)) {
-          // Ensure array if WC already provides it
-        } else {
+        if (!Array.isArray(newValue)) {
           newValue = String(newValue).split(' ').filter(v => v !== '');
+        }
+        // Enforce max selection if configured
+        const max = this.parseMaxSelected();
+        if (max != null && newValue.length > max) {
+          const limited = (newValue as string[]).slice(0, max);
+          // Write back limited selection to DOM to prevent UI from exceeding the limit
+          this.isWriting = true;
+          try {
+            this.renderer.setProperty(el, 'value', limited);
+            if (limited.length === 0) {
+              this.renderer.removeAttribute(el, 'value');
+            } else {
+              this.renderer.setAttribute(el, 'value', limited.join(' '));
+            }
+          } finally {
+            Promise.resolve().then(() => (this.isWriting = false));
+          }
+          newValue = limited;
         }
       }
       const mapped = this.mapFromKeys(newValue);
@@ -214,6 +245,22 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
               if (!Array.isArray(newValue)) {
                 newValue = String(current).split(' ').filter(v => v !== '');
               }
+              const max = this.parseMaxSelected();
+              if (max != null && newValue.length > max) {
+                const limited = (newValue as string[]).slice(0, max);
+                this.isWriting = true;
+                try {
+                  this.renderer.setProperty(el, 'value', limited);
+                  if (limited.length === 0) {
+                    this.renderer.removeAttribute(el, 'value');
+                  } else {
+                    this.renderer.setAttribute(el, 'value', limited.join(' '));
+                  }
+                } finally {
+                  Promise.resolve().then(() => (this.isWriting = false));
+                }
+                newValue = limited;
+              }
             }
             const mapped = this.mapFromKeys(newValue);
             this.onChange(mapped);
@@ -262,6 +309,35 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     // Properties
     if (this.getTag) {
       (this.el.nativeElement as any).getTag = this.getTag;
+    }
+
+    // Enforce maxSelected immediately when inputs change
+    if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
+      const max = this.parseMaxSelected();
+      if (max != null) {
+        const el: any = this.el.nativeElement;
+        let raw: any = el?.getAttribute?.('value');
+        if (raw == null) {
+          raw = el?.value ?? '';
+        }
+        let currentKeys: string[] = Array.isArray(raw)
+          ? raw
+          : String(raw).split(' ').filter(v => v !== '');
+        if (currentKeys.length > max) {
+          const limited = currentKeys.slice(0, max);
+          this.isWriting = true;
+          try {
+            this.renderer.setProperty(el, 'value', limited);
+            if (limited.length === 0) {
+              this.renderer.removeAttribute(el, 'value');
+            } else {
+              this.renderer.setAttribute(el, 'value', limited.join(' '));
+            }
+          } finally {
+            Promise.resolve().then(() => (this.isWriting = false));
+          }
+        }
+      }
     }
   }
 
@@ -322,7 +398,9 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
         // Reflect to property first
         if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
           if (Array.isArray(value)) {
-            const keys = value.map(v => this.getKeyFor(v));
+            const max = this.parseMaxSelected();
+            const limitedVals = max != null ? value.slice(0, max) : value;
+            const keys = limitedVals.map(v => this.getKeyFor(v));
             this.renderer.setProperty(el, 'value', keys);
             if (keys.length === 0) {
               this.renderer.removeAttribute(el, 'value');

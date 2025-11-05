@@ -3,18 +3,18 @@
 ## Basic Usage
 
 ```html
-<wa-scroller-wrapper>
+<wa-scroller>
   <div style="width: 800px; padding: 20px;">
     This content will be scrollable if it exceeds the container width.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Vertical Scrolling
 
 ```html
-<wa-scroller-wrapper orientation="vertical" style="height: 200px;">
+<wa-scroller orientation="vertical" style="height: 200px;">
   <div style="padding: 20px;">
     <p>This content will scroll vertically when it exceeds the container height.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -24,13 +24,13 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Horizontal Scrolling
 
 ```html
-<wa-scroller-wrapper orientation="horizontal">
+<wa-scroller orientation="horizontal">
   <div style="display: flex; gap: 20px; padding: 20px;">
     <div style="min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
       Card 1
@@ -48,42 +48,42 @@
       Card 5
     </div>
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Without Scrollbar
 
 ```html
-<wa-scroller-wrapper [withoutScrollbar]="true">
+<wa-scroller [withoutScrollbar]="true">
   <div style="width: 800px; padding: 20px;">
     This content will be scrollable but without a visible scrollbar.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Without Shadow
 
 ```html
-<wa-scroller-wrapper [withoutShadow]="true">
+<wa-scroller [withoutShadow]="true">
   <div style="width: 800px; padding: 20px;">
     This content will be scrollable but without the shadow indicators at the edges.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Custom Shadow Styling
 
 ```html
-<wa-scroller-wrapper 
+<wa-scroller 
   [shadowColor]="'rgba(0, 0, 255, 0.3)'" 
   [shadowSize]="'30px'">
   <div style="width: 800px; padding: 20px;">
     This content has custom shadow color and size.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </div>
-</wa-scroller-wrapper>
+</wa-scroller>
 ```
 
 ## Using with Angular Bindings
@@ -104,7 +104,7 @@ import { Component } from '@angular/core';
       <wa-checkbox [(ngModel)]="hideShadow" label="Hide Shadow"></wa-checkbox>
     </div>
     
-    <wa-scroller-wrapper 
+    <wa-scroller 
       [orientation]="scrollerOrientation" 
       [withoutScrollbar]="hideScrollbar" 
       [withoutShadow]="hideShadow"
@@ -131,7 +131,7 @@ import { Component } from '@angular/core';
         </ng-container>
       </div>
       
-    </wa-scroller-wrapper>
+    </wa-scroller>
   `
 })
 export class ScrollerDemoComponent {
@@ -150,7 +150,7 @@ export class ScrollerDemoComponent {
 <div class="image-gallery">
   <h2>Photo Gallery</h2>
   
-  <wa-scroller-wrapper 
+  <wa-scroller 
     orientation="horizontal" 
     [shadowColor]="'rgba(0, 0, 0, 0.3)'" 
     [shadowSize]="'40px'">
@@ -160,7 +160,7 @@ export class ScrollerDemoComponent {
         <div class="caption">{{ image.caption }}</div>
       </div>
     </div>
-  </wa-scroller-wrapper>
+  </wa-scroller>
 </div>
 
 <style>
@@ -200,7 +200,7 @@ export class ScrollerDemoComponent {
 
 ```html
 <div class="scrollable-tabs">
-  <wa-scroller-wrapper 
+  <wa-scroller 
     orientation="horizontal" 
     [withoutScrollbar]="true">
     <div class="tabs-container">
@@ -212,7 +212,7 @@ export class ScrollerDemoComponent {
         {{ tab.label }}
       </button>
     </div>
-  </wa-scroller-wrapper>
+  </wa-scroller>
   
   <div class="tab-content">
     <ng-container *ngFor="let tab of tabs">
@@ -266,7 +266,7 @@ export class ScrollerDemoComponent {
 <div class="timeline-container">
   <h2>Project Timeline</h2>
   
-  <wa-scroller-wrapper 
+  <wa-scroller
     orientation="horizontal" 
     [shadowSize]="'50px'">
     <div class="timeline">
