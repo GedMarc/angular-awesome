@@ -55,6 +55,12 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   }
   set value(val: string | null) {
     this._value = val;
+    // Reflect to DOM attribute immediately so the underlying WC reacts
+    if (val == null || val === '') {
+      this.renderer.removeAttribute(this.el.nativeElement, 'active');
+    } else {
+      this.renderer.setAttribute(this.el.nativeElement, 'active', val);
+    }
     this.onChange(val);
     this.onTouched();
   }

@@ -166,6 +166,54 @@ describe('Tab Group Components', () => {
     expect(tabPanelElements[0].style.getPropertyValue('--padding')).toBe('24px');
   });
 
+  it('should only render DOM content for the active wa-tab-panel and remove it for inactive ones', () => {
+    // Initial state: tab1 active, others inactive
+    hostComponent.tab1Active = true;
+    hostComponent.tab2Active = false;
+    hostComponent.tab3Active = false;
+    hostFixture.detectChanges();
+
+    const p1: HTMLElement = tabPanelElements[0];
+    const p2: HTMLElement = tabPanelElements[1];
+    const p3: HTMLElement = tabPanelElements[2];
+
+    const p1Child = p1.querySelector(':scope > *');
+    const p2Child = p2.querySelector(':scope > *');
+    const p3Child = p3.querySelector(':scope > *');
+
+    expect(p1Child).not.toBeNull();
+    expect(p2Child).toBeNull();
+    expect(p3Child).toBeNull();
+
+    // Toggle: make tab2 active, tab1 inactive
+    hostComponent.tab1Active = false;
+    hostComponent.tab2Active = true;
+    hostComponent.activeTab = 'tab2';
+    hostFixture.detectChanges();
+
+    const p1ChildAfter = p1.querySelector(':scope > *');
+    const p2ChildAfter = p2.querySelector(':scope > *');
+    const p3ChildAfter = p3.querySelector(':scope > *');
+
+    expect(p1ChildAfter).toBeNull();
+    expect(p2ChildAfter).not.toBeNull();
+    expect(p3ChildAfter).toBeNull();
+
+    // Toggle again: activate tab3
+    hostComponent.tab2Active = false;
+    hostComponent.tab3Active = true;
+    hostComponent.activeTab = 'tab3';
+    hostFixture.detectChanges();
+
+    const p1ChildAfter2 = p1.querySelector(':scope > *');
+    const p2ChildAfter2 = p2.querySelector(':scope > *');
+    const p3ChildAfter2 = p3.querySelector(':scope > *');
+
+    expect(p1ChildAfter2).toBeNull();
+    expect(p2ChildAfter2).toBeNull();
+    expect(p3ChildAfter2).not.toBeNull();
+  });
+
   it('should handle ngModel binding', () => {
     // Initial state
     expect(hostComponent.activeTab).toBe('tab1');

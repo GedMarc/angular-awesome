@@ -187,13 +187,13 @@ describe('WaDialogDirective', () => {
     spyOn(hostComponent, 'onHide');
     spyOn(hostComponent, 'onAfterHide');
 
-    // Create mock events
-    const showEvent = new Event('waShow');
-    const afterShowEvent = new Event('waAfterShow');
-    const hideEvent = new CustomEvent('waHide', {
+    // Create mock events (native events)
+    const showEvent = new Event('wa-show');
+    const afterShowEvent = new Event('wa-after-show');
+    const hideEvent = new CustomEvent('wa-hide', {
       detail: { source: 'escape' }
     });
-    const afterHideEvent = new Event('waAfterHide');
+    const afterHideEvent = new Event('wa-after-hide');
 
     // Dispatch events on the native element
     dialogElement.dispatchEvent(showEvent);
@@ -206,6 +206,36 @@ describe('WaDialogDirective', () => {
     expect(hostComponent.onAfterShow).toHaveBeenCalled();
     expect(hostComponent.onHide).toHaveBeenCalledWith({ source: 'escape' });
     expect(hostComponent.onAfterHide).toHaveBeenCalled();
+  });
+
+  it('should remove projected content when closed and restore when opened', () => {
+    // Initially closed -> no children should remain directly under host
+    hostComponent.open = false;
+    hostComponent.showFooter = true;
+    hostComponent.showHeaderActions = true;
+    hostFixture.detectChanges();
+
+    // Expect no direct element children (content moved out)
+    const firstChildEl = dialogElement.querySelector(':scope > *');
+    expect(firstChildEl).toBeNull();
+
+    // Open the dialog -> children should be restored
+    hostComponent.open = true;
+    hostFixture.detectChanges();
+
+    const restoredDefault = dialogElement.querySelector(':scope > div:not([slot])');
+    const restoredFooter = dialogElement.querySelector(':scope > [slot="footer"]');
+    const restoredHeaderActions = dialogElement.querySelector(':scope > [slot="header-actions"]');
+
+    expect(restoredDefault).toBeTruthy();
+    expect(restoredFooter).toBeTruthy();
+    expect(restoredHeaderActions).toBeTruthy();
+
+    // Close again -> children removed
+    hostComponent.open = false;
+    hostFixture.detectChanges();
+    const afterCloseChild = dialogElement.querySelector(':scope > *');
+    expect(afterCloseChild).toBeNull();
   });
 
   it('should support two-way binding on open and update when dialog closes (light dismiss)', (done) => {

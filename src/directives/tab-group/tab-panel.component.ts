@@ -14,35 +14,35 @@ export class WaTabPanelComponent implements AfterViewInit, OnDestroy {
   @Input() name!: string;
   @Input() active = false;
 
+  /**
+   * When the panel is inactive, we keep all child nodes in this fragment so that
+   * there is no DOM footprint. When it becomes active, we append the nodes back.
+   */
   private contentFragment: DocumentFragment | null = null;
-  private contentRendered = false;
   private unlistenShow?: () => void;
+  private unlistenWaShow?: () => void;
   private mutationObserver?: MutationObserver;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
     const host = this.el.nativeElement as HTMLElement;
-    // Prepare lazy content: move all child nodes into a fragment initially
-    this.captureContentIntoFragment();
 
-    // If panel starts active, render content immediately
-    if (host.hasAttribute('active') || this.active) {
-      this.renderContentFromFragment();
-    }
+    // Always start by capturing any projected content; visibility handled below
+    this.captureAllChildrenIntoFragment();
+
+    // Ensure initial state reflects current active status
+    this.updateProjectedContentVisibility();
 
     // Listen for possible show events emitted by the web component (defensive)
-    this.unlistenShow = this.renderer.listen(host, 'show', () => this.renderContentFromFragment());
-    const unlistenShowWa = this.renderer.listen(host, 'wa-show', () => this.renderContentFromFragment());
-    (this as any)._unlistenShowWa = unlistenShowWa;
+    this.unlistenShow = this.renderer.listen(host, 'show', () => this.updateProjectedContentVisibility());
+    this.unlistenWaShow = this.renderer.listen(host, 'wa-show', () => this.updateProjectedContentVisibility());
 
-    // Observe the "active" attribute so we can render when it becomes active
+    // Observe the "active" attribute to toggle content presence on changes
     this.mutationObserver = new MutationObserver(mutations => {
       for (const m of mutations) {
         if (m.type === 'attributes' && m.attributeName === 'active') {
-          if ((host as HTMLElement).hasAttribute('active')) {
-            this.renderContentFromFragment();
-          }
+          this.updateProjectedContentVisibility();
         }
       }
     });
@@ -51,9 +51,9 @@ export class WaTabPanelComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.unlistenShow) this.unlistenShow();
-    if ((this as any)._unlistenShowWa) (this as any)._unlistenShowWa();
+    if (this.unlistenWaShow) this.unlistenWaShow();
     if (this.mutationObserver) this.mutationObserver.disconnect();
-    // Ensure we don't leak detached nodes
+    // Allow GC of detached nodes
     this.contentFragment = null;
   }
 
@@ -63,35 +63,36 @@ export class WaTabPanelComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  // Move all slotted child nodes into a fragment (to prevent initial render)
-  private captureContentIntoFragment() {
+  private isActive(): boolean {
+    const host = this.el.nativeElement as HTMLElement;
+    return host.hasAttribute('active') || !!this.active;
+  }
+
+  // Move all current child nodes into a fragment (closed/inactive state)
+  private captureAllChildrenIntoFragment(): void {
     const host = this.el.nativeElement as HTMLElement;
     if (!this.contentFragment) this.contentFragment = document.createDocumentFragment();
 
-    // If content already captured (not rendered), do nothing
-    if (!this.contentRendered && this.contentFragment.childNodes.length > 0) {
-      return;
-    }
-
-    const nodesToMove: ChildNode[] = [];
-    host.childNodes.forEach(node => {
-      nodesToMove.push(node);
-    });
-
-    if (nodesToMove.length > 0) {
-      nodesToMove.forEach(n => this.contentFragment!.appendChild(n));
-      this.contentRendered = false;
+    const nodes: ChildNode[] = Array.from(host.childNodes);
+    if (nodes.length > 0) {
+      nodes.forEach(n => this.contentFragment!.appendChild(n));
     }
   }
 
-  // Render captured content back into the host when showing (only once)
-  private renderContentFromFragment() {
+  // Toggle children presence based on active state
+  private updateProjectedContentVisibility(): void {
     const host = this.el.nativeElement as HTMLElement;
-    if (this.contentRendered) return;
-    if (this.contentFragment && this.contentFragment.childNodes.length > 0) {
-      host.appendChild(this.contentFragment);
-      // contentFragment becomes empty after append; no need to recreate because we render only once
-      this.contentRendered = true;
+    const shouldHaveContent = this.isActive();
+
+    if (shouldHaveContent) {
+      if (this.contentFragment && this.contentFragment.childNodes.length > 0) {
+        host.appendChild(this.contentFragment);
+        // Keep fragment instance; it becomes empty after append and can be reused
+      }
+      return;
     }
+
+    // Inactive: ensure children are removed into fragment
+    this.captureAllChildrenIntoFragment();
   }
 }

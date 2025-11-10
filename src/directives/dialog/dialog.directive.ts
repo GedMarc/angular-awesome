@@ -21,6 +21,12 @@ import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
   standalone: true
 })
 export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
+  /**
+   * When dialog is closed, we move all child nodes into this fragment so that
+   * the dialog has no content in the DOM. When it opens again, we re-attach
+   * the nodes back to the host element.
+   */
+  private contentFragment: DocumentFragment | null = null;
   // Boolean inputs
   @Input() open?: boolean | string;
   @Input() withoutHeader?: boolean | string;
@@ -69,11 +75,16 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
     this.applyInputs();
 
+    // Ensure initial content visibility matches open state
+    this.updateProjectedContentVisibility();
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'wa-show', () => {
       this.waShow.emit();
     });
     this.renderer.listen(nativeEl, 'wa-after-show', () => {
+      // Ensure content is present after it finishes opening
+      this.updateProjectedContentVisibility();
       this.waAfterShow.emit();
       // Ensure two-way binding reflects final state after show
       this.openChange.emit(true);
@@ -82,6 +93,8 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       this.waHide.emit(event.detail);
     });
     this.renderer.listen(nativeEl, 'wa-after-hide', () => {
+      // Remove content after it fully hides
+      this.updateProjectedContentVisibility();
       this.waAfterHide.emit();
       // Ensure two-way binding reflects final state after hide
       this.openChange.emit(false);
@@ -94,6 +107,8 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
         for (const m of mutations) {
           if (m.type === 'attributes' && m.attributeName === 'open') {
             const isOpen = (nativeEl as any).open === true || nativeEl.hasAttribute('open');
+            // Sync projected content presence with current open state
+            this.updateProjectedContentVisibility();
             this.openChange.emit(!!isOpen);
           }
         }
@@ -106,6 +121,7 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(_: SimpleChanges): void {
     this.applyInputs();
+    this.updateProjectedContentVisibility();
   }
 
   ngOnDestroy(): void {
@@ -247,6 +263,51 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
+  }
+
+  /** Determine whether the dialog is currently open */
+  private isDialogOpen(): boolean {
+    const host = this.el.nativeElement as any;
+    return host?.open === true || (host as HTMLElement).hasAttribute('open');
+  }
+
+  /**
+   * Ensure that projected children exist only when dialog is open.
+   * Moves children into a DocumentFragment when closed, and restores when opened.
+   */
+  private updateProjectedContentVisibility(): void {
+    const host = this.el.nativeElement as HTMLElement;
+    const shouldHaveContent = this.isDialogOpen();
+
+    if (shouldHaveContent) {
+      // Restore children if we have a cached fragment
+      if (this.contentFragment) {
+        // Append all nodes back in their original order
+        host.appendChild(this.contentFragment);
+        this.contentFragment = null;
+        // Reconnect label slot observer now that content is back
+        this.setupLabelSlotObserver();
+      }
+      return;
+    }
+
+    // If closed and we haven't already removed children, move them into a fragment
+    if (!this.contentFragment) {
+      // Disconnect label observer since the slot content will be removed
+      if (this.labelSlotObserver) {
+        try { this.labelSlotObserver.disconnect(); } catch {}
+        this.labelSlotObserver = undefined;
+      }
+      const frag = document.createDocumentFragment();
+      const nodes = Array.from(host.childNodes);
+      // Move all nodes (including text), but keep attributes untouched
+      for (const node of nodes) {
+        // Skip nodes that are purely internal like comment placeholders Angular might add?
+        // We still move them to remove any DOM footprint as requested.
+        frag.appendChild(node);
+      }
+      this.contentFragment = frag;
     }
   }
 }
