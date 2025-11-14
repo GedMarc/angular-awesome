@@ -1,0 +1,128 @@
+name: Codex Auto Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: >-
+          Instructions to give Codex about the change to perform inside this repository.
+        required: true
+        default: 'Align the angular wrapper with the latest updates from the react/ folder, then update the changelog and version and create a pull request'
+      branch:
+        description: >-
+          Optional branch name to push Codex changes to (defaults to codex/update-<run_id>).
+        required: false
+  push:
+    branches:
+      - master
+    paths:
+      - 'react/**'
+
+jobs:
+  codex:
+    name: Run Codex Prompt
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      CODEX_VSCODE_VERSION: '0.4.40'
+      WORKFLOW_BRANCH_INPUT: ${{ github.event.inputs.branch }}
+      DEFAULT_BRANCH_NAME: codex/update-${{ github.run_id }}
+      DEFAULT_PROMPT_FILE: PROMPT_LIBRARY_RULES_UPDATE.md
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Codex CLI
+        run: |
+          set -euo pipefail
+          curl -L "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/openai/vsextensions/chatgpt/${CODEX_VSCODE_VERSION}/vspackage" -o codex.vsix
+          mkdir codex-cli
+          unzip -j codex.vsix 'extension/bin/linux-x86_64/codex' -d codex-cli
+          sudo install -m 755 codex-cli/extension/bin/linux-x86_64/codex /usr/local/bin/codex
+          rm -rf codex.vsix codex-cli
+          codex --version
+
+      - name: Authenticate Codex CLI
+        env:
+          CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CODEX_API_KEY:-}" ]; then
+            echo 'The CODEX_API_KEY secret must be configured on the repository.' >&2
+            exit 1
+          fi
+          printf '%s' "$CODEX_API_KEY" | codex login --with-api-key
+
+      - name: Prepare Codex prompt
+        id: prompt
+        run: |
+          set -euo pipefail
+          prompt_file="$RUNNER_TEMP/codex-prompt.txt"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            manual_prompt="${{ github.event.inputs.prompt }}"
+            if [ -z "$manual_prompt" ]; then
+              echo 'A prompt is required when triggering manually.' >&2
+              exit 1
+            fi
+            printf '%s' "$manual_prompt" > "$prompt_file"
+            echo "description=$manual_prompt" >> "$GITHUB_OUTPUT"
+          else
+            source_file="$GITHUB_WORKSPACE/${DEFAULT_PROMPT_FILE}"
+            if [ ! -f "$source_file" ]; then
+              echo "Default prompt file $source_file could not be found." >&2
+              exit 1
+            fi
+            cp "$source_file" "$prompt_file"
+            echo "description=Automated prompt from ${DEFAULT_PROMPT_FILE}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "path=$prompt_file" >> "$GITHUB_OUTPUT"
+
+      - name: Run Codex prompt
+        env:
+          CODEX_PROMPT_FILE: ${{ steps.prompt.outputs.path }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CODEX_PROMPT_FILE:-}" ] || [ ! -s "$CODEX_PROMPT_FILE" ]; then
+            echo 'Codex prompt file is missing or empty.' >&2
+            exit 1
+          fi
+          codex exec --full-auto --cd "$GITHUB_WORKSPACE" - < "$CODEX_PROMPT_FILE"
+
+      - name: Detect repository changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Choose branch name
+        id: branch
+        run: |
+          branch_name="$WORKFLOW_BRANCH_INPUT"
+          if [ -z "$branch_name" ]; then
+            branch_name="$DEFAULT_BRANCH_NAME"
+          fi
+          echo "name=$branch_name" >> "$GITHUB_OUTPUT"
+
+      - name: Create pull request with Codex edits
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.branch.outputs.name }}
+          title: 'Codex update: ${{ steps.prompt.outputs.description }}'
+          commit-message: 'chore(codex): apply Codex prompt changes'
+          body: |
+            Codex prompt source: `${{ steps.prompt.outputs.description }}`
+
+            _This PR was generated automatically by the Codex Auto Update workflow._
+
+      - name: No changes detected
+        if: steps.changes.outputs.changed != 'true'
+        run: echo 'Codex did not leave any modifications.'

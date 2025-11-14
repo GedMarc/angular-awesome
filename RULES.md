@@ -4,6 +4,15 @@
 
 ---
 
+## 🔗 Enterprise Alignment
+
+- This host `RULES.md` extends the enterprise guidance inside `rules/generative/frontend/angular-awesome/` and the shared behavioral guardrails under `rules/RULES.md`.
+- Before editing code, confirm the documentation loop `PACT.md ↔ GLOSSARY.md ↔ RULES.md ↔ GUIDES.md ↔ IMPLEMENTATION.md ↔ docs/architecture/c4-context.md` is up to date per `rules/README.md`.
+- Reference the glossary (`GLOSSARY.md`) for prompt language alignment and defer to the submodule glossary files for canonical definitions.
+- Follow the stage-gated workflow in `GUIDES.md`/`rules/README.md#documentation-first-stage-gated-workflow` for every change (Architecture → Guides → Plan → Implementation).
+
+---
+
 ## 📝 Purpose
 
 Create Angular components/directives to wrap Web Awesome web components and:

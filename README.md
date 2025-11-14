@@ -2,6 +2,19 @@
 
 Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://backers.webawesome.com/) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
 
+## Enterprise Rules Alignment
+
+This repository consumes the enterprise Rules Repository as a submodule under `rules/`. All contributors must follow the documentation-first, stage-gated workflow described in `rules/README.md` before touching source code. Start every change by reviewing the host artifacts:
+
+- Pact — `PACT.md`
+- Glossary — `GLOSSARY.md` (links back to the topic glossaries under `rules/generative/**`)
+- Project Rules — `RULES.md`
+- Guides & stage gates — `GUIDES.md`
+- Implementation notes & validation plan — `IMPLEMENTATION.md`
+- Architecture diagrams — `docs/architecture/c4-context.md`
+
+Each artifact links back to the submodule so the forward-only change policy (`rules/RULES.md#6-forward-only-change-policy`) stays enforced. When syncing new Web Awesome releases, run through `PROMPT_LIBRARY_RULES_UPDATE.md` to refresh both this repo and the enterprise rules at the same time.
+
 
 
 
@@ -150,6 +163,20 @@ npm run build
 
 This uses `ng-packagr` and outputs all formats in the `dist/angular-awesome` directory.
 
+### 🤖 Codex Auto Update Build
+
+This repository exposes a dedicated GitHub Actions workflow at `.github/workflows/codex-auto-update.yml` that can run a Codex prompt in CI and open a pull request with the resulting edits.
+
+To use it:
+
+1. Add a repository secret named `CODEX_API_KEY` that contains a Codex-compatible API key.
+2. Open **Actions → Codex Auto Update → Run workflow** and provide the prompt that describes the change you want Codex to make (optionally override the branch name).
+3. The workflow downloads the Codex CLI, authenticates with the secret, executes the prompt inside this repo, and creates a pull request when files were changed.
+
+In addition to the manual trigger, any push to the `master` branch that touches `react/**` automatically runs the workflow using the default instructions stored in `PROMPT_LIBRARY_RULES_UPDATE.md`. This keeps the Angular wrapper synchronized with React changes without any manual action.
+
+If Codex does not modify the workspace the job will finish without creating a pull request. You can rerun the workflow with a new or refined prompt at any time.
+
 ---
 
 ## 🛠️ Contributing
@@ -157,21 +184,6 @@ This uses `ng-packagr` and outputs all formats in the `dist/angular-awesome` dir
 Contributions are welcome through issues and PR's!
 
 ---
-
-## 🧾 License
-
-Copyright (c) 2025 GedMarc
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License in the LICENSE file in this repository
-or at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 
 ## Running tests on BrowserStack
 
