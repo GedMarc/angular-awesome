@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -22,10 +22,15 @@ import { SizeToken } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaSwitchDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaSwitchDirective),
+      multi: true
     }
   ]
 })
-export class WaSwitchDirective implements OnInit, ControlValueAccessor {
+export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validator {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -64,6 +69,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  private validatorChange?: () => void;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -98,11 +104,13 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
       this.inputEvent.emit(event);
       const target = event.target as HTMLInputElement;
       this.onChange(target.checked);
+      this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.changeEvent.emit(event);
       const target = event.target as HTMLInputElement;
       this.onChange(!!target.checked);
+      this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
@@ -165,5 +173,25 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+  }
+
+  // Validator implementation: expose required error to Angular forms
+  validate(control: AbstractControl): ValidationErrors | null {
+    const host: any = this.el?.nativeElement;
+    if (!host) return null;
+    if (host.disabled || host.hasAttribute?.('disabled')) return null;
+
+    // We mirror the Checkbox semantics: if marked required, value must be truthy
+    const isRequired = (host.hasAttribute && host.hasAttribute('required')) || this as any;
+    // Prefer explicit input if available
+    const requiredInput = (this as any).required;
+    const required = (requiredInput === true || requiredInput === '' || requiredInput === 'true') || (host.hasAttribute && host.hasAttribute('required'));
+    if (!required) return null;
+    const val = control?.value;
+    return !!val ? null : { required: true };
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }

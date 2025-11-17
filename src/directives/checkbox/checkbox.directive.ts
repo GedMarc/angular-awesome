@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -26,10 +26,15 @@ import { SizeToken } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaCheckboxDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaCheckboxDirective),
+      multi: true
     }
   ]
 })
-export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAccessor {
+export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -84,6 +89,7 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
    */
   private isWriting = false;
   private attrObserver?: MutationObserver;
+  private validatorChange?: () => void;
 
   /**
    * Safely determine the current checked state by preferring the property and
@@ -169,12 +175,14 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
       // Update model on input to reflect current checked state
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
+      this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'change', (event) => {
       this.change.emit(event);
       // Update model on change to reflect current checked state
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
+      this.validatorChange?.();
     });
 
     // WebAwesome custom events (some environments emit wa-input/wa-change)
@@ -182,11 +190,13 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
       this.input.emit(event as unknown as Event);
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
+      this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
       this.change.emit(event as unknown as Event);
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
+      this.validatorChange?.();
     });
 
     this.renderer.listen(nativeEl, 'blur', (event) => {
@@ -194,12 +204,16 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-invalid', (event) => this.waInvalid.emit(event));
+    this.renderer.listen(nativeEl, 'wa-invalid', (event) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
 
     // Fallback: ensure model sync on click toggle
     this.renderer.listen(nativeEl, 'click', () => {
       const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
       this.onChange(!!currentChecked);
+      this.validatorChange?.();
     });
 
     // Observe 'checked' attribute changes to sync when WC toggles via attributes
@@ -210,6 +224,7 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
           if (m.type === 'attributes' && m.attributeName === 'checked') {
             const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
             this.onChange(!!currentChecked);
+            this.validatorChange?.();
           }
         }
       });
@@ -221,6 +236,26 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
     try {
       this.attrObserver?.disconnect();
     } catch {}
+  }
+
+  // Validator implementation to participate in Angular forms validity (e.g., required)
+  validate(control: AbstractControl): ValidationErrors | null {
+    const host: any = this.el?.nativeElement;
+    if (!host) return null;
+    // Disabled controls are considered valid
+    if (host.disabled || host.hasAttribute?.('disabled')) return null;
+
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (!isRequired) return null;
+
+    // For a single checkbox, validity means it must be checked when required
+    const value = control?.value;
+    const isChecked = !!value;
+    return isChecked ? null : { required: true };
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 
   /**

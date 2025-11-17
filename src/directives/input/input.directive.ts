@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
@@ -28,10 +28,15 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaInputDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaInputDirective),
+      multi: true
     }
   ]
 })
-export class WaInputDirective implements OnInit, ControlValueAccessor {
+export class WaInputDirective implements OnInit, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() type?: string;
   @Input() value?: string | number | null;
@@ -85,6 +90,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  private validatorChange?: () => void;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -157,6 +163,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
     });
     this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
       this.waInvalid.emit(event);
+      this.validatorChange?.();
     });
   }
 
@@ -297,5 +304,23 @@ export class WaInputDirective implements OnInit, ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+  }
+
+  // Validator implementation: expose required error to Angular forms
+  validate(control: AbstractControl): ValidationErrors | null {
+    // If the underlying element is disabled, treat as valid
+    const el: any = this.el?.nativeElement;
+    if (!el || el.disabled) return null;
+
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (!isRequired) return null;
+
+    const val = control?.value;
+    const isEmpty = val === null || val === undefined || val === '';
+    return isEmpty ? { required: true } : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }
