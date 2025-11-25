@@ -206,12 +206,12 @@ describe('WaSwitchDirective', () => {
     switchElement.dispatchEvent(new Event('change'));
     expect(hostComponent.changeEventCalled).toBe(true);
 
-    // Simulate focus event
-    switchElement.dispatchEvent(new FocusEvent('focus'));
+    // Simulate focusNative event
+    switchElement.dispatchEvent(new FocusEvent('focusNative'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
-    // Simulate blur event
-    switchElement.dispatchEvent(new FocusEvent('blur'));
+    // Simulate blurNative event
+    switchElement.dispatchEvent(new FocusEvent('blurNative'));
     expect(hostComponent.blurEventCalled).toBe(true);
   });
 });

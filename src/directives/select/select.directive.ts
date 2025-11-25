@@ -10,7 +10,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
  *
  * Features:
  * - Binds all supported select attributes as @Input() properties
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for wa-option elements
  * - Supports custom styling via CSS variables
@@ -213,10 +213,10 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       this.changeEvent.emit(event as unknown as Event);
       handleValueRead();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });

@@ -215,12 +215,12 @@ describe('WaColorPickerDirective', () => {
     colorPickerElement.dispatchEvent(new Event('input'));
     expect(hostComponent.inputEventCalled).toBe(true);
 
-    // Simulate focus event
-    colorPickerElement.dispatchEvent(new Event('focus'));
+    // Simulate focusNative event
+    colorPickerElement.dispatchEvent(new Event('focusNative'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
-    // Simulate blur event
-    colorPickerElement.dispatchEvent(new Event('blur'));
+    // Simulate blurNative event
+    colorPickerElement.dispatchEvent(new Event('blurNative'));
     expect(hostComponent.blurEventCalled).toBe(true);
 
     // Simulate waInvalid event

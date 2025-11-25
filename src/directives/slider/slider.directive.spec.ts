@@ -197,8 +197,8 @@ describe('WaSliderDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(sliderElement, 'focus');
-    spyOn(sliderElement, 'blur');
+    spyOn(sliderElement, 'focusNative');
+    spyOn(sliderElement, 'blurNative');
     spyOn(sliderElement, 'stepUp');
     spyOn(sliderElement, 'stepDown');
 
@@ -227,8 +227,8 @@ describe('WaSliderDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new FocusEvent('blur');
-    const focusEvent = new FocusEvent('focus');
+    const blurEvent = new FocusEvent('blurNative');
+    const focusEvent = new FocusEvent('focusNative');
     const changeEvent = new Event('change');
     const inputEvent = new Event('input');
     const invalidEvent = new CustomEvent('wa-invalid');

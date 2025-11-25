@@ -10,7 +10,7 @@ import { SizeToken } from '../../types/tokens';
  *
  * Features:
  * - Binds all supported switch attributes as @Input() properties
- * - Emits events for input, change, focus, blur
+ * - Emits events for input, change, focusNative, blurNative
  * - Enables Angular-style class and style bindings
  * - Supports ngModel for form integration
  */
@@ -112,10 +112,10 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
       this.onChange(!!target.checked);
       this.validatorChange?.();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });

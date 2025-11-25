@@ -11,9 +11,9 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @slot label - The textarea's label. Alternatively, you can use the `label` attribute.
  * @slot hint - Text that describes how to use the input. Alternatively, you can use the `hint` attribute.
  *
- * @event blur - Emitted when the control loses focus.
+ * @event blur - Emitted when the control loses focusNative.
  * @event change - Emitted when an alteration to the control's value is committed by the user.
- * @event focus - Emitted when the control gains focus.
+ * @event focusNative - Emitted when the control gains focusNative.
  * @event input - Emitted when the control receives input.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *

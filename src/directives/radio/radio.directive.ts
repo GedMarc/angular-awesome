@@ -10,7 +10,7 @@ import { SizeToken } from '../../types/tokens';
  *
  * Features:
  * - Binds all supported radio group attributes as @Input() properties
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for radio buttons
  * - Supports custom styling via CSS variables
@@ -107,10 +107,10 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
       this.change.emit(event);
       this.validatorChange?.();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });

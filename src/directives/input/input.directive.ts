@@ -13,11 +13,11 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
  * - Supports string inputs like type, label, placeholder, etc.
  * - Supports numeric inputs like minlength, maxlength, min, max, etc.
  * - Supports boolean attributes like required, readonly, clearable, etc.
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for label, hint, start, end, etc.
  * - Supports custom styling via CSS variables
- * - Provides methods for programmatic control: focus(), blur(), select(), etc.
+ * - Provides methods for programmatic control: focusNative(), blurNative(), select(), etc.
  * - Implements ControlValueAccessor for ngModel support
  */
 @Directive({

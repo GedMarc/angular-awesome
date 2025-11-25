@@ -11,10 +11,10 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @slot - The switch's label.
  * @slot hint - Text that describes how to use the switch. Alternatively, you can use the `hint` attribute.
  *
- * @event blur - Emitted when the control loses focus.
+ * @event blur - Emitted when the control loses focusNative.
  * @event change - Emitted when the control's checked state changes.
  * @event input - Emitted when the control receives input.
- * @event focus - Emitted when the control gains focus.
+ * @event focusNative - Emitted when the control gains focusNative.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
  * @csspart base - The component's base wrapper.

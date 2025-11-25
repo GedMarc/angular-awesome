@@ -204,8 +204,8 @@ describe('WaDrawerDirective', () => {
     const afterShowEvent = new CustomEvent('wa-after-show');
     const hideEvent = new CustomEvent('wa-hide');
     const afterHideEvent = new CustomEvent('wa-after-hide');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const focusEvent = new FocusEvent('focusNative');
+    const blurEvent = new FocusEvent('blurNative');
 
     // Dispatch events on the native element
     drawerElement.dispatchEvent(showEvent);

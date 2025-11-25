@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  *
  * Features:
  * - Binds attributes: type, checked, value, loading, disabled, label, variant
- * - Emits events: blur, focus
+ * - Emits events: blurNative, focusNative
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content, icon, details, submenu, etc.
  * - Supports custom styling via CSS variables
@@ -91,11 +91,11 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
     this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
 

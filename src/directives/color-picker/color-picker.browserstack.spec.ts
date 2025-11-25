@@ -87,6 +87,21 @@ describe('wa-color-picker [(ngModel)] on BrowserStack', () => {
     expect(nativeEl.getAttribute('value')).toBe('#123456');
   });
 
+  it('should update model from wa-input detail when attribute/property are not yet reflected', () => {
+    // Ensure no value is set on attribute/property
+    nativeEl.removeAttribute('value');
+    (nativeEl as any).value = undefined;
+    fixture.detectChanges();
+
+    // Dispatch a custom event carrying the new value only in detail
+    const newValue = '#cafeba';
+    const evt = new CustomEvent('wa-input', { detail: newValue, bubbles: true } as any);
+    nativeEl.dispatchEvent(evt);
+    fixture.detectChanges();
+
+    expect(component.color).toBe(newValue);
+  });
+
   it('should clear attribute when model becomes null', () => {
     component.color = null;
     fixture.detectChanges();

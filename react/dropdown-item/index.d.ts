@@ -7,8 +7,8 @@ import Component from '../../components/dropdown-item/dropdown-item.js';
  *
  * @dependency wa-icon
  *
- * @event blur - Emitted when the dropdown item loses focus.
- * @event focus - Emitted when the dropdown item gains focus.
+ * @event blur - Emitted when the dropdown item loses focusNative.
+ * @event focusNative - Emitted when the dropdown item gains focusNative.
  *
  * @slot - The dropdown item's label.
  * @slot icon - An optional icon to display before the label.

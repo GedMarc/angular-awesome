@@ -10,7 +10,7 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
  * Features:
  * - Binds all supported button attributes as @Input() properties
  * - Supports boolean attributes like pill, caret, disabled, loading
- * - Emits button events (blur, focus, waInvalid)
+ * - Emits button events (blurNative, focusNative, waInvalid)
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for start, end, and default content
  * - Supports custom styling via CSS variables
@@ -172,14 +172,14 @@ export class WaButtonDirective implements OnInit, OnChanges {
   }
 
   /**
-   * Sets focus on the button
+   * Sets focusNative on the button
    */
   public focus(): void {
     this.el.nativeElement.focus();
   }
 
   /**
-   * Removes focus from the button
+   * Removes focusNative from the button
    */
   public blur(): void {
     this.el.nativeElement.blur();

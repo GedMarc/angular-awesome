@@ -262,8 +262,8 @@ describe('WaInputDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(inputElement, 'focus');
-    spyOn(inputElement, 'blur');
+    spyOn(inputElement, 'focusNative');
+    spyOn(inputElement, 'blurNative');
     spyOn(inputElement, 'select');
     spyOn(inputElement, 'setSelectionRange');
     spyOn(inputElement, 'setRangeText');
@@ -307,8 +307,8 @@ describe('WaInputDirective', () => {
     // Create mock events
     const inputEvent = new Event('input');
     const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const focusEvent = new FocusEvent('focusNative');
+    const blurEvent = new FocusEvent('blurNative');
     const clearEvent = new CustomEvent('waClear');
     const invalidEvent = new CustomEvent('waInvalid');
 

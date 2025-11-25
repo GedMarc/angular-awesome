@@ -259,8 +259,8 @@ describe('WaSelectWrapperComponent', () => {
     // Create mock events
     const inputEvent = new Event('input');
     const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const focusEvent = new FocusEvent('focusNative');
+    const blurEvent = new FocusEvent('blurNative');
     const clearEvent = new CustomEvent('wa-clear');
     const showEvent = new CustomEvent('wa-show');
     const afterShowEvent = new CustomEvent('wa-after-show');

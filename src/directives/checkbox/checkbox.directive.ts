@@ -11,7 +11,7 @@ import { SizeToken } from '../../types/tokens';
  * Features:
  * - Binds all supported checkbox attributes as @Input() properties
  * - Supports boolean attributes like checked, disabled, required, indeterminate
- * - Emits checkbox events (change, input, blur, focus, waInvalid); also re-emits checkedChange for compatibility
+ * - Emits checkbox events (change, input, blurNative, focusNative, waInvalid); also re-emits checkedChange for compatibility
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for label and hint content
  * - Supports custom styling via CSS variables
@@ -273,14 +273,14 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
   }
 
   /**
-   * Sets focus on the checkbox
+   * Sets focusNative on the checkbox
    */
   public focus(): void {
     this.el.nativeElement.focus();
   }
 
   /**
-   * Removes focus from the checkbox
+   * Removes focusNative from the checkbox
    */
   public blur(): void {
     this.el.nativeElement.blur();

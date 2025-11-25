@@ -128,8 +128,8 @@ describe('WaRatingDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(ratingElement, 'focus');
-    spyOn(ratingElement, 'blur');
+    spyOn(ratingElement, 'focusNative');
+    spyOn(ratingElement, 'blurNative');
 
     // Call the directive methods
     ratingDirective.focus();

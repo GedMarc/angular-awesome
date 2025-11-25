@@ -11,7 +11,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
  * - Supports string inputs like label and placement
  * - Supports boolean attributes like open, withoutHeader, lightDismiss
  * - Emits events for drawer lifecycle: showEvent, afterShowEvent, hideEvent, afterHideEvent
- * - Emits native focus and blur events
+ * - Emits native focusNative and blurNative events
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content, label, header-actions, and footer
  * - Supports custom styling via CSS variables
@@ -76,8 +76,8 @@ export class WaDrawerDirective implements OnInit {
     this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => this.afterShowEvent.emit(event));
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => this.hideEvent.emit(event));
     this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => this.afterHideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => this.blurEvent.emit(event));
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => this.focusEvent.emit(event));
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => this.blurEvent.emit(event));
   }
 
   /**

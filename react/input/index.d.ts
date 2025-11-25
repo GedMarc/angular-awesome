@@ -18,9 +18,9 @@ export type { WaClearEvent, WaInvalidEvent } from '../../events/events.js';
  * @slot hide-password-icon - An icon to use in lieu of the default hide password icon.
  * @slot hint - Text that describes how to use the input. Alternatively, you can use the `hint` attribute.
  *
- * @event blur - Emitted when the control loses focus.
+ * @event blur - Emitted when the control loses focusNative.
  * @event change - Emitted when an alteration to the control's value is committed by the user.
- * @event focus - Emitted when the control gains focus.
+ * @event focusNative - Emitted when the control gains focusNative.
  * @event input - Emitted when the control receives input.
  * @event wa-clear - Emitted when the clear button is activated.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.

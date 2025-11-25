@@ -23,7 +23,7 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   @Input() open = false;
   @Input() showDelay = 150;
   @Input() hideDelay = 0;
-  @Input() trigger: string = 'hover focus';
+  @Input() trigger: string = 'hover focusNative';
   @Input() withoutArrow = false;
 
   // Styling Inputs (mapped to CSS custom properties)
