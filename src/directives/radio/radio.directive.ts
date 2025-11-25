@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -10,7 +10,7 @@ import { SizeToken } from '../../types/tokens';
  *
  * Features:
  * - Binds all supported radio group attributes as @Input() properties
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for radio buttons
  * - Supports custom styling via CSS variables
@@ -24,10 +24,15 @@ import { SizeToken } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaRadioGroupDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaRadioGroupDirective),
+      multi: true
     }
   ]
 })
-export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
+export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: string | null;
   @Input() label?: string;
@@ -57,6 +62,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  private validatorChange?: () => void;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -95,19 +101,22 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
         this.renderer.setAttribute(this.el.nativeElement, 'value', String(nextValue));
       }
       this.onChange(nextValue);
+      this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.change.emit(event);
+      this.validatorChange?.();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'waInvalid', (event: CustomEvent) => {
       this.waInvalid.emit(event);
+      this.validatorChange?.();
     });
   }
 
@@ -181,6 +190,26 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor {
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
     }
+  }
+
+  // Validator implementation: when required, ensure a selection exists
+  validate(control: AbstractControl): ValidationErrors | null {
+    const host: any = this.el?.nativeElement;
+    if (!host) return null;
+    // Treat disabled as valid
+    if (host.disabled || host.hasAttribute?.('disabled')) return null;
+
+    const requiredInput = this.required;
+    const isRequired = requiredInput === true || requiredInput === '' || requiredInput === 'true' || (host.hasAttribute && host.hasAttribute('required'));
+    if (!isRequired) return null;
+
+    const val = control?.value;
+    const isEmpty = val == null || val === '';
+    return isEmpty ? { required: true } : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }
 

@@ -119,8 +119,8 @@ describe('WaProgressRingDirective', () => {
     spyOn(hostComponent, 'onBlur');
 
     // Create mock events
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const focusEvent = new FocusEvent('focusNative');
+    const blurEvent = new FocusEvent('blurNative');
 
     // Dispatch events on the native element
     progressRingElement.dispatchEvent(focusEvent);

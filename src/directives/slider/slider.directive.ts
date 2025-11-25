@@ -15,7 +15,7 @@ import { SizeToken } from '../../types/tokens';
  * - Supports markers at each step
  * - Supports reference labels
  * - Supports tooltips for current values
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Supports ngModel for form integration
  * - Allows access to native methods via ViewChild
@@ -182,7 +182,7 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   }
 
   /**
-   * Removes focus from the slider
+   * Removes focusNative from the slider
    */
   public blur(): void {
     if (typeof this.el.nativeElement.blur === 'function') {

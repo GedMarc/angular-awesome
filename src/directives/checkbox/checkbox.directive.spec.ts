@@ -200,8 +200,8 @@ describe('WaCheckboxDirective', () => {
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
     spyOn(checkboxElement, 'click');
-    spyOn(checkboxElement, 'focus');
-    spyOn(checkboxElement, 'blur');
+    spyOn(checkboxElement, 'focusNative');
+    spyOn(checkboxElement, 'blurNative');
     spyOn(checkboxDirective as any, 'setCustomValidity');
 
     // Call the directive methods
@@ -232,8 +232,8 @@ describe('WaCheckboxDirective', () => {
     // Create mock events
     const checkedChangeEvent = new CustomEvent('checkedChange', { detail: true });
     const inputEvent = new Event('input');
-    const blurEvent = new Event('blur');
-    const focusEvent = new Event('focus');
+    const blurEvent = new Event('blurNative');
+    const focusEvent = new Event('focusNative');
     const changeEvent = new Event('change');
     const invalidEvent = new Event('wa-invalid');
 

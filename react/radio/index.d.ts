@@ -9,8 +9,8 @@ import Component from '../../components/radio/radio.js';
  *
  * @slot - The radio's label.
  *
- * @event blur - Emitted when the control loses focus.
- * @event focus - Emitted when the control gains focus.
+ * @event blur - Emitted when the control loses focusNative.
+ * @event focusNative - Emitted when the control gains focusNative.
  *
  * @csspart control - The circular container that wraps the radio's checked state.
  * @csspart checked-icon - The checked icon.

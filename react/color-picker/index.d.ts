@@ -17,9 +17,9 @@ export type { WaAfterHideEvent, WaAfterShowEvent, WaHideEvent, WaInvalidEvent, W
  * @slot label - The color picker's form label. Alternatively, you can use the `label` attribute.
  * @slot hint - The color picker's form hint. Alternatively, you can use the `hint` attribute.
  *
- * @event blur - Emitted when the color picker loses focus.
+ * @event blur - Emitted when the color picker loses focusNative.
  * @event change - Emitted when the color picker's value changes.
- * @event focus - Emitted when the color picker receives focus.
+ * @event focusNative - Emitted when the color picker receives focusNative.
  * @event input - Emitted when the color picker receives input.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *

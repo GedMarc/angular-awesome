@@ -40,9 +40,9 @@ export type { WaAfterHideEvent, WaAfterShowEvent, WaHideEvent, WaShowEvent } fro
  * @cssproperty [--show-duration=200ms] - The animation duration when showing the drawer.
  * @cssproperty [--hide-duration=200ms] - The animation duration when hiding the drawer.
  *
- * @property modal - Exposes the internal modal utility that controls focus trapping. To temporarily disable focus
+ * @property modal - Exposes the internal modal utility that controls focusNative trapping. To temporarily disable focusNative
  *   trapping and allow third-party modals spawned from an active Shoelace modal, call `modal.activateExternal()` when
- *   the third-party modal opens. Upon closing, call `modal.deactivateExternal()` to restore Shoelace's focus trapping.
+ *   the third-party modal opens. Upon closing, call `modal.deactivateExternal()` to restore Shoelace's focusNative trapping.
  */
 declare const reactWrapper: import("@lit/react").ReactWebComponent<Component, {
     onWaShow: EventName<WaShowEvent>;

@@ -221,12 +221,12 @@ describe('WaTextareaComponent', () => {
   });
 
   it('should emit events correctly', () => {
-    // Simulate focus event
-    textareaElement.dispatchEvent(new FocusEvent('focus'));
+    // Simulate focusNative event
+    textareaElement.dispatchEvent(new FocusEvent('focusNative'));
     expect(hostComponent.focusCalled).toBe(true);
 
-    // Simulate blur event
-    textareaElement.dispatchEvent(new FocusEvent('blur'));
+    // Simulate blurNative event
+    textareaElement.dispatchEvent(new FocusEvent('blurNative'));
     expect(hostComponent.blurCalled).toBe(true);
 
     // Simulate input event

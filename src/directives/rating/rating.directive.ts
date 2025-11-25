@@ -115,14 +115,14 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets focus on the rating component
+   * Sets focusNative on the rating component
    */
   public focus(): void {
     this.el.nativeElement.focus();
   }
 
   /**
-   * Removes focus from the rating component
+   * Removes focusNative from the rating component
    */
   public blur(): void {
     this.el.nativeElement.blur();

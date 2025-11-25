@@ -17,9 +17,9 @@ export type { WaInvalidEvent } from '../../events/events.js';
  *  instead.
  * @slot reference - One or more reference labels to show visually below the slider.
  *
- * @event blur - Emitted when the control loses focus.
+ * @event blur - Emitted when the control loses focusNative.
  * @event change - Emitted when an alteration to the control's value is committed by the user.
- * @event focus - Emitted when the control gains focus.
+ * @event focusNative - Emitted when the control gains focusNative.
  * @event input - Emitted when the control receives input.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
@@ -41,7 +41,7 @@ export type { WaInvalidEvent } from '../../events/events.js';
  *
  * @cssstate disabled - Applied when the slider is disabled.
  * @cssstate dragging - Applied when the slider is being dragged.
- * @cssstate focused - Applied when the slider has focus.
+ * @cssstate focused - Applied when the slider has focusNative.
  * @cssstate user-valid - Applied when the slider is valid and the user has sufficiently interacted with it.
  * @cssstate user-invalid - Applied when the slider is invalid and the user has sufficiently interacted with it.
  *

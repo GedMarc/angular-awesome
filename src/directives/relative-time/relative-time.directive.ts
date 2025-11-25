@@ -10,7 +10,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * Features:
  * - Binds date attribute via ngModel (ISO 8601 string or Date)
  * - Supports format, numeric, lang, and sync inputs
- * - Emits focus and blur events
+ * - Emits focusNative and blurNative events
  * - Enables Angular-style class and style bindings
  * - Supports custom styling via CSS variables
  * - Implements ControlValueAccessor for ngModel support
@@ -63,10 +63,10 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--display', this.display);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });

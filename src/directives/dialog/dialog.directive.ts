@@ -75,28 +75,31 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
     this.applyInputs();
 
-    // Ensure initial content visibility matches open state
-    this.updateProjectedContentVisibility();
+    // Ensure initial content visibility matches open state once, without reacting to mid-transition changes
+    if (this.isDialogOpen()) {
+      this.attachProjectedContentIfNeeded();
+    } else {
+      this.detachProjectedContentIfNeeded();
+    }
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'wa-show', () => {
+      // Restore content as soon as dialog starts to open so internal logic sees correct DOM
+      this.attachProjectedContentIfNeeded();
       this.waShow.emit();
     });
     this.renderer.listen(nativeEl, 'wa-after-show', () => {
-      // Ensure content is present after it finishes opening
-      this.updateProjectedContentVisibility();
+      // Content should already be present; just emit events and sync two-way binding
       this.waAfterShow.emit();
-      // Ensure two-way binding reflects final state after show
       this.openChange.emit(true);
     });
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>) => {
       this.waHide.emit(event.detail);
     });
     this.renderer.listen(nativeEl, 'wa-after-hide', () => {
-      // Remove content after it fully hides
-      this.updateProjectedContentVisibility();
+      // Remove content only after it fully hides to avoid interfering with open/close sequence
+      this.detachProjectedContentIfNeeded();
       this.waAfterHide.emit();
-      // Ensure two-way binding reflects final state after hide
       this.openChange.emit(false);
     });
 
@@ -107,8 +110,6 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
         for (const m of mutations) {
           if (m.type === 'attributes' && m.attributeName === 'open') {
             const isOpen = (nativeEl as any).open === true || nativeEl.hasAttribute('open');
-            // Sync projected content presence with current open state
-            this.updateProjectedContentVisibility();
             this.openChange.emit(!!isOpen);
           }
         }
@@ -121,7 +122,7 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(_: SimpleChanges): void {
     this.applyInputs();
-    this.updateProjectedContentVisibility();
+    // Avoid touching content presence during generic input changes; lifecycle events handle it.
   }
 
   ngOnDestroy(): void {
@@ -281,19 +282,29 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
     const shouldHaveContent = this.isDialogOpen();
 
     if (shouldHaveContent) {
-      // Restore children if we have a cached fragment
-      if (this.contentFragment) {
-        // Append all nodes back in their original order
-        host.appendChild(this.contentFragment);
-        this.contentFragment = null;
-        // Reconnect label slot observer now that content is back
-        this.setupLabelSlotObserver();
-      }
+      this.attachProjectedContentIfNeeded();
       return;
     }
 
-    // If closed and we haven't already removed children, move them into a fragment
-    if (!this.contentFragment) {
+    // Only detach in explicit calls (e.g., on wa-after-hide or initial setup), not on random input changes
+    this.detachProjectedContentIfNeeded();
+  }
+
+  /** Explicitly attach content if it was previously detached */
+  private attachProjectedContentIfNeeded(): void {
+    const host = this.el.nativeElement as HTMLElement;
+    if (this.contentFragment) {
+      host.appendChild(this.contentFragment);
+      this.contentFragment = null;
+      // Reconnect label slot observer now that content is back
+      this.setupLabelSlotObserver();
+    }
+  }
+
+  /** Explicitly detach content if dialog is closed and content is present */
+  private detachProjectedContentIfNeeded(): void {
+    const host = this.el.nativeElement as HTMLElement;
+    if (!this.contentFragment && !this.isDialogOpen()) {
       // Disconnect label observer since the slot content will be removed
       if (this.labelSlotObserver) {
         try { this.labelSlotObserver.disconnect(); } catch {}
@@ -301,10 +312,7 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       }
       const frag = document.createDocumentFragment();
       const nodes = Array.from(host.childNodes);
-      // Move all nodes (including text), but keep attributes untouched
       for (const node of nodes) {
-        // Skip nodes that are purely internal like comment placeholders Angular might add?
-        // We still move them to remove any DOM footprint as requested.
         frag.appendChild(node);
       }
       this.contentFragment = frag;

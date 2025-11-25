@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  *
  * Features:
  * - Binds value, indeterminate, and label attributes
- * - Emits focus and blur events
+ * - Emits focusNative and blurNative events
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content and prefix
  * - Supports custom styling via CSS variables
@@ -67,10 +67,10 @@ export class WaProgressBarDirective implements OnInit, OnChanges, ControlValueAc
     this.applyInputs();
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });

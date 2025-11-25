@@ -41,7 +41,7 @@ class TestHostComponent {
   open = false;
   showDelay = 150;
   hideDelay = 0;
-  trigger = 'hover focus';
+  trigger = 'hover focusNative';
   content = 'Tooltip Content';
 
   backgroundColor?: string;
@@ -143,9 +143,9 @@ describe('WaTooltipDirective', () => {
     hostFixture.detectChanges();
     expect(tooltipElement.getAttribute('trigger')).toBe('hover');
 
-    hostComponent.trigger = 'focus';
+    hostComponent.trigger = 'focusNative';
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('trigger')).toBe('focus');
+    expect(tooltipElement.getAttribute('trigger')).toBe('focusNative');
 
     hostComponent.trigger = 'click';
     hostFixture.detectChanges();

@@ -228,8 +228,8 @@ describe('WaRadioGroupDirective', () => {
     // Create mock events
     const inputEvent = new Event('input');
     const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const focusEvent = new FocusEvent('focusNative');
+    const blurEvent = new FocusEvent('blurNative');
     const invalidEvent = new CustomEvent('waInvalid');
 
     // Dispatch events on the native element

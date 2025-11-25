@@ -12,7 +12,7 @@ import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChang
  * - Supports custom styling via CSS variables
  */
 @Directive({
-  selector: 'wa-scroller, wa-scroller-wrapper',
+  selector: 'wa-scroller',
   standalone: true
 })
 export class WaScrollerDirective implements OnInit, OnChanges {

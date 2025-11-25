@@ -255,6 +255,49 @@ describe('WaDialogDirective', () => {
       done();
     }, 0);
   });
+
+  it('should not close immediately when content changes while opening/open', (done) => {
+    // Spy on hide handler to detect unintended close
+    spyOn(hostComponent, 'onHide');
+
+    // Start closed with some content
+    hostComponent.open = false;
+    hostComponent.showFooter = false;
+    hostComponent.showHeaderActions = false;
+    hostFixture.detectChanges();
+
+    // Open the dialog and dispatch lifecycle events
+    hostComponent.open = true;
+    hostFixture.detectChanges();
+
+    // Simulate web component firing wa-show and wa-after-show
+    dialogElement.dispatchEvent(new Event('wa-show'));
+    dialogElement.dispatchEvent(new Event('wa-after-show'));
+
+    // Now, while open, toggle some bound content (this used to cause immediate close)
+    hostComponent.showFooter = true;
+    hostComponent.showHeaderActions = true;
+    hostComponent.label = 'Dynamic Label';
+    hostFixture.detectChanges();
+
+    // Give MutationObserver microtask queue a tick
+    setTimeout(() => {
+      hostFixture.detectChanges();
+
+      // Ensure no hide was triggered
+      expect(hostComponent.onHide).not.toHaveBeenCalled();
+
+      // Ensure content remains present
+      const restoredDefault = dialogElement.querySelector(':scope > div:not([slot])');
+      const restoredFooter = dialogElement.querySelector(':scope > [slot="footer"]');
+      const restoredHeaderActions = dialogElement.querySelector(':scope > [slot="header-actions"]');
+      expect(restoredDefault).toBeTruthy();
+      expect(restoredFooter).toBeTruthy();
+      expect(restoredHeaderActions).toBeTruthy();
+
+      done();
+    }, 0);
+  });
 });
 
 

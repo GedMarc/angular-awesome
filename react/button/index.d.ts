@@ -11,8 +11,8 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @dependency wa-icon
  * @dependency wa-spinner
  *
- * @event blur - Emitted when the button loses focus.
- * @event focus - Emitted when the button gains focus.
+ * @event blur - Emitted when the button loses focusNative.
+ * @event focusNative - Emitted when the button gains focusNative.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
  * @slot - The button's label.

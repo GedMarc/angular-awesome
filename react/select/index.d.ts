@@ -23,8 +23,8 @@ export type { WaAfterHideEvent, WaAfterShowEvent, WaClearEvent, WaHideEvent, WaI
  *
  * @event change - Emitted when the control's value changes.
  * @event input - Emitted when the control receives input.
- * @event focus - Emitted when the control gains focus.
- * @event blur - Emitted when the control loses focus.
+ * @event focusNative - Emitted when the control gains focusNative.
+ * @event blur - Emitted when the control loses focusNative.
  * @event wa-clear - Emitted when the control's value is cleared.
  * @event wa-show - Emitted when the select's menu opens.
  * @event wa-after-show - Emitted after the select's menu opens and all animations are complete.

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
@@ -10,7 +10,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
  *
  * Features:
  * - Binds all supported select attributes as @Input() properties
- * - Emits events for input, change, focus, blur, etc.
+ * - Emits events for input, change, focusNative, blurNative, etc.
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for wa-option elements
  * - Supports custom styling via CSS variables
@@ -25,10 +25,15 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaSelectWrapperComponent),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaSelectWrapperComponent),
+      multi: true
     }
   ]
 })
-export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: any | any[];
   @Input() label?: string;
@@ -135,6 +140,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
    */
   private isWriting = false;
   private attrObserver?: MutationObserver;
+  private validatorChange?: () => void;
 
   private parseMaxSelected(): number | undefined {
     const v = this.maxSelected;
@@ -207,10 +213,10 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       this.changeEvent.emit(event as unknown as Event);
       handleValueRead();
     });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
       this.blurEvent.emit(event);
       this.onTouched();
     });
@@ -231,6 +237,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     });
     this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
       this.invalidEvent.emit(event);
+      // Notify Angular that validation might have changed
+      this.validatorChange?.();
     });
     // Observe 'value' attribute changes to sync model when WC updates attribute
     try {
@@ -447,6 +455,25 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+  }
+
+  // Validator implementation so Angular forms can reflect validity state (e.g., required)
+  validate(control: AbstractControl): ValidationErrors | null {
+    // If disabled, treat as valid
+    const el: any = this.el?.nativeElement;
+    if (!el || el.disabled) return null;
+
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (!isRequired) return null;
+
+    // Determine emptiness based on multiple vs single
+    const val = control?.value;
+    const isEmpty = Array.isArray(val) ? val.length === 0 : (val === null || val === undefined || val === '');
+    return isEmpty ? { required: true } : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }
 

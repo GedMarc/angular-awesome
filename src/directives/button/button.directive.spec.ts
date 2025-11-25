@@ -184,8 +184,8 @@ describe('WaButtonDirective', () => {
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
     spyOn(buttonElement, 'click');
-    spyOn(buttonElement, 'focus');
-    spyOn(buttonElement, 'blur');
+    spyOn(buttonElement, 'focusNative');
+    spyOn(buttonElement, 'blurNative');
 
     // Call the directive methods
     buttonDirective.click();
@@ -208,8 +208,8 @@ describe('WaButtonDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new Event('blur');
-    const focusEvent = new Event('focus');
+    const blurEvent = new Event('blurNative');
+    const focusEvent = new Event('focusNative');
     const invalidEvent = new Event('waInvalid');
 
     // Dispatch events on the native element

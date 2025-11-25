@@ -13,9 +13,9 @@ export type { WaInvalidEvent } from '../../events/events.js';
  * @slot - The checkbox's label.
  * @slot hint - Text that describes how to use the checkbox. Alternatively, you can use the `hint` attribute.
  *
- * @event blur - Emitted when the checkbox loses focus.
+ * @event blur - Emitted when the checkbox loses focusNative.
  * @event change - Emitted when the checked state changes.
- * @event focus - Emitted when the checkbox gains focus.
+ * @event focusNative - Emitted when the checkbox gains focusNative.
  * @event input - Emitted when the checkbox receives input.
  * @event wa-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
  *
