@@ -267,6 +267,7 @@ const componentCategories = {
   'button': 'input',
   'input': 'input',
   'select': 'input',
+  'combobox': 'input',
   'text-area': 'input',
   'checkbox': 'input',
   'radio': 'input',

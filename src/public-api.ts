@@ -39,6 +39,7 @@ export * from './directives/radio/radio.directive';
 export * from './directives/relative-time/relative-time.directive';
 export * from './directives/scroller/scroller.directive';
 export * from './directives/select/select.directive';
+export * from './directives/combobox/combobox.directive';
 export * from './directives/skeleton/skeleton.directive';
 export * from './directives/slider/slider.directive';
 export * from './directives/spinner/spinner.directive';
