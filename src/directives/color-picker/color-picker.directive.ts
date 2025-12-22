@@ -106,7 +106,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
   private readCurrentValueFromEvent(evt?: Event): any {
     // 1) If CustomEvent with detail, prefer it
     const asCustom = evt as CustomEvent<any> | undefined;
-    if (asCustom && 'detail' in (asCustom ?? {})) {
+    if (asCustom && asCustom.detail !== undefined) {
       const d = asCustom.detail;
       if (d != null) {
         // Some components emit { value: string } while others emit the value directly
@@ -117,11 +117,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
       }
     }
 
-    // 2) Fallback to attribute first (WC often reflects to attr), then property
+    // 2) Fallback to property first, then attribute
     const el: any = this.el.nativeElement;
-    let current = el?.getAttribute?.('value');
-    if (current == null) {
-      current = el?.value ?? null;
+    let current = el?.value;
+    if (current == null || current === '') {
+      current = el?.getAttribute?.('value') ?? null;
     }
     return current;
   }
@@ -136,22 +136,26 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
       this.change.emit(event);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
     });
     // Also listen for custom web component events
     this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
       this.change.emit(event as any);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
     });
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
       this.input.emit(event);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
     });
     this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
       this.input.emit(event as any);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
     });
     this.renderer.listen(nativeEl, 'focus', (event: Event) => {
@@ -201,6 +205,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
             if (current == null) {
               current = el?.value ?? null;
             }
+            this.value = current;
             this.onChange(current);
           }
         }
@@ -322,6 +327,9 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
+    if (this.value === value) {
+      return;
+    }
     this.value = value;
     this.isWriting = true;
     try {
@@ -335,7 +343,8 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
         this.setAttr('value', String(value));
       }
     } finally {
-      Promise.resolve().then(() => (this.isWriting = false));
+      // Use a slightly longer delay or ensure it happens after microtasks to avoid immediate feedback
+      setTimeout(() => (this.isWriting = false), 0);
     }
   }
 
