@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Text Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Text Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-text> provides text functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the text directive from the angular-awesome package:</p>
+        <pre>// Import the text directive
+import { WaTextDirective } from 'angular-awesome/text';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h3>Body</h3>
+<p waText [waBody]="'s'">Five boxing wizards</p>
+<p waText waBody="wa-body-xl">Five boxing wizards</p>
+
+<h3>Headings</h3>
+<h3 waText [waHeading]="'m'">Five boxing wizards</h3>
+<h2 waText waHeading="2xl">Five boxing wizards</h2>
+
+<h3>Captions</h3>
+<div waText [waCaption]="'xs'">Five boxing wizards</div>
+<div waText waCaption="l">Five boxing wizards</div>
+
+<h3>Longform</h3>
+<article waText waLongform="m">
+  <p>The five boxing wizards jump quickly. How quickly?</p>
+</article>
+
+<h3>Links</h3>
+<p>&lt;a waText [waLink]=&quot;true&quot; href=&quot;#&quot;&gt;Five boxing wizards</a>
+<a waText waLink="plain" href="#">Five boxing wizards</a></p>
+<h3>Lists</h3>
+<ul waText waListPlain>
+  <li>First list item</li>
+  <li>Second list item</li>
+  <li>Final list item</li>
+</ul>
+
+<h3>Form Controls Text</h3>
+<p><label waText waFormControlText="label">Email</label></p>
+<div waText waFormControlText="value">value@example.com</div>
+<div waText waFormControlText="placeholder">Type your email</div>
+<div waText waFormControlText="hint">We never share your email.</div>
+
+<h3>Font Size</h3>
+<p waText waFontSize="xs">Five boxing wizards</p>
+<p waText waFontSize="wa-font-size-2xl">Five boxing wizards</p>
+
+<h3>Font Weight</h3>
+<p waText waFontWeight="light">Five boxing wizards</p>
+<p waText waFontWeight="semibold">Five boxing wizards</p>
+
+<h3>Text Color</h3>
+<p waText waColorText="quiet">Five boxing wizards</p>
+<p waText waColorText="link">Five boxing wizards</p>
+
+<h3>Truncation</h3>
+<div style="max-width: 240px;" waText waTextTruncate>
+  The five boxing wizards jump quickly. How quickly?
+</div>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+import { ElementRef, EventEmitter, AfterViewInit, OnDestroy, Renderer2, OnChanges } from '@angular/core';
+import * as i0 from "@angular/core";
+export declare class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
+    private host;
+    private renderer;
+    for: string;
+    placement: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string;
+    disabled?: boolean | string;
+    distance: number | string;
+    skidding: number | string;
+    open?: boolean | string;
+    showDelay: number | string;
+    hideDelay: number | string;
+    trigger: string;
+    withoutArrow?: boolean | string;
+    set backgroundColor(value: string);
+    set borderRadius(value: string);
+    set maxWidth(value: string);
+    set padding(value: string);
+    set arrowSize(value: string);
+    waShow: EventEmitter<CustomEvent<any>>;
+    waShowHyphen: EventEmitter<CustomEvent<any>>;
+    waAfterShow: EventEmitter<CustomEvent<any>>;
+    waAfterShowHyphen: EventEmitter<CustomEvent<any>>;
+    waHide: EventEmitter<CustomEvent<any>>;
+    waHideHyphen: EventEmitter<CustomEvent<any>>;
+    waAfterHide: EventEmitter<CustomEvent<any>>;
+    waAfterHideHyphen: EventEmitter<CustomEvent<any>>;
+    private listeners;
+    constructor(host: ElementRef, renderer: Renderer2);
+    private el;
+    ngAfterViewInit(): void;
+    ngOnChanges(): void;
+    ngOnDestroy(): void;
+    private setProperties;
+    private setAttr;
+    private setBooleanAttr;
+    private setNumericAttr;
+    private setStyle;
+    private attachEvents;
+    static ɵfac: i0.ɵɵFactoryDeclaration<WaTooltipDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<WaTooltipDirective, "wa-tooltip", never, { "for": { "alias": "for"; "required": false; }; "placement": { "alias": "placement"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "distance": { "alias": "distance"; "required": false; }; "skidding": { "alias": "skidding"; "required": false; }; "open": { "alias": "open"; "required": false; }; "showDelay": { "alias": "showDelay"; "required": false; }; "hideDelay": { "alias": "hideDelay"; "required": false; }; "trigger": { "alias": "trigger"; "required": false; }; "withoutArrow": { "alias": "withoutArrow"; "required": false; }; "backgroundColor": { "alias": "backgroundColor"; "required": false; }; "borderRadius": { "alias": "borderRadius"; "required": false; }; "maxWidth": { "alias": "maxWidth"; "required": false; }; "padding": { "alias": "padding"; "required": false; }; "arrowSize": { "alias": "arrowSize"; "required": false; }; }, { "waShow": "waShow"; "waShowHyphen": "wa-show"; "waAfterShow": "waAfterShow"; "waAfterShowHyphen": "wa-after-show"; "waHide": "waHide"; "waHideHyphen": "wa-hide"; "waAfterHide": "waAfterHide"; "waAfterHideHyphen": "wa-after-hide"; }, never, never, true, never>;
+}
+//# sourceMappingURL=tooltip.directive.d.ts.map

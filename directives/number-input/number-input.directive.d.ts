@@ -1,0 +1,41 @@
+import { ElementRef, EventEmitter, OnChanges, AfterViewInit, Renderer2 } from '@angular/core';
+import * as i0 from "@angular/core";
+export declare class WaNumberInputDirective implements AfterViewInit, OnChanges {
+    private host;
+    private renderer;
+    constructor(host: ElementRef<HTMLElement>, renderer: Renderer2);
+    value?: string | number;
+    defaultValue?: string | null;
+    size: 'small' | 'medium' | 'large' | string;
+    appearance: 'filled' | 'outlined' | 'filled-outlined' | string;
+    pill?: boolean | string;
+    label?: string;
+    hint?: string;
+    placeholder?: string;
+    readonly?: boolean | string;
+    required?: boolean | string;
+    min?: number | string;
+    max?: number | string;
+    step: number | 'any' | string;
+    withoutSteppers?: boolean | string;
+    autocomplete?: string;
+    autofocus?: boolean | string;
+    enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' | string;
+    inputmode: 'numeric' | 'decimal' | string;
+    withLabel?: boolean | string;
+    withHint?: boolean | string;
+    input: EventEmitter<Event>;
+    change: EventEmitter<Event>;
+    blur: EventEmitter<Event>;
+    focus: EventEmitter<Event>;
+    waInvalid: EventEmitter<CustomEvent<any>>;
+    private setAll;
+    ngAfterViewInit(): void;
+    ngOnChanges(): void;
+    private setAttr;
+    private setNumericAttr;
+    private setBooleanAttr;
+    static ɵfac: i0.ɵɵFactoryDeclaration<WaNumberInputDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<WaNumberInputDirective, "wa-number-input", never, { "value": { "alias": "value"; "required": false; }; "defaultValue": { "alias": "defaultValue"; "required": false; }; "size": { "alias": "size"; "required": false; }; "appearance": { "alias": "appearance"; "required": false; }; "pill": { "alias": "pill"; "required": false; }; "label": { "alias": "label"; "required": false; }; "hint": { "alias": "hint"; "required": false; }; "placeholder": { "alias": "placeholder"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; "required": { "alias": "required"; "required": false; }; "min": { "alias": "min"; "required": false; }; "max": { "alias": "max"; "required": false; }; "step": { "alias": "step"; "required": false; }; "withoutSteppers": { "alias": "withoutSteppers"; "required": false; }; "autocomplete": { "alias": "autocomplete"; "required": false; }; "autofocus": { "alias": "autofocus"; "required": false; }; "enterkeyhint": { "alias": "enterkeyhint"; "required": false; }; "inputmode": { "alias": "inputmode"; "required": false; }; "withLabel": { "alias": "withLabel"; "required": false; }; "withHint": { "alias": "withHint"; "required": false; }; }, { "input": "input"; "change": "change"; "blur": "blur"; "focus": "focus"; "waInvalid": "wa-invalid"; }, never, never, true, never>;
+}
+//# sourceMappingURL=number-input.directive.d.ts.map

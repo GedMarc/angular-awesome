@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - TextArea Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>TextArea Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-text-area> provides text area functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the textArea directive from the angular-awesome package:</p>
+        <pre>// Import the textArea directive
+import { WaTextAreaDirective } from 'angular-awesome/text-area';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Textarea Examples</h1>
+<p>Textarea collects multiline user input. These examples mirror the official sections.</p>
+<h2>Basic</h2>
+<pre><code class="language-html">&lt;wa-textarea label=&quot;Type something&#39;, will ya&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Labels</h2>
+<pre><code class="language-html">&lt;wa-textarea label=&quot;Comments&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Hint</h2>
+<pre><code class="language-html">&lt;wa-textarea label=&quot;Feedback&quot; hint=&quot;Please tell us what you think.&quot;&gt; &lt;/wa-textarea&gt;
+</code></pre>
+<h2>Rows</h2>
+<pre><code class="language-html">&lt;wa-textarea rows=&quot;2&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Placeholders</h2>
+<pre><code class="language-html">&lt;wa-textarea placeholder=&quot;Type something&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Appearance</h2>
+<pre><code class="language-html">&lt;wa-textarea placeholder=&quot;Type something&quot; appearance=&quot;filled&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Disabled</h2>
+<pre><code class="language-html">&lt;wa-textarea placeholder=&quot;Textarea&quot; disabled&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Value</h2>
+<pre><code class="language-html">&lt;wa-textarea value=&quot;Write something awesome!&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Sizes</h2>
+<pre><code class="language-html">&lt;wa-textarea placeholder=&quot;Small&quot; size=&quot;small&quot;&gt;&lt;/wa-textarea&gt;
+&lt;br /&gt;
+&lt;wa-textarea placeholder=&quot;Medium&quot; size=&quot;medium&quot;&gt;&lt;/wa-textarea&gt;
+&lt;br /&gt;
+&lt;wa-textarea placeholder=&quot;Large&quot; size=&quot;large&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Prevent Resizing</h2>
+<pre><code class="language-html">&lt;wa-textarea resize=&quot;none&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Expand with Content</h2>
+<pre><code class="language-html">&lt;wa-textarea resize=&quot;auto&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Resize horizontal</h2>
+<pre><code class="language-html">&lt;wa-textarea resize=&quot;horizontal&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<h2>Resize both</h2>
+<pre><code class="language-html">&lt;wa-textarea resize=&quot;both&quot;&gt;&lt;/wa-textarea&gt;
+</code></pre>
+<hr>
+<h2>Angular bindings (template-driven)</h2>
+<pre><code class="language-html">&lt;form #f=&quot;ngForm&quot;&gt;
+  &lt;wa-textarea label=&quot;Comments&quot; name=&quot;comments&quot; [(ngModel)]=&quot;comments&quot;&gt;&lt;/wa-textarea&gt;
+  &lt;div&gt;Value: {{ comments }}&lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Event Handling (Angular)</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-textarea-events&#39;,
+  template: `
+    &lt;wa-textarea
+      label=&quot;Event Demo&quot;
+      placeholder=&quot;Type something...&quot;
+      (focusEvent)=&quot;log(&#39;focus&#39;)&quot;
+      (blurEvent)=&quot;log(&#39;blur&#39;)&quot;
+      (inputEvent)=&quot;log(&#39;input&#39;)&quot;
+      (changeEvent)=&quot;log(&#39;change&#39;)&quot;
+      (invalid)=&quot;log(&#39;invalid&#39;)&quot;
+    &gt;&lt;/wa-textarea&gt;
+
+    &lt;ul&gt;&lt;li *ngFor=&quot;let e of events&quot;&gt;{{ e }}&lt;/li&gt;&lt;/ul&gt;
+  `
+})
+export class TextareaEventsComponent {
+  events: string[] = [];
+  log(t: string) { this.events.unshift(`${new Date().toLocaleTimeString()}: ${t}`); if (this.events.length&gt;10) this.events.pop(); }
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

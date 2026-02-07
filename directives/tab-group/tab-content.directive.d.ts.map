@@ -1,0 +1,1 @@
+{"version":3,"file":"tab-content.directive.d.ts","sourceRoot":"","sources":["../../../../src/directives/tab-group/tab-content.directive.ts"],"names":[],"mappings":"AAAA,OAAO,EAAa,WAAW,EAAE,MAAM,eAAe,CAAC;;AAEvD,qBAIa,YAAY;IACJ,WAAW,EAAE,WAAW,CAAC,GAAG,CAAC;gBAA7B,WAAW,EAAE,WAAW,CAAC,GAAG,CAAC;yCADrC,YAAY;2CAAZ,YAAY;CAExB"}

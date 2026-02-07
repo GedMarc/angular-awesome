@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Getting Started</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        main {
+            flex: 1;
+        }
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .nav-tabs li {
+            margin-right: 10px;
+        }
+        .nav-tabs a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-tabs a:hover, .nav-tabs a.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .note {
+            background-color: #e6f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning {
+            background-color: #fff7e6;
+            border-left: 4px solid #fa8c16;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Getting Started with Angular Awesome</h1>
+        <p class="subtitle">Learn how to install and use Angular Awesome in your projects</p>
+        <p>
+            <a href="index.html">Home</a> |
+            <a href="components.html">Components</a> |
+            <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+        </p>
+    </header>
+
+    <main>
+        <ul class="nav-tabs">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" class="active">Getting Started</a></li>
+            <li><a href="components.html">Components</a></li>
+            <li><a href="rules.html">Rules & Guidelines</a></li>
+        </ul>
+
+        <section>
+            <h2>Installation</h2>
+
+            <div class="step">
+                <h3>Step 1: Prerequisites</h3>
+                <p>Before installing Angular Awesome, make sure you have:</p>
+                <ul>
+                    <li>Angular 19.2 or later</li>
+                    <li>Node.js 16 or later</li>
+                    <li>npm 7 or later</li>
+                </ul>
+                <p>Angular Awesome requires the following peer dependencies:</p>
+                <ul>
+                    <li><code>@angular/core</code> ^19.2.0</li>
+                    <li><code>@angular/common</code> ^19.2.0</li>
+                    <li><code>@angular/forms</code> ^19.2.0</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Install the Package</h3>
+                <p>Install Angular Awesome and its Web Awesome peer dependency from npm:</p>
+                <pre>npm install angular-awesome web-awesome@^3.0.0-beta6</pre>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Include Web Awesome Assets</h3>
+                <p>Angular Awesome is a wrapper for Web Awesome components. You need to include the Web Awesome assets in your project.</p>
+
+                <div class="note">
+                    <p><strong>Note:</strong> If you're using Font Awesome, you can add your kit code with the data-fa-kit-code attribute.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Basic Usage</h2>
+
+            <div class="step">
+                <h3>Step 1: Import Components</h3>
+                <p>Each component is standalone and can be imported individually. See the GitHub repository for import examples.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Use in Templates</h3>
+                <p>Use the components in your templates with their native tag names. All components support Angular template-driven forms with ngModel binding.</p>
+
+                <div class="note">
+                    <p><strong>Note:</strong> All components support Angular template-driven forms with ngModel binding.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Configure Your Module</h3>
+                <p>If you're using NgModules, make sure to include CUSTOM_ELEMENTS_SCHEMA in your module.</p>
+
+                <div class="warning">
+                    <p><strong>Important:</strong> The CUSTOM_ELEMENTS_SCHEMA is required to allow Angular to recognize the Web Awesome custom elements.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Styling Components</h2>
+
+            <div class="step">
+                <h3>Using CSS Custom Properties</h3>
+                <p>Angular Awesome components expose styling options as Angular inputs that map to CSS custom properties.</p>
+            </div>
+
+            <div class="step">
+                <h3>Using Utility Classes</h3>
+                <p>Web Awesome provides utility classes for common styling needs:</p>
+                <ul>
+                    <li><code>wa-align-items-*</code> - For alignment (start, end, center, stretch, baseline)</li>
+                    <li><code>wa-gap-*</code> - For spacing (0, 3xs, 2xs, xs, s, m, l, xl, 2xl, 3xl)</li>
+                    <li><code>wa-accent</code>, <code>wa-outlined</code>, <code>wa-filled</code>, <code>wa-plain</code> - For appearance</li>
+                    <li><code>wa-brand</code>, <code>wa-neutral</code>, <code>wa-success</code>, <code>wa-warning</code>, <code>wa-danger</code> - For color variants</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Next Steps</h2>
+            <p>Now that you've set up Angular Awesome, you can:</p>
+            <ul>
+                <li><a href="components.html">Explore all available components</a></li>
+                <li><a href="rules.html">Learn about the design rules and guidelines</a></li>
+                <li><a href="https://github.com/GedMarc/angular-awesome" target="_blank">Check out the GitHub repository</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>2025 GedMarc</p>
+        <p><a href="index.html">Back to Home</a></p>
+    </footer>
+</body>
+</html>

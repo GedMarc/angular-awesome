@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Badge Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Badge Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-badge> provides badge functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the badge directive from the angular-awesome package:</p>
+        <pre>// Import the badge directive
+import { WaBadgeDirective } from 'angular-awesome/badge';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>WaBadgeComponent Usage Examples</h1>
+<p>The <code>WaBadgeComponent</code> is an Angular wrapper for the Web Awesome <code>&lt;wa-badge&gt;</code> web component. It provides a declarative way to use badges in Angular applications with full support for Angular&#39;s binding syntax.</p>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-badge variant=&quot;brand&quot;&gt;Brand&lt;/wa-badge&gt;
+</code></pre>
+<h2>Appearance Options</h2>
+<pre><code class="language-html">&lt;!-- Default accent appearance --&gt;
+&lt;wa-badge variant=&quot;success&quot;&gt;Success&lt;/wa-badge&gt;
+
+&lt;!-- Filled appearance --&gt;
+&lt;wa-badge variant=&quot;warning&quot; appearance=&quot;filled&quot;&gt;Warning&lt;/wa-badge&gt;
+
+&lt;!-- Outlined appearance --&gt;
+&lt;wa-badge variant=&quot;danger&quot; appearance=&quot;outlined&quot;&gt;Danger&lt;/wa-badge&gt;
+</code></pre>
+<h2>Shape Options</h2>
+<pre><code class="language-html">&lt;!-- Pill shape (rounded) --&gt;
+&lt;wa-badge variant=&quot;brand&quot; [pill]=&quot;true&quot;&gt;Rounded&lt;/wa-badge&gt;
+
+&lt;!-- With pulse animation --&gt;
+&lt;wa-badge variant=&quot;danger&quot; [pulse]=&quot;true&quot;&gt;Alert&lt;/wa-badge&gt;
+
+&lt;!-- Combined options --&gt;
+&lt;wa-badge variant=&quot;warning&quot; appearance=&quot;filled&quot; [pill]=&quot;true&quot; [pulse]=&quot;true&quot;&gt;
+  Important
+&lt;/wa-badge&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Custom font size --&gt;
+&lt;wa-badge variant=&quot;success&quot; [fontSize]=&quot;&#39;var(--wa-font-size-s)&#39;&quot;&gt;✓&lt;/wa-badge&gt;
+
+&lt;!-- Custom colors --&gt;
+&lt;wa-badge 
+  [backgroundColor]=&quot;&#39;#e6f7ff&#39;&quot; 
+  [borderColor]=&quot;&#39;#1890ff&#39;&quot; 
+  [textColor]=&quot;&#39;#0050b3&#39;&quot;&gt;
+  Custom
+&lt;/wa-badge&gt;
+
+&lt;!-- Custom pulse color --&gt;
+&lt;wa-badge 
+  variant=&quot;danger&quot; 
+  [pulse]=&quot;true&quot; 
+  [pulseColor]=&quot;&#39;rgba(255, 0, 0, 0.5)&#39;&quot;&gt;
+  Alert
+&lt;/wa-badge&gt;
+</code></pre>
+<h2>Dynamic Content</h2>
+<pre><code class="language-html">&lt;wa-badge variant=&quot;brand&quot; [pill]=&quot;isPill&quot; [pulse]=&quot;isPulsing&quot;&gt;
+  {{ count }}
+&lt;/wa-badge&gt;
+</code></pre>
+<pre><code class="language-typescript">@Component({
+  selector: &#39;app-example&#39;,
+  templateUrl: &#39;./example.component.html&#39;,
+  standalone: true,
+  imports: [WaBadgeComponent]
+})
+export class ExampleComponent {
+  count = 5;
+  isPill = true;
+  isPulsing = false;
+}
+</code></pre>
+<h2>Integration with Angular Features</h2>
+<pre><code class="language-typescript">// Component code
+@Component({
+  selector: &#39;app-example&#39;,
+  template: `
+    &lt;!-- Conditional rendering --&gt;
+    &lt;div *ngIf=&quot;showBadge&quot;&gt;
+      &lt;wa-badge variant=&quot;success&quot;&gt;Available&lt;/wa-badge&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Rendering a list of badges --&gt;
+    &lt;div&gt;
+      &lt;wa-badge 
+        *ngFor=&quot;let status of statuses&quot;
+        [variant]=&quot;status.type&quot;
+        [appearance]=&quot;status.appearance&quot;&gt;
+        {{ status.label }}
+      &lt;/wa-badge&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaBadgeComponent, NgIf, NgFor]
+})
+export class ExampleComponent {
+  showBadge = true;
+  statuses = [
+    { type: &#39;success&#39;, appearance: &#39;accent&#39;, label: &#39;Completed&#39; },
+    { type: &#39;warning&#39;, appearance: &#39;filled&#39;, label: &#39;Pending&#39; },
+    { type: &#39;danger&#39;, appearance: &#39;outlined&#39;, label: &#39;Failed&#39; }
+  ];
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

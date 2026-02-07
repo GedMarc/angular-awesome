@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - LayoutAlign Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>LayoutAlign Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-layout-align> provides layout align functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the layoutAlign directive from the angular-awesome package:</p>
+        <pre>// Import the layoutAlign directive
+import { WaLayoutAlignDirective } from 'angular-awesome/layout-align';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Align Items Directive Examples</h1>
+<p>This page shows how to use the <code>[waAlignItems]</code> directive together with Web Awesome layout utilities.</p>
+<h2>Center items in a cluster</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-cluster wa-gap-s&quot; [waAlignItems]=&quot;&#39;center&#39;&quot;&gt;
+  &lt;wa-avatar style=&quot;--size: 28px&quot;&gt;&lt;/wa-avatar&gt;
+  &lt;span class=&quot;wa-body-s&quot;&gt;User name&lt;/span&gt;
+  &lt;wa-button size=&quot;s&quot; variant=&quot;filled&quot;&gt;Follow&lt;/wa-button&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>End align on split</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-split:row wa-gap-m&quot; [waAlignItems]=&quot;&#39;end&#39;&quot;&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;wa-heading-m&quot;&gt;Project&lt;/div&gt;
+    &lt;p class=&quot;wa-body-s wa-color-quiet&quot;&gt;Align controls to bottom&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wa-cluster wa-gap-xs&quot;&gt;
+    &lt;wa-button size=&quot;s&quot;&gt;Cancel&lt;/wa-button&gt;
+    &lt;wa-button size=&quot;s&quot; variant=&quot;filled&quot;&gt;Save&lt;/wa-button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Baseline alignment in a stack</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack wa-gap-xs&quot; [waAlignItems]=&quot;&#39;baseline&#39;&quot;&gt;
+  &lt;div class=&quot;wa-heading-m&quot;&gt;Heading&lt;/div&gt;
+  &lt;div class=&quot;wa-body-s&quot;&gt;Smaller text aligns on baseline&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

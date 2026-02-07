@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Switch Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Switch Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-switch> provides switch functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the switch directive from the angular-awesome package:</p>
+        <pre>// Import the switch directive
+import { WaSwitchDirective } from 'angular-awesome/switch';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Switch Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-switch waSwitch&gt;&lt;/wa-switch&gt;
+</code></pre>
+<h2>Disabled State</h2>
+<pre><code class="language-html">&lt;wa-switch waSwitch disabled&gt;&lt;/wa-switch&gt;
+</code></pre>
+<h2>With Hint Text</h2>
+<pre><code class="language-html">&lt;wa-switch waSwitch hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
+</code></pre>
+<h2>Different Sizes</h2>
+<pre><code class="language-html">&lt;!-- Small size --&gt;
+&lt;wa-switch waSwitch size=&quot;small&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Medium size (default) --&gt;
+&lt;wa-switch waSwitch size=&quot;medium&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Large size --&gt;
+&lt;wa-switch waSwitch size=&quot;large&quot;&gt;&lt;/wa-switch&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;!-- Custom background color --&gt;
+&lt;wa-switch waSwitch [backgroundColor]=&quot;&#39;#e0e0e0&#39;&quot; [backgroundColorChecked]=&quot;&#39;#4CAF50&#39;&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Custom border --&gt;
+&lt;wa-switch waSwitch [borderColor]=&quot;&#39;#999&#39;&quot; [borderColorChecked]=&quot;&#39;#2196F3&#39;&quot; [borderWidth]=&quot;&#39;2px&#39;&quot; [borderStyle]=&quot;&#39;solid&#39;&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Custom thumb --&gt;
+&lt;wa-switch waSwitch [thumbColor]=&quot;&#39;#fff&#39;&quot; [thumbColorChecked]=&quot;&#39;#fff&#39;&quot; [thumbSize]=&quot;&#39;16px&#39;&quot; [thumbShadow]=&quot;&#39;0 0 4px rgba(0,0,0,0.3)&#39;&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Custom dimensions --&gt;
+&lt;wa-switch waSwitch [width]=&quot;&#39;60px&#39;&quot; [height]=&quot;&#39;30px&#39;&quot;&gt;&lt;/wa-switch&gt;
+
+&lt;!-- Combined custom styling --&gt;
+&lt;wa-switch 
+  waSwitch 
+  [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
+  [backgroundColorChecked]=&quot;&#39;#673AB7&#39;&quot; 
+  [borderColor]=&quot;&#39;#ccc&#39;&quot; 
+  [borderColorChecked]=&quot;&#39;#512DA8&#39;&quot; 
+  [borderWidth]=&quot;&#39;1px&#39;&quot; 
+  [borderStyle]=&quot;&#39;solid&#39;&quot; 
+  [thumbColor]=&quot;&#39;#fff&#39;&quot; 
+  [thumbColorChecked]=&quot;&#39;#fff&#39;&quot; 
+  [thumbSize]=&quot;&#39;18px&#39;&quot; 
+  [thumbShadow]=&quot;&#39;0 0 3px rgba(0,0,0,0.2)&#39;&quot; 
+  [width]=&quot;&#39;50px&#39;&quot; 
+  [height]=&quot;&#39;26px&#39;&quot;
+&gt;&lt;/wa-switch&gt;
+</code></pre>
+<h2>Using with Angular Forms</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { FormsModule } from &#39;@angular/forms&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+
+@Component({
+  selector: &#39;app-switch-demo&#39;,
+  template: `
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;wa-switch waSwitch [(ngModel)]=&quot;isEnabled&quot; hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
+      &lt;p&gt;Feature is {{ isEnabled ? &#39;enabled&#39; : &#39;disabled&#39; }}&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;wa-switch waSwitch [(ngModel)]=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
+      &lt;p&gt;Dark mode is {{ darkMode ? &#39;on&#39; : &#39;off&#39; }}&lt;/p&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaSwitchDirective, FormsModule]
+})
+export class SwitchDemoComponent {
+  isEnabled = false;
+  darkMode = true;
+}
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+
+@Component({
+  selector: &#39;app-switch-events-demo&#39;,
+  template: `
+    &lt;wa-switch 
+      waSwitch 
+      [hint]=&quot;&#39;Notifications&#39;&quot;
+      (changeEvent)=&quot;onSwitchChange($event)&quot;
+      (inputEvent)=&quot;onSwitchInput($event)&quot;
+      (focusEvent)=&quot;onSwitchFocus($event)&quot;
+      (blurEvent)=&quot;onSwitchBlur($event)&quot;
+    &gt;&lt;/wa-switch&gt;
+    
+    &lt;div class=&quot;event-log&quot;&gt;
+      &lt;p&gt;Last event: {{ lastEvent }}&lt;/p&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaSwitchDirective]
+})
+export class SwitchEventsDemoComponent {
+  lastEvent = &#39;None&#39;;
+  
+  onSwitchChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.lastEvent = `Change: ${target.checked ? &#39;checked&#39; : &#39;unchecked&#39;}`;
+    console.log(&#39;Switch changed:&#39;, target.checked);
+  }
+  
+  onSwitchInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.lastEvent = `Input: ${target.checked ? &#39;checked&#39; : &#39;unchecked&#39;}`;
+    console.log(&#39;Switch input:&#39;, target.checked);
+  }
+  
+  onSwitchFocus(event: FocusEvent) {
+    this.lastEvent = &#39;Focus&#39;;
+    console.log(&#39;Switch focused&#39;);
+  }
+  
+  onSwitchBlur(event: FocusEvent) {
+    this.lastEvent = &#39;Blur&#39;;
+    console.log(&#39;Switch blurred&#39;);
+  }
+}
+</code></pre>
+<h2>Reactive Forms</h2>
+<pre><code class="language-typescript">import { Component, OnInit } from &#39;@angular/core&#39;;
+import { FormBuilder, FormGroup, ReactiveFormsModule } from &#39;@angular/forms&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+
+@Component({
+  selector: &#39;app-switch-reactive-form-demo&#39;,
+  template: `
+    &lt;form [formGroup]=&quot;settingsForm&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;wa-switch waSwitch formControlName=&quot;notifications&quot; hint=&quot;Enable notifications&quot;&gt;&lt;/wa-switch&gt;
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;wa-switch waSwitch formControlName=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
+      &lt;/div&gt;
+      
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;wa-switch waSwitch formControlName=&quot;autoSave&quot; hint=&quot;Auto-save&quot; [disabled]=&quot;!settingsForm.get(&#39;notifications&#39;)?.value&quot;&gt;&lt;/wa-switch&gt;
+        &lt;p class=&quot;hint&quot;&gt;Auto-save requires notifications to be enabled&lt;/p&gt;
+      &lt;/div&gt;
+      
+      &lt;button type=&quot;submit&quot;&gt;Save Settings&lt;/button&gt;
+    &lt;/form&gt;
+    
+    &lt;div *ngIf=&quot;submitted&quot;&gt;
+      &lt;h3&gt;Saved Settings:&lt;/h3&gt;
+      &lt;pre&gt;{{ settingsForm.value | json }}&lt;/pre&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaSwitchDirective, ReactiveFormsModule]
+})
+export class SwitchReactiveFormDemoComponent implements OnInit {
+  settingsForm!: FormGroup;
+  submitted = false;
+  
+  constructor(private fb: FormBuilder) {}
+  
+  ngOnInit() {
+    this.settingsForm = this.fb.group({
+      notifications: [true],
+      darkMode: [false],
+      autoSave: [false]
+    });
+    
+    // Disable autoSave when notifications are off
+    this.settingsForm.get(&#39;notifications&#39;)?.valueChanges.subscribe(value =&gt; {
+      const autoSaveControl = this.settingsForm.get(&#39;autoSave&#39;);
+      if (!value) {
+        autoSaveControl?.setValue(false);
+        autoSaveControl?.disable();
+      } else {
+        autoSaveControl?.enable();
+      }
+    });
+  }
+  
+  onSubmit() {
+    this.submitted = true;
+    console.log(&#39;Form submitted:&#39;, this.settingsForm.value);
+  }
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

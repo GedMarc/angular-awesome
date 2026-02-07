@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Drawer Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Drawer Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-drawer> provides drawer functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the drawer directive from the angular-awesome package:</p>
+        <pre>// Import the drawer directive
+import { WaDrawerDirective } from 'angular-awesome/drawer';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Drawer Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-drawer label=&quot;Basic Drawer&quot; [(open)]=&quot;isOpen&quot;&gt;
+  &lt;p&gt;This is a basic drawer with default styling.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isOpen = true&quot;&gt;Open Drawer&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  isOpen = false;
+}
+</code></pre>
+<h2>Different Placements</h2>
+<pre><code class="language-html">&lt;!-- Right side drawer (default) --&gt;
+&lt;wa-drawer label=&quot;End Drawer&quot; [(open)]=&quot;isEndOpen&quot; placement=&quot;end&quot;&gt;
+  &lt;p&gt;This drawer slides in from the right (end).&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;!-- Left side drawer --&gt;
+&lt;wa-drawer label=&quot;Start Drawer&quot; [(open)]=&quot;isStartOpen&quot; placement=&quot;start&quot;&gt;
+  &lt;p&gt;This drawer slides in from the left (start).&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;!-- Top drawer --&gt;
+&lt;wa-drawer label=&quot;Top Drawer&quot; [(open)]=&quot;isTopOpen&quot; placement=&quot;top&quot;&gt;
+  &lt;p&gt;This drawer slides in from the top.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;!-- Bottom drawer --&gt;
+&lt;wa-drawer label=&quot;Bottom Drawer&quot; [(open)]=&quot;isBottomOpen&quot; placement=&quot;bottom&quot;&gt;
+  &lt;p&gt;This drawer slides in from the bottom.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;div class=&quot;button-group&quot;&gt;
+  &lt;wa-button (click)=&quot;isEndOpen = true&quot;&gt;Open End Drawer&lt;/wa-button&gt;
+  &lt;wa-button (click)=&quot;isStartOpen = true&quot;&gt;Open Start Drawer&lt;/wa-button&gt;
+  &lt;wa-button (click)=&quot;isTopOpen = true&quot;&gt;Open Top Drawer&lt;/wa-button&gt;
+  &lt;wa-button (click)=&quot;isBottomOpen = true&quot;&gt;Open Bottom Drawer&lt;/wa-button&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Without Header</h2>
+<pre><code class="language-html">&lt;wa-drawer label=&quot;No Header Drawer&quot; [(open)]=&quot;isNoHeaderOpen&quot; withoutHeader&gt;
+  &lt;p&gt;This drawer has no header section.&lt;/p&gt;
+  &lt;wa-button data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isNoHeaderOpen = true&quot;&gt;Open No Header Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>With Light Dismiss</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Light Dismiss Drawer&quot; 
+  [(open)]=&quot;isLightDismissOpen&quot; 
+  lightDismiss&gt;
+  &lt;p&gt;Click outside this drawer to close it.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isLightDismissOpen = true&quot;&gt;Open Light Dismiss Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>With Custom Header Actions</h2>
+<pre><code class="language-html">&lt;wa-drawer label=&quot;Custom Header Drawer&quot; [(open)]=&quot;isCustomHeaderOpen&quot;&gt;
+  &lt;wa-button 
+    appearance=&quot;plain&quot; 
+    size=&quot;small&quot; 
+    slot=&quot;header-actions&quot; 
+    aria-label=&quot;More information&quot;&gt;
+    &lt;wa-icon name=&quot;info-circle&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/wa-button&gt;
+  
+  &lt;p&gt;This drawer has custom actions in the header.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isCustomHeaderOpen = true&quot;&gt;Open Custom Header Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>With Custom Label</h2>
+<pre><code class="language-html">&lt;wa-drawer [(open)]=&quot;isCustomLabelOpen&quot;&gt;
+  &lt;div slot=&quot;label&quot;&gt;
+    &lt;wa-icon name=&quot;settings&quot;&gt;&lt;/wa-icon&gt;
+    &lt;span&gt;Custom Label with Icon&lt;/span&gt;
+  &lt;/div&gt;
+  
+  &lt;p&gt;This drawer has a custom label with an icon.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isCustomLabelOpen = true&quot;&gt;Open Custom Label Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>Programmatic Control</h2>
+<pre><code class="language-html">&lt;wa-drawer #myDrawer label=&quot;Programmatic Drawer&quot;&gt;
+  &lt;p&gt;This drawer is controlled programmatically.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;openDrawer()&quot;&gt;Open Drawer&lt;/wa-button&gt;
+&lt;wa-button (click)=&quot;closeDrawer()&quot;&gt;Close Drawer&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  @ViewChild(&#39;myDrawer&#39;) drawerRef: ElementRef;
+
+  openDrawer() {
+    this.drawerRef.nativeElement.show();
+  }
+
+  closeDrawer() {
+    this.drawerRef.nativeElement.hide();
+  }
+}
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Event Drawer&quot; 
+  [(open)]=&quot;isEventOpen&quot;
+  (showEvent)=&quot;onDrawerShow($event)&quot;
+  (afterShowEvent)=&quot;onDrawerAfterShow($event)&quot;
+  (hideEvent)=&quot;onDrawerHide($event)&quot;
+  (afterHideEvent)=&quot;onDrawerAfterHide($event)&quot;
+  (focusEvent)=&quot;onDrawerFocus($event)&quot;
+  (blurEvent)=&quot;onDrawerBlur($event)&quot;&gt;
+  
+  &lt;p&gt;This drawer demonstrates event handling.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isEventOpen = true&quot;&gt;Open Event Drawer&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  isEventOpen = false;
+
+  onDrawerShow(event: CustomEvent) {
+    console.log(&#39;Drawer is opening&#39;, event);
+  }
+
+  onDrawerAfterShow(event: CustomEvent) {
+    console.log(&#39;Drawer has opened&#39;, event);
+  }
+
+  onDrawerHide(event: CustomEvent) {
+    console.log(&#39;Drawer is closing&#39;, event);
+    
+    // Optionally prevent closing
+    if (this.hasUnsavedChanges) {
+      event.preventDefault();
+      // Show confirmation
+    }
+  }
+
+  onDrawerAfterHide(event: CustomEvent) {
+    console.log(&#39;Drawer has closed&#39;, event);
+  }
+
+  onDrawerFocus(event: FocusEvent) {
+    console.log(&#39;Drawer focused&#39;, event);
+  }
+
+  onDrawerBlur(event: FocusEvent) {
+    console.log(&#39;Drawer blurred&#39;, event);
+  }
+}
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Styled Drawer&quot; 
+  [(open)]=&quot;isStyledOpen&quot;
+  backgroundColor=&quot;#f8f9fa&quot;
+  boxShadow=&quot;0 0 20px rgba(0,0,0,0.15)&quot;
+  spacing=&quot;24px&quot;
+  size=&quot;400px&quot;
+  showDuration=&quot;500ms&quot;
+  hideDuration=&quot;300ms&quot;&gt;
+  
+  &lt;p&gt;This drawer has custom styling applied.&lt;/p&gt;
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isStyledOpen = true&quot;&gt;Open Styled Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>Complex Drawer with Form</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Edit Profile&quot; 
+  [(open)]=&quot;isFormOpen&quot;
+  (hideEvent)=&quot;onFormDrawerHide($event)&quot;&gt;
+  
+  &lt;form #profileForm=&quot;ngForm&quot;&gt;
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
+      &lt;wa-input id=&quot;name&quot; [(ngModel)]=&quot;profile.name&quot; name=&quot;name&quot; required&gt;&lt;/wa-input&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+      &lt;wa-input id=&quot;email&quot; [(ngModel)]=&quot;profile.email&quot; name=&quot;email&quot; required type=&quot;email&quot;&gt;&lt;/wa-input&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+  
+  &lt;div slot=&quot;footer&quot;&gt;
+    &lt;wa-button variant=&quot;secondary&quot; data-drawer=&quot;close&quot;&gt;Cancel&lt;/wa-button&gt;
+    &lt;wa-button 
+      variant=&quot;primary&quot; 
+      [disabled]=&quot;profileForm.invalid&quot;
+      (click)=&quot;saveProfile(); isFormOpen = false;&quot;&gt;
+      Save
+    &lt;/wa-button&gt;
+  &lt;/div&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isFormOpen = true&quot;&gt;Edit Profile&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  isFormOpen = false;
+  profile = {
+    name: &#39;John Doe&#39;,
+    email: &#39;john@example.com&#39;
+  };
+  hasUnsavedChanges = false;
+
+  onFormDrawerHide(event: CustomEvent) {
+    if (this.hasUnsavedChanges) {
+      // Prevent drawer from closing
+      event.preventDefault();
+      
+      // Show confirmation
+      if (confirm(&#39;You have unsaved changes. Are you sure you want to close?&#39;)) {
+        this.hasUnsavedChanges = false;
+        this.isFormOpen = false;
+      }
+    }
+  }
+
+  saveProfile() {
+    // Save profile logic
+    console.log(&#39;Profile saved:&#39;, this.profile);
+    this.hasUnsavedChanges = false;
+  }
+}
+</code></pre>
+<h2>Navigation Drawer</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Navigation&quot; 
+  [(open)]=&quot;isNavOpen&quot;
+  placement=&quot;start&quot;
+  size=&quot;250px&quot;&gt;
+  
+  &lt;div class=&quot;navigation-items&quot;&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;home&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;home&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+      Home
+    &lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;profile&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;user&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+      Profile
+    &lt;/wa-dropdown-item&gt;
+    &lt;wa-dropdown-item (click)=&quot;navigate(&#39;settings&#39;); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;cog&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+      Settings
+    &lt;/wa-dropdown-item&gt;
+    &lt;wa-divider&gt;&lt;/wa-divider&gt;
+    &lt;wa-dropdown-item (click)=&quot;logout(); isNavOpen = false;&quot;&gt;
+      &lt;wa-icon name=&quot;sign-out-alt&quot; slot=&quot;start&quot;&gt;&lt;/wa-icon&gt;
+      Logout
+    &lt;/wa-dropdown-item&gt;
+  &lt;/div&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isNavOpen = true&quot;&gt;Open Navigation&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  isNavOpen = false;
+
+  navigate(route: string) {
+    console.log(`Navigating to ${route}`);
+    // Implement navigation logic
+  }
+
+  logout() {
+    console.log(&#39;Logging out&#39;);
+    // Implement logout logic
+  }
+}
+</code></pre>
+<h2>Drawer with Autofocus</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Autofocus Drawer&quot; 
+  [(open)]=&quot;isAutofocusOpen&quot;&gt;
+  
+  &lt;p&gt;The input field below will receive focus when the drawer opens:&lt;/p&gt;
+  &lt;wa-input autofocus placeholder=&quot;This will be focused&quot;&gt;&lt;/wa-input&gt;
+  
+  &lt;div slot=&quot;footer&quot;&gt;
+    &lt;wa-button data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+  &lt;/div&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isAutofocusOpen = true&quot;&gt;Open Autofocus Drawer&lt;/wa-button&gt;
+</code></pre>
+<h2>Responsive Drawer</h2>
+<pre><code class="language-html">&lt;wa-drawer 
+  label=&quot;Responsive Drawer&quot; 
+  [(open)]=&quot;isResponsiveOpen&quot;
+  [placement]=&quot;isMobile ? &#39;bottom&#39; : &#39;end&#39;&quot;
+  [size]=&quot;isMobile ? &#39;80%&#39; : &#39;400px&#39;&quot;&gt;
+  
+  &lt;p&gt;This drawer adapts to screen size.&lt;/p&gt;
+  &lt;p&gt;Current mode: {{ isMobile ? &#39;Mobile (bottom)&#39; : &#39;Desktop (end)&#39; }}&lt;/p&gt;
+  
+  &lt;wa-button slot=&quot;footer&quot; data-drawer=&quot;close&quot;&gt;Close&lt;/wa-button&gt;
+&lt;/wa-drawer&gt;
+
+&lt;wa-button (click)=&quot;isResponsiveOpen = true&quot;&gt;Open Responsive Drawer&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DrawerExampleComponent {
+  isResponsiveOpen = false;
+  isMobile = window.innerWidth &lt; 768;
+  
+  @HostListener(&#39;window:resize&#39;)
+  onResize() {
+    this.isMobile = window.innerWidth &lt; 768;
+  }
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

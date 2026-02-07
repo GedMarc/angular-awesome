@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Checkbox Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Checkbox Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-checkbox> provides checkbox functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the checkbox directive from the angular-awesome package:</p>
+        <pre>// Import the checkbox directive
+import { WaCheckboxDirective } from 'angular-awesome/checkbox';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Checkbox Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-checkbox&gt;Accept terms and conditions&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Different States</h2>
+<pre><code class="language-html">&lt;!-- Checked state --&gt;
+&lt;wa-checkbox checked&gt;I agree to the terms&lt;/wa-checkbox&gt;
+
+&lt;!-- Disabled state --&gt;
+&lt;wa-checkbox disabled&gt;Disabled option&lt;/wa-checkbox&gt;
+
+&lt;!-- Required state --&gt;
+&lt;wa-checkbox required&gt;Required field&lt;/wa-checkbox&gt;
+
+&lt;!-- Indeterminate state --&gt;
+&lt;wa-checkbox indeterminate&gt;Select all items&lt;/wa-checkbox&gt;
+
+&lt;!-- Combinations --&gt;
+&lt;wa-checkbox checked disabled&gt;Checked and disabled&lt;/wa-checkbox&gt;
+&lt;wa-checkbox indeterminate disabled&gt;Indeterminate and disabled&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Different Sizes</h2>
+<pre><code class="language-html">&lt;wa-checkbox size=&quot;small&quot;&gt;Small checkbox&lt;/wa-checkbox&gt;
+&lt;wa-checkbox size=&quot;medium&quot;&gt;Medium checkbox&lt;/wa-checkbox&gt;
+&lt;wa-checkbox size=&quot;large&quot;&gt;Large checkbox&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>With Hint Text</h2>
+<pre><code class="language-html">&lt;wa-checkbox hint=&quot;This is additional information&quot;&gt;Checkbox with hint&lt;/wa-checkbox&gt;
+
+&lt;!-- Using hint slot for more complex content --&gt;
+&lt;wa-checkbox&gt;
+  Subscribe to newsletter
+  &lt;div slot=&quot;hint&quot;&gt;
+    You&#39;ll receive weekly updates about our &lt;strong&gt;products&lt;/strong&gt; and &lt;strong&gt;services&lt;/strong&gt;.
+  &lt;/div&gt;
+&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Form Integration</h2>
+<pre><code class="language-html">&lt;!-- With name and value --&gt;
+&lt;wa-checkbox name=&quot;terms&quot; value=&quot;accepted&quot;&gt;Accept terms&lt;/wa-checkbox&gt;
+
+&lt;!-- In a form --&gt;
+&lt;form id=&quot;myForm&quot;&gt;
+  &lt;wa-checkbox name=&quot;subscribe&quot; required&gt;Subscribe to newsletter&lt;/wa-checkbox&gt;
+  &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- Using form attribute to associate with a form --&gt;
+&lt;wa-checkbox form=&quot;myForm&quot; name=&quot;external&quot;&gt;I&#39;m outside the form&lt;/wa-checkbox&gt;
+</code></pre>
+<h3>Template-Driven Forms with ngModel</h3>
+<pre><code class="language-html">&lt;form #myForm=&quot;ngForm&quot; (ngSubmit)=&quot;onSubmit(myForm)&quot;&gt;
+  &lt;!-- Basic ngModel binding --&gt;
+  &lt;wa-checkbox [(ngModel)]=&quot;user.acceptTerms&quot; name=&quot;acceptTerms&quot; required&gt;
+    I accept the terms and conditions
+  &lt;/wa-checkbox&gt;
+  
+  &lt;!-- With validation and error message --&gt;
+  &lt;div&gt;
+    &lt;wa-checkbox [(ngModel)]=&quot;user.subscribe&quot; name=&quot;subscribe&quot; #subscribe=&quot;ngModel&quot; required&gt;
+      Subscribe to newsletter
+    &lt;/wa-checkbox&gt;
+    &lt;div [class.visible]=&quot;subscribe.invalid &amp;&amp; (subscribe.dirty || subscribe.touched)&quot; class=&quot;error-message&quot;&gt;
+      This field is required
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;!myForm.valid&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<h3>Reactive Forms</h3>
+<pre><code class="language-html">&lt;form [formGroup]=&quot;myForm&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;
+  &lt;!-- Basic formControlName binding --&gt;
+  &lt;wa-checkbox formControlName=&quot;acceptTerms&quot;&gt;
+    I accept the terms and conditions
+  &lt;/wa-checkbox&gt;
+  
+  &lt;!-- With validation and error message --&gt;
+  &lt;div&gt;
+    &lt;wa-checkbox formControlName=&quot;subscribe&quot;&gt;
+      Subscribe to newsletter
+    &lt;/wa-checkbox&gt;
+    &lt;div [class.visible]=&quot;myForm.get(&#39;subscribe&#39;)?.invalid &amp;&amp; 
+               (myForm.get(&#39;subscribe&#39;)?.dirty || myForm.get(&#39;subscribe&#39;)?.touched)&quot; 
+         class=&quot;error-message&quot;&gt;
+      This field is required
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;button type=&quot;submit&quot; [disabled]=&quot;myForm.invalid&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+import { Component, OnInit } from &#39;@angular/core&#39;;
+import { FormBuilder, FormGroup, Validators } from &#39;@angular/forms&#39;;
+
+@Component({
+  selector: &#39;app-checkbox-form-example&#39;,
+  templateUrl: &#39;./checkbox-form-example.component.html&#39;
+})
+export class CheckboxFormExampleComponent implements OnInit {
+  myForm!: FormGroup;
+  
+  constructor(private fb: FormBuilder) {}
+  
+  ngOnInit(): void {
+    this.myForm = this.fb.group({
+      acceptTerms: [false, Validators.requiredTrue],
+      subscribe: [false, Validators.required]
+    });
+  }
+  
+  onSubmit(): void {
+    if (this.myForm.valid) {
+      console.log(this.myForm.value);
+    }
+  }
+}
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-html">&lt;!-- Property binding --&gt;
+&lt;wa-checkbox [checked]=&quot;isChecked&quot; [disabled]=&quot;isDisabled&quot;&gt;
+  Toggle me
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Event binding --&gt;
+&lt;wa-checkbox (checkedChange)=&quot;onCheckboxChange($event)&quot;&gt;
+  Notify on change
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Two-way binding with ngModel (recommended) --&gt;
+&lt;wa-checkbox [(ngModel)]=&quot;formValue.subscribe&quot; name=&quot;subscribe&quot;&gt;
+  Subscribe to newsletter
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Multiple bindings --&gt;
+&lt;wa-checkbox
+  [checked]=&quot;user.preferences.notifications&quot;
+  [disabled]=&quot;!user.isActive&quot;
+  (checkedChange)=&quot;updatePreferences($event)&quot;&gt;
+  Enable notifications
+&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-typescript">// In your component
+export class CheckboxExampleComponent {
+  onCheckboxChange(isChecked: boolean): void {
+    console.log(`Checkbox is now ${isChecked ? &#39;checked&#39; : &#39;unchecked&#39;}`);
+  }
+  
+  onInvalid(event: Event): void {
+    console.log(&#39;Checkbox validation failed&#39;);
+  }
+}
+</code></pre>
+<pre><code class="language-html">&lt;!-- In your template --&gt;
+&lt;wa-checkbox 
+  required
+  (change)=&quot;onCheckboxChange($event)&quot;
+  (waInvalid)=&quot;onInvalid($event)&quot;&gt;
+  This field is required
+&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Programmatic Control</h2>
+<pre><code class="language-typescript">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaCheckboxDirective } from &#39;./checkbox.directive&#39;;
+
+@Component({
+  selector: &#39;app-checkbox-demo&#39;,
+  template: `
+    &lt;wa-checkbox #myCheckbox&gt;Programmatically controlled&lt;/wa-checkbox&gt;
+    &lt;button (click)=&quot;focusCheckbox()&quot;&gt;Focus&lt;/button&gt;
+    &lt;button (click)=&quot;clickCheckbox()&quot;&gt;Click&lt;/button&gt;
+    &lt;button (click)=&quot;setInvalid()&quot;&gt;Set Invalid&lt;/button&gt;
+  `
+})
+export class CheckboxDemoComponent {
+  @ViewChild(&#39;myCheckbox&#39;) checkbox!: WaCheckboxDirective;
+  
+  focusCheckbox(): void {
+    this.checkbox.focus();
+  }
+  
+  clickCheckbox(): void {
+    this.checkbox.click();
+  }
+  
+  setInvalid(): void {
+    this.checkbox.setCustomValidity(&#39;This checkbox is invalid&#39;);
+  }
+}
+</code></pre>
+<h2>Custom Styling with CSS Properties</h2>
+<pre><code class="language-html">&lt;!-- Basic custom styling --&gt;
+&lt;wa-checkbox 
+  [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
+  [backgroundColorChecked]=&quot;&#39;#4a90e2&#39;&quot;&gt;
+  Custom background colors
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Border customization --&gt;
+&lt;wa-checkbox 
+  [borderColor]=&quot;&#39;#cccccc&#39;&quot; 
+  [borderColorChecked]=&quot;&#39;#2a70c2&#39;&quot; 
+  [borderRadius]=&quot;&#39;4px&#39;&quot; 
+  [borderStyle]=&quot;&#39;solid&#39;&quot; 
+  [borderWidth]=&quot;&#39;2px&#39;&quot;&gt;
+  Custom borders
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Icon and size customization --&gt;
+&lt;wa-checkbox 
+  [checkedIconColor]=&quot;&#39;white&#39;&quot; 
+  [toggleSize]=&quot;&#39;24px&#39;&quot;&gt;
+  Custom icon and size
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Shadow effects --&gt;
+&lt;wa-checkbox 
+  [boxShadow]=&quot;&#39;0 0 5px rgba(0,0,0,0.2)&#39;&quot;&gt;
+  With shadow effect
+&lt;/wa-checkbox&gt;
+
+&lt;!-- Comprehensive styling example --&gt;
+&lt;wa-checkbox 
+  [backgroundColor]=&quot;&#39;#f8f9fa&#39;&quot; 
+  [backgroundColorChecked]=&quot;&#39;#28a745&#39;&quot; 
+  [borderColor]=&quot;&#39;#dee2e6&#39;&quot; 
+  [borderColorChecked]=&quot;&#39;#28a745&#39;&quot; 
+  [borderRadius]=&quot;&#39;50%&#39;&quot; 
+  [borderWidth]=&quot;&#39;1px&#39;&quot; 
+  [checkedIconColor]=&quot;&#39;white&#39;&quot; 
+  [toggleSize]=&quot;&#39;20px&#39;&quot;&gt;
+  Fully customized checkbox
+&lt;/wa-checkbox&gt;
+</code></pre>
+<h2>Common Use Cases</h2>
+<pre><code class="language-html">&lt;!-- In a settings form --&gt;
+&lt;div class=&quot;settings-form&quot;&gt;
+  &lt;wa-checkbox checked&gt;Enable notifications&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox&gt;Subscribe to newsletter&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox disabled&gt;Premium feature (upgrade to enable)&lt;/wa-checkbox&gt;
+&lt;/div&gt;
+
+&lt;!-- In a terms acceptance form --&gt;
+&lt;div class=&quot;terms-form&quot;&gt;
+  &lt;wa-checkbox required&gt;I accept the terms and conditions&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox&gt;I want to receive promotional emails&lt;/wa-checkbox&gt;
+  &lt;button type=&quot;submit&quot;&gt;Continue&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- In a task list --&gt;
+&lt;div class=&quot;task-list&quot;&gt;
+  &lt;div class=&quot;task-item&quot;&gt;
+    &lt;wa-checkbox checked&gt;Complete project setup&lt;/wa-checkbox&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;task-item&quot;&gt;
+    &lt;wa-checkbox&gt;Write documentation&lt;/wa-checkbox&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;task-item&quot;&gt;
+    &lt;wa-checkbox&gt;Deploy to production&lt;/wa-checkbox&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

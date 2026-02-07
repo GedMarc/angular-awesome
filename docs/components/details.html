@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Details Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Details Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-details> provides details functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the details directive from the angular-awesome package:</p>
+        <pre>// Import the details directive
+import { WaDetailsDirective } from 'angular-awesome/details';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Details Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-details summary=&quot;Toggle Me&quot;&gt;
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+&lt;/wa-details&gt;
+</code></pre>
+<h2>Disabled</h2>
+<pre><code class="language-html">&lt;wa-details summary=&quot;Disabled&quot; [disabled]=&quot;true&quot;&gt;
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+&lt;/wa-details&gt;
+</code></pre>
+<h2>Customizing the Summary Icon</h2>
+<pre><code class="language-html">&lt;wa-details summary=&quot;Toggle Me&quot; class=&quot;custom-icons&quot;&gt;
+  &lt;wa-icon name=&quot;square-plus&quot; slot=&quot;expand-icon&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon name=&quot;square-minus&quot; slot=&quot;collapse-icon&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+&lt;/wa-details&gt;
+
+&lt;style&gt;
+  /* Disable the expand/collapse animation */
+  wa-details.custom-icons::part(icon) {
+    rotate: none;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2>Icon Position</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;wa-details summary=&quot;Start&quot; iconPosition=&quot;start&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+  &lt;wa-details summary=&quot;End&quot; iconPosition=&quot;end&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>HTML in Summary</h2>
+<pre><code class="language-html">&lt;wa-details&gt;
+  &lt;span slot=&quot;summary&quot;&gt;
+    Some text
+    &lt;a href=&quot;https://webawesome.com&quot; target=&quot;_blank&quot;&gt;a link&lt;/a&gt;
+    more text
+  &lt;/span&gt;
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+&lt;/wa-details&gt;
+</code></pre>
+<h2>Right-to-Left Languages</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;wa-details summary=&quot;تبديلني&quot; lang=&quot;ar&quot; dir=&quot;rtl&quot;&gt;
+    استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن
+  &lt;/wa-details&gt;
+  &lt;wa-details summary=&quot;تبديلني&quot; lang=&quot;ar&quot; dir=&quot;rtl&quot; iconPosition=&quot;start&quot;&gt;
+    استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن
+  &lt;/wa-details&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Appearance</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;wa-details summary=&quot;Outlined (default)&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+  &lt;wa-details summary=&quot;Filled + Outlined&quot; appearance=&quot;filled-outlined&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+  &lt;wa-details summary=&quot;Filled&quot; appearance=&quot;filled&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+  &lt;wa-details summary=&quot;Plain&quot; appearance=&quot;plain&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Grouping Details</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-stack&quot;&gt;
+  &lt;wa-details name=&quot;group-1&quot; summary=&quot;Section 1&quot; [open]=&quot;true&quot;&gt;
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  &lt;/wa-details&gt;
+
+  &lt;wa-details name=&quot;group-1&quot; summary=&quot;Section 2&quot;&gt;
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+  &lt;/wa-details&gt;
+
+  &lt;wa-details name=&quot;group-1&quot; summary=&quot;Section 3&quot;&gt;
+    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+    corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+  &lt;/wa-details&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-details-demo&#39;,
+  template: `
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;wa-button (click)=&quot;toggleOpen()&quot;&gt;Toggle Open&lt;/wa-button&gt;
+      &lt;wa-button (click)=&quot;toggleDisabled()&quot;&gt;Toggle Disabled&lt;/wa-button&gt;
+      &lt;wa-select [(ngModel)]=&quot;iconPosition&quot; label=&quot;Icon Position&quot;&gt;
+        &lt;wa-option value=&quot;start&quot;&gt;Start&lt;/wa-option&gt;
+        &lt;wa-option value=&quot;end&quot;&gt;End&lt;/wa-option&gt;
+      &lt;/wa-select&gt;
+      &lt;wa-select [(ngModel)]=&quot;appearance&quot; label=&quot;Appearance&quot;&gt;
+        &lt;wa-option value=&quot;outlined&quot;&gt;Outlined&lt;/wa-option&gt;
+        &lt;wa-option value=&quot;filled&quot;&gt;Filled&lt;/wa-option&gt;
+        &lt;wa-option value=&quot;plain&quot;&gt;Plain&lt;/wa-option&gt;
+      &lt;/wa-select&gt;
+    &lt;/div&gt;
+    
+    &lt;wa-details
+      [summary]=&quot;summary&quot;
+      [open]=&quot;isOpen&quot;
+      [disabled]=&quot;isDisabled&quot;
+      [iconPosition]=&quot;iconPosition&quot;
+      [appearance]=&quot;appearance&quot;
+      (waShow)=&quot;onShow()&quot;
+      (waAfterShow)=&quot;onAfterShow()&quot;
+      (waHide)=&quot;onHide()&quot;
+      (waAfterHide)=&quot;onAfterHide()&quot;&gt;
+      
+      &lt;p&gt;This is the content of the details component.&lt;/p&gt;
+      &lt;p&gt;You can include any HTML or Angular components here.&lt;/p&gt;
+      
+    &lt;/wa-details&gt;
+  `,
+  styles: [`
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 16px;
+    }
+  `]
+})
+export class DetailsDemoComponent {
+  summary = &#39;Click to Toggle&#39;;
+  isOpen = false;
+  isDisabled = false;
+  iconPosition = &#39;end&#39;;
+  appearance = &#39;outlined&#39;;
+  
+  toggleOpen(): void {
+    this.isOpen = !this.isOpen;
+  }
+  
+  toggleDisabled(): void {
+    this.isDisabled = !this.isDisabled;
+  }
+  
+  onShow(): void {
+    console.log(&#39;Details showing&#39;);
+  }
+  
+  onAfterShow(): void {
+    console.log(&#39;Details shown&#39;);
+  }
+  
+  onHide(): void {
+    console.log(&#39;Details hiding&#39;);
+  }
+  
+  onAfterHide(): void {
+    console.log(&#39;Details hidden&#39;);
+  }
+}
+</code></pre>
+<h2>Programmatic Control</h2>
+<pre><code class="language-typescript">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaDetailsDirective } from &#39;angular-awesome&#39;;
+
+@Component({
+  selector: &#39;app-details-programmatic&#39;,
+  template: `
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;wa-button (click)=&quot;showDetails()&quot;&gt;Show&lt;/wa-button&gt;
+      &lt;wa-button (click)=&quot;hideDetails()&quot;&gt;Hide&lt;/wa-button&gt;
+    &lt;/div&gt;
+    
+    &lt;wa-details #detailsElement summary=&quot;Programmatically Controlled&quot;&gt;
+      This details element is controlled programmatically using the show() and hide() methods.
+    &lt;/wa-details&gt;
+  `
+})
+export class DetailsProgrammaticComponent {
+  @ViewChild(&#39;detailsElement&#39;) details!: WaDetailsDirective;
+  
+  showDetails(): void {
+    this.details.show();
+  }
+  
+  hideDetails(): void {
+    this.details.hide();
+  }
+}
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-details 
+  summary=&quot;Custom Styled Details&quot;
+  [spacing]=&quot;&#39;1.5rem&#39;&quot;
+  [showDuration]=&quot;&#39;300ms&#39;&quot;
+  [hideDuration]=&quot;&#39;300ms&#39;&quot;
+  [iconColor]=&quot;&#39;#2196f3&#39;&quot;&gt;
+  
+  &lt;p&gt;This details element has custom styling applied through Angular inputs.&lt;/p&gt;
+  
+&lt;/wa-details&gt;
+
+&lt;style&gt;
+  wa-details::part(base) {
+    border-color: #2196f3;
+  }
+  
+  wa-details::part(header) {
+    background-color: #e3f2fd;
+  }
+  
+  wa-details::part(content) {
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+  }
+&lt;/style&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

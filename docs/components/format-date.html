@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - FormatDate Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>FormatDate Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-format-date> provides format date functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the formatDate directive from the angular-awesome package:</p>
+        <pre>// Import the formatDate directive
+import { WaFormatDateDirective } from 'angular-awesome/format-date';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Format Date Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-format-date [date]=&quot;myDate&quot;&gt;&lt;/wa-format-date&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatDateExampleComponent {
+  myDate = new Date();
+}
+</code></pre>
+<h2>With Two-Way Binding</h2>
+<pre><code class="language-html">&lt;wa-format-date [(ngModel)]=&quot;selectedDate&quot;&gt;&lt;/wa-format-date&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatDateExampleComponent {
+  selectedDate = new Date();
+}
+</code></pre>
+<h2>Date Formatting Options</h2>
+<h3>Year, Month, Day Formatting</h3>
+<pre><code class="language-html">&lt;!-- Full date (e.g., &quot;January 1, 2023&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Short date (e.g., &quot;Jan 1, 2023&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;short&quot;
+  day=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Numeric date (e.g., &quot;1/1/2023&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;numeric&quot;
+  day=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- 2-digit date (e.g., &quot;01/01/23&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;2-digit&quot;
+  month=&quot;2-digit&quot;
+  day=&quot;2-digit&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h3>Time Formatting</h3>
+<pre><code class="language-html">&lt;!-- Time only (e.g., &quot;3:30 PM&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Time with seconds (e.g., &quot;3:30:45 PM&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;
+  second=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- 24-hour time (e.g., &quot;15:30&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  hour=&quot;2-digit&quot;
+  minute=&quot;2-digit&quot;
+  hourFormat=&quot;24&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h3>Full Date and Time</h3>
+<pre><code class="language-html">&lt;!-- Full date and time (e.g., &quot;January 1, 2023, 3:30 PM&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- With seconds and timezone (e.g., &quot;January 1, 2023, 3:30:45 PM EST&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;
+  second=&quot;numeric&quot;
+  timeZoneName=&quot;short&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h3>Weekday and Era</h3>
+<pre><code class="language-html">&lt;!-- With weekday (e.g., &quot;Sunday, January 1, 2023&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  weekday=&quot;long&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- With era (e.g., &quot;January 1, 2023 AD&quot;) --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  era=&quot;short&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h2>Localization</h2>
+<pre><code class="language-html">&lt;!-- German format --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  lang=&quot;de&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- French format --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  lang=&quot;fr&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Japanese format --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  lang=&quot;ja&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h2>Time Zones</h2>
+<pre><code class="language-html">&lt;!-- New York time --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;
+  timeZone=&quot;America/New_York&quot;
+  timeZoneName=&quot;long&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- London time --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;
+  timeZone=&quot;Europe/London&quot;
+  timeZoneName=&quot;long&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Tokyo time --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  hour=&quot;numeric&quot;
+  minute=&quot;numeric&quot;
+  timeZone=&quot;Asia/Tokyo&quot;
+  timeZoneName=&quot;long&quot;&gt;
+&lt;/wa-format-date&gt;
+</code></pre>
+<h2>Styling Examples</h2>
+<pre><code class="language-html">&lt;!-- Custom color --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  color=&quot;#3f51b5&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Custom font size --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  fontSize=&quot;1.5rem&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Bold text --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  fontWeight=&quot;bold&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- With background --&gt;
+&lt;wa-format-date 
+  [date]=&quot;myDate&quot;
+  year=&quot;numeric&quot;
+  month=&quot;long&quot;
+  day=&quot;numeric&quot;
+  backgroundColor=&quot;#f0f0f0&quot;
+  padding=&quot;0.5rem&quot;&gt;
+&lt;/wa-format-date&gt;
+
+&lt;!-- Inline display --&gt;
+&lt;p&gt;
+  Today is 
+  &lt;wa-format-date 
+    [date]=&quot;myDate&quot;
+    year=&quot;numeric&quot;
+    month=&quot;long&quot;
+    day=&quot;numeric&quot;
+    display=&quot;inline&quot;&gt;
+  &lt;/wa-format-date&gt;
+  and the time is
+  &lt;wa-format-date 
+    [date]=&quot;myDate&quot;
+    hour=&quot;numeric&quot;
+    minute=&quot;numeric&quot;
+    display=&quot;inline&quot;&gt;
+  &lt;/wa-format-date&gt;.
+&lt;/p&gt;
+</code></pre>
+<h2>In a Form</h2>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;eventDate&quot;&gt;Event Date:&lt;/label&gt;
+    &lt;input 
+      type=&quot;datetime-local&quot; 
+      id=&quot;eventDate&quot; 
+      [(ngModel)]=&quot;eventDate&quot; 
+      name=&quot;eventDate&quot;&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label&gt;Formatted Date:&lt;/label&gt;
+    &lt;wa-format-date 
+      [date]=&quot;eventDate&quot;
+      year=&quot;numeric&quot;
+      month=&quot;long&quot;
+      day=&quot;numeric&quot;
+      hour=&quot;numeric&quot;
+      minute=&quot;numeric&quot;&gt;
+    &lt;/wa-format-date&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>In a Table</h2>
+<pre><code class="language-html">&lt;!-- Example of using format-date in a table --&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Event Name&lt;/th&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;Formatted Date&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;!-- Using ngFor to iterate through events --&gt;
+    &lt;tr *ngFor=&quot;let event of events&quot;&gt;
+      &lt;td&gt;{{ event.name }}&lt;/td&gt;
+      &lt;td&gt;{{ event.date }}&lt;/td&gt;
+      &lt;td&gt;
+        &lt;wa-format-date 
+          [date]=&quot;event.date&quot;
+          year=&quot;numeric&quot;
+          month=&quot;long&quot;
+          day=&quot;numeric&quot;
+          hour=&quot;numeric&quot;
+          minute=&quot;numeric&quot;&gt;
+        &lt;/wa-format-date&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatDateExampleComponent {
+  events = [
+    { name: &#39;Conference&#39;, date: new Date(&#39;2023-06-15T09:00:00&#39;) },
+    { name: &#39;Meeting&#39;, date: new Date(&#39;2023-06-20T14:30:00&#39;) },
+    { name: &#39;Workshop&#39;, date: new Date(&#39;2023-07-05T10:00:00&#39;) },
+    { name: &#39;Webinar&#39;, date: new Date(&#39;2023-07-12T16:00:00&#39;) }
+  ];
+}
+</code></pre>
+<h2>Relative Time Example</h2>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt;
+    Event: {{ eventName }}
+  &lt;/p&gt;
+  &lt;p&gt;
+    Date: 
+    &lt;wa-format-date 
+      [date]=&quot;eventDate&quot;
+      year=&quot;numeric&quot;
+      month=&quot;long&quot;
+      day=&quot;numeric&quot;
+      hour=&quot;numeric&quot;
+      minute=&quot;numeric&quot;&gt;
+    &lt;/wa-format-date&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;!-- You can combine with your own relative time logic --&gt;
+    {{ getRelativeTimeString(eventDate) }}
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatDateExampleComponent {
+  eventName = &#39;Annual Conference&#39;;
+  eventDate = new Date(&#39;2023-12-15T09:00:00&#39;);
+  
+  getRelativeTimeString(date: Date): string {
+    const now = new Date();
+    const diffMs = date.getTime() - now.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDays &gt; 0) {
+      return `Starts in ${diffDays} days`;
+    } else if (diffDays &lt; 0) {
+      return `Ended ${Math.abs(diffDays)} days ago`;
+    } else {
+      return &#39;Happening today!&#39;;
+    }
+  }
+}
+</code></pre>
+<h2>Date Range Example</h2>
+<pre><code class="language-html">&lt;div class=&quot;date-range&quot;&gt;
+  &lt;div&gt;
+    &lt;label&gt;From:&lt;/label&gt;
+    &lt;wa-format-date 
+      [date]=&quot;startDate&quot;
+      year=&quot;numeric&quot;
+      month=&quot;long&quot;
+      day=&quot;numeric&quot;&gt;
+    &lt;/wa-format-date&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label&gt;To:&lt;/label&gt;
+    &lt;wa-format-date 
+      [date]=&quot;endDate&quot;
+      year=&quot;numeric&quot;
+      month=&quot;long&quot;
+      day=&quot;numeric&quot;&gt;
+    &lt;/wa-format-date&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class FormatDateExampleComponent {
+  startDate = new Date(&#39;2023-08-01&#39;);
+  endDate = new Date(&#39;2023-08-15&#39;);
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

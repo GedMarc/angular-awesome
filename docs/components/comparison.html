@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Comparison Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Comparison Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-comparison> provides comparison functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the comparison directive from the angular-awesome package:</p>
+        <pre>// Import the comparison directive
+import { WaComparisonDirective } from 'angular-awesome/comparison';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Comparison Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-comparison&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<h2>With Initial Position</h2>
+<pre><code class="language-html">&lt;wa-comparison position=&quot;25&quot;&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+&lt;/wa-comparison&gt;
+
+&lt;wa-comparison position=&quot;75&quot;&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<h2>With Custom Handle</h2>
+<pre><code class="language-html">&lt;wa-comparison position=&quot;50&quot;&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+  &lt;wa-icon slot=&quot;handle&quot; name=&quot;arrows-left-right&quot; variant=&quot;solid&quot;&gt;&lt;/wa-icon&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-html">&lt;wa-comparison (change)=&quot;onPositionChange($event)&quot;&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+onPositionChange(position: number): void {
+  console.log(`Divider position: ${position}%`);
+}
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;style&gt;
+  .custom-comparison {
+    --divider-color: #ff5722;
+    --divider-width: 3px;
+    --handle-color: #ff5722;
+    --handle-size: 32px;
+  }
+&lt;/style&gt;
+
+&lt;wa-comparison class=&quot;custom-comparison&quot;&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<h2>With Labels</h2>
+<pre><code class="language-html">&lt;wa-comparison&gt;
+  &lt;div slot=&quot;before&quot;&gt;
+    &lt;img src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+    &lt;div class=&quot;label&quot;&gt;Before&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div slot=&quot;after&quot;&gt;
+    &lt;img src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+    &lt;div class=&quot;label&quot;&gt;After&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<h2>Using with Angular Bindings</h2>
+<pre><code class="language-html">&lt;wa-comparison 
+  [position]=&quot;sliderPosition&quot; 
+  (change)=&quot;updatePosition($event)&quot;&gt;
+  &lt;img slot=&quot;before&quot; [src]=&quot;beforeImage&quot; alt=&quot;Before&quot; /&gt;
+  &lt;img slot=&quot;after&quot; [src]=&quot;afterImage&quot; alt=&quot;After&quot; /&gt;
+  &lt;ng-container *ngIf=&quot;showCustomHandle&quot;&gt;
+    &lt;wa-icon slot=&quot;handle&quot; [name]=&quot;handleIcon&quot;&gt;&lt;/wa-icon&gt;
+  &lt;/ng-container&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class ComparisonDemoComponent {
+  sliderPosition = 50;
+  beforeImage = &#39;/assets/image-before.jpg&#39;;
+  afterImage = &#39;/assets/image-after.jpg&#39;;
+  showCustomHandle = true;
+  handleIcon = &#39;arrows-left-right&#39;;
+
+  updatePosition(position: number): void {
+    this.sliderPosition = position;
+  }
+}
+</code></pre>
+<h2>Responsive Example</h2>
+<pre><code class="language-html">&lt;div class=&quot;responsive-container&quot;&gt;
+  &lt;wa-comparison&gt;
+    &lt;img slot=&quot;before&quot; src=&quot;/assets/image-before.jpg&quot; alt=&quot;Before&quot; /&gt;
+    &lt;img slot=&quot;after&quot; src=&quot;/assets/image-after.jpg&quot; alt=&quot;After&quot; /&gt;
+  &lt;/wa-comparison&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  .responsive-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .responsive-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2>Common Use Cases</h2>
+<pre><code class="language-html">&lt;!-- Before/After Photo Editing --&gt;
+&lt;wa-comparison&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/photo-original.jpg&quot; alt=&quot;Original Photo&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/photo-edited.jpg&quot; alt=&quot;Edited Photo&quot; /&gt;
+&lt;/wa-comparison&gt;
+
+&lt;!-- Product Comparison --&gt;
+&lt;wa-comparison&gt;
+  &lt;div slot=&quot;before&quot;&gt;
+    &lt;img src=&quot;/assets/product-a.jpg&quot; alt=&quot;Product A&quot; /&gt;
+    &lt;div class=&quot;product-info&quot;&gt;
+      &lt;h3&gt;Product A&lt;/h3&gt;
+      &lt;p&gt;$99.99&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Feature 1&lt;/li&gt;
+        &lt;li&gt;Feature 2&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div slot=&quot;after&quot;&gt;
+    &lt;img src=&quot;/assets/product-b.jpg&quot; alt=&quot;Product B&quot; /&gt;
+    &lt;div class=&quot;product-info&quot;&gt;
+      &lt;h3&gt;Product B&lt;/h3&gt;
+      &lt;p&gt;$149.99&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Feature 1&lt;/li&gt;
+        &lt;li&gt;Feature 2&lt;/li&gt;
+        &lt;li&gt;Feature 3&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/wa-comparison&gt;
+
+&lt;!-- Map Comparison --&gt;
+&lt;wa-comparison&gt;
+  &lt;img slot=&quot;before&quot; src=&quot;/assets/map-1990.jpg&quot; alt=&quot;Map 1990&quot; /&gt;
+  &lt;img slot=&quot;after&quot; src=&quot;/assets/map-2020.jpg&quot; alt=&quot;Map 2020&quot; /&gt;
+  &lt;div slot=&quot;handle&quot; class=&quot;year-handle&quot;&gt;
+    &lt;span class=&quot;year&quot;&gt;1990&lt;/span&gt;
+    &lt;wa-icon name=&quot;arrows-left-right&quot;&gt;&lt;/wa-icon&gt;
+    &lt;span class=&quot;year&quot;&gt;2020&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/wa-comparison&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+userName:
+accessKey:
+platforms:
+  - os: Windows
+    osVersion: 10
+    browserName: Chrome
+    browserVersion: '120.0'
+browserstackLocal: true
+buildName: angular-awesome
+projectName: AngularAwesome
+CUSTOM_TAG_1: "AngularAwesome"
+# Use CUSTOM_TAG_<N> and set more build tags as you need.
+debug: true
+networkLogs: true
+consoleLogs: verbose

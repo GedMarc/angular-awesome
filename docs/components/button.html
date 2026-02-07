@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Button Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Button Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-button> is an interactive element that represents an action. It supports multiple variants, appearances, and sizes. It can also render as a link when href is provided.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the button directive from the angular-awesome package:</p>
+        <pre>// Import the button directive
+import { WaButtonDirective } from 'angular-awesome/button';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Button Component Examples</h1>
+<p>📌 This document provides examples of using the <code>&lt;wa-button&gt;</code> component in Angular applications.</p>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-button&gt;Click Me&lt;/wa-button&gt;
+</code></pre>
+<h2>Variants</h2>
+<pre><code class="language-html">&lt;wa-button variant=&quot;neutral&quot;&gt;Neutral&lt;/wa-button&gt;
+&lt;wa-button variant=&quot;brand&quot;&gt;Brand&lt;/wa-button&gt;
+&lt;wa-button variant=&quot;success&quot;&gt;Success&lt;/wa-button&gt;
+&lt;wa-button variant=&quot;warning&quot;&gt;Warning&lt;/wa-button&gt;
+&lt;wa-button variant=&quot;danger&quot;&gt;Danger&lt;/wa-button&gt;
+</code></pre>
+<h2>Appearances</h2>
+<pre><code class="language-html">&lt;wa-button appearance=&quot;accent&quot;&gt;Accent&lt;/wa-button&gt;
+&lt;wa-button appearance=&quot;filled&quot;&gt;Filled&lt;/wa-button&gt;
+&lt;wa-button appearance=&quot;outlined&quot;&gt;Outlined&lt;/wa-button&gt;
+&lt;wa-button appearance=&quot;plain&quot;&gt;Plain&lt;/wa-button&gt;
+</code></pre>
+<h2>Sizes</h2>
+<pre><code class="language-html">&lt;wa-button size=&quot;small&quot;&gt;Small&lt;/wa-button&gt;
+&lt;wa-button size=&quot;medium&quot;&gt;Medium&lt;/wa-button&gt;
+&lt;wa-button size=&quot;large&quot;&gt;Large&lt;/wa-button&gt;
+</code></pre>
+<h2>Boolean Attributes</h2>
+<pre><code class="language-html">&lt;wa-button pill&gt;Pill Button&lt;/wa-button&gt;
+&lt;wa-button caret&gt;Dropdown&lt;/wa-button&gt;
+&lt;wa-button disabled&gt;Disabled&lt;/wa-button&gt;
+&lt;wa-button loading&gt;Loading&lt;/wa-button&gt;
+</code></pre>
+<h2>With Angular Bindings</h2>
+<pre><code class="language-html">&lt;wa-button [variant]=&quot;buttonVariant&quot; [disabled]=&quot;isDisabled&quot; (click)=&quot;handleClick()&quot;&gt;
+  Dynamic Button
+&lt;/wa-button&gt;
+
+&lt;!-- Using direct styling with Angular bindings --&gt;
+&lt;wa-button 
+  [variant]=&quot;buttonVariant&quot; 
+  [color]=&quot;buttonColor&quot; 
+  [backgroundColor]=&quot;buttonBackgroundColor&quot; 
+  [fontSize]=&quot;buttonFontSize&quot;
+  (click)=&quot;handleClick()&quot;&gt;
+  Styled Dynamic Button
+&lt;/wa-button&gt;
+
+&lt;!-- Conditional styling based on component state --&gt;
+&lt;wa-button 
+  [variant]=&quot;buttonVariant&quot; 
+  [color]=&quot;isDarkMode ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;isHighlighted ? accentColor : defaultColor&quot;&gt;
+  Context-Aware Button
+&lt;/wa-button&gt;
+</code></pre>
+<h2>Link Buttons</h2>
+<pre><code class="language-html">&lt;wa-button href=&quot;https://example.com&quot; target=&quot;_blank&quot;&gt;
+  External Link
+&lt;/wa-button&gt;
+</code></pre>
+<h2>With Slots</h2>
+<pre><code class="language-html">&lt;wa-button&gt;
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;star&quot;&gt;&lt;/wa-icon&gt;
+  With Icon Start
+&lt;/wa-button&gt;
+
+&lt;wa-button&gt;
+  With Icon End
+  &lt;wa-icon slot=&quot;end&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
+&lt;/wa-button&gt;
+</code></pre>
+<h2>Form Buttons</h2>
+<pre><code class="language-html">&lt;form #myForm=&quot;ngForm&quot;&gt;
+  &lt;!-- Form fields here --&gt;
+  &lt;wa-button type=&quot;submit&quot;&gt;Submit Form&lt;/wa-button&gt;
+  &lt;wa-button type=&quot;reset&quot;&gt;Reset Form&lt;/wa-button&gt;
+&lt;/form&gt;
+</code></pre>
+<h2>Combined Examples</h2>
+<pre><code class="language-html">&lt;wa-button 
+  variant=&quot;success&quot; 
+  appearance=&quot;outlined&quot; 
+  size=&quot;large&quot; 
+  [loading]=&quot;isSubmitting&quot;
+  (click)=&quot;saveData()&quot;&gt;
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
+  Save Changes
+&lt;/wa-button&gt;
+
+&lt;wa-button 
+  variant=&quot;danger&quot; 
+  appearance=&quot;plain&quot; 
+  [disabled]=&quot;!canDelete&quot;
+  (focus)=&quot;handleFocus()&quot;
+  (blur)=&quot;handleBlur()&quot;&gt;
+  Delete Item
+&lt;/wa-button&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-button class=&quot;custom-button&quot;&gt;
+  Custom Styled Button
+&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-css">wa-button.custom-button::part(base) {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+wa-button.custom-button:hover::part(base) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+</code></pre>
+<h3>Direct Styling</h3>
+<pre><code class="language-html">&lt;!-- Using direct styling inputs --&gt;
+&lt;wa-button 
+  [color]=&quot;&#39;#ffffff&#39;&quot; 
+  [backgroundColor]=&quot;&#39;#4a90e2&#39;&quot; 
+  [fontSize]=&quot;&#39;16px&#39;&quot;&gt;
+  Directly Styled Button
+&lt;/wa-button&gt;
+
+&lt;!-- Dynamic direct styling --&gt;
+&lt;wa-button 
+  [color]=&quot;isActive ? &#39;#ffffff&#39; : &#39;#333333&#39;&quot; 
+  [backgroundColor]=&quot;isActive ? &#39;#4a90e2&#39; : &#39;#f0f0f0&#39;&quot; 
+  [fontSize]=&quot;isLarge ? &#39;18px&#39; : &#39;14px&#39;&quot;&gt;
+  Dynamic Styled Button
+&lt;/wa-button&gt;
+</code></pre>
+<hr>
+<p>📌 For more details on available properties and usage guidelines, refer to the <a href="./button.rules.md">Button Component Rules</a>.</p>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

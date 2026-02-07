@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - ButtonGroup Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>ButtonGroup Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-button-group> provides button group functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the buttonGroup directive from the angular-awesome package:</p>
+        <pre>// Import the buttonGroup directive
+import { WaButtonGroupDirective } from 'angular-awesome/button-group';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Button Group Component Examples</h1>
+<p>📌 This document provides examples of using the <code>&lt;wa-button-group&gt;</code> component in Angular applications.</p>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Alignment&quot;&gt;
+  &lt;wa-button&gt;Left&lt;/wa-button&gt;
+  &lt;wa-button&gt;Center&lt;/wa-button&gt;
+  &lt;wa-button&gt;Right&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>Using Attribute Selector</h2>
+<pre><code class="language-html">&lt;div waButtonGroup label=&quot;Alignment&quot;&gt;
+  &lt;button waButton&gt;Left&lt;/button&gt;
+  &lt;button waButton&gt;Center&lt;/button&gt;
+  &lt;button waButton&gt;Right&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Orientation</h2>
+<h3>Horizontal (Default)</h3>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Horizontal Group&quot; orientation=&quot;horizontal&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+  &lt;wa-button&gt;Three&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h3>Vertical</h3>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Vertical Group&quot; orientation=&quot;vertical&quot;&gt;
+  &lt;wa-button&gt;Top&lt;/wa-button&gt;
+  &lt;wa-button&gt;Middle&lt;/wa-button&gt;
+  &lt;wa-button&gt;Bottom&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>Size Inheritance</h2>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Small Buttons&quot; size=&quot;small&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Medium Buttons&quot; size=&quot;medium&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Large Buttons&quot; size=&quot;large&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>Variant Inheritance</h2>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Neutral Buttons&quot; variant=&quot;neutral&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Brand Buttons&quot; variant=&quot;brand&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Success Buttons&quot; variant=&quot;success&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Warning Buttons&quot; variant=&quot;warning&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+
+&lt;wa-button-group label=&quot;Danger Buttons&quot; variant=&quot;danger&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>With Angular Bindings</h2>
+<pre><code class="language-html">&lt;wa-button-group 
+  [label]=&quot;groupLabel&quot; 
+  [variant]=&quot;groupVariant&quot; 
+  [size]=&quot;groupSize&quot; 
+  [orientation]=&quot;groupOrientation&quot;&gt;
+  &lt;wa-button *ngFor=&quot;let option of options&quot;&gt;{{ option }}&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<pre><code class="language-typescript">@Component({
+  // ...
+})
+export class MyComponent {
+  groupLabel = &#39;Dynamic Group&#39;;
+  groupVariant = &#39;brand&#39;;
+  groupSize = &#39;medium&#39;;
+  groupOrientation = &#39;horizontal&#39;;
+  options = [&#39;Option 1&#39;, &#39;Option 2&#39;, &#39;Option 3&#39;];
+}
+</code></pre>
+<h2>Mixed Button Styles</h2>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Mixed Styles&quot; variant=&quot;neutral&quot;&gt;
+  &lt;wa-button&gt;Default&lt;/wa-button&gt;
+  &lt;wa-button variant=&quot;brand&quot;&gt;Override&lt;/wa-button&gt;
+  &lt;wa-button pill&gt;Pill Button&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>With Tooltips</h2>
+<pre><code class="language-html">&lt;wa-button-group label=&quot;Actions&quot;&gt;
+  &lt;wa-tooltip content=&quot;Create new item&quot;&gt;
+    &lt;wa-button&gt;New&lt;/wa-button&gt;
+  &lt;/wa-tooltip&gt;
+  &lt;wa-tooltip content=&quot;Edit selected item&quot;&gt;
+    &lt;wa-button&gt;Edit&lt;/wa-button&gt;
+  &lt;/wa-tooltip&gt;
+  &lt;wa-tooltip content=&quot;Delete selected item&quot;&gt;
+    &lt;wa-button&gt;Delete&lt;/wa-button&gt;
+  &lt;/wa-tooltip&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<h2>Custom Styling</h2>
+<pre><code class="language-html">&lt;wa-button-group class=&quot;custom-group&quot; label=&quot;Custom Styled Group&quot;&gt;
+  &lt;wa-button&gt;One&lt;/wa-button&gt;
+  &lt;wa-button&gt;Two&lt;/wa-button&gt;
+  &lt;wa-button&gt;Three&lt;/wa-button&gt;
+&lt;/wa-button-group&gt;
+</code></pre>
+<pre><code class="language-css">wa-button-group.custom-group::part(base) {
+  background-color: var(--wa-color-neutral-50);
+  padding: 0.25em; /* Changed from var(--wa-space-xs) to relative em value */
+  border-radius: var(--wa-border-radius-m);
+  box-shadow: var(--wa-shadow-s);
+}
+
+/* Add spacing between button groups */
+wa-button-group:not(:last-child) {
+  margin-right: 1em; /* Changed from var(--wa-space-m) to relative em value */
+}
+</code></pre>
+<hr>
+<p>📌 For more details on available properties and usage guidelines, refer to the <a href="./buttongroup.rules.md">Button Group Component Rules</a>.</p>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

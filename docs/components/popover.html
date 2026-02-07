@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Popover Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Popover Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-popover> provides popover functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the popover directive from the angular-awesome package:</p>
+        <pre>// Import the popover directive
+import { WaPopoverDirective } from 'angular-awesome/popover';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Popover Examples</h1>
+<h2>Basic Usage</h2>
+<pre><code class="language-html">&lt;button id=&quot;popover-trigger&quot;&gt;Click me&lt;/button&gt;
+&lt;wa-popover anchor=&quot;popover-trigger&quot;&gt;
+  &lt;div class=&quot;popover-content&quot;&gt;
+    This is a basic popover anchored to a button.
+  &lt;/div&gt;
+&lt;/wa-popover&gt;
+</code></pre>
+<h2>Activating</h2>
+<p>Popovers are inactive and hidden until the <code>active</code> attribute is applied. Removing the attribute will tear down all positioning logic and listeners, meaning you can have many idle popovers on the page without affecting performance.</p>
+<pre><code class="language-html">&lt;button id=&quot;popover-active-trigger&quot; onclick=&quot;document.getElementById(&#39;active-popover&#39;).toggleAttribute(&#39;active&#39;)&quot;&gt;
+  Toggle Popover
+&lt;/button&gt;
+&lt;wa-popover id=&quot;active-popover&quot; anchor=&quot;popover-active-trigger&quot;&gt;
+  &lt;div class=&quot;popover-content&quot;&gt;
+    This popover is toggled by clicking the button.
+  &lt;/div&gt;
+&lt;/wa-popover&gt;
+</code></pre>
+<h2>External Anchors</h2>
+<p>By default, anchors are slotted into the popover using the <code>anchor</code> slot. If your anchor needs to live outside of the popover, you can pass the anchor&#39;s id to the <code>anchor</code> attribute.</p>
+<pre><code class="language-html">&lt;!-- Using anchor attribute --&gt;
+&lt;button id=&quot;external-anchor&quot;&gt;External Anchor&lt;/button&gt;
+&lt;wa-popover anchor=&quot;external-anchor&quot; active&gt;
+  &lt;div class=&quot;popover-content&quot;&gt;
+    This popover is anchored to an external element.
+  &lt;/div&gt;
+&lt;/wa-popover&gt;
+
+&lt;!-- Using anchor slot --&gt;
+&lt;wa-popover active&gt;
+  &lt;button slot=&quot;anchor&quot;&gt;Slotted Anchor&lt;/button&gt;
+  &lt;div class=&quot;popover-content&quot;&gt;
+    This popover uses a slotted anchor.
+  &lt;/div&gt;
+&lt;/wa-popover&gt;
+</code></pre>
+<h2>Placement</h2>
+<p>Use the <code>placement</code> attribute to tell the popover the preferred placement of the popover. Note that the actual position will vary to ensure the panel remains in the viewport if you&#39;re using positioning features such as flip and shift.</p>
+<pre><code class="language-html">&lt;div class=&quot;placement-examples&quot;&gt;
+  &lt;!-- Top placement (default) --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;top-anchor&quot;&gt;Top&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;top-anchor&quot; placement=&quot;top&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Top placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Right placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;right-anchor&quot;&gt;Right&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;right-anchor&quot; placement=&quot;right&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Right placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Bottom placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;bottom-anchor&quot;&gt;Bottom&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;bottom-anchor&quot; placement=&quot;bottom&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Bottom placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Left placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;left-anchor&quot;&gt;Left&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;left-anchor&quot; placement=&quot;left&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Left placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Top-start placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;top-start-anchor&quot;&gt;Top-Start&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;top-start-anchor&quot; placement=&quot;top-start&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Top-start placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Bottom-end placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;bottom-end-anchor&quot;&gt;Bottom-End&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;bottom-end-anchor&quot; placement=&quot;bottom-end&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Bottom-end placement&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Distance</h2>
+<p>Use the <code>distance</code> attribute to change the distance between the popover and its anchor. A positive value will move the popover further away and a negative value will move it closer.</p>
+<pre><code class="language-html">&lt;div class=&quot;distance-examples&quot;&gt;
+  &lt;!-- Default distance (0px) --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;default-distance-anchor&quot;&gt;Default&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;default-distance-anchor&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Default distance (0px)&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 10px distance --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;small-distance-anchor&quot;&gt;Small&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;small-distance-anchor&quot; distance=&quot;10&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;10px distance&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 20px distance --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;medium-distance-anchor&quot;&gt;Medium&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;medium-distance-anchor&quot; distance=&quot;20&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;20px distance&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Negative distance (-5px) --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;negative-distance-anchor&quot;&gt;Negative&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;negative-distance-anchor&quot; distance=&quot;-5&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;-5px distance (closer)&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Skidding</h2>
+<p>The <code>skidding</code> attribute is similar to distance, but instead allows you to offset the popover along the anchor&#39;s axis. Both positive and negative values are allowed.</p>
+<pre><code class="language-html">&lt;div class=&quot;skidding-examples&quot;&gt;
+  &lt;!-- Default skidding (0px) --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;default-skidding-anchor&quot;&gt;Default&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;default-skidding-anchor&quot; placement=&quot;top&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Default skidding (0px)&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 20px skidding --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;positive-skidding-anchor&quot;&gt;Positive&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;positive-skidding-anchor&quot; placement=&quot;top&quot; skidding=&quot;20&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;20px skidding&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- -20px skidding --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;negative-skidding-anchor&quot;&gt;Negative&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;negative-skidding-anchor&quot; placement=&quot;top&quot; skidding=&quot;-20&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;-20px skidding&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Arrows</h2>
+<p>Add an arrow to your popover with the <code>arrow</code> attribute. It&#39;s usually a good idea to set a distance to make room for the arrow. To adjust the arrow&#39;s color and size, use the <code>--arrow-color</code> and <code>--arrow-size</code> custom properties, respectively. You can also target the arrow part to add additional styles such as shadows and borders.</p>
+<pre><code class="language-html">&lt;div class=&quot;arrow-examples&quot;&gt;
+  &lt;!-- Basic arrow --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;basic-arrow-anchor&quot;&gt;Basic Arrow&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;basic-arrow-anchor&quot; arrow distance=&quot;8&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Popover with an arrow&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Arrow with custom placement --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;arrow-placement-anchor&quot;&gt;Custom Placement&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;arrow-placement-anchor&quot; arrow arrow-placement=&quot;start&quot; distance=&quot;8&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Arrow aligned to start&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Arrow with custom styling --&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;styled-arrow-anchor&quot;&gt;Styled Arrow&lt;/button&gt;
+    &lt;wa-popover 
+      anchor=&quot;styled-arrow-anchor&quot; 
+      arrow 
+      distance=&quot;8&quot; 
+      active
+      style=&quot;--arrow-color: #ff5722; --arrow-size: 12px;&quot;
+    &gt;
+      &lt;div class=&quot;popover-content&quot;&gt;Custom arrow color and size&lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Flip</h2>
+<p>When the popover doesn&#39;t have enough room in its preferred placement, it can automatically flip to keep it in view and visually connected to its anchor. To enable this, use the <code>flip</code> attribute. By default, the popover will flip to the opposite placement, but you can configure preferred fallback placements using <code>flip-fallback-placement</code> and <code>flip-fallback-strategy</code>.</p>
+<pre><code class="language-html">&lt;div class=&quot;flip-examples&quot; style=&quot;overflow: auto; height: 300px; padding: 100px 20px;&quot;&gt;
+  &lt;p&gt;Scroll the container to see how the popover flips to prevent clipping.&lt;/p&gt;
+  
+  &lt;div class=&quot;example&quot; style=&quot;margin-bottom: 200px;&quot;&gt;
+    &lt;button id=&quot;flip-anchor&quot;&gt;Flip Enabled&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;flip-anchor&quot; placement=&quot;bottom&quot; flip active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover will flip to the top when there&#39;s not enough room at the bottom.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;no-flip-anchor&quot;&gt;No Flip&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;no-flip-anchor&quot; placement=&quot;bottom&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover won&#39;t flip and might get clipped.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Flip Fallbacks</h2>
+<p>While using the <code>flip</code> attribute, you can customize the placement of the popover when the preferred placement doesn&#39;t have room. For this, use <code>flip-fallback-placements</code> and <code>flip-fallback-strategy</code>.</p>
+<pre><code class="language-html">&lt;div class=&quot;flip-fallback-examples&quot; style=&quot;overflow: auto; height: 300px; padding: 100px 20px;&quot;&gt;
+  &lt;p&gt;Scroll the container to see how the popover changes its fallback placement to prevent clipping.&lt;/p&gt;
+  
+  &lt;div class=&quot;example&quot; style=&quot;margin-bottom: 200px;&quot;&gt;
+    &lt;button id=&quot;fallback-anchor&quot;&gt;With Fallbacks&lt;/button&gt;
+    &lt;wa-popover 
+      anchor=&quot;fallback-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      flip 
+      flip-fallback-placements=&quot;right left top-start&quot; 
+      flip-fallback-strategy=&quot;best-fit&quot;
+      active
+    &gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover will try different placements in this order: bottom, right, left, top-start.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Shift</h2>
+<p>When a popover is longer than its anchor, it risks overflowing. In this case, use the <code>shift</code> attribute to shift the popover along its axis and back into view. You can customize the shift behavior using <code>shift-boundary</code> and <code>shift-padding</code>.</p>
+<pre><code class="language-html">&lt;div class=&quot;shift-examples&quot; style=&quot;overflow: auto; width: 300px;&quot;&gt;
+  &lt;p&gt;Toggle the switch to see the difference.&lt;/p&gt;
+  
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;shift-anchor&quot; style=&quot;margin-left: 5px;&quot;&gt;Shift Enabled&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;shift-anchor&quot; placement=&quot;bottom&quot; shift active&gt;
+      &lt;div class=&quot;popover-content&quot; style=&quot;width: 200px;&quot;&gt;
+        This popover will shift to stay in view even though it&#39;s wider than its anchor.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;no-shift-anchor&quot; style=&quot;margin-left: 5px;&quot;&gt;No Shift&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;no-shift-anchor&quot; placement=&quot;bottom&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot; style=&quot;width: 200px;&quot;&gt;
+        This popover might overflow the container because shift is disabled.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Auto-size</h2>
+<p>Use the <code>auto-size</code> attribute to tell the popover to resize when necessary to prevent it from overflowing. Possible values are <code>horizontal</code>, <code>vertical</code>, and <code>both</code>. You can use <code>auto-size-boundary</code> and <code>auto-size-padding</code> to customize the behavior of this option.</p>
+<pre><code class="language-html">&lt;div class=&quot;auto-size-examples&quot; style=&quot;overflow: auto; width: 300px; height: 300px;&quot;&gt;
+  &lt;p&gt;Scroll the container to see the popover resize as its available space changes.&lt;/p&gt;
+  
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;auto-size-anchor&quot; style=&quot;margin: 50px;&quot;&gt;Auto-size&lt;/button&gt;
+    &lt;wa-popover anchor=&quot;auto-size-anchor&quot; placement=&quot;bottom&quot; auto-size=&quot;both&quot; active&gt;
+      &lt;div class=&quot;popover-content&quot; style=&quot;max-width: var(--auto-size-available-width); max-height: var(--auto-size-available-height);&quot;&gt;
+        This popover will automatically resize to fit within the available space. It contains a lot of content that would normally cause overflow, but the auto-size attribute prevents that from happening.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Hover Bridge</h2>
+<p>When a gap exists between the anchor and the popover element, this option will add a &quot;hover bridge&quot; that fills the gap using an invisible element. This makes listening for events such as mouseover and mouseout more sane because the pointer never technically leaves the element.</p>
+<pre><code class="language-html">&lt;div class=&quot;hover-bridge-examples&quot;&gt;
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;hover-bridge-anchor&quot;&gt;With Hover Bridge&lt;/button&gt;
+    &lt;wa-popover 
+      anchor=&quot;hover-bridge-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      distance=&quot;15&quot; 
+      hover-bridge 
+      active
+    &gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover has a hover bridge, making it easier to move the mouse between the anchor and the popover without the popover disappearing.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+  
+  &lt;div class=&quot;example&quot;&gt;
+    &lt;button id=&quot;no-hover-bridge-anchor&quot;&gt;Without Hover Bridge&lt;/button&gt;
+    &lt;wa-popover 
+      anchor=&quot;no-hover-bridge-anchor&quot; 
+      placement=&quot;bottom&quot; 
+      distance=&quot;15&quot; 
+      active
+    &gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover doesn&#39;t have a hover bridge, so moving the mouse between the anchor and popover might cause the popover to hide.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Virtual Elements</h2>
+<p>In most cases, popovers are anchored to an actual element. Sometimes, it can be useful to anchor them to a non-element. To do this, you can pass a VirtualElement to the anchor property. A virtual element must contain a function called getBoundingClientRect() that returns a DOMRect object.</p>
+<pre><code class="language-javascript">// Example of creating a virtual element that follows the mouse cursor
+const virtualElement = {
+  getBoundingClientRect() {
+    return {
+      width: 0,
+      height: 0,
+      x: mouseX,
+      y: mouseY,
+      top: mouseY,
+      left: mouseX,
+      right: mouseX,
+      bottom: mouseY
+    };
+  }
+};
+
+// Then use it with the popover
+const popover = document.querySelector(&#39;wa-popover&#39;);
+popover.anchor = virtualElement;
+</code></pre>
+<h2>Event Handling</h2>
+<pre><code class="language-typescript">import { Component, ViewChild, ElementRef, AfterViewInit } from &#39;@angular/core&#39;;
+import { WaPopoverDirective } from &#39;@angular-awesome/directives/popover&#39;;
+
+@Component({
+  selector: &#39;app-popover-events-demo&#39;,
+  template: `
+    &lt;button #eventAnchor&gt;Click for Events&lt;/button&gt;
+    &lt;wa-popover 
+      #eventPopover
+      [anchor]=&quot;eventAnchor&quot;
+      (waReposition)=&quot;onReposition($event)&quot;
+    &gt;
+      &lt;div class=&quot;popover-content&quot;&gt;
+        This popover triggers events when repositioned.
+      &lt;/div&gt;
+    &lt;/wa-popover&gt;
+    
+    &lt;div class=&quot;event-log&quot;&gt;
+      &lt;p&gt;Repositioned: {{ repositionCount }} times&lt;/p&gt;
+      &lt;button (click)=&quot;togglePopover()&quot;&gt;Toggle Popover&lt;/button&gt;
+    &lt;/div&gt;
+  `,
+  standalone: true,
+  imports: [WaPopoverDirective]
+})
+export class PopoverEventsDemoComponent implements AfterViewInit {
+  @ViewChild(&#39;eventPopover&#39;) popover!: ElementRef;
+  @ViewChild(&#39;eventAnchor&#39;) anchor!: ElementRef;
+  
+  repositionCount = 0;
+  
+  ngAfterViewInit() {
+    // Initial setup
+  }
+  
+  togglePopover() {
+    const popoverEl = this.popover.nativeElement;
+    popoverEl.active = !popoverEl.active;
+  }
+  
+  onReposition(event: CustomEvent) {
+    this.repositionCount++;
+    console.log(&#39;Popover repositioned&#39;);
+  }
+}
+</code></pre>
+<h2>Combining Features</h2>
+<pre><code class="language-html">&lt;div class=&quot;combined-examples&quot;&gt;
+  &lt;button id=&quot;combined-anchor&quot;&gt;Advanced Popover&lt;/button&gt;
+  &lt;wa-popover 
+    anchor=&quot;combined-anchor&quot;
+    placement=&quot;bottom&quot;
+    arrow
+    arrow-placement=&quot;center&quot;
+    distance=&quot;10&quot;
+    flip
+    shift
+    auto-size=&quot;both&quot;
+    hover-bridge
+    active
+    style=&quot;--arrow-color: #3f51b5;&quot;
+  &gt;
+    &lt;div class=&quot;popover-content&quot;&gt;
+      &lt;h3&gt;Fully Featured Popover&lt;/h3&gt;
+      &lt;p&gt;This popover combines multiple features:&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Custom placement&lt;/li&gt;
+        &lt;li&gt;Arrow with custom color&lt;/li&gt;
+        &lt;li&gt;Distance from anchor&lt;/li&gt;
+        &lt;li&gt;Flip to stay in view&lt;/li&gt;
+        &lt;li&gt;Shift to prevent overflow&lt;/li&gt;
+        &lt;li&gt;Auto-size to fit available space&lt;/li&gt;
+        &lt;li&gt;Hover bridge for better mouse interaction&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/wa-popover&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

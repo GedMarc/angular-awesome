@@ -1,0 +1,43 @@
+{
+  "name": "angular-awesome",
+  "version": "3.2.1",
+  "private": false,
+  "description": "Angular 19+ wrappers for the Web Awesome 3.2.x web components framework",
+  "keywords": [
+    "angular",
+    "web-awesome",
+    "web-components",
+    "wrapper",
+    "components",
+    "directives"
+  ],
+  "author": "Marc Magon <marc.magon@gmail.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GedMarc/angular-awesome.git"
+  },
+  "homepage": "https://gedmarc.github.io/angular-awesome",
+  "main": "dist/angular-awesome/fesm2022/angular-awesome.js",
+  "module": "fesm2022/angular-awesome.mjs",
+  "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
+  "typings": "index.d.ts",
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0"
+  },
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./fesm2022/angular-awesome.mjs"
+    }
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
