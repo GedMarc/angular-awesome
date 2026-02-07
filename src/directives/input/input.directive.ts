@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Appearance, normalizeAppearance } from '../../types/tokens';
 
@@ -36,7 +36,7 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
     }
   ]
 })
-export class WaInputDirective implements OnInit, ControlValueAccessor, Validator {
+export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() type?: string;
   @Input() value?: string | number | null;
@@ -76,12 +76,19 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   @Input() boxShadow?: string;
 
   // Event outputs
-  @Output() input = new EventEmitter<Event>();
-  @Output() change = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
   @Output() waClear = new EventEmitter<CustomEvent>();
+  @Output('wa-clear') waClearHyphen = this.waClear;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<string | number | null>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -95,6 +102,62 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.waInput.emit(event);
+      const val = (event.target as any).value;
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    const forwardChange = (event: Event) => {
+      this.waChange.emit(event);
+      const val = (event.target as any).value;
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
+      this.waClear.emit(event);
+      this.onChange('');
+      this.valueChange.emit('');
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('type', this.type);
     this.setAttr('value', this.value?.toString());
@@ -140,31 +203,6 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
     this.setCssVar('--border-color', this.borderColor);
     this.setCssVar('--border-width', this.borderWidth);
     this.setCssVar('--box-shadow', this.boxShadow);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.input.emit(event);
-      this.onChange((event.target as HTMLInputElement).value);
-    });
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.change.emit(event);
-      this.onChange((event.target as HTMLInputElement).value);
-    });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
-      this.waClear.emit(event);
-      this.onChange('');
-    });
-    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
-      this.waInvalid.emit(event);
-      this.validatorChange?.();
-    });
   }
 
   /**

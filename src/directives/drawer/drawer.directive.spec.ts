@@ -17,12 +17,12 @@ import { WaDrawerDirective } from './drawer.directive';
       [size]="size"
       [showDuration]="showDuration"
       [hideDuration]="hideDuration"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     >
       <div>Default content</div>
       <div slot="footer" *ngIf="showFooter">Footer content</div>
@@ -204,8 +204,8 @@ describe('WaDrawerDirective', () => {
     const afterShowEvent = new CustomEvent('wa-after-show');
     const hideEvent = new CustomEvent('wa-hide');
     const afterHideEvent = new CustomEvent('wa-after-hide');
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
 
     // Dispatch events on the native element
     drawerElement.dispatchEvent(showEvent);

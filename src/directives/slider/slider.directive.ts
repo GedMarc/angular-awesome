@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
@@ -32,7 +32,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaSliderDirective implements OnInit, ControlValueAccessor {
+export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
   @Input() min?: number;
   @Input() max?: number;
@@ -68,11 +68,17 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   @Input() thumbHeight?: string;
 
   // Event outputs
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() invalidEvent = new EventEmitter<CustomEvent>();
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -86,6 +92,71 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.waInput.emit(event);
+      const target = event.target as HTMLInputElement;
+
+      let val: any;
+      // Handle range slider with dual thumbs
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        const minValue = parseFloat((target as any).minValue);
+        const maxValue = parseFloat((target as any).maxValue);
+        val = { min: minValue, max: maxValue };
+      } else {
+        // Regular slider
+        val = target.value !== '' ? parseFloat(target.value) : null;
+      }
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    const forwardChange = (event: Event) => {
+      this.waChange.emit(event);
+      const target = event.target as HTMLInputElement;
+      let val: any;
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        val = { min: parseFloat((target as any).minValue), max: parseFloat((target as any).maxValue) };
+      } else {
+        val = target.value !== '' ? parseFloat(target.value) : null;
+      }
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
+      this.waInvalid.emit(event);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set numeric attributes
     this.setNumericAttr('min', this.min);
     this.setNumericAttr('max', this.max);
@@ -121,39 +192,6 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--marker-height', this.markerHeight);
     this.setCssVar('--thumb-width', this.thumbWidth);
     this.setCssVar('--thumb-height', this.thumbHeight);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.inputEvent.emit(event);
-      const target = event.target as HTMLInputElement;
-
-      // Handle range slider with dual thumbs
-      if (this.range === true || this.range === 'true' || this.range === '') {
-        const minValue = parseFloat((target as any).minValue);
-        const maxValue = parseFloat((target as any).maxValue);
-        this.onChange({ min: minValue, max: maxValue });
-      } else {
-        // Regular slider
-        this.onChange(target.value !== '' ? parseFloat(target.value) : null);
-      }
-    });
-
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.changeEvent.emit(event);
-    });
-
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-
-    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
-      this.invalidEvent.emit(event);
-    });
   }
 
   /**

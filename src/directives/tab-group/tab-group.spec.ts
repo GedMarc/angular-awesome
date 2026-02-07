@@ -16,8 +16,8 @@ import { WaTabPanelComponent } from './tab-panel.component';
       [indicatorColor]="indicatorColor"
       [trackColor]="trackColor"
       [trackWidth]="trackWidth"
-      (tabShow)="onTabShow($event)"
-      (tabHide)="onTabHide($event)"
+      (wa-tab-show)="onTabShow($event)"
+      (wa-tab-hide)="onTabHide($event)"
     >
       <wa-tab panel="tab1" [disabled]="tab1Disabled" [activeTabColor]="tab1ActiveColor">Tab 1</wa-tab>
       <wa-tab panel="tab2" [disabled]="tab2Disabled" [activeTabColor]="tab2ActiveColor">Tab 2</wa-tab>

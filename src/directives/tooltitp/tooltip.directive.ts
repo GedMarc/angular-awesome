@@ -6,14 +6,14 @@ import {
   EventEmitter,
   AfterViewInit,
   OnDestroy,
-  Renderer2,
+  Renderer2, OnChanges,
 } from '@angular/core';
 
 @Directive({
   selector: 'wa-tooltip',
   standalone: true,
 })
-export class WaTooltipDirective implements AfterViewInit, OnDestroy {
+export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
 
 
   @Input() for!: string;
@@ -45,9 +45,13 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   }
 
   @Output() waShow = new EventEmitter<CustomEvent>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<CustomEvent>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<CustomEvent>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<CustomEvent>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   private listeners: (() => void)[] = [];
 
@@ -56,11 +60,15 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   }
 
 
-  private el: ElementRef;
+  private el: HTMLElement;
 
   ngAfterViewInit(): void {
     this.setProperties();
     this.attachEvents();
+  }
+
+  ngOnChanges(): void {
+    this.setProperties();
   }
 
   ngOnDestroy(): void {

@@ -25,10 +25,10 @@ import { WaSwitchDirective } from './switch.directive';
       [thumbSize]="thumbSize"
       [width]="width"
       [(ngModel)]="isChecked"
-      (changeEvent)="onChange($event)"
-      (inputEvent)="onInput($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-change)="onChange($event)"
+      (wa-input)="onInput($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     ></wa-switch>
   `,
   standalone: true,
@@ -174,10 +174,10 @@ describe('WaSwitchDirective', () => {
     hostFixture.detectChanges();
     expect(hostComponent.isChecked).toBeFalse();
 
-    // Simulate the underlying element becoming checked and dispatch 'change'
+    // Simulate the underlying element becoming checked and dispatch 'wa-change'
     (switchElement as any).checked = true;
     switchElement.setAttribute('checked', '');
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     hostFixture.detectChanges();
 
     expect(hostComponent.isChecked).toBeTrue();
@@ -188,10 +188,10 @@ describe('WaSwitchDirective', () => {
     hostFixture.detectChanges();
     expect(switchElement.hasAttribute('checked')).toBeTrue();
 
-    // Simulate unchecking and dispatch 'change'
+    // Simulate unchecking and dispatch 'wa-change'
     (switchElement as any).checked = false;
     switchElement.removeAttribute('checked');
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     hostFixture.detectChanges();
 
     expect(hostComponent.isChecked).toBeFalse();
@@ -199,19 +199,19 @@ describe('WaSwitchDirective', () => {
 
   it('should emit events correctly', () => {
     // Simulate input event
-    switchElement.dispatchEvent(new Event('input'));
+    switchElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputEventCalled).toBe(true);
 
     // Simulate change event
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeEventCalled).toBe(true);
 
-    // Simulate focusNative event
-    switchElement.dispatchEvent(new FocusEvent('focusNative'));
+    // Simulate focus event
+    switchElement.dispatchEvent(new FocusEvent('wa-focus'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
-    // Simulate blurNative event
-    switchElement.dispatchEvent(new FocusEvent('blurNative'));
+    // Simulate blur event
+    switchElement.dispatchEvent(new FocusEvent('wa-blur'));
     expect(hostComponent.blurEventCalled).toBe(true);
   });
 });

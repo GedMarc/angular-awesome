@@ -21,11 +21,11 @@ import {WaOptionComponent} from '../select';
       [required]="required"
       [maxOptionsVisible]="maxOptionsVisible"
       [allowCustomValue]="allowCustomValue"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (clearEvent)="onClear($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-clear)="onClear($event)"
     >
       <wa-option value="apple">Apple</wa-option>
       <wa-option value="banana">Banana</wa-option>
@@ -137,7 +137,7 @@ describe('WaComboboxComponent', () => {
   it('should call onChange when value changes', () => {
     const spy = spyOn<any>(comboboxCmp, 'onChange');
     (comboboxEl as any).value = 'banana';
-    comboboxEl.dispatchEvent(new Event('change'));
+    comboboxEl.dispatchEvent(new Event('wa-change'));
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
   });
@@ -150,10 +150,10 @@ describe('WaComboboxComponent', () => {
     spyOn(host, 'onClear');
 
     const events = [
-      new Event('input'),
-      new Event('change'),
-      new FocusEvent('focusNative'),
-      new FocusEvent('blurNative'),
+      new Event('wa-input'),
+      new Event('wa-change'),
+      new FocusEvent('wa-focus'),
+      new FocusEvent('wa-blur'),
       new CustomEvent('wa-clear')
     ];
 

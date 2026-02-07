@@ -1,8 +1,30 @@
-# Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
+
+
+## [3.2.1] - 2026-02-07
+### Added
+- Angular wrappers and exports for new Web Awesome components introduced in 3.2.x:
+  - wa-file-input (experimental pro)
+  - wa-sparkline (experimental pro)
+  - wa-number-input (experimental)
+  - wa-zoomable-frame
+- Enterprise rules repository updates for new components:
+  - rules/generative/frontend/webawesome/file-input.rules.md
+  - rules/generative/frontend/webawesome/number-input.rules.md
+  - rules/generative/frontend/webawesome/sparkline.rules.md
+  - Updated rules/generative/frontend/webawesome/README.md to index the above.
+
+### Changed
+- Public API surface updated to export the new directives.
+
+### Fixed
+- Tooltip directive path corrected from src/directives/tooltitp/ to src/directives/tooltip/ and public exports aligned.
+
+### Notes
+- Per request, no edits were made to llms.txt and no tests/build were run as part of this changelog update.
 
 
 ## [3.0.3] - 2025-11-04
@@ -40,3 +62,15 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 - Examples refreshed and small styling tweaks.
 
 [3.0.3]: https://github.com/GedMarc/angular-awesome/compare/3.0.2...3.0.3
+
+
+## [3.0.4] - 2025-12-30
+### Added
+- wa-tab-panel: Introduced optional `[lazy]` input to lazily attach/detach projected DOM based on active state. Keeps default behavior unchanged; for true deferred instantiation continue to use `<ng-template waTabContent>`.
+
+### Documentation
+- Updated tab-group rules and examples to document both lazy modes (template-based true lazy vs DOM-only `[lazy]`).
+- Updated docs/components/tab-group.html with a dedicated Lazy Loading section and corrected `withoutScrollControls` input name.
+
+[3.0.4]: https://github.com/GedMarc/angular-awesome/compare/3.0.3...3.0.4
+[3.2.1]: https://github.com/GedMarc/angular-awesome/compare/3.0.4...3.2.1

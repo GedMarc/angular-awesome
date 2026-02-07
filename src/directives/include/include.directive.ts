@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaIncludeDirective
@@ -17,7 +17,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-include',
   standalone: true
 })
-export class WaIncludeDirective implements OnInit {
+export class WaIncludeDirective implements OnInit, OnChanges {
   // String inputs
   @Input() src?: string;
   @Input() mode?: 'cors' | 'no-cors' | 'same-origin' | string;
@@ -26,8 +26,8 @@ export class WaIncludeDirective implements OnInit {
   @Input() allowScripts?: boolean | string;
 
   // Event outputs
-  @Output() waLoad = new EventEmitter<void>();
-  @Output() waError = new EventEmitter<{ status: number }>();
+  @Output('wa-load') waLoad = new EventEmitter<void>();
+  @Output('wa-error') waError = new EventEmitter<{ status: number }>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -36,12 +36,7 @@ export class WaIncludeDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set string attributes
-    this.setAttr('src', this.src);
-    this.setAttr('mode', this.mode);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('allow-scripts', this.allowScripts);
+    this.applyInputs();
 
     // Set up event listeners (use hyphenated custom events per WebAwesome)
     this.renderer.listen(nativeEl, 'wa-load', () => this.waLoad.emit());
@@ -49,6 +44,19 @@ export class WaIncludeDirective implements OnInit {
     // Backwards compatibility with legacy camelCase events
     this.renderer.listen(nativeEl, 'waLoad', () => this.waLoad.emit());
     this.renderer.listen(nativeEl, 'waError', (event: CustomEvent<{ status: number }>) => this.waError.emit(event.detail));
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set string attributes
+    this.setAttr('src', this.src);
+    this.setAttr('mode', this.mode);
+
+    // Set boolean attributes (only if true)
+    this.setBooleanAttr('allow-scripts', this.allowScripts);
   }
 
   /**

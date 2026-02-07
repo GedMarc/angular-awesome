@@ -49,14 +49,16 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   @Input() showDuration?: string;
   @Input() hideDuration?: string;
 
-  // Two-way binding output for open state
-  @Output() openChange = new EventEmitter<boolean>();
-
   // Event outputs
+  @Output() openChange = new EventEmitter<boolean>();
   @Output() waShow = new EventEmitter<void>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<void>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<void>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   // Injected services
   private el = inject(ElementRef);

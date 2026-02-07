@@ -26,9 +26,9 @@ import { WaButtonDirective } from './button.directive';
       [formMethod]="formMethod"
       [formNoValidate]="formNoValidate"
       [formTarget]="formTarget"
-      (blur)="onBlur($event)"
-      (focus)="onFocus($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       <div slot="start" *ngIf="showPrefix">Prefix</div>
       {{ buttonText }}
@@ -183,9 +183,9 @@ describe('WaButtonDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(buttonElement, 'click');
-    spyOn(buttonElement, 'focusNative');
-    spyOn(buttonElement, 'blurNative');
+    spyOn(buttonElement as any, 'click');
+    spyOn(buttonElement as any, 'focus');
+    spyOn(buttonElement as any, 'blur');
 
     // Call the directive methods
     buttonDirective.click();
@@ -208,9 +208,9 @@ describe('WaButtonDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new Event('blurNative');
-    const focusEvent = new Event('focusNative');
-    const invalidEvent = new Event('waInvalid');
+    const blurEvent = new Event('wa-blur');
+    const focusEvent = new Event('wa-focus');
+    const invalidEvent = new Event('wa-invalid');
 
     // Dispatch events on the native element
     buttonElement.dispatchEvent(blurEvent);

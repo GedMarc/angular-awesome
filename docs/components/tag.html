@@ -160,14 +160,15 @@ import { WaTagDirective } from 'angular-awesome/tag';</pre>
 &lt;wa-tag&gt;Regular&lt;/wa-tag&gt;
 
 &lt;!-- Pill-shaped tag --&gt;
-&lt;wa-tag [pill]=&quot;true&quot;&gt;Pill&lt;/wa-tag&gt;
+&lt;wa-tag pill&gt;Pill&lt;/wa-tag&gt;
+&lt;wa-tag [pill]=&quot;true&quot;&gt;Pill (Bound)&lt;/wa-tag&gt;
 </code></pre>
 <h2>Removable Tags</h2>
 <pre><code class="language-html">&lt;!-- Non-removable tag --&gt;
 &lt;wa-tag&gt;Non-removable&lt;/wa-tag&gt;
 
 &lt;!-- Removable tag --&gt;
-&lt;wa-tag ngModel [removable]=&quot;true&quot; (waRemove)=&quot;handleRemove($event)&quot;&gt;Removable&lt;/wa-tag&gt;
+&lt;wa-tag ngModel [withRemove]=&quot;true&quot; (waRemove)=&quot;handleRemove($event)&quot;&gt;Removable&lt;/wa-tag&gt;
 </code></pre>
 <h2>Combined Examples</h2>
 <pre><code class="language-html">&lt;!-- Success pill tag with filled appearance --&gt;
@@ -175,7 +176,7 @@ import { WaTagDirective } from 'angular-awesome/tag';</pre>
   ngModel 
   variant=&quot;success&quot; 
   appearance=&quot;filled&quot; 
-  [pill]=&quot;true&quot;
+  pill
 &gt;
   Success
 &lt;/wa-tag&gt;
@@ -185,7 +186,7 @@ import { WaTagDirective } from 'angular-awesome/tag';</pre>
   ngModel 
   variant=&quot;warning&quot; 
   size=&quot;medium&quot; 
-  [removable]=&quot;true&quot; 
+  [withRemove]=&quot;true&quot; 
   (waRemove)=&quot;handleRemove($event)&quot;
 &gt;
   Warning
@@ -214,7 +215,7 @@ import { WaTagDirective } from &#39;@angular-awesome/directives/tag&#39;;
         ngModel
         [variant]=&quot;tag.variant&quot; 
         [appearance]=&quot;tag.appearance&quot;
-        [removable]=&quot;true&quot;
+        [withRemove]=&quot;true&quot;
         (waRemove)=&quot;removeTag(tag)&quot;
       &gt;
         {{ tag.label }}

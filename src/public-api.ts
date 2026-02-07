@@ -45,20 +45,17 @@ export * from './directives/slider/slider.directive';
 export * from './directives/spinner/spinner.directive';
 export * from './directives/split-panel/split-panel.directive';
 export * from './directives/switch/switch.directive';
-export * from './directives/tooltitp/tooltip.directive';
+export * from './directives/tooltip/tooltip.directive';
 export * from './directives/text-area/textarea.component';
 export * from './directives/tag/tag.directive';
 export * from './directives/tree/tree.directive';
 export * from './directives/tree/tree-item.directive';
 export * from './directives/tab-group/tab.component';
-// Backward-compatible alias: allow importing WaTabDirective (docs may reference directive naming)
-export { WaTabComponent as WaTabDirective } from './directives/tab-group/tab.component';
+export * from './directives/tab-group/tab.component';
 export * from './directives/tab-group/tab-panel.component';
-// Backward-compatible alias: allow importing WaTabPanelDirective (docs may reference directive naming)
-export { WaTabPanelComponent as WaTabPanelDirective } from './directives/tab-group/tab-panel.component';
+export * from './directives/tab-group/tab-panel.component';
 export * from './directives/tab-group/tab-group.component';
-// Backward-compatible alias: allow importing WaTabGroupDirective (docs may reference directive naming)
-export { WaTabGroupComponent as WaTabGroupDirective } from './directives/tab-group/tab-group.component';
+export * from './directives/tab-group/tab-group.component';
 export * from './directives/page/page.component';
 export * from './directives/popup/popup.directive';
 export * from './directives/popover/popover.directive';
@@ -74,6 +71,12 @@ export * from './directives/layout-split/layout-split.directive';
 export * from './directives/layout-stack/layout-stack.directive';
 export * from './directives/text/text.directive';
 export * from './directives/variant/variant.directive';
+
+// New components added in Web Awesome 3.2.1 release
+export * from './directives/zoomable-frame/zoomable-frame.directive';
+export * from './directives/file-input/file-input.directive';
+export * from './directives/sparkline/sparkline.directive';
+export * from './directives/number-input/number-input.directive';
 
 // Toasts
 export * from './services/toast/toast.types';

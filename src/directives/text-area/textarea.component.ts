@@ -55,10 +55,14 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     '[style.--box-shadow]': 'boxShadow',
 
     '(focus)': 'onFocus($event)',
+    '(wa-focus)': 'onFocus($event)',
     '(blur)': 'onBlur($event)',
+    '(wa-blur)': 'onBlur($event)',
     '(input)': 'handleInput($event)',
-    '(change)': 'changeEvent.emit($event)',
-    '(wa-invalid)': 'invalid.emit($event)'
+    '(wa-input)': 'handleInput($event)',
+    '(change)': 'handleChange($event)',
+    '(wa-change)': 'handleChange($event)',
+    '(wa-invalid)': 'waInvalid.emit($event)'
   }
 })
 export class WaTextareaComponent implements ControlValueAccessor {
@@ -94,11 +98,17 @@ export class WaTextareaComponent implements ControlValueAccessor {
   @Input() borderWidth?: string;
   @Input() boxShadow?: string;
 
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() invalid = new EventEmitter<CustomEvent>();
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<string>();
 
   private _value = '';
   onChange = (_: any) => {};
@@ -125,18 +135,27 @@ export class WaTextareaComponent implements ControlValueAccessor {
   }
 
   handleInput(event: Event): void {
-    const target = event.target as HTMLTextAreaElement;
+    const target = event.target as any;
     this._value = target.value;
     this.onChange(this._value);
-    this.inputEvent.emit(event);
+    this.valueChange.emit(this._value);
+    this.waInput.emit(event);
+  }
+
+  handleChange(event: Event): void {
+    const target = event.target as any;
+    this._value = target.value;
+    this.onChange(this._value);
+    this.valueChange.emit(this._value);
+    this.waChange.emit(event);
   }
 
   onFocus(event: FocusEvent) {
-    this.focusEvent.emit(event);
+    this.waFocus.emit(event);
   }
 
   onBlur(event: FocusEvent) {
     this.onTouched();
-    this.blurEvent.emit(event);
+    this.waBlur.emit(event);
   }
 }

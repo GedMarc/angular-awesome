@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { WaBadgeComponent } from './badge.component';
+import { WaBadgeDirective } from './badge.component';
 
 // Create a test host component to test the badge component
 @Component({
@@ -19,7 +19,7 @@ import { WaBadgeComponent } from './badge.component';
     </wa-badge>
   `,
   standalone: true,
-  imports: [WaBadgeComponent]
+  imports: [WaBadgeDirective]
 })
 class TestHostComponent {
   variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'brand';
@@ -32,7 +32,7 @@ class TestHostComponent {
   textColor?: string;
 }
 
-describe('WaBadgeComponent', () => {
+describe('WaBadgeDirective', () => {
   let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
   let badgeElement: HTMLElement;

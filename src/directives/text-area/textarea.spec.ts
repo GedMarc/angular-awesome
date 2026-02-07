@@ -34,11 +34,11 @@ import { WaTextareaComponent } from './textarea.component';
       [borderColor]="borderColor"
       [borderWidth]="borderWidth"
       [boxShadow]="boxShadow"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (invalid)="onInvalid($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-invalid)="onInvalid($event)"
     ></wa-textarea>
   `,
   standalone: true,
@@ -221,20 +221,20 @@ describe('WaTextareaComponent', () => {
   });
 
   it('should emit events correctly', () => {
-    // Simulate focusNative event
-    textareaElement.dispatchEvent(new FocusEvent('focusNative'));
+    // Simulate focus event
+    textareaElement.dispatchEvent(new FocusEvent('wa-focus'));
     expect(hostComponent.focusCalled).toBe(true);
 
-    // Simulate blurNative event
-    textareaElement.dispatchEvent(new FocusEvent('blurNative'));
+    // Simulate blur event
+    textareaElement.dispatchEvent(new FocusEvent('wa-blur'));
     expect(hostComponent.blurCalled).toBe(true);
 
     // Simulate input event
-    textareaElement.dispatchEvent(new Event('input'));
+    textareaElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputCalled).toBe(true);
 
     // Simulate change event
-    textareaElement.dispatchEvent(new Event('change'));
+    textareaElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeCalled).toBe(true);
 
     // Simulate invalid event

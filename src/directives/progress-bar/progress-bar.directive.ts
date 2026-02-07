@@ -49,8 +49,10 @@ export class WaProgressBarDirective implements OnInit, OnChanges, ControlValueAc
   @Input() trackHeight?: string;
 
   // Event outputs
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
 
   // Injected services
   private el = inject(ElementRef);
@@ -67,11 +69,18 @@ export class WaProgressBarDirective implements OnInit, OnChanges, ControlValueAc
     this.applyInputs();
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
+    this.renderer.listen(nativeEl, 'wa-focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'input', (event: Event) => {

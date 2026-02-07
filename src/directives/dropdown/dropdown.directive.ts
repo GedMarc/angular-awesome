@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -53,11 +53,17 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   @Input() boxShadow?: string;
 
   // Event outputs
-  @Output() showEvent = new EventEmitter<Event>();
-  @Output() afterShowEvent = new EventEmitter<Event>();
-  @Output() hideEvent = new EventEmitter<Event>();
-  @Output() afterHideEvent = new EventEmitter<Event>();
-  @Output() selectEvent = new EventEmitter<{ item: HTMLElement }>();
+  @Output() waShow = new EventEmitter<Event>();
+  @Output('wa-show') waShowHyphen = this.waShow;
+  @Output() waAfterShow = new EventEmitter<Event>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
+  @Output() waHide = new EventEmitter<Event>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
+  @Output() waAfterHide = new EventEmitter<Event>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
+  @Output() waSelect = new EventEmitter<{ item: HTMLElement }>();
+  @Output('wa-select') waSelectHyphen = this.waSelect;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -69,6 +75,37 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   private value: any;
 
   ngOnInit() {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'wa-show', (event: Event) => this.waShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-hide', (event: Event) => this.waHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.waAfterHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-select', (event: CustomEvent<{ item: HTMLElement }>) => {
+      this.waSelect.emit(event.detail);
+
+      // Handle ngModel value update when a dropdown item is selected
+      const selectedItem = event.detail.item;
+      if (selectedItem && selectedItem.hasAttribute('value')) {
+        const newValue = selectedItem.getAttribute('value');
+        if (newValue !== this.value) {
+          this.value = newValue;
+          this.onChange(newValue);
+          this.valueChange.emit(newValue);
+          this.onTouched();
+        }
+      }
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set string attributes
@@ -90,26 +127,6 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
 
     // Set style attributes
     this.setCssVar('--box-shadow', this.boxShadow);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-show', (event: Event) => this.showEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.afterShowEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-hide', (event: Event) => this.hideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.afterHideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-select', (event: CustomEvent<{ item: HTMLElement }>) => {
-      this.selectEvent.emit(event.detail);
-
-      // Handle ngModel value update when a dropdown item is selected
-      const selectedItem = event.detail.item;
-      if (selectedItem && selectedItem.hasAttribute('value')) {
-        const newValue = selectedItem.getAttribute('value');
-        if (newValue !== this.value) {
-          this.value = newValue;
-          this.onChange(newValue);
-          this.onTouched();
-        }
-      }
-    });
   }
 
   /**

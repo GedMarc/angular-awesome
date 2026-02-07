@@ -38,6 +38,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Core input attributes
   @Input() disabled?: boolean | string;
+  @Input() required?: boolean | string;
   @Input() hint?: string;
   @Input() size?: SizeToken | string;
 
@@ -57,10 +58,11 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   @Input() width?: string;
 
   // Event outputs
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output('wa-change') changeEvent = new EventEmitter<Event>();
+  @Output('wa-input') inputEvent = new EventEmitter<Event>();
+  @Output('wa-focus') focusEvent = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') blurEvent = new EventEmitter<FocusEvent>();
+  @Output() checkedChange = new EventEmitter<boolean>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -80,6 +82,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('required', this.required);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);
@@ -100,23 +103,39 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
     this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
+    const forwardInput = (event: Event) => {
       this.inputEvent.emit(event);
       const target = event.target as HTMLInputElement;
       this.onChange(target.checked);
+      this.checkedChange.emit(target.checked);
       this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
+    };
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    const forwardChange = (event: Event) => {
       this.changeEvent.emit(event);
       const target = event.target as HTMLInputElement;
       this.onChange(!!target.checked);
+      this.checkedChange.emit(!!target.checked);
       this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
+    };
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
       this.focusEvent.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.focusEvent.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
       this.blurEvent.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.blurEvent.emit(event as unknown as FocusEvent);
       this.onTouched();
     });
   }
@@ -182,11 +201,8 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
     if (host.disabled || host.hasAttribute?.('disabled')) return null;
 
     // We mirror the Checkbox semantics: if marked required, value must be truthy
-    const isRequired = (host.hasAttribute && host.hasAttribute('required')) || this as any;
-    // Prefer explicit input if available
-    const requiredInput = (this as any).required;
-    const required = (requiredInput === true || requiredInput === '' || requiredInput === 'true') || (host.hasAttribute && host.hasAttribute('required'));
-    if (!required) return null;
+    const isRequired = this.required === true || this.required === '' || this.required === 'true' || (host.hasAttribute && host.hasAttribute('required'));
+    if (!isRequired) return null;
     const val = control?.value;
     return !!val ? null : { required: true };
   }

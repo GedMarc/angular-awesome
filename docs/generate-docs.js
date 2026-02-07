@@ -85,7 +85,9 @@ import { Wa{{COMPONENT_CLASS_NAME}}Directive } from 'angular-awesome/{{COMPONENT
 
 // Get all component directories
 const componentDirs = fs.readdirSync(componentsDir)
-  .filter(dir => fs.statSync(path.join(componentsDir, dir)).isDirectory());
+  .filter(dir => fs.statSync(path.join(componentsDir, dir)).isDirectory())
+  // Skip legacy misspelled directory to avoid duplicate tooltip docs
+  .filter(dir => dir !== 'tooltitp');
 
 // Process each component
 componentDirs.forEach(componentDir => {
@@ -102,12 +104,6 @@ componentDirs.forEach(componentDir => {
     const altExamplePath = path.join(componentPath, `${altName}.example.md`);
     if (fs.existsSync(altExamplePath)) {
       examplePath = altExamplePath;
-    } else if (componentDir === 'tooltitp') {
-      // Special case for tooltitp which has files named tooltip
-      const tooltipPath = path.join(componentPath, 'tooltip.example.md');
-      if (fs.existsSync(tooltipPath)) {
-        examplePath = tooltipPath;
-      }
     }
   }
 
@@ -117,24 +113,36 @@ componentDirs.forEach(componentDir => {
     const altRulesPath = path.join(componentPath, `${altName}.rules.md`);
     if (fs.existsSync(altRulesPath)) {
       rulesPath = altRulesPath;
-    } else if (componentDir === 'tooltitp') {
-      // Special case for tooltitp which has files named tooltip
-      const tooltipPath = path.join(componentPath, 'tooltip.rules.md');
-      if (fs.existsSync(tooltipPath)) {
-        rulesPath = tooltipPath;
-      }
     }
   }
 
-  // Skip if example or rules file doesn't exist after trying alternative names
-  if (!fs.existsSync(examplePath) || !fs.existsSync(rulesPath)) {
-    console.log(`Skipping ${componentDir} - missing example or rules file`);
-    return;
+  // Prepare example content (fallback to a minimal auto-generated snippet if missing)
+  let exampleContent = '';
+  if (fs.existsSync(examplePath)) {
+    exampleContent = fs.readFileSync(examplePath, 'utf8');
+  } else {
+    // Auto-generate a minimal example using the tag name
+    exampleContent = `\n<wa-${componentDir}></wa-${componentDir}>\n`;
   }
 
-  // Read the example and rules files
-  const exampleContent = fs.readFileSync(examplePath, 'utf8');
-  const rulesContent = fs.readFileSync(rulesPath, 'utf8');
+  // Resolve rules content: prefer local rules, otherwise fall back to enterprise rules repo
+  let rulesContent = '';
+  if (fs.existsSync(rulesPath)) {
+    rulesContent = fs.readFileSync(rulesPath, 'utf8');
+  } else {
+    const enterpriseRulesDir = path.join(__dirname, '..', 'rules', 'generative', 'frontend', 'webawesome');
+    const enterpriseRulesPath = path.join(enterpriseRulesDir, `${componentDir}.rules.md`);
+    const altName = componentDir.replace(/-/g, '');
+    const enterpriseAltRulesPath = path.join(enterpriseRulesDir, `${altName}.rules.md`);
+    if (fs.existsSync(enterpriseRulesPath)) {
+      rulesContent = fs.readFileSync(enterpriseRulesPath, 'utf8');
+    } else if (fs.existsSync(enterpriseAltRulesPath)) {
+      rulesContent = fs.readFileSync(enterpriseAltRulesPath, 'utf8');
+    } else {
+      console.log(`Skipping ${componentDir} - missing rules file (local and enterprise)`);
+      return;
+    }
+  }
 
   // Extract component name and description
   const componentName = componentDir.replace(/-([a-z])/g, (g) => g[1].toUpperCase());

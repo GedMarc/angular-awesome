@@ -54,6 +54,7 @@ export class WaPopupDirective implements OnInit {
 
   // Event outputs
   @Output() waReposition = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') waRepositionHyphen = this.waReposition;
 
   // Injected services
   private el = inject(ElementRef);

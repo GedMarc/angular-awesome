@@ -30,16 +30,16 @@ import { FormsModule } from '@angular/forms';
       [backgroundColorHover]="backgroundColorHover"
       [textColorCurrent]="textColorCurrent"
       [textColorHover]="textColorHover"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (clearEvent)="onClear($event)"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (invalidEvent)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-clear)="onClear($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       <wa-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
         {{ option.text }}
@@ -257,10 +257,10 @@ describe('WaSelectWrapperComponent', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const inputEvent = new Event('input');
-    const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
+    const inputEvent = new Event('wa-input');
+    const changeEvent = new Event('wa-change');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
     const clearEvent = new CustomEvent('wa-clear');
     const showEvent = new CustomEvent('wa-show');
     const afterShowEvent = new CustomEvent('wa-after-show');
