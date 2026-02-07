@@ -27,11 +27,11 @@ import { WaCheckboxDirective } from './checkbox.directive';
       [checkedIconColor]="checkedIconColor"
       [toggleSize]="toggleSize"
       (checkedChange)="onCheckedChange($event)"
-      (input)="onInput($event)"
-      (blur)="onBlur($event)"
-      (focus)="onFocus($event)"
-      (change)="onChange($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-change)="onChange($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       {{ checkboxText }}
     </wa-checkbox>
@@ -199,9 +199,9 @@ describe('WaCheckboxDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(checkboxElement, 'click');
-    spyOn(checkboxElement, 'focusNative');
-    spyOn(checkboxElement, 'blurNative');
+    spyOn(checkboxElement as any, 'click');
+    spyOn(checkboxElement as any, 'focus');
+    spyOn(checkboxElement as any, 'blur');
     spyOn(checkboxDirective as any, 'setCustomValidity');
 
     // Call the directive methods
@@ -231,10 +231,10 @@ describe('WaCheckboxDirective', () => {
 
     // Create mock events
     const checkedChangeEvent = new CustomEvent('checkedChange', { detail: true });
-    const inputEvent = new Event('input');
-    const blurEvent = new Event('blurNative');
-    const focusEvent = new Event('focusNative');
-    const changeEvent = new Event('change');
+    const inputEvent = new Event('wa-input');
+    const blurEvent = new Event('wa-blur');
+    const focusEvent = new Event('wa-focus');
+    const changeEvent = new Event('wa-change');
     const invalidEvent = new Event('wa-invalid');
 
     // Dispatch events on the native element
@@ -279,16 +279,16 @@ describe('WaCheckboxDirective', () => {
     hostFixture.detectChanges();
 
     // Verify CSS custom properties are set
-    expect(checkboxElement.getAttribute('--background-color')).toBe('#f0f0f0');
-    expect(checkboxElement.getAttribute('--background-color-checked')).toBe('#4a90e2');
-    expect(checkboxElement.getAttribute('--border-color')).toBe('#cccccc');
-    expect(checkboxElement.getAttribute('--border-color-checked')).toBe('#2a70c2');
-    expect(checkboxElement.getAttribute('--border-radius')).toBe('4px');
-    expect(checkboxElement.getAttribute('--border-style')).toBe('solid');
-    expect(checkboxElement.getAttribute('--border-width')).toBe('2px');
-    expect(checkboxElement.getAttribute('--box-shadow')).toBe('0 0 5px rgba(0,0,0,0.2)');
-    expect(checkboxElement.getAttribute('--checked-icon-color')).toBe('white');
-    expect(checkboxElement.getAttribute('--toggle-size')).toBe('24px');
+    expect(checkboxElement.style.getPropertyValue('--background-color')).toBe('#f0f0f0');
+    expect(checkboxElement.style.getPropertyValue('--background-color-checked')).toBe('#4a90e2');
+    expect(checkboxElement.style.getPropertyValue('--border-color')).toBe('#cccccc');
+    expect(checkboxElement.style.getPropertyValue('--border-color-checked')).toBe('#2a70c2');
+    expect(checkboxElement.style.getPropertyValue('--border-radius')).toBe('4px');
+    expect(checkboxElement.style.getPropertyValue('--border-style')).toBe('solid');
+    expect(checkboxElement.style.getPropertyValue('--border-width')).toBe('2px');
+    expect(checkboxElement.style.getPropertyValue('--box-shadow')).toBe('0 0 5px rgba(0,0,0,0.2)');
+    expect(checkboxElement.style.getPropertyValue('--checked-icon-color')).toBe('white');
+    expect(checkboxElement.style.getPropertyValue('--toggle-size')).toBe('24px');
   });
 });
 

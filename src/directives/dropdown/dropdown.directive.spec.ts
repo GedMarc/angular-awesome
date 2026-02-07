@@ -16,11 +16,11 @@ import { WaDropdownDirective } from './dropdown.directive';
       [skidding]="skidding"
       [sync]="sync"
       [boxShadow]="boxShadow"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (selectEvent)="onSelect($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-select)="onSelect($event)"
     >
       <div slot="trigger">{{ triggerText }}</div>
       <div class="menu-container">

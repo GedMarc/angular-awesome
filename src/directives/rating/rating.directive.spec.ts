@@ -128,8 +128,8 @@ describe('WaRatingDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(ratingElement, 'focusNative');
-    spyOn(ratingElement, 'blurNative');
+    spyOn(ratingElement as any, 'focus');
+    spyOn(ratingElement as any, 'blur');
 
     // Call the directive methods
     ratingDirective.focus();
@@ -149,8 +149,8 @@ describe('WaRatingDirective', () => {
     spyOn(hostComponent, 'onRatingHover');
 
     // Create mock events
-    const changeEvent = new CustomEvent('change', { detail: 4 });
-    const hoverEvent = new CustomEvent('hover', {
+    const changeEvent = new CustomEvent('wa-change', { detail: 4 });
+    const hoverEvent = new CustomEvent('wa-hover', {
       detail: { phase: 'start', value: 3 }
     });
 

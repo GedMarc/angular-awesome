@@ -17,11 +17,11 @@ import { FormsModule } from '@angular/forms';
       [withLabel]="withLabel"
       [withHint]="withHint"
       [styleRadiosGap]="styleRadiosGap"
-      (input)="onInput($event)"
-      (change)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       <ng-content></ng-content>
     </wa-radio-group>
@@ -226,11 +226,11 @@ describe('WaRadioGroupDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const inputEvent = new Event('input');
-    const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
-    const invalidEvent = new CustomEvent('waInvalid');
+    const inputEvent = new Event('wa-input');
+    const changeEvent = new Event('wa-change');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
+    const invalidEvent = new CustomEvent('wa-invalid');
 
     // Dispatch events on the native element
     radioGroupElement.dispatchEvent(inputEvent);

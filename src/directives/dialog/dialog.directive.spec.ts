@@ -17,10 +17,10 @@ import { WaDialogDirective } from './dialog.directive';
       [width]="width"
       [showDuration]="showDuration"
       [hideDuration]="hideDuration"
-      (waShow)="onShow()"
-      (waAfterShow)="onAfterShow()"
-      (waHide)="onHide($event)"
-      (waAfterHide)="onAfterHide()"
+      (wa-show)="onShow()"
+      (wa-after-show)="onAfterShow()"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide()"
     >
       <div>Default content</div>
       <div slot="footer" *ngIf="showFooter">Footer content</div>

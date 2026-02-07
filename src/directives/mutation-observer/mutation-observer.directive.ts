@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaMutationObserverDirective
@@ -14,7 +14,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-mutation-observer',
   standalone: true
 })
-export class WaMutationObserverDirective implements OnInit {
+export class WaMutationObserverDirective implements OnInit, OnChanges {
   // Inputs
   /** Element id or HTMLElement to observe. If not provided, the default slot content is observed. */
   @Input() target?: string | HTMLElement;
@@ -23,13 +23,26 @@ export class WaMutationObserverDirective implements OnInit {
   @Input() disabled?: boolean | string;
 
   // Events
-  @Output() waMutation = new EventEmitter<CustomEvent>();
+  @Output('wa-mutation') waMutation = new EventEmitter<CustomEvent>();
 
   // Services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit(): void {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
+    this.applyInputs();
+
+    // Events
+    this.renderer.listen(nativeEl, 'wa-mutation', (event: CustomEvent) => this.waMutation.emit(event));
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Map inputs
@@ -44,9 +57,6 @@ export class WaMutationObserverDirective implements OnInit {
       (nativeEl as any).options = this.options;
     }
     this.setBooleanAttr('disabled', this.disabled);
-
-    // Events
-    this.renderer.listen(nativeEl, 'wa-mutation', (event: CustomEvent) => this.waMutation.emit(event));
   }
 
   private setAttr(name: string, value: string | null | undefined) {

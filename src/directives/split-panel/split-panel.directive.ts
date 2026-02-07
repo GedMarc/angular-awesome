@@ -40,7 +40,7 @@ export class WaSplitPanelDirective implements OnInit, OnChanges {
   @Input() max?: string;
 
   // Event outputs
-  @Output() repositionEvent = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') repositionEvent = new EventEmitter<CustomEvent>();
 
   // Injected services
   private el = inject(ElementRef);

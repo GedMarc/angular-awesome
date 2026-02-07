@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaCarouselDirective
@@ -21,7 +21,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-carousel',
   standalone: true
 })
-export class WaCarouselDirective implements OnInit {
+export class WaCarouselDirective implements OnInit, OnChanges {
   // Boolean inputs
   @Input() loop?: boolean | string;
   @Input() navigation?: boolean | string;
@@ -38,7 +38,8 @@ export class WaCarouselDirective implements OnInit {
   @Input() orientation?: 'horizontal' | 'vertical' | string;
 
   // Event outputs
-  @Output() waSlideChange = new EventEmitter<{ index: number }>();
+  @Output('wa-slide-change') waSlideChange = new EventEmitter<{ index: number }>();
+  @Output('waSlideChange') waSlideChangeCamel = this.waSlideChange;
 
   // Injected services
   private el = inject(ElementRef);
@@ -47,6 +48,19 @@ export class WaCarouselDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'wa-slide-change', (event: CustomEvent<{ index: number }>) => {
+      this.waSlideChange.emit(event.detail);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('loop', this.loop);
     this.setBooleanAttr('navigation', this.navigation);
@@ -61,11 +75,6 @@ export class WaCarouselDirective implements OnInit {
 
     // Set string attributes
     this.setAttr('orientation', this.orientation);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-slide-change', (event: CustomEvent<{ index: number }>) => {
-      this.waSlideChange.emit(event.detail);
-    });
   }
 
   /**

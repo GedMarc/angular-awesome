@@ -111,15 +111,15 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
         <h2>Examples</h2>
         <h1>Scroller Examples</h1>
 <h2>Basic Usage</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper&gt;
+<pre><code class="language-html">&lt;wa-scroller&gt;
   &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
     This content will be scrollable if it exceeds the container width.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Vertical Scrolling</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper orientation=&quot;vertical&quot; style=&quot;height: 200px;&quot;&gt;
+<pre><code class="language-html">&lt;wa-scroller orientation=&quot;vertical&quot; style=&quot;height: 200px;&quot;&gt;
   &lt;div style=&quot;padding: 20px;&quot;&gt;
     &lt;p&gt;This content will scroll vertically when it exceeds the container height.&lt;/p&gt;
     &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
@@ -129,10 +129,10 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
     &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
     &lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.&lt;/p&gt;
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Horizontal Scrolling</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper orientation=&quot;horizontal&quot;&gt;
+<pre><code class="language-html">&lt;wa-scroller orientation=&quot;horizontal&quot;&gt;
   &lt;div style=&quot;display: flex; gap: 20px; padding: 20px;&quot;&gt;
     &lt;div style=&quot;min-width: 200px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;&quot;&gt;
       Card 1
@@ -150,33 +150,33 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
       Card 5
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Without Scrollbar</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper [withoutScrollbar]=&quot;true&quot;&gt;
+<pre><code class="language-html">&lt;wa-scroller [withoutScrollbar]=&quot;true&quot;&gt;
   &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
     This content will be scrollable but without a visible scrollbar.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Without Shadow</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper [withoutShadow]=&quot;true&quot;&gt;
+<pre><code class="language-html">&lt;wa-scroller [withoutShadow]=&quot;true&quot;&gt;
   &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
     This content will be scrollable but without the shadow indicators at the edges.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Custom Shadow Styling</h2>
-<pre><code class="language-html">&lt;wa-scroller-wrapper 
+<pre><code class="language-html">&lt;wa-scroller 
   [shadowColor]=&quot;&#39;rgba(0, 0, 255, 0.3)&#39;&quot; 
   [shadowSize]=&quot;&#39;30px&#39;&quot;&gt;
   &lt;div style=&quot;width: 800px; padding: 20px;&quot;&gt;
     This content has custom shadow color and size.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   &lt;/div&gt;
-&lt;/wa-scroller-wrapper&gt;
+&lt;/wa-scroller&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
@@ -194,7 +194,7 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
       &lt;wa-checkbox [(ngModel)]=&quot;hideShadow&quot; label=&quot;Hide Shadow&quot;&gt;&lt;/wa-checkbox&gt;
     &lt;/div&gt;
     
-    &lt;wa-scroller-wrapper 
+    &lt;wa-scroller 
       [orientation]=&quot;scrollerOrientation&quot; 
       [withoutScrollbar]=&quot;hideScrollbar&quot; 
       [withoutShadow]=&quot;hideShadow&quot;
@@ -221,7 +221,7 @@ import { WaScrollerDirective } from 'angular-awesome/scroller';</pre>
         &lt;/ng-container&gt;
       &lt;/div&gt;
       
-    &lt;/wa-scroller-wrapper&gt;
+    &lt;/wa-scroller&gt;
   `
 })
 export class ScrollerDemoComponent {
@@ -237,7 +237,7 @@ export class ScrollerDemoComponent {
 <pre><code class="language-html">&lt;div class=&quot;image-gallery&quot;&gt;
   &lt;h2&gt;Photo Gallery&lt;/h2&gt;
   
-  &lt;wa-scroller-wrapper 
+  &lt;wa-scroller 
     orientation=&quot;horizontal&quot; 
     [shadowColor]=&quot;&#39;rgba(0, 0, 0, 0.3)&#39;&quot; 
     [shadowSize]=&quot;&#39;40px&#39;&quot;&gt;
@@ -247,7 +247,7 @@ export class ScrollerDemoComponent {
         &lt;div class=&quot;caption&quot;&gt;{{ image.caption }}&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/wa-scroller-wrapper&gt;
+  &lt;/wa-scroller&gt;
 &lt;/div&gt;
 
 &lt;style&gt;
@@ -284,7 +284,7 @@ export class ScrollerDemoComponent {
 </code></pre>
 <h2>Real-World Example: Content Tabs with Horizontal Scrolling</h2>
 <pre><code class="language-html">&lt;div class=&quot;scrollable-tabs&quot;&gt;
-  &lt;wa-scroller-wrapper 
+  &lt;wa-scroller 
     orientation=&quot;horizontal&quot; 
     [withoutScrollbar]=&quot;true&quot;&gt;
     &lt;div class=&quot;tabs-container&quot;&gt;
@@ -296,7 +296,7 @@ export class ScrollerDemoComponent {
         {{ tab.label }}
       &lt;/button&gt;
     &lt;/div&gt;
-  &lt;/wa-scroller-wrapper&gt;
+  &lt;/wa-scroller&gt;
   
   &lt;div class=&quot;tab-content&quot;&gt;
     &lt;ng-container *ngFor=&quot;let tab of tabs&quot;&gt;
@@ -347,7 +347,7 @@ export class ScrollerDemoComponent {
 <pre><code class="language-html">&lt;div class=&quot;timeline-container&quot;&gt;
   &lt;h2&gt;Project Timeline&lt;/h2&gt;
   
-  &lt;wa-scroller-wrapper 
+  &lt;wa-scroller
     orientation=&quot;horizontal&quot; 
     [shadowSize]=&quot;&#39;50px&#39;&quot;&gt;
     &lt;div class=&quot;timeline&quot;&gt;

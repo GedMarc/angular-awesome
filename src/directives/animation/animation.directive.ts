@@ -41,9 +41,12 @@ export class WaAnimationDirective implements OnInit {
   @Input() iconSize?: string;
 
   // Event outputs
-  @Output('wa-start') start = new EventEmitter<Event>();
-  @Output('wa-finish') finish = new EventEmitter<Event>();
-  @Output('wa-cancel') cancel = new EventEmitter<Event>();
+  @Output() waStart = new EventEmitter<Event>();
+  @Output('wa-start') waStartHyphen = this.waStart;
+  @Output() waFinish = new EventEmitter<Event>();
+  @Output('wa-finish') waFinishHyphen = this.waFinish;
+  @Output() waCancel = new EventEmitter<Event>();
+  @Output('wa-cancel') waCancelHyphen = this.waCancel;
 
   // Injected services
   private el = inject(ElementRef);
@@ -78,9 +81,9 @@ export class WaAnimationDirective implements OnInit {
     }
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-start', (event) => this.start.emit(event));
-    this.renderer.listen(nativeEl, 'wa-finish', (event) => this.finish.emit(event));
-    this.renderer.listen(nativeEl, 'wa-cancel', (event) => this.cancel.emit(event));
+    this.renderer.listen(nativeEl, 'wa-start', (event) => this.waStart.emit(event));
+    this.renderer.listen(nativeEl, 'wa-finish', (event) => this.waFinish.emit(event));
+    this.renderer.listen(nativeEl, 'wa-cancel', (event) => this.waCancel.emit(event));
   }
 
   /**

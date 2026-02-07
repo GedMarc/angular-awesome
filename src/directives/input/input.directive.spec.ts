@@ -41,12 +41,12 @@ import { FormsModule } from '@angular/forms';
       [borderColor]="borderColor"
       [borderWidth]="borderWidth"
       [boxShadow]="boxShadow"
-      (input)="onInput($event)"
-      (change)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (waClear)="onClear($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-clear)="onClear($event)"
+      (wa-invalid)="onInvalid($event)"
     ></wa-input>
   `,
   standalone: true,
@@ -262,14 +262,14 @@ describe('WaInputDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(inputElement, 'focusNative');
-    spyOn(inputElement, 'blurNative');
-    spyOn(inputElement, 'select');
-    spyOn(inputElement, 'setSelectionRange');
-    spyOn(inputElement, 'setRangeText');
-    spyOn(inputElement, 'showPicker');
-    spyOn(inputElement, 'stepUp');
-    spyOn(inputElement, 'stepDown');
+    spyOn(inputElement as any, 'focus');
+    spyOn(inputElement as any, 'blur');
+    spyOn(inputElement as any, 'select');
+    spyOn(inputElement as any, 'setSelectionRange');
+    spyOn(inputElement as any, 'setRangeText');
+    spyOn(inputElement as any, 'showPicker');
+    spyOn(inputElement as any, 'stepUp');
+    spyOn(inputElement as any, 'stepDown');
 
     // Call the directive methods
     inputDirective.focus();
@@ -284,12 +284,12 @@ describe('WaInputDirective', () => {
     // Verify the methods were called
     expect(inputElement.focus).toHaveBeenCalled();
     expect(inputElement.blur).toHaveBeenCalled();
-    expect(inputElement.select).toHaveBeenCalled();
-    expect(inputElement.setSelectionRange).toHaveBeenCalledWith(0, 5, 'forward');
-    expect(inputElement.setRangeText).toHaveBeenCalledWith('test', 0, 4, 'select');
-    expect(inputElement.showPicker).toHaveBeenCalled();
-    expect(inputElement.stepUp).toHaveBeenCalled();
-    expect(inputElement.stepDown).toHaveBeenCalled();
+    expect((inputElement as any).select).toHaveBeenCalled();
+    expect((inputElement as any).setSelectionRange).toHaveBeenCalledWith(0, 5, 'forward');
+    expect((inputElement as any).setRangeText).toHaveBeenCalledWith('test', 0, 4, 'select');
+    expect((inputElement as any).showPicker).toHaveBeenCalled();
+    expect((inputElement as any).stepUp).toHaveBeenCalled();
+    expect((inputElement as any).stepDown).toHaveBeenCalled();
   });
 
   it('should expose the native element', () => {
@@ -305,12 +305,12 @@ describe('WaInputDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const inputEvent = new Event('input');
-    const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
-    const clearEvent = new CustomEvent('waClear');
-    const invalidEvent = new CustomEvent('waInvalid');
+    const inputEvent = new Event('wa-input');
+    const changeEvent = new Event('wa-change');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
+    const clearEvent = new CustomEvent('wa-clear');
+    const invalidEvent = new CustomEvent('wa-invalid');
 
     // Dispatch events on the native element
     inputElement.dispatchEvent(inputEvent);
@@ -336,7 +336,7 @@ describe('WaInputDirective', () => {
     // Simulate user typing then blurring causing a change
     (inputElement as any).value = 'hello world';
     inputElement.setAttribute('value', 'hello world');
-    inputElement.dispatchEvent(new Event('change'));
+    inputElement.dispatchEvent(new Event('wa-change'));
     hostFixture.detectChanges();
 
     expect(hostComponent.value).toBe('hello world');

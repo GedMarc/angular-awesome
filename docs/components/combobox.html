@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Combobox Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Combobox Component <span class="version-badge">synced with Web Awesome 3.0.0</span></h1>
+                <p class="subtitle"><wa-combobox> provides combobox functionality for Angular applications.</p>
+                <p style="margin-top:6px;color:#666;font-size:0.9rem;">Preparing for Web Awesome 1.0.0. This wrapper will not target a version above 1.0.0 until it is released.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the combobox directive from the angular-awesome package:</p>
+        <pre>// Import the combobox directive
+import { WaComboboxDirective } from 'angular-awesome/combobox';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Combobox Examples</h1>
+<p>Comboboxes combine a text input with a listbox so users can search, filter, and select values.</p>
+<h2>Basic</h2>
+<pre><code class="language-html">&lt;wa-combobox placeholder=&quot;Type to filter...&quot;&gt;
+  &lt;wa-option value=&quot;apple&quot;&gt;Apple&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;banana&quot;&gt;Banana&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;cherry&quot;&gt;Cherry&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;dragonfruit&quot;&gt;Dragonfruit&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Labels</h2>
+<pre><code class="language-html">&lt;wa-combobox label=&quot;Choose a fruit&quot;&gt;
+  &lt;wa-option value=&quot;apple&quot;&gt;Apple&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;banana&quot;&gt;Banana&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;cherry&quot;&gt;Cherry&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Hint</h2>
+<pre><code class="language-html">&lt;wa-combobox label=&quot;Favorite Fruit&quot; hint=&quot;Start typing to filter options.&quot;&gt;
+  &lt;wa-option value=&quot;apple&quot;&gt;Apple&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;banana&quot;&gt;Banana&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;cherry&quot;&gt;Cherry&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Placeholders</h2>
+<pre><code class="language-html">&lt;wa-combobox placeholder=&quot;Type to search...&quot;&gt;
+  &lt;wa-option value=&quot;apple&quot;&gt;Apple&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;banana&quot;&gt;Banana&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;cherry&quot;&gt;Cherry&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Clearable</h2>
+<pre><code class="language-html">&lt;wa-combobox with-clear label=&quot;Option&quot;&gt;
+  &lt;wa-option value=&quot;option-1&quot;&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-2&quot;&gt;Option 2&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-3&quot;&gt;Option 3&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Autocomplete Modes</h2>
+<pre><code class="language-html">&lt;wa-combobox label=&quot;List Autocomplete&quot; autocomplete=&quot;list&quot;&gt;
+  &lt;wa-option value=&quot;alaska&quot;&gt;Alaska&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;alabama&quot;&gt;Alabama&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;arkansas&quot;&gt;Arkansas&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox label=&quot;No Autocomplete&quot; autocomplete=&quot;none&quot;&gt;
+  &lt;wa-option value=&quot;alaska&quot;&gt;Alaska&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;alabama&quot;&gt;Alabama&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;arkansas&quot;&gt;Arkansas&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Allow Custom Values</h2>
+<pre><code class="language-html">&lt;wa-combobox allow-custom-value label=&quot;Enter or select a color&quot; placeholder=&quot;Type a color...&quot;&gt;
+  &lt;wa-option value=&quot;red&quot;&gt;Red&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;green&quot;&gt;Green&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;blue&quot;&gt;Blue&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Custom Filter Function</h2>
+<pre><code class="language-html">&lt;wa-combobox class=&quot;custom-filter&quot; label=&quot;Search (includes match)&quot;&gt;
+  &lt;wa-option value=&quot;alpha&quot;&gt;Alpha&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;beta&quot;&gt;Beta&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;gamma&quot;&gt;Gamma&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+&lt;script type=&quot;module&quot;&gt;
+  await customElements.whenDefined(&#39;wa-combobox&#39;);
+  const combo = document.querySelector(&#39;.custom-filter&#39;);
+  if (combo &amp;&amp; &#39;updateComplete&#39; in combo) {
+    await combo.updateComplete;
+  }
+  combo.filter = (option, query) =&gt; {
+    const label = option.label || (option.textContent || &#39;&#39;).trim();
+    return label.toLowerCase().includes(query.toLowerCase());
+  };
+&lt;/script&gt;
+</code></pre>
+<h2>Appearance</h2>
+<pre><code class="language-html">&lt;wa-combobox appearance=&quot;filled&quot; label=&quot;Filled&quot;&gt;
+  &lt;wa-option value=&quot;1&quot;&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;2&quot;&gt;Option 2&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox appearance=&quot;filled-outlined&quot; label=&quot;Filled Outlined&quot;&gt;
+  &lt;wa-option value=&quot;1&quot;&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;2&quot;&gt;Option 2&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox appearance=&quot;outlined&quot; label=&quot;Outlined&quot;&gt;
+  &lt;wa-option value=&quot;1&quot;&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;2&quot;&gt;Option 2&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Pill</h2>
+<pre><code class="language-html">&lt;wa-combobox pill placeholder=&quot;Search...&quot;&gt;
+  &lt;wa-option value=&quot;paris&quot;&gt;Paris&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;rome&quot;&gt;Rome&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;tokyo&quot;&gt;Tokyo&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Disabled</h2>
+<pre><code class="language-html">&lt;wa-combobox placeholder=&quot;Disabled&quot; disabled&gt;
+  &lt;wa-option value=&quot;one&quot;&gt;One&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;two&quot;&gt;Two&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Multiple</h2>
+<pre><code class="language-html">&lt;wa-combobox label=&quot;Select Multiple&quot; multiple with-clear&gt;
+  &lt;wa-option value=&quot;option-1&quot; selected&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-2&quot; selected&gt;Option 2&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-3&quot;&gt;Option 3&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Setting Initial Values</h2>
+<pre><code class="language-html">&lt;wa-combobox&gt;
+  &lt;wa-option value=&quot;option-1&quot; selected&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-2&quot;&gt;Option 2&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox multiple with-clear&gt;
+  &lt;wa-option value=&quot;option-1&quot; selected&gt;Option 1&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-2&quot; selected&gt;Option 2&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;option-3&quot;&gt;Option 3&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Grouping Options</h2>
+<pre><code class="language-html">&lt;wa-combobox label=&quot;Grouped Options&quot;&gt;
+  &lt;small&gt;Fruits&lt;/small&gt;
+  &lt;wa-option value=&quot;apple&quot;&gt;Apple&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;orange&quot;&gt;Orange&lt;/wa-option&gt;
+  &lt;wa-divider&gt;&lt;/wa-divider&gt;
+  &lt;small&gt;Veggies&lt;/small&gt;
+  &lt;wa-option value=&quot;carrot&quot;&gt;Carrot&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;broccoli&quot;&gt;Broccoli&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Sizes</h2>
+<pre><code class="language-html">&lt;wa-combobox placeholder=&quot;Small&quot; size=&quot;small&quot;&gt;
+  &lt;wa-option value=&quot;a&quot;&gt;A&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;b&quot;&gt;B&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox placeholder=&quot;Medium&quot; size=&quot;medium&quot;&gt;
+  &lt;wa-option value=&quot;a&quot;&gt;A&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;b&quot;&gt;B&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+
+&lt;wa-combobox placeholder=&quot;Large&quot; size=&quot;large&quot;&gt;
+  &lt;wa-option value=&quot;a&quot;&gt;A&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;b&quot;&gt;B&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Placement</h2>
+<pre><code class="language-html">&lt;wa-combobox placement=&quot;top&quot; placeholder=&quot;Opens above&quot;&gt;
+  &lt;wa-option value=&quot;north&quot;&gt;North&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;south&quot;&gt;South&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Start &amp; End Decorations</h2>
+<pre><code class="language-html">&lt;wa-combobox placeholder=&quot;Search locations...&quot; with-clear&gt;
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;map&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;end&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-option value=&quot;nyc&quot;&gt;New York&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;sf&quot;&gt;San Francisco&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;la&quot;&gt;Los Angeles&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Custom Tags</h2>
+<pre><code class="language-html">&lt;wa-combobox class=&quot;custom-tag-demo&quot; multiple with-clear label=&quot;Select contacts...&quot;&gt;
+  &lt;wa-option value=&quot;email&quot; selected&gt;Email&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;phone&quot; selected&gt;Phone&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;chat&quot;&gt;Chat&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+&lt;script type=&quot;module&quot;&gt;
+  await customElements.whenDefined(&#39;wa-combobox&#39;);
+  const combo = document.querySelector(&#39;.custom-tag-demo&#39;);
+  if (combo &amp;&amp; &#39;updateComplete&#39; in combo) {
+    await combo.updateComplete;
+  }
+  combo.getTag = (option, index) =&gt; {
+    const label = option.label || (option.textContent || &#39;&#39;).trim();
+    return `&lt;wa-tag with-remove data-value=&quot;${option.value}&quot;&gt;${index + 1}. ${label}&lt;/wa-tag&gt;`;
+  };
+&lt;/script&gt;
+</code></pre>
+<h2>Multiple with SSR hint</h2>
+<pre><code class="language-html">&lt;wa-combobox multiple with-label with-hint&gt;
+  &lt;span slot=&quot;label&quot;&gt;Select Multiple&lt;/span&gt;
+  &lt;span slot=&quot;hint&quot;&gt;SSR-friendly label and hint slots.&lt;/span&gt;
+  &lt;wa-option value=&quot;1&quot;&gt;One&lt;/wa-option&gt;
+  &lt;wa-option value=&quot;2&quot;&gt;Two&lt;/wa-option&gt;
+&lt;/wa-combobox&gt;
+</code></pre>
+<h2>Lazy loading notes</h2>
+<ul>
+<li>Newly added <code>&lt;wa-option&gt;</code> elements participate in filtering automatically once connected.</li>
+<li>When <code>multiple</code>, the input value resets to blank after each selection so users can continue filtering.</li>
+</ul>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

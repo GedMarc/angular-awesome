@@ -27,8 +27,8 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     '[attr.placement]': 'placement',
     '[attr.activation]': 'activation',
     '[attr.without-scroll-controls]': 'withoutScrollControls ? "" : null',
-    '(wa-tab-show)': 'tabShow.emit($event)',
-    '(wa-tab-hide)': 'tabHide.emit($event)'
+    '(wa-tab-show)': 'onTabShow($event)',
+    '(wa-tab-hide)': 'onTabHide($event)'
   }
 })
 export class WaTabGroupComponent implements ControlValueAccessor {
@@ -37,8 +37,11 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   // Updated naming to match spec: withoutScrollControls reflects to without-scroll-controls
   @Input() withoutScrollControls = false;
 
-  @Output() tabShow = new EventEmitter<CustomEvent>();
-  @Output() tabHide = new EventEmitter<CustomEvent>();
+  @Output() waTabShow = new EventEmitter<CustomEvent>();
+  @Output('wa-tab-show') waTabShowHyphen = this.waTabShow;
+  @Output() waTabHide = new EventEmitter<CustomEvent>();
+  @Output('wa-tab-hide') waTabHideHyphen = this.waTabHide;
+  @Output() valueChange = new EventEmitter<string | null>();
 
   // Support binding via [active]
   @Input('active')
@@ -62,12 +65,26 @@ export class WaTabGroupComponent implements ControlValueAccessor {
       this.renderer.setAttribute(this.el.nativeElement, 'active', val);
     }
     this.onChange(val);
+    this.valueChange.emit(val);
     this.onTouched();
   }
   private _value: string | null = null;
 
   onChange = (value: any) => {};
   onTouched = () => {};
+
+  onTabShow(event: CustomEvent) {
+    this.waTabShow.emit(event);
+    // Detail often contains the name of the tab being shown
+    const tabName = event.detail?.name;
+    if (tabName && tabName !== this.value) {
+      this.value = tabName;
+    }
+  }
+
+  onTabHide(event: CustomEvent) {
+    this.waTabHide.emit(event);
+  }
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 

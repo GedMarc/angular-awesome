@@ -31,7 +31,8 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   @Input() name?: string;
 
   // Outputs
-  @Output() selectionChange = new EventEmitter<any>();
+  @Output() waSelectionChange = new EventEmitter<any>();
+  @Output('wa-selection-change') waSelectionChangeHyphen = this.waSelectionChange;
 
   // Styling inputs
   @Input() indentSize?: string;
@@ -78,7 +79,7 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   // Re-emit native selection change for Angular consumers and update ngModel
   @HostListener('wa-selection-change', ['$event'])
   onSelectionChanged(event: CustomEvent) {
-    this.selectionChange.emit(event);
+    this.waSelectionChange.emit(event);
 
     const isLeaf = (item: Element): boolean => {
       // A leaf has no wa-tree-item children

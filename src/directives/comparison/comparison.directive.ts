@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaComparisonDirective
@@ -17,7 +17,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-comparison',
   standalone: true
 })
-export class WaComparisonDirective implements OnInit {
+export class WaComparisonDirective implements OnInit, OnChanges {
   // Position input
   @Input() position?: number | string;
 
@@ -28,7 +28,7 @@ export class WaComparisonDirective implements OnInit {
   @Input() handleSize?: string;
 
   // Event outputs
-  @Output() change = new EventEmitter<number>();
+  @Output('wa-change') change = new EventEmitter<number>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -37,6 +37,22 @@ export class WaComparisonDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {
+      this.change.emit(event.detail);
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent<number>) => {
+      this.change.emit(event.detail);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set position attribute
     this.setNumericAttr('position', this.position);
 
@@ -45,11 +61,6 @@ export class WaComparisonDirective implements OnInit {
     this.setCssVar('--divider-width', this.dividerWidth);
     this.setCssVar('--handle-color', this.handleColor);
     this.setCssVar('--handle-size', this.handleSize);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {
-      this.change.emit(event.detail);
-    });
   }
 
   /**

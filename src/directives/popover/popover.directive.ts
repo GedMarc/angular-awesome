@@ -57,10 +57,15 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
 
   // Event outputs
   @Output() waReposition = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') waRepositionHyphen = this.waReposition;
   @Output() waShow = new EventEmitter<Event>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<Event>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<Event>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<Event>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   // Injected services
   private el = inject(ElementRef);

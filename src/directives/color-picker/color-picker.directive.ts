@@ -68,24 +68,27 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
   // Event outputs
   // change and input map 1:1 to native events
-  @Output() change = new EventEmitter<Event>();
-  @Output() input = new EventEmitter<Event>();
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
   // Backwards-compatible outputs plus aliases that match native event names
-  @Output() focusEvent = new EventEmitter<Event>();
-  @Output('focusNative') focus = new EventEmitter<Event>();
-  @Output() blurEvent = new EventEmitter<Event>();
-  @Output('blurNative') blur = new EventEmitter<Event>();
+  @Output() waFocus = new EventEmitter<Event>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<Event>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
   // Web Awesome lifecycle/validation events: keep camelCase for BC and add hyphenated aliases
   @Output() waInvalid = new EventEmitter<Event>();
-  @Output('wa-invalid') waInvalidHyphen = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
   @Output() waShow = new EventEmitter<CustomEvent>();
-  @Output('wa-show') waShowHyphen = new EventEmitter<CustomEvent>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<CustomEvent>();
-  @Output('wa-after-show') waAfterShowHyphen = new EventEmitter<CustomEvent>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<CustomEvent>();
-  @Output('wa-hide') waHideHyphen = new EventEmitter<CustomEvent>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<CustomEvent>();
-  @Output('wa-after-hide') waAfterHideHyphen = new EventEmitter<CustomEvent>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -106,7 +109,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
   private readCurrentValueFromEvent(evt?: Event): any {
     // 1) If CustomEvent with detail, prefer it
     const asCustom = evt as CustomEvent<any> | undefined;
-    if (asCustom && 'detail' in (asCustom ?? {})) {
+    if (asCustom && asCustom.detail !== undefined) {
       const d = asCustom.detail;
       if (d != null) {
         // Some components emit { value: string } while others emit the value directly
@@ -117,11 +120,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
       }
     }
 
-    // 2) Fallback to attribute first (WC often reflects to attr), then property
+    // 2) Fallback to property first, then attribute
     const el: any = this.el.nativeElement;
-    let current = el?.getAttribute?.('value');
-    if (current == null) {
-      current = el?.value ?? null;
+    let current = el?.value;
+    if (current == null || current === '') {
+      current = el?.getAttribute?.('value') ?? null;
     }
     return current;
   }
@@ -134,60 +137,65 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.change.emit(event);
+      this.waChange.emit(event);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
+      this.valueChange.emit(current);
     });
     // Also listen for custom web component events
     this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
-      this.change.emit(event as any);
+      this.waChange.emit(event as any);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
+      this.valueChange.emit(current);
     });
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.input.emit(event);
+      this.waInput.emit(event);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
+      this.valueChange.emit(current);
     });
     this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
-      this.input.emit(event as any);
+      this.waInput.emit(event as any);
       const current = this.readCurrentValueFromEvent(event);
+      this.value = current;
       this.onChange(current);
+      this.valueChange.emit(current);
     });
     this.renderer.listen(nativeEl, 'focus', (event: Event) => {
-      this.focusEvent.emit(event);
-      // Emit through the aliased Output property ("focus"), which is exported as (focusNative) in templates
-      this.focus.emit(event);
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as any);
     });
     this.renderer.listen(nativeEl, 'blur', (event: Event) => {
-      this.blurEvent.emit(event);
-      // Emit through the aliased Output property ("blur"), which is exported as (blurNative) in templates
-      this.blur.emit(event);
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as any);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'waInvalid', (event: Event) => {
       this.waInvalid.emit(event);
-      this.waInvalidHyphen.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-invalid', (event: Event) => {
       this.waInvalid.emit(event);
-      this.waInvalidHyphen.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-show', (event: CustomEvent) => {
       this.waShow.emit(event);
-      this.waShowHyphen.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => {
       this.waAfterShow.emit(event);
-      this.waAfterShowHyphen.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => {
       this.waHide.emit(event);
-      this.waHideHyphen.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => {
       this.waAfterHide.emit(event);
-      this.waAfterHideHyphen.emit(event);
     });
 
     // Observe 'value' attribute changes to keep model in sync when WC reflects updates via attributes
@@ -201,7 +209,9 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
             if (current == null) {
               current = el?.value ?? null;
             }
+            this.value = current;
             this.onChange(current);
+            this.valueChange.emit(current);
           }
         }
       });
@@ -322,6 +332,9 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
+    if (this.value === value) {
+      return;
+    }
     this.value = value;
     this.isWriting = true;
     try {
@@ -335,7 +348,8 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
         this.setAttr('value', String(value));
       }
     } finally {
-      Promise.resolve().then(() => (this.isWriting = false));
+      // Use a slightly longer delay or ensure it happens after microtasks to avoid immediate feedback
+      setTimeout(() => (this.isWriting = false), 0);
     }
   }
 

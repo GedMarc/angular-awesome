@@ -28,12 +28,17 @@ export class WaTreeItemDirective implements OnChanges {
   @Input() value: any;
 
   // Outputs
-  @Output() expand = new EventEmitter<void>();
-  @Output() afterExpand = new EventEmitter<void>();
-  @Output() collapse = new EventEmitter<void>();
-  @Output() afterCollapse = new EventEmitter<void>();
+  @Output() waExpand = new EventEmitter<void>();
+  @Output('wa-expand') waExpandHyphen = this.waExpand;
+  @Output() waAfterExpand = new EventEmitter<void>();
+  @Output('wa-after-expand') waAfterExpandHyphen = this.waAfterExpand;
+  @Output() waCollapse = new EventEmitter<void>();
+  @Output('wa-collapse') waCollapseHyphen = this.waCollapse;
+  @Output() waAfterCollapse = new EventEmitter<void>();
+  @Output('wa-after-collapse') waAfterCollapseHyphen = this.waAfterCollapse;
   @Output() lazyChange = new EventEmitter<boolean>();
-  @Output() lazyLoad = new EventEmitter<void>();
+  @Output() waLazyLoad = new EventEmitter<void>();
+  @Output('wa-lazy-load') waLazyLoadHyphen = this.waLazyLoad;
 
   // Styling inputs
   @Input() selectionBackgroundColor?: string;
@@ -53,31 +58,31 @@ export class WaTreeItemDirective implements OnChanges {
   @HostListener('wa-expand')
   onExpand() {
     if (!this.isTruthy(this.disabled)) {
-      this.expand.emit();
+      this.waExpand.emit();
     }
   }
 
   @HostListener('wa-after-expand')
   onAfterExpand() {
-    this.afterExpand.emit();
+    this.waAfterExpand.emit();
   }
 
   @HostListener('wa-collapse')
   onCollapse() {
     if (!this.isTruthy(this.disabled)) {
-      this.collapse.emit();
+      this.waCollapse.emit();
     }
   }
 
   @HostListener('wa-after-collapse')
   onAfterCollapse() {
-    this.afterCollapse.emit();
+    this.waAfterCollapse.emit();
   }
 
   @HostListener('wa-lazy-load')
   onLazyLoad() {
     if (this.isTruthy(this.lazy) && !this.isTruthy(this.disabled)) {
-      this.lazyLoad.emit();
+      this.waLazyLoad.emit();
     }
   }
 

@@ -28,11 +28,11 @@ import { WaColorPickerDirective } from './color-picker.directive';
       [borderRadius]="borderRadius"
       [dropdownWidth]="dropdownWidth"
       [dropdownHeight]="dropdownHeight"
-      (change)="onChange($event)"
-      (input)="onInput($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-change)="onChange($event)"
+      (wa-input)="onInput($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-invalid)="onInvalid($event)"
     ></wa-color-picker>
   `,
   standalone: true,
@@ -208,23 +208,23 @@ describe('WaColorPickerDirective', () => {
 
   it('should emit events correctly', () => {
     // Simulate change event
-    colorPickerElement.dispatchEvent(new Event('change'));
+    colorPickerElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeEventCalled).toBe(true);
 
     // Simulate input event
-    colorPickerElement.dispatchEvent(new Event('input'));
+    colorPickerElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputEventCalled).toBe(true);
 
-    // Simulate focusNative event
-    colorPickerElement.dispatchEvent(new Event('focusNative'));
+    // Simulate focus event
+    colorPickerElement.dispatchEvent(new Event('wa-focus'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
-    // Simulate blurNative event
-    colorPickerElement.dispatchEvent(new Event('blurNative'));
+    // Simulate blur event
+    colorPickerElement.dispatchEvent(new Event('wa-blur'));
     expect(hostComponent.blurEventCalled).toBe(true);
 
-    // Simulate waInvalid event
-    colorPickerElement.dispatchEvent(new Event('waInvalid'));
+    // Simulate wa-invalid event
+    colorPickerElement.dispatchEvent(new Event('wa-invalid'));
     expect(hostComponent.invalidEventCalled).toBe(true);
   });
 });

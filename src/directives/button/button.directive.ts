@@ -68,9 +68,12 @@ export class WaButtonDirective implements OnInit, OnChanges {
   @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
 
   // Event outputs
-  @Output() blurEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<Event>();
+  @Output() waBlur = new EventEmitter<Event>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<Event>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
   @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
 
   // Injected services
   private el = inject(ElementRef);
@@ -113,8 +116,10 @@ export class WaButtonDirective implements OnInit, OnChanges {
     this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
-    this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
+    this.renderer.listen(nativeEl, 'blur', (event) => this.waBlur.emit(event));
+    this.renderer.listen(nativeEl, 'wa-blur', (event) => this.waBlur.emit(event));
+    this.renderer.listen(nativeEl, 'focus', (event) => this.waFocus.emit(event));
+    this.renderer.listen(nativeEl, 'wa-focus', (event) => this.waFocus.emit(event));
     this.renderer.listen(nativeEl, 'wa-invalid', (event) => this.waInvalid.emit(event));
 
     // Handle data-dialog at click time to avoid timing issues with Angular rendering

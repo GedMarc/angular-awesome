@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
@@ -34,8 +34,8 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-  // Dialog integration: support both kebab-case and camelCase bindings
+export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, ControlValueAccessor, Validator {
+  // Dialog integration
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
   @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -70,11 +70,16 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
 
   // Event outputs
   @Output() checkedChange = new EventEmitter<boolean>();
-  @Output() input = new EventEmitter<Event>();
-  @Output() blurEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<Event>();
-  @Output() change = new EventEmitter<Event>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waBlur = new EventEmitter<Event>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<Event>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
 
   // Injected services
   private el = inject(ElementRef);
@@ -134,6 +139,99 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
+      this.checkedChange.emit(event.detail);
+      this.onChange(event.detail);
+    });
+
+    // Standard DOM events
+    this.renderer.listen(nativeEl, 'input', (event) => {
+      this.waInput.emit(event);
+      // Update model on input to reflect current checked state
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+    this.renderer.listen(nativeEl, 'change', (event) => {
+      this.waChange.emit(event);
+      // Update model on change to reflect current checked state
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    // WebAwesome custom events (some environments emit wa-input/wa-change)
+    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      this.waInput.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      this.waChange.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
+
+    // Fallback: ensure model sync on click toggle
+    this.renderer.listen(nativeEl, 'click', () => {
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    // Observe 'checked' attribute changes to sync when WC toggles via attributes
+    try {
+      this.attrObserver = new MutationObserver((mutations) => {
+        if (this.isWriting) { return; }
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'checked') {
+            const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
+            this.onChange(!!currentChecked);
+            this.checkedChange.emit(!!currentChecked);
+            this.validatorChange?.();
+          }
+        }
+      });
+      this.attrObserver.observe(nativeEl, { attributes: true, attributeFilter: ['checked'] });
+    } catch {}
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('value', this.value);
     this.setAttr('name', this.name);
@@ -162,74 +260,6 @@ export class WaCheckboxDirective implements OnInit, OnDestroy, ControlValueAcces
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
-      this.checkedChange.emit(event.detail);
-      this.onChange(event.detail);
-    });
-
-    // Standard DOM events
-    this.renderer.listen(nativeEl, 'input', (event) => {
-      this.input.emit(event);
-      // Update model on input to reflect current checked state
-      const currentChecked = this.getCurrentChecked();
-      this.onChange(currentChecked);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'change', (event) => {
-      this.change.emit(event);
-      // Update model on change to reflect current checked state
-      const currentChecked = this.getCurrentChecked();
-      this.onChange(currentChecked);
-      this.validatorChange?.();
-    });
-
-    // WebAwesome custom events (some environments emit wa-input/wa-change)
-    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
-      this.input.emit(event as unknown as Event);
-      const currentChecked = this.getCurrentChecked();
-      this.onChange(currentChecked);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
-      this.change.emit(event as unknown as Event);
-      const currentChecked = this.getCurrentChecked();
-      this.onChange(currentChecked);
-      this.validatorChange?.();
-    });
-
-    this.renderer.listen(nativeEl, 'blur', (event) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-invalid', (event) => {
-      this.waInvalid.emit(event);
-      this.validatorChange?.();
-    });
-
-    // Fallback: ensure model sync on click toggle
-    this.renderer.listen(nativeEl, 'click', () => {
-      const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
-      this.onChange(!!currentChecked);
-      this.validatorChange?.();
-    });
-
-    // Observe 'checked' attribute changes to sync when WC toggles via attributes
-    try {
-      this.attrObserver = new MutationObserver((mutations) => {
-        if (this.isWriting) { return; }
-        for (const m of mutations) {
-          if (m.type === 'attributes' && m.attributeName === 'checked') {
-            const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
-            this.onChange(!!currentChecked);
-            this.validatorChange?.();
-          }
-        }
-      });
-      this.attrObserver.observe(nativeEl, { attributes: true, attributeFilter: ['checked'] });
-    } catch {}
   }
 
   ngOnDestroy(): void {

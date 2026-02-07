@@ -18,10 +18,11 @@ Each artifact links back to the submodule so the forward-only change policy (`ru
 
 
 
-📦 Version: `3.0.0`
+📦 Version: `3.2.1`
 
 ### Version Compatibility
-- Current: 3.0.0 is synced with Web Awesome 3.0.0 (stable).
+- Current: 3.2.1 is synced with Web Awesome 3.2.x (stable).
+- 3.0.x matched Web Awesome 3.0.x
 - 1.1.x matched Web Awesome 3.0.0-beta6
 - 1.0.4 matched Web Awesome 3.0.0-beta.1
 - 1.0.0 – 1.0.3 matched Web Awesome 3.0.0-alpha.13
@@ -47,7 +48,7 @@ Each artifact links back to the submodule so the forward-only change policy (`ru
 - Updated documentation for various components
 - General bug fixes and performance improvements
 
-🔗 [Web Awesome Component Docs](https://backers.webawesome.com/)
+🔗 Web Awesome Docs: https://webawesome.com/docs/
 
 ---
 
@@ -70,7 +71,7 @@ This library makes it easy to use Web Awesome's rich set of components in Angula
 Angular Awesome requires Web Awesome as a peer dependency. Install both:
 
 ```bash
-npm install angular-awesome web-awesome@^3.0.0
+npm install angular-awesome web-awesome@^3.2.0
 ```
 
 Make sure you’ve installed `@angular/core`, `@angular/forms`, and `@angular/common` version 19.2 or later.
@@ -80,11 +81,13 @@ Make sure you’ve installed `@angular/core`, `@angular/forms`, and `@angular/co
 Each component is standalone and can be imported individually.
 
 ```ts
-import { WaInputComponent } from 'angular-awesome/input';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { WaInputDirective } from 'angular-awesome';
 
 @Component({
   standalone: true,
-  imports: [WaInputComponent, FormsModule],
+  imports: [WaInputDirective, FormsModule],
   template: `<wa-input [(ngModel)]="value" hint="Enter text"></wa-input>`
 })
 export class MyComponent {
@@ -96,18 +99,25 @@ export class MyComponent {
 
 ## 📚 Components
 
-All components and directives mirror the structure of the Web Awesome library. Check out the component-specific README files under:
+All components and directives mirror the structure of the Web Awesome library. For full APIs, see llms.txt at the repo root and the enterprise rules index:
 
-```
-projects/angular-awesome/src/lib/<component>/README.md
-```
+- Rules index: `rules/generative/frontend/webawesome/README.md`
+- Public Angular exports: `src/public-api.ts`
 
-Each contains:
+Each component’s rule file contains:
 
 * Angular usage examples
 * Available inputs and outputs
 * Styling customizations
 * Link to general [Web Awesome Angular Rules](./RULES.md)
+
+### New in 3.2.1
+- Added wrappers/exports for:
+  - `<wa-file-input>` (experimental pro)
+  - `<wa-sparkline>` (experimental pro)
+  - `<wa-number-input>` (experimental)
+  - `<wa-zoomable-frame>`
+- Fixed: Tooltip directive path corrected to `src/directives/tooltip/` and public exports aligned.
 
 ### 📖 Documentation
 

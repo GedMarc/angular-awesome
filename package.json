@@ -1,11 +1,12 @@
 {
   "name": "angular-awesome",
-  "version": "3.0.2",
+  "version": "3.2.1",
   "private": false,
-  "description": "Angular wrapper for the web awesome framework",
+  "description": "Angular 19+ wrappers for the Web Awesome 3.2.x web components framework",
   "keywords": [
     "angular",
     "web-awesome",
+    "web-components",
     "wrapper",
     "components",
     "directives"

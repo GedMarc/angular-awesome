@@ -28,11 +28,11 @@ import { FormsModule } from '@angular/forms';
       [thumbShadow]="thumbShadow"
       [thumbSize]="thumbSize"
       [tooltipOffset]="tooltipOffset"
-      (blurEvent)="onBlur($event)"
-      (focusEvent)="onFocus($event)"
-      (changeEvent)="onChange($event)"
-      (inputEvent)="onInput($event)"
-      (invalidEvent)="onInvalid($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-change)="onChange($event)"
+      (wa-input)="onInput($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       {{ sliderContent }}
     </wa-slider>
@@ -197,10 +197,10 @@ describe('WaSliderDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(sliderElement, 'focusNative');
-    spyOn(sliderElement, 'blurNative');
-    spyOn(sliderElement, 'stepUp');
-    spyOn(sliderElement, 'stepDown');
+    spyOn(sliderElement as any, 'focus');
+    spyOn(sliderElement as any, 'blur');
+    spyOn(sliderElement as any, 'stepUp');
+    spyOn(sliderElement as any, 'stepDown');
 
     // Call the directive methods
     sliderDirective.focus();
@@ -227,10 +227,10 @@ describe('WaSliderDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new FocusEvent('blurNative');
-    const focusEvent = new FocusEvent('focusNative');
-    const changeEvent = new Event('change');
-    const inputEvent = new Event('input');
+    const blurEvent = new FocusEvent('wa-blur');
+    const focusEvent = new FocusEvent('wa-focus');
+    const changeEvent = new Event('wa-change');
+    const inputEvent = new Event('wa-input');
     const invalidEvent = new CustomEvent('wa-invalid');
 
     // Dispatch events on the native element

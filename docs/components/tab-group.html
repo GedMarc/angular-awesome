@@ -222,6 +222,45 @@ import { WaTabGroupDirective } from 'angular-awesome/tab-group';</pre>
   &lt;wa-tab-panel name=&quot;tab2&quot; [padding]=&quot;&#39;8px&#39;&quot;&gt;Content with less padding&lt;/wa-tab-panel&gt;
 &lt;/wa-tab-group&gt;
 </code></pre>
+<h2>Lazy Loading</h2>
+<p>Two options are available:</p>
+<ol>
+<li>True lazy instantiation using <code>&lt;ng-template waTabContent&gt;</code></li>
+</ol>
+<pre><code class="language-html">&lt;wa-tab-group [active]=&quot;activeTab&quot;&gt;
+  &lt;wa-tab panel=&quot;heavy&quot;&gt;Heavy&lt;/wa-tab&gt;
+  &lt;wa-tab panel=&quot;medium&quot;&gt;Medium&lt;/wa-tab&gt;
+
+  &lt;wa-tab-panel name=&quot;heavy&quot;&gt;
+    &lt;ng-template waTabContent&gt;
+      &lt;app-heavy-component-one&gt;&lt;/app-heavy-component-one&gt;
+    &lt;/ng-template&gt;
+  &lt;/wa-tab-panel&gt;
+
+  &lt;wa-tab-panel name=&quot;medium&quot; [lazy]=&quot;true&quot;&gt;
+    &lt;app-medium-component&gt;&lt;/app-medium-component&gt;
+  &lt;/wa-tab-panel&gt;
+&lt;/wa-tab-group&gt;
+</code></pre>
+<ol start="2">
+<li>Nested groups with lazy</li>
+</ol>
+<pre><code class="language-html">&lt;wa-tab-group active=&quot;printTab&quot;&gt;
+  &lt;wa-tab panel=&quot;printTab&quot;&gt;Print&lt;/wa-tab&gt;
+  &lt;wa-tab-panel name=&quot;printTab&quot; [lazy]=&quot;true&quot;&gt;
+    &lt;div class=&quot;wa-cluster wa-align-items-start wa-gap-sm&quot;&gt;
+      &lt;wa-tab-group active=&quot;serversTreeTab&quot;&gt;
+        &lt;wa-tab panel=&quot;serversTreeTab&quot;&gt;Servers&lt;/wa-tab&gt;
+        &lt;wa-tab-panel name=&quot;serversTreeTab&quot;&gt;
+          &lt;ng-template waTabContent&gt;
+            &lt;grader-select-tree&gt;&lt;/grader-select-tree&gt;
+          &lt;/ng-template&gt;
+        &lt;/wa-tab-panel&gt;
+      &lt;/wa-tab-group&gt;
+    &lt;/div&gt;
+  &lt;/wa-tab-panel&gt;
+&lt;/wa-tab-group&gt;
+</code></pre>
 <h2>No Scroll Controls</h2>
 <pre><code class="language-html">&lt;wa-tab-group [withoutScrollControls]=&quot;true&quot;&gt;
   &lt;wa-tab panel=&quot;tab1&quot;&gt;Tab 1&lt;/wa-tab&gt;

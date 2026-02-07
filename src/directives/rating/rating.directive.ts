@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -21,7 +21,7 @@ import { SizeToken } from '../../types/tokens';
   selector: 'wa-rating',
   standalone: true
 })
-export class WaRatingDirective implements OnInit, AfterViewInit {
+export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -46,13 +46,61 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
 
   // Event outputs
   @Output() waChange = new EventEmitter<number>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waHover = new EventEmitter<{ phase: string, value: number }>();
+  @Output('wa-hover') waHoverHyphen = this.waHover;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() valueChange = new EventEmitter<number>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
+    this.applyInputs();
+
+    // Set up event listeners
+    const handleChange = (event: CustomEvent<number>) => {
+      const val = typeof event.detail === 'number' ? event.detail : (event.target as any).value;
+      this.waChange.emit(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'change', handleChange as any);
+    this.renderer.listen(nativeEl, 'wa-change', handleChange as any);
+
+    this.renderer.listen(nativeEl, 'hover', (event: CustomEvent<{ phase: string, value: number }>) => {
+      this.waHover.emit(event.detail);
+    });
+    this.renderer.listen(nativeEl, 'wa-hover', (event: CustomEvent<{ phase: string, value: number }>) => {
+      this.waHover.emit(event.detail);
+    });
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
@@ -77,15 +125,6 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {
-      this.waChange.emit(event.detail);
-    });
-
-    this.renderer.listen(nativeEl, 'hover', (event: CustomEvent<{ phase: string, value: number }>) => {
-      this.waHover.emit(event.detail);
-    });
   }
 
   ngAfterViewInit() {
