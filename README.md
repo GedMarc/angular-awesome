@@ -1,6 +1,6 @@
 # Angular Awesome
 
-Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://backers.webawesome.com/) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
+Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://webawesome.com/docs/) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
 
 ## Enterprise Rules Alignment
 
@@ -34,7 +34,7 @@ Each artifact links back to the submodule so the forward-only change policy (`ru
 - `<wa-radio-button>` was dropped; use `<wa-radio appearance="button">` instead
 
 ### What's New in 1.1.0
-- Alignment with Web Awesome 3.0.0-beta6 (preparing for Web Awesome 1.0.0)
+- Alignment with Web Awesome 3.0.0-beta6
 - Added all component removals from recent Web Awesome betas
 - Regenerated documentation and examples to reflect latest changes
 - General bug fixes and improvements
