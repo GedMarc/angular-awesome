@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaButtonDirective } from './button.directive';
 
 // Create a test host component to test the button directive
@@ -36,7 +37,7 @@ import { WaButtonDirective } from './button.directive';
     </wa-button>
   `,
   standalone: true,
-  imports: [WaButtonDirective]
+  imports: [WaButtonDirective, NgIf]
 })
 class TestHostComponent {
   variant?: string;

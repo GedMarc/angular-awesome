@@ -38,9 +38,7 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   @Input() withoutScrollControls = false;
 
   @Output() waTabShow = new EventEmitter<CustomEvent>();
-  @Output('wa-tab-show') waTabShowHyphen = this.waTabShow;
   @Output() waTabHide = new EventEmitter<CustomEvent>();
-  @Output('wa-tab-hide') waTabHideHyphen = this.waTabHide;
   @Output() valueChange = new EventEmitter<string | null>();
 
   // Support binding via [active]
@@ -74,6 +72,11 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   onTouched = () => {};
 
   onTabShow(event: CustomEvent) {
+    // Ignore bubbled events from nested tab groups; only handle events
+    // dispatched by this wa-tab-group host element.
+    if ((event as Event).target !== this.el.nativeElement) {
+      return;
+    }
     this.waTabShow.emit(event);
     // Detail often contains the name of the tab being shown
     const tabName = event.detail?.name;
@@ -83,6 +86,10 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   }
 
   onTabHide(event: CustomEvent) {
+    // Ignore bubbled events from nested tab groups
+    if ((event as Event).target !== this.el.nativeElement) {
+      return;
+    }
     this.waTabHide.emit(event);
   }
 
@@ -116,7 +123,7 @@ export class WaTabGroupComponent implements ControlValueAccessor {
 
   private setStyle(prop: string, value: string) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, prop, value);
+      this.el.nativeElement.style.setProperty(prop, value);
     }
   }
 }

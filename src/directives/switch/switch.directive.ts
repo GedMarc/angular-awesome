@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
@@ -30,7 +30,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validator {
+export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccessor, Validator {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -76,31 +76,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set string attributes
-    this.setAttr('hint', this.hint);
-    this.setAttr('size', this.size);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('disabled', this.disabled);
-    this.setBooleanAttr('required', this.required);
-
-    // Set style attributes
-    this.setCssVar('--background-color', this.backgroundColor);
-    this.setCssVar('--background-color-checked', this.backgroundColorChecked);
-    this.setCssVar('--border-color', this.borderColor);
-    this.setCssVar('--border-color-checked', this.borderColorChecked);
-    this.setCssVar('--border-style', this.borderStyle);
-    this.setCssVar('--border-width', this.borderWidth);
-    this.setCssVar('--box-shadow', this.boxShadow);
-    this.setCssVar('--height', this.height);
-    this.setCssVar('--thumb-color', this.thumbColor);
-    this.setCssVar('--thumb-color-checked', this.thumbColorChecked);
-    this.setCssVar('--thumb-shadow', this.thumbShadow);
-    this.setCssVar('--thumb-size', this.thumbSize);
-    this.setCssVar('--width', this.width);
-
-    // Dialog attribute
-    this.setAttr('data-dialog', this._dataDialog);
+    this.applyInputs();
 
     // Set up event listeners
     const forwardInput = (event: Event) => {
@@ -140,6 +116,38 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
     });
   }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set string attributes
+    this.setAttr('hint', this.hint);
+    this.setAttr('size', this.size);
+
+    // Set boolean attributes (only if true)
+    this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('required', this.required);
+
+    // Set style attributes
+    this.setCssVar('--background-color', this.backgroundColor);
+    this.setCssVar('--background-color-checked', this.backgroundColorChecked);
+    this.setCssVar('--border-color', this.borderColor);
+    this.setCssVar('--border-color-checked', this.borderColorChecked);
+    this.setCssVar('--border-style', this.borderStyle);
+    this.setCssVar('--border-width', this.borderWidth);
+    this.setCssVar('--box-shadow', this.boxShadow);
+    this.setCssVar('--height', this.height);
+    this.setCssVar('--thumb-color', this.thumbColor);
+    this.setCssVar('--thumb-color-checked', this.thumbColorChecked);
+    this.setCssVar('--thumb-shadow', this.thumbShadow);
+    this.setCssVar('--thumb-size', this.thumbSize);
+    this.setCssVar('--width', this.width);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
+  }
+
   /**
    * Exposes the native element for direct interaction
    */
@@ -161,7 +169,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -172,6 +180,8 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

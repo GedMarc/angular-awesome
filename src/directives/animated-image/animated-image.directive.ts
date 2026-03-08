@@ -1,4 +1,4 @@
-import {Input, ElementRef, OnInit, inject, EventEmitter, Output} from '@angular/core';
+import {Input, ElementRef, OnInit, OnChanges, SimpleChanges, inject, EventEmitter, Output} from '@angular/core';
 
 /**
  * WaAnimatedImageDirective
@@ -19,7 +19,7 @@ import { Directive, Renderer2 } from '@angular/core';
   selector: 'wa-animated-image',
   standalone: true
 })
-export class WaAnimatedImageDirective implements OnInit {
+export class WaAnimatedImageDirective implements OnInit, OnChanges {
   @Input() src!: string;
   @Input() alt!: string;
   @Input() play?: boolean | string | null;
@@ -36,16 +36,24 @@ export class WaAnimatedImageDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'wa-load', (event) => this.load.emit(event));
+    this.renderer.listen(nativeEl, 'wa-error', (event) => this.error.emit(event));
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     this.setAttr('src', this.src);
     this.setAttr('alt', this.alt);
     this.setBooleanAttr('play', this.play);
 
     this.setStyle('--icon-size', this.iconSize);
     this.setStyle('--control-box-size', this.controlBoxSize);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-load', (event) => this.load.emit(event));
-    this.renderer.listen(nativeEl, 'wa-error', (event) => this.error.emit(event));
   }
 
   private setAttr(name: string, value: string | null | undefined) {
@@ -63,6 +71,8 @@ export class WaAnimatedImageDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

@@ -50,8 +50,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "include": [
-              "src/services/toast/toast.service.spec.ts",
-              "src/directives/toast/toast-container.component.spec.ts"
+              "src/**/*.spec.ts"
             ]
           }
         }

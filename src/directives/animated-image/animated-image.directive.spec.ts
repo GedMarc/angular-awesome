@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaAnimatedImageDirective } from './animated-image.directive';
 
 // Create a test host component to test the animated-image directive
@@ -17,7 +18,7 @@ import { WaAnimatedImageDirective } from './animated-image.directive';
     </wa-animated-image>
   `,
   standalone: true,
-  imports: [WaAnimatedImageDirective]
+  imports: [WaAnimatedImageDirective, NgIf]
 })
 class TestHostComponent {
   src = 'animation.gif';

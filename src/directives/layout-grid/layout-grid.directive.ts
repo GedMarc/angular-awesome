@@ -51,9 +51,9 @@ export class WaLayoutGridDirective implements OnChanges {
 
     // Re-apply managed styles
     this.clearStyles(host);
-    if (this.minColumnSize) this.renderer.setStyle(host, '--min-column-size', this.minColumnSize);
-    if (this.columns != null && this.columns !== '') this.renderer.setStyle(host, '--columns', String(this.columns));
-    if (this.rowSize) this.renderer.setStyle(host, '--row-size', this.rowSize);
+    if (this.minColumnSize) host.style.setProperty('--min-column-size', this.minColumnSize);
+    if (this.columns != null && this.columns !== '') host.style.setProperty('--columns', String(this.columns));
+    if (this.rowSize) host.style.setProperty('--row-size', this.rowSize);
   }
 
   private clearStyles(host: HTMLElement) {

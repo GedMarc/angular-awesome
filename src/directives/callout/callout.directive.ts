@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../types/tokens';
 
 /**
@@ -18,7 +18,7 @@ import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../
   selector: 'wa-callout',
   standalone: true
 })
-export class WaCalloutDirective implements OnInit {
+export class WaCalloutDirective implements OnInit, OnChanges {
   // Appearance inputs
   @Input() variant?: VariantToken | string;
   @Input() appearance?: Appearance | string;
@@ -29,8 +29,14 @@ export class WaCalloutDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('variant', this.variant);
     this.setAttr('appearance', normalizeAppearance(this.appearance));

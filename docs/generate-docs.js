@@ -308,7 +308,18 @@ const componentCategories = {
   'popover': 'utility',
   'date-picker': 'utility',
   'time-picker': 'utility',
-  'color-picker': 'utility'
+  'color-picker': 'utility',
+  'chart': 'data',
+  'bar-chart': 'data',
+  'bubble-chart': 'data',
+  'doughnut-chart': 'data',
+  'line-chart': 'data',
+  'pie-chart': 'data',
+  'polar-area-chart': 'data',
+  'radar-chart': 'data',
+  'scatter-chart': 'data',
+  'option': 'input',
+  'resize-observer': 'utility'
 };
 
 // Sort components alphabetically

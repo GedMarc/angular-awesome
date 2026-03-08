@@ -30,6 +30,9 @@ export class WaTagDirective {
 
   @HostListener('wa-remove', ['$event'])
   onRemove(event: Event) {
+    // Guard against re-entrant calls from our own emit
+    if ((event as any).__waHandled) return;
+    (event as any).__waHandled = true;
     this.waRemove.emit(event);
   }
 

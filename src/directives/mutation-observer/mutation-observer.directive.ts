@@ -68,6 +68,8 @@ export class WaMutationObserverDirective implements OnInit, OnChanges {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

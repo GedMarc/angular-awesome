@@ -9,7 +9,7 @@ import { WaSelectWrapperComponent, WaOptionComponent } from './select.directive'
     <wa-select
       name="favOption"
       [(ngModel)]="value"
-      [attr.multiple]="multiple ? '' : null"
+      [multiple]="multiple"
       [attr.label]="label || null"
       [attr.hint]="hint || null"
       [attr.placeholder]="placeholder || null"
@@ -17,6 +17,10 @@ import { WaSelectWrapperComponent, WaOptionComponent } from './select.directive'
       [attr.disabled]="disabled ? '' : null"
       [attr.size]="size"
       [attr.placement]="placement"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
     >
       <wa-option value="one">One</wa-option>
       <wa-option value="two">Two</wa-option>
@@ -73,7 +77,7 @@ describe('wa-select-wrapper [(ngModel)] on BrowserStack', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    nativeEl = fixture.nativeElement.querySelector('wa-select-wrapper') as HTMLElement;
+    nativeEl = fixture.nativeElement.querySelector('wa-select') as HTMLElement;
   });
 
   it('should start with null model and no value attribute', () => {

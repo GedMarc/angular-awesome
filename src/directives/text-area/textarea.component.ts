@@ -99,15 +99,10 @@ export class WaTextareaComponent implements ControlValueAccessor {
   @Input() boxShadow?: string;
 
   @Output() waFocus = new EventEmitter<FocusEvent>();
-  @Output('wa-focus') waFocusHyphen = this.waFocus;
   @Output() waBlur = new EventEmitter<FocusEvent>();
-  @Output('wa-blur') waBlurHyphen = this.waBlur;
   @Output() waInput = new EventEmitter<Event>();
-  @Output('wa-input') waInputHyphen = this.waInput;
   @Output() waChange = new EventEmitter<Event>();
-  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
-  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
   @Output() valueChange = new EventEmitter<string>();
 
   private _value = '';

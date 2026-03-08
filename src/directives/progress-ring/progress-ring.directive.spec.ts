@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { WaProgressRingDirective } from './progress-ring.directive';
 import { FormsModule } from '@angular/forms';
@@ -15,8 +15,8 @@ import { FormsModule } from '@angular/forms';
       [indicatorWidth]="indicatorWidth"
       [indicatorColor]="indicatorColor"
       [indicatorTransitionDuration]="indicatorTransitionDuration"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     >
       {{ displayText }}
     </wa-progress-ring>
@@ -73,11 +73,13 @@ describe('WaProgressRingDirective', () => {
     expect(progressRingDirective).toBeTruthy();
   });
 
-  it('should set numeric attributes correctly', () => {
+  it('should set numeric attributes correctly', fakeAsync(() => {
     hostComponent.value = 75;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
     expect(progressRingElement.getAttribute('value')).toBe('75');
-  });
+  }));
 
   it('should set string attributes correctly', () => {
     hostComponent.label = 'Upload Progress';
@@ -119,8 +121,8 @@ describe('WaProgressRingDirective', () => {
     spyOn(hostComponent, 'onBlur');
 
     // Create mock events
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
 
     // Dispatch events on the native element
     progressRingElement.dispatchEvent(focusEvent);

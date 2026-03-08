@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaFormatDateDirective } from './format-date.directive';
@@ -91,21 +91,25 @@ describe('WaFormatDateDirective', () => {
     expect(formatDateDirective).toBeTruthy();
   });
 
-  it('should set date attribute correctly with Date object', () => {
+  it('should set date attribute correctly with Date object', fakeAsync(() => {
     const testDate = new Date('2023-01-15T12:30:00Z');
     hostComponent.date = testDate;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
 
     expect(formatDateElement.getAttribute('date')).toBe(testDate.toISOString());
-  });
+  }));
 
-  it('should set date attribute correctly with string', () => {
+  it('should set date attribute correctly with string', fakeAsync(() => {
     const testDateString = '2023-01-15T12:30:00Z';
     hostComponent.date = testDateString;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
 
     expect(formatDateElement.getAttribute('date')).toBe(testDateString);
-  });
+  }));
 
   it('should set format attributes correctly', () => {
     hostComponent.weekday = 'long';
@@ -155,10 +159,12 @@ describe('WaFormatDateDirective', () => {
     expect(formatDateElement.style.getPropertyValue('--display')).toBe('inline-block');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', fakeAsync(() => {
     // Set the date via ngModel
     const testDate = new Date('2023-01-15T12:30:00Z');
     hostComponent.date = testDate;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(formatDateElement.getAttribute('date')).toBe(testDate.toISOString());
@@ -167,9 +173,11 @@ describe('WaFormatDateDirective', () => {
     const newDate = new Date('2023-02-20T15:45:00Z');
     hostComponent.date = newDate;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
 
     expect(formatDateElement.getAttribute('date')).toBe(newDate.toISOString());
-  });
+  }));
 
   it('should expose the native element', () => {
     expect(formatDateDirective.nativeElement).toBe(formatDateElement);

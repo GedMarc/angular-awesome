@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaFormatBytesDirective } from './format-bytes.directive';
@@ -57,12 +57,14 @@ describe('WaFormatBytesDirective', () => {
     expect(formatBytesDirective).toBeTruthy();
   });
 
-  it('should set numeric attributes correctly', () => {
+  it('should set numeric attributes correctly', fakeAsync(() => {
     hostComponent.value = 1024;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(formatBytesElement.getAttribute('value')).toBe('1024');
-  });
+  }));
 
   it('should set string attributes correctly', () => {
     hostComponent.unit = 'bit';
@@ -75,9 +77,11 @@ describe('WaFormatBytesDirective', () => {
     expect(formatBytesElement.getAttribute('lang')).toBe('fr');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', fakeAsync(() => {
     // Set the value via ngModel
     hostComponent.value = 2048;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(formatBytesElement.getAttribute('value')).toBe('2048');
@@ -85,9 +89,11 @@ describe('WaFormatBytesDirective', () => {
     // Update the value
     hostComponent.value = 4096;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
 
     expect(formatBytesElement.getAttribute('value')).toBe('4096');
-  });
+  }));
 
   it('should expose the native element', () => {
     expect(formatBytesDirective.nativeElement).toBe(formatBytesElement);

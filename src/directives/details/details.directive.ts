@@ -165,6 +165,8 @@ export class WaDetailsDirective implements OnInit, OnChanges {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -174,7 +176,7 @@ export class WaDetailsDirective implements OnInit, OnChanges {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

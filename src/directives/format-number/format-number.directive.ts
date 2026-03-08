@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -25,7 +25,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
+export class WaFormatNumberDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Value input
   @Input() value?: number;
 
@@ -58,8 +58,14 @@ export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set numeric attributes
     this.setNumericAttr('value', this.value);
     this.setNumericAttr('minimum-integer-digits', this.minimumIntegerDigits);
@@ -119,7 +125,7 @@ export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -130,6 +136,8 @@ export class WaFormatNumberDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

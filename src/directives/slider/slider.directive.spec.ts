@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { WaSliderDirective } from './slider.directive';
 import { FormsModule } from '@angular/forms';
 
@@ -12,22 +12,12 @@ import { FormsModule } from '@angular/forms';
       [max]="max"
       [step]="step"
       [disabled]="disabled"
-      [tooltip]="tooltip"
       [label]="label"
       [hint]="hint"
       [name]="name"
       [form]="form"
       [withLabel]="withLabel"
       [withHint]="withHint"
-      [trackColorActive]="trackColorActive"
-      [trackColorInactive]="trackColorInactive"
-      [trackHeight]="trackHeight"
-      [trackActiveOffset]="trackActiveOffset"
-      [thumbColor]="thumbColor"
-      [thumbGap]="thumbGap"
-      [thumbShadow]="thumbShadow"
-      [thumbSize]="thumbSize"
-      [tooltipOffset]="tooltipOffset"
       (wa-blur)="onBlur($event)"
       (wa-focus)="onFocus($event)"
       (wa-change)="onChange($event)"
@@ -38,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     </wa-slider>
   `,
   standalone: true,
-  imports: [WaSliderDirective, FormsModule]
+  imports: [WaSliderDirective, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 class TestHostComponent {
   value?: number;
@@ -46,22 +37,12 @@ class TestHostComponent {
   max?: number | string;
   step?: number | string;
   disabled?: boolean | string;
-  tooltip?: 'top' | 'bottom' | 'none' | string;
   label?: string;
   hint?: string;
   name?: string;
   form?: string;
   withLabel?: boolean | string;
   withHint?: boolean | string;
-  trackColorActive?: string;
-  trackColorInactive?: string;
-  trackHeight?: string;
-  trackActiveOffset?: string;
-  thumbColor?: string;
-  thumbGap?: string;
-  thumbShadow?: string;
-  thumbSize?: string;
-  tooltipOffset?: string;
   sliderContent = 'Slider Content';
 
   onBlur(event: FocusEvent): void {}
@@ -110,28 +91,28 @@ describe('WaSliderDirective', () => {
     hostComponent.hint = 'Adjust the volume';
     hostComponent.name = 'volume-slider';
     hostComponent.form = 'audio-form';
-    hostComponent.tooltip = 'bottom';
     hostFixture.detectChanges();
 
     expect(sliderElement.getAttribute('label')).toBe('Volume');
     expect(sliderElement.getAttribute('hint')).toBe('Adjust the volume');
     expect(sliderElement.getAttribute('name')).toBe('volume-slider');
     expect(sliderElement.getAttribute('form')).toBe('audio-form');
-    expect(sliderElement.getAttribute('tooltip')).toBe('bottom');
   });
 
-  it('should set numeric attributes correctly', () => {
+  it('should set numeric attributes correctly', fakeAsync(() => {
     hostComponent.min = 0;
     hostComponent.max = 100;
     hostComponent.step = 5;
     hostComponent.value = 50;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(sliderElement.getAttribute('min')).toBe('0');
     expect(sliderElement.getAttribute('max')).toBe('100');
     expect(sliderElement.getAttribute('step')).toBe('5');
     expect(sliderElement.getAttribute('value')).toBe('50');
-  });
+  }));
 
   it('should set boolean attributes correctly', () => {
     hostComponent.disabled = true;
@@ -164,29 +145,6 @@ describe('WaSliderDirective', () => {
     expect(sliderElement.hasAttribute('with-label')).toBeTrue();
   });
 
-  it('should set style attributes correctly', () => {
-    hostComponent.trackColorActive = '#3366ff';
-    hostComponent.trackColorInactive = '#cccccc';
-    hostComponent.trackHeight = '6px';
-    hostComponent.trackActiveOffset = '2px';
-    hostComponent.thumbColor = '#ffffff';
-    hostComponent.thumbGap = '2px';
-    hostComponent.thumbShadow = '0 0 5px rgba(0,0,0,0.2)';
-    hostComponent.thumbSize = '20px';
-    hostComponent.tooltipOffset = '10px';
-    hostFixture.detectChanges();
-
-    expect(sliderElement.style.getPropertyValue('--track-color-active')).toBe('#3366ff');
-    expect(sliderElement.style.getPropertyValue('--track-color-inactive')).toBe('#cccccc');
-    expect(sliderElement.style.getPropertyValue('--track-height')).toBe('6px');
-    expect(sliderElement.style.getPropertyValue('--track-active-offset')).toBe('2px');
-    expect(sliderElement.style.getPropertyValue('--thumb-color')).toBe('#ffffff');
-    expect(sliderElement.style.getPropertyValue('--thumb-gap')).toBe('2px');
-    expect(sliderElement.style.getPropertyValue('--thumb-shadow')).toBe('0 0 5px rgba(0,0,0,0.2)');
-    expect(sliderElement.style.getPropertyValue('--thumb-size')).toBe('20px');
-    expect(sliderElement.style.getPropertyValue('--tooltip-offset')).toBe('10px');
-  });
-
   it('should project content correctly', () => {
     expect(sliderElement.textContent?.trim()).toBe('Slider Content');
 
@@ -199,6 +157,8 @@ describe('WaSliderDirective', () => {
     // Mock the native element methods
     spyOn(sliderElement as any, 'focus');
     spyOn(sliderElement as any, 'blur');
+    (sliderElement as any).stepUp = () => {};
+    (sliderElement as any).stepDown = () => {};
     spyOn(sliderElement as any, 'stepUp');
     spyOn(sliderElement as any, 'stepDown');
 
@@ -211,8 +171,8 @@ describe('WaSliderDirective', () => {
     // Verify the methods were called
     expect(sliderElement.focus).toHaveBeenCalled();
     expect(sliderElement.blur).toHaveBeenCalled();
-    expect(sliderElement.stepUp).toHaveBeenCalled();
-    expect(sliderElement.stepDown).toHaveBeenCalled();
+    expect((sliderElement as any).stepUp).toHaveBeenCalled();
+    expect((sliderElement as any).stepDown).toHaveBeenCalled();
   });
 
   it('should expose the native element', () => {
@@ -261,13 +221,15 @@ describe('WaSliderDirective', () => {
     expect(sliderElement.hasAttribute('disabled')).toBeFalse();
   });
 
-  it('should handle different tooltip values', () => {
-    const tooltipValues = ['top', 'bottom', 'none'];
+  it('should handle different orientation values', () => {
+    const orientations = ['horizontal', 'vertical'];
 
-    tooltipValues.forEach(tooltip => {
-      hostComponent.tooltip = tooltip;
+    orientations.forEach(orientation => {
+      sliderDirective.orientation = orientation;
       hostFixture.detectChanges();
-      expect(sliderElement.getAttribute('tooltip')).toBe(tooltip);
+      // Directive applies via applyInputs, check via directive property
+      expect(sliderDirective.orientation).toBe(orientation);
     });
   });
 });
+

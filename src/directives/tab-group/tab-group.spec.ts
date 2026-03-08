@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaTabGroupComponent } from './tab-group.component';
 import { WaTabComponent } from './tab.component';
 import { WaTabPanelComponent } from './tab-panel.component';
+import { WaTabContent } from './tab-content.directive';
 
 // Create a test host component for the tab group components
 @Component({
@@ -166,61 +167,55 @@ describe('Tab Group Components', () => {
     expect(tabPanelElements[0].style.getPropertyValue('--padding')).toBe('24px');
   });
 
-  it('should only render DOM content for the active wa-tab-panel and remove it for inactive ones', () => {
+  it('should only render DOM content for the active wa-tab-panel and remove it for inactive ones', async () => {
     // Initial state: tab1 active, others inactive
     hostComponent.tab1Active = true;
     hostComponent.tab2Active = false;
     hostComponent.tab3Active = false;
     hostFixture.detectChanges();
+    // Allow MutationObserver callbacks to fire
+    await new Promise(resolve => setTimeout(resolve, 0));
 
     const p1: HTMLElement = tabPanelElements[0];
     const p2: HTMLElement = tabPanelElements[1];
     const p3: HTMLElement = tabPanelElements[2];
 
-    const p1Child = p1.querySelector(':scope > *');
-    const p2Child = p2.querySelector(':scope > *');
-    const p3Child = p3.querySelector(':scope > *');
-
-    expect(p1Child).not.toBeNull();
-    expect(p2Child).toBeNull();
-    expect(p3Child).toBeNull();
+    expect(p1.textContent!.trim()).toContain('Content for Tab 1');
+    expect(p2.textContent!.trim()).toBe('');
+    expect(p3.textContent!.trim()).toBe('');
 
     // Toggle: make tab2 active, tab1 inactive
     hostComponent.tab1Active = false;
     hostComponent.tab2Active = true;
     hostComponent.activeTab = 'tab2';
     hostFixture.detectChanges();
+    await new Promise(resolve => setTimeout(resolve, 0));
 
-    const p1ChildAfter = p1.querySelector(':scope > *');
-    const p2ChildAfter = p2.querySelector(':scope > *');
-    const p3ChildAfter = p3.querySelector(':scope > *');
-
-    expect(p1ChildAfter).toBeNull();
-    expect(p2ChildAfter).not.toBeNull();
-    expect(p3ChildAfter).toBeNull();
+    expect(p1.textContent!.trim()).toBe('');
+    expect(p2.textContent!.trim()).toContain('Content for Tab 2');
+    expect(p3.textContent!.trim()).toBe('');
 
     // Toggle again: activate tab3
     hostComponent.tab2Active = false;
     hostComponent.tab3Active = true;
     hostComponent.activeTab = 'tab3';
     hostFixture.detectChanges();
+    await new Promise(resolve => setTimeout(resolve, 0));
 
-    const p1ChildAfter2 = p1.querySelector(':scope > *');
-    const p2ChildAfter2 = p2.querySelector(':scope > *');
-    const p3ChildAfter2 = p3.querySelector(':scope > *');
-
-    expect(p1ChildAfter2).toBeNull();
-    expect(p2ChildAfter2).toBeNull();
-    expect(p3ChildAfter2).not.toBeNull();
+    expect(p1.textContent!.trim()).toBe('');
+    expect(p2.textContent!.trim()).toBe('');
+    expect(p3.textContent!.trim()).toContain('Content for Tab 3');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', async () => {
     // Initial state
     expect(hostComponent.activeTab).toBe('tab1');
     expect(tabGroupElement.getAttribute('active')).toBe('tab1');
 
     // Update model -> view
     hostComponent.activeTab = 'tab2';
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.detectChanges();
     expect(tabGroupElement.getAttribute('active')).toBe('tab2');
   });
@@ -239,5 +234,248 @@ describe('Tab Group Components', () => {
     }));
     expect(hostComponent.tabHideCalled).toBe(true);
     expect(hostComponent.lastHiddenTab).toBe('tab1');
+  });
+});
+
+// ----------------------------------------------
+// Additional lifecycle-focused tests
+// ----------------------------------------------
+
+@Component({
+  selector: 'test-pane',
+  template: `pane`,
+  standalone: true
+})
+class TestPaneComponent implements OnInit, AfterViewInit, OnDestroy {
+  static inits = 0;
+  static viewInits = 0;
+  static destroys = 0;
+
+  ngOnInit(): void {
+    TestPaneComponent.inits++;
+  }
+  ngAfterViewInit(): void {
+    TestPaneComponent.viewInits++;
+  }
+  ngOnDestroy(): void {
+    TestPaneComponent.destroys++;
+  }
+  static reset(): void {
+    TestPaneComponent.inits = 0;
+    TestPaneComponent.viewInits = 0;
+    TestPaneComponent.destroys = 0;
+  }
+}
+
+// Host using projected content (no <ng-template waTabContent>)
+@Component({
+  template: `
+    <wa-tab-group [(ngModel)]="active">
+      <wa-tab panel="a">A</wa-tab>
+      <wa-tab panel="b">B</wa-tab>
+      <wa-tab panel="c">C</wa-tab>
+
+      <wa-tab-panel name="a" [active]="active==='a'">
+        <test-pane></test-pane>
+      </wa-tab-panel>
+      <wa-tab-panel name="b" [active]="active==='b'">
+        <test-pane></test-pane>
+      </wa-tab-panel>
+      <wa-tab-panel name="c" [active]="active==='c'">
+        <test-pane></test-pane>
+      </wa-tab-panel>
+    </wa-tab-group>
+  `,
+  standalone: true,
+  imports: [WaTabGroupComponent, WaTabComponent, WaTabPanelComponent, FormsModule, TestPaneComponent]
+})
+class ProjectedHostComponent {
+  active: 'a' | 'b' | 'c' = 'a';
+}
+
+// Host using template-based lazy content (<ng-template waTabContent>)
+@Component({
+  template: `
+    <wa-tab-group [(ngModel)]="active">
+      <wa-tab panel="a">A</wa-tab>
+      <wa-tab panel="b">B</wa-tab>
+      <wa-tab panel="c">C</wa-tab>
+
+      <wa-tab-panel name="a" [active]="active==='a'">
+        <ng-template waTabContent>
+          <test-pane></test-pane>
+        </ng-template>
+      </wa-tab-panel>
+      <wa-tab-panel name="b" [active]="active==='b'">
+        <ng-template waTabContent>
+          <test-pane></test-pane>
+        </ng-template>
+      </wa-tab-panel>
+      <wa-tab-panel name="c" [active]="active==='c'">
+        <ng-template waTabContent>
+          <test-pane></test-pane>
+        </ng-template>
+      </wa-tab-panel>
+    </wa-tab-group>
+  `,
+  standalone: true,
+  imports: [WaTabGroupComponent, WaTabComponent, WaTabPanelComponent, FormsModule, TestPaneComponent, WaTabContent]
+})
+class TemplateLazyLifecycleHostComponent {
+  active: 'a' | 'b' | 'c' = 'a';
+}
+
+describe('Tab Panel component instantiation modes', () => {
+  it('projected content: child components are instantiated eagerly for all panels', async () => {
+    TestPaneComponent.reset();
+    const fixture = await TestBed.configureTestingModule({
+      imports: [ProjectedHostComponent]
+    }).createComponent(ProjectedHostComponent);
+    fixture.detectChanges();
+
+    // All three TestPaneComponent instances are created at initial render
+    expect(TestPaneComponent.inits).toBe(3);
+    expect(TestPaneComponent.viewInits).toBe(3);
+
+    // Switching active tab should not create new instances
+    fixture.componentInstance.active = 'b';
+    fixture.detectChanges();
+    expect(TestPaneComponent.inits).toBe(3);
+    expect(TestPaneComponent.viewInits).toBe(3);
+    // No destroys happen merely due to our manual DOM movement approach
+    expect(TestPaneComponent.destroys).toBe(0);
+  });
+
+  it('template-based lazy content: instantiate only the active panel component and destroy previous on switch', async () => {
+    TestPaneComponent.reset();
+    const fixture = await TestBed.configureTestingModule({
+      imports: [TemplateLazyLifecycleHostComponent]
+    }).createComponent(TemplateLazyLifecycleHostComponent);
+    fixture.detectChanges();
+
+    // Only the active tab's component is created
+    expect(TestPaneComponent.inits).toBe(1);
+    expect(TestPaneComponent.viewInits).toBe(1);
+    expect(TestPaneComponent.destroys).toBe(0);
+
+    // Switch to tab b
+    fixture.componentInstance.active = 'b';
+    fixture.detectChanges();
+    expect(TestPaneComponent.inits).toBe(2);
+    expect(TestPaneComponent.viewInits).toBe(2);
+    expect(TestPaneComponent.destroys).toBe(1);
+
+    // Switch to tab c
+    fixture.componentInstance.active = 'c';
+    fixture.detectChanges();
+    expect(TestPaneComponent.inits).toBe(3);
+    expect(TestPaneComponent.viewInits).toBe(3);
+    expect(TestPaneComponent.destroys).toBe(2);
+  });
+});
+
+// Additional host for non-lazy mode verification
+@Component({
+  template: `
+    <wa-tab-group [(ngModel)]="activeTab">
+      <wa-tab panel="tab1">Tab 1</wa-tab>
+      <wa-tab panel="tab2">Tab 2</wa-tab>
+      <wa-tab panel="tab3">Tab 3</wa-tab>
+
+      <wa-tab-panel name="tab1" [active]="activeTab==='tab1'" [lazy]="false">
+        Content 1
+      </wa-tab-panel>
+      <wa-tab-panel name="tab2" [active]="activeTab==='tab2'" [lazy]="false">
+        Content 2
+      </wa-tab-panel>
+      <wa-tab-panel name="tab3" [active]="activeTab==='tab3'" [lazy]="false">
+        Content 3
+      </wa-tab-panel>
+    </wa-tab-group>
+  `,
+  standalone: true,
+  imports: [WaTabGroupComponent, WaTabComponent, WaTabPanelComponent, FormsModule]
+})
+class NonLazyHostComponent {
+  activeTab = 'tab1';
+}
+
+// Additional host for template-based lazy content verification
+@Component({
+  template: `
+    <wa-tab-group [(ngModel)]="activeTab">
+      <wa-tab panel="tab1">Tab 1</wa-tab>
+      <wa-tab panel="tab2">Tab 2</wa-tab>
+
+      <wa-tab-panel name="tab1" [active]="activeTab==='tab1'">
+        <ng-template waTabContent>
+          <div class="tmpl-1">Tmpl 1</div>
+        </ng-template>
+      </wa-tab-panel>
+      <wa-tab-panel name="tab2" [active]="activeTab==='tab2'">
+        <ng-template waTabContent>
+          <div class="tmpl-2">Tmpl 2</div>
+        </ng-template>
+      </wa-tab-panel>
+    </wa-tab-group>
+  `,
+  standalone: true,
+  imports: [WaTabGroupComponent, WaTabComponent, WaTabPanelComponent, WaTabContent, FormsModule]
+})
+class TemplateLazyHostComponent {
+  activeTab = 'tab1';
+}
+
+describe('Tab Panel lazy modes', () => {
+  it('non-lazy ([lazy]="false") should keep DOM for inactive panels', async () => {
+    await TestBed.configureTestingModule({
+      imports: [NonLazyHostComponent]
+    }).compileComponents();
+
+    const fix = TestBed.createComponent(NonLazyHostComponent);
+    fix.detectChanges();
+
+    const panels: NodeListOf<HTMLElement> = fix.nativeElement.querySelectorAll('wa-tab-panel');
+    expect(panels.length).toBe(3);
+
+    const [p1, p2, p3] = Array.from(panels);
+    // Default active is tab1; but since lazy=false, all panels should have their content present
+    expect(p1.textContent!.trim()).toContain('Content 1');
+    expect(p2.textContent!.trim()).toContain('Content 2');
+    expect(p3.textContent!.trim()).toContain('Content 3');
+
+    // Switch active tab; DOM should still remain present for all
+    const cmp = fix.componentInstance as NonLazyHostComponent;
+    cmp.activeTab = 'tab2';
+    fix.detectChanges();
+
+    expect(p1.textContent!.trim()).toContain('Content 1');
+    expect(p2.textContent!.trim()).toContain('Content 2');
+    expect(p3.textContent!.trim()).toContain('Content 3');
+  });
+
+  it('template-based lazy (<ng-template waTabContent>) should render only active panel', async () => {
+    await TestBed.configureTestingModule({
+      imports: [TemplateLazyHostComponent]
+    }).compileComponents();
+
+    const fix = TestBed.createComponent(TemplateLazyHostComponent);
+    fix.detectChanges();
+
+    const el: HTMLElement = fix.nativeElement as HTMLElement;
+    const p1: HTMLElement = el.querySelector('wa-tab-panel[name="tab1"]')!;
+    const p2: HTMLElement = el.querySelector('wa-tab-panel[name="tab2"]')!;
+
+    // Initially active tab1
+    expect(p1.querySelector('.tmpl-1')).not.toBeNull();
+    expect(p2.querySelector('.tmpl-2')).toBeNull();
+
+    // Switch to tab2
+    const cmp = fix.componentInstance as TemplateLazyHostComponent;
+    cmp.activeTab = 'tab2';
+    fix.detectChanges();
+
+    expect(p1.querySelector('.tmpl-1')).toBeNull();
+    expect(p2.querySelector('.tmpl-2')).not.toBeNull();
   });
 });

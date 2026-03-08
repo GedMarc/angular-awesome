@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaBreadcrumbDirective } from './breadcrumb.directive';
 
 // Create a test host component to test the breadcrumb directive
@@ -13,7 +14,7 @@ import { WaBreadcrumbDirective } from './breadcrumb.directive';
     </wa-breadcrumb>
   `,
   standalone: true,
-  imports: [WaBreadcrumbDirective]
+  imports: [WaBreadcrumbDirective, NgIf]
 })
 class TestHostComponent {
   label?: string;

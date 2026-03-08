@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -25,7 +25,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaFormatDateDirective implements OnInit, ControlValueAccessor {
+export class WaFormatDateDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Date input
   @Input() date?: Date | string;
 
@@ -61,6 +61,14 @@ export class WaFormatDateDirective implements OnInit, ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set date attribute
@@ -121,7 +129,7 @@ export class WaFormatDateDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

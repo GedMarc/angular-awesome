@@ -113,7 +113,7 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   private setStyle(prop: string, value: string) {
     if (value) {
-      this.renderer.setStyle(this.el, prop, value);
+      this.el.style.setProperty(prop, value);
     }
   }
 

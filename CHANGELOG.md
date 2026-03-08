@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.3.1] - 2026-03-08
+### Added
+- Angular wrappers and exports for new Web Awesome 3.3.1 components:
+  - wa-chart (base chart component for advanced Chart.js configuration)
+  - wa-bar-chart (bar/column chart visualization)
+  - wa-bubble-chart (bubble chart visualization)
+  - wa-doughnut-chart (doughnut chart visualization)
+  - wa-line-chart (line chart visualization)
+  - wa-pie-chart (pie chart visualization)
+  - wa-polar-area-chart (polar area chart visualization)
+  - wa-radar-chart (radar/spider chart visualization)
+  - wa-scatter-chart (scatter plot visualization)
+  - wa-option (selectable items for select/combobox controls)
+  - wa-resize-observer (declarative ResizeObserver API wrapper)
+- Rules and example documentation files for all new components.
+- CSS custom property input setters on all chart directives for theming (fill colors, border colors, grid, etc.).
+
+### Changed
+- Updated package version from 3.2.1 to 3.3.1.
+- Updated package description to reference Web Awesome 3.3.x.
+- Public API surface updated to export all new directives.
+
+### Notes
+- All chart components share a common API surface with inputs for label, description, axes labels, legend position, stacking, grid, min/max, animation control, and Chart.js config/plugins.
+- The wa-option directive complements the existing wa-select and wa-combobox wrappers.
+- The wa-resize-observer follows the same pattern as wa-intersection-observer and wa-mutation-observer.
+
+
 ## [3.2.1] - 2026-02-07
 ### Added
 - Angular wrappers and exports for new Web Awesome components introduced in 3.2.x:

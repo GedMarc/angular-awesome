@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -26,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
+export class WaQrCodeDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
   @Input() value?: string;
   @Input() label?: string;
@@ -61,22 +61,7 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set attributes
-    this.setAttr('value', this.value);
-    this.setAttr('label', this.label);
-    this.setNumericAttr('size', this.size);
-    this.setAttr('fill', this.fill);
-    this.setAttr('background', this.background);
-    this.setNumericAttr('radius', this.radius);
-    this.setAttr('error-correction', this.errorCorrection);
-
-    // Set style attributes
-    this.setCssVar('--size', this.styleSize);
-    this.setCssVar('--fill', this.styleFill);
-    this.setCssVar('--background', this.styleBackground);
-    this.setCssVar('--radius', this.styleRadius);
-    this.setCssVar('--color', this.styleColor);
-    this.setCssVar('--display', this.styleDisplay);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
@@ -97,6 +82,29 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
       const target = event.target as HTMLInputElement;
       this.onChange(target.value);
     });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set attributes
+    this.setAttr('value', this.value);
+    this.setAttr('label', this.label);
+    this.setNumericAttr('size', this.size);
+    this.setAttr('fill', this.fill);
+    this.setAttr('background', this.background);
+    this.setNumericAttr('radius', this.radius);
+    this.setAttr('error-correction', this.errorCorrection);
+
+    // Set style attributes
+    this.setCssVar('--size', this.styleSize);
+    this.setCssVar('--fill', this.styleFill);
+    this.setCssVar('--background', this.styleBackground);
+    this.setCssVar('--radius', this.styleRadius);
+    this.setCssVar('--color', this.styleColor);
+    this.setCssVar('--display', this.styleDisplay);
   }
 
   /**
@@ -132,7 +140,7 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

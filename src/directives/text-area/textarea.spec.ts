@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaTextareaComponent } from './textarea.component';
@@ -213,12 +213,14 @@ describe('WaTextareaComponent', () => {
     expect(textareaElement.style.getPropertyValue('--box-shadow')).toBe('0 4px 8px rgba(0,0,0,0.1)');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', fakeAsync(() => {
     // Update model -> view
     hostComponent.value = 'Test Value';
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
     expect(textareaElement.getAttribute('value')).toBe('Test Value');
-  });
+  }));
 
   it('should emit events correctly', () => {
     // Simulate focus event

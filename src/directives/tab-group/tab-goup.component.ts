@@ -83,7 +83,7 @@ export class WaTabGroupComponent implements ControlValueAccessor {
 
   private setStyle(prop: string, value: string) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, prop, value);
+      this.el.nativeElement.style.setProperty(prop, value);
     }
   }
 }

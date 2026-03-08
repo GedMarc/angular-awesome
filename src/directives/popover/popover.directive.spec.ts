@@ -104,7 +104,8 @@ describe('WaPopoverDirective', () => {
   });
 
   it('should call reposition method on the native element', () => {
-    // Mock the reposition method on the native element
+    // Define the reposition method on the native element (doesn't exist in test DOM)
+    (popoverElement as any).reposition = () => {};
     const spy = spyOn(popoverElement as any, 'reposition');
 
     directive.reposition();

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
@@ -20,9 +20,10 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
   selector: 'wa-card',
   standalone: true
 })
-export class WaCardDirective implements OnInit {
+export class WaCardDirective implements OnInit, OnChanges {
   // Appearance inputs
   @Input() appearance?: Appearance | string;
+  @Input() size?: string;
 
   // Boolean inputs
   @Input() withHeader?: boolean | string;
@@ -46,10 +47,19 @@ export class WaCardDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
     this.setAttr('appearance', normalizeAppearance(this.appearance));
+    this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-header', this.withHeader);
@@ -92,6 +102,8 @@ export class WaCardDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

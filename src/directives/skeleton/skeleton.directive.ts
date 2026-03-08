@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaSkeletonDirective
@@ -16,7 +16,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: '[waSkeleton]',
   standalone: true
 })
-export class WaSkeletonDirective implements OnInit {
+export class WaSkeletonDirective implements OnInit, OnChanges {
   // Core input attributes
   @Input() effect?: 'none' | 'sheen' | 'pulse' | string;
 
@@ -38,6 +38,14 @@ export class WaSkeletonDirective implements OnInit {
       this.renderer.setAttribute(nativeEl, 'aria-hidden', 'true');
     }
 
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('effect', this.effect);
 
@@ -61,7 +69,7 @@ export class WaSkeletonDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

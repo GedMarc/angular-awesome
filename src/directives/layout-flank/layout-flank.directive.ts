@@ -62,10 +62,10 @@ export class WaLayoutFlankDirective implements OnChanges {
 
     // CSS variables
     if (this.flankSize) {
-      this.renderer.setStyle(host, '--flank-size', this.flankSize);
+      host.style.setProperty('--flank-size', this.flankSize);
     }
     if (this.contentPercentage) {
-      this.renderer.setStyle(host, '--content-percentage', this.contentPercentage);
+      host.style.setProperty('--content-percentage', this.contentPercentage);
     }
   }
 

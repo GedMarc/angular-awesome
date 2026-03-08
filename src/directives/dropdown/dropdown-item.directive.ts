@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -32,7 +32,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
+export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueAccessor {
   @Input() type?: 'normal' | 'checkbox' | string;
   @Input() checked?: boolean | string;
   @Input() value?: string;
@@ -69,6 +69,30 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
+      this.blurEvent.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
+      this.focusEvent.emit(event);
+    });
+
+    // For checkbox type, listen for checked changes
+    if (this.type === 'checkbox') {
+      this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
+        this.onChange(event.detail);
+      });
+    }
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('type', this.type);
     this.setAttr('value', this.value);
@@ -89,22 +113,6 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-
-    // For checkbox type, listen for checked changes
-    if (this.type === 'checkbox') {
-      this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
-        this.onChange(event.detail);
-      });
-    }
   }
 
   /**
@@ -121,7 +129,7 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -132,6 +140,8 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else if (value === false || value === 'false') {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

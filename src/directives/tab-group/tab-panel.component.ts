@@ -13,6 +13,35 @@ import {
 import { WaTabContent } from './tab-content.directive';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 
+/**
+ * WaTabPanelComponent
+ *
+ * Content rendering and lazy behavior
+ * - Projected content (default): If you place elements directly inside <wa-tab-panel>,
+ *   Angular will instantiate those child components eagerly at initial render. With
+ *   [lazy] = true (default), this component removes the projected DOM from inactive
+ *   panels and re-attaches it for the active one. This optimizes DOM size but does NOT
+ *   defer Angular component instantiation or lifecycle hooks (OnInit/AfterViewInit will
+ *   run at initial render for all projected children).
+ *
+ * - Template-based lazy content: To truly defer component instantiation until a panel
+ *   becomes active, wrap the content in <ng-template waTabContent>. In this mode,
+ *   only the active panel's template is instantiated; switching tabs destroys the
+ *   previous instance and creates the new one. Lifecycle hooks fire on tab activation.
+ *
+ * Usage examples
+ * 1) Projected (DOM-lazy by default, eager component instantiation):
+ *   <wa-tab-panel name="tab1">
+ *     <expensive-child></expensive-child>
+ *   </wa-tab-panel>
+ *
+ * 2) True lazy instantiation (recommended for expensive children):
+ *   <wa-tab-panel name="tab1">
+ *     <ng-template waTabContent>
+ *       <expensive-child></expensive-child>
+ *     </ng-template>
+ *   </wa-tab-panel>
+ */
 @Component({
   selector: 'wa-tab-panel',
   template: `
@@ -37,7 +66,9 @@ export class WaTabPanelComponent implements AfterViewInit, AfterContentInit, OnD
    * its projected DOM based on active state. Note this does NOT prevent Angular component
    * instantiation; for true deferred instantiation use <ng-template waTabContent>.
    */
-  @Input() lazy = false;
+  // Lazy-loading of projected content is enabled by default. To render all
+  // panels' projected DOM upfront, explicitly set [lazy]="false".
+  @Input() lazy = true;
 
   @ContentChild(WaTabContent) lazyContent?: WaTabContent;
 
@@ -94,7 +125,7 @@ export class WaTabPanelComponent implements AfterViewInit, AfterContentInit, OnD
 
   @Input() set padding(value: string) {
     if (value) {
-      this.renderer.setStyle(this.el.nativeElement, '--padding', value);
+      this.el.nativeElement.style.setProperty('--padding', value);
     }
   }
 

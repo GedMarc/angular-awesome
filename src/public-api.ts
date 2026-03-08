@@ -21,8 +21,12 @@ export * from './directives/checkbox/checkbox.directive';
 export * from './directives/comparison/comparison.directive';
 export * from './directives/copy-button/copy-button.directive';
 export * from './directives/details/details.directive';
+// Details template-content directive (enables true lazy instantiation)
+//export * from './directives/details/details-content.directive';
 export * from './directives/color-picker/color-picker.directive';
 export * from './directives/dialog/dialog.directive';
+// Dialog template-content directive (enables true lazy instantiation)
+export * from './directives/dialog/dialog-content.directive';
 export * from './directives/divider/divider.directive';
 export * from './directives/drawer/drawer.directive';
 export * from './directives/dropdown/dropdown.directive';
@@ -56,6 +60,8 @@ export * from './directives/tab-group/tab-panel.component';
 export * from './directives/tab-group/tab-panel.component';
 export * from './directives/tab-group/tab-group.component';
 export * from './directives/tab-group/tab-group.component';
+// Tabs template-content directive (enables true lazy instantiation)
+export * from './directives/tab-group/tab-content.directive';
 export * from './directives/page/page.component';
 export * from './directives/popup/popup.directive';
 export * from './directives/popover/popover.directive';
@@ -77,6 +83,19 @@ export * from './directives/zoomable-frame/zoomable-frame.directive';
 export * from './directives/file-input/file-input.directive';
 export * from './directives/sparkline/sparkline.directive';
 export * from './directives/number-input/number-input.directive';
+
+// New components added in Web Awesome 3.3.1 release
+export * from './directives/chart/chart.directive';
+export * from './directives/bar-chart/bar-chart.directive';
+export * from './directives/bubble-chart/bubble-chart.directive';
+export * from './directives/doughnut-chart/doughnut-chart.directive';
+export * from './directives/line-chart/line-chart.directive';
+export * from './directives/pie-chart/pie-chart.directive';
+export * from './directives/polar-area-chart/polar-area-chart.directive';
+export * from './directives/radar-chart/radar-chart.directive';
+export * from './directives/scatter-chart/scatter-chart.directive';
+export * from './directives/option/option.directive';
+export * from './directives/resize-observer/resize-observer.directive';
 
 // Toasts
 export * from './services/toast/toast.types';

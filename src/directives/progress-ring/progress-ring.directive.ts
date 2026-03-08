@@ -128,7 +128,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
       return;
     }
     this._lastPercentApplied = clamped;
-    this.renderer.setStyle(this.el.nativeElement, '--percentage', `${clamped}%`);
+    this.el.nativeElement.style.setProperty('--percentage', `${clamped}%`);
   }
 
   /**
@@ -172,7 +172,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

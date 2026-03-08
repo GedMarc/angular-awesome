@@ -12,7 +12,7 @@ import { WaIconDirective } from './icon.directive';
       [library]="library"
       [src]="src"
       [label]="label"
-      [fixedWidth]="fixedWidth"
+      [withFixedWidth]="withFixedWidth"
     >
     </wa-icon>
   `,
@@ -26,7 +26,8 @@ class TestHostComponent {
   library?: string;
   src?: string;
   label?: string;
-  fixedWidth?: boolean;
+  // Allow string coercion in tests
+  withFixedWidth?: boolean | string;
 }
 
 describe('WaIconDirective', () => {
@@ -81,17 +82,17 @@ describe('WaIconDirective', () => {
   });
 
   it('should set boolean attributes correctly', () => {
-    hostComponent.fixedWidth = true;
+    hostComponent.withFixedWidth = true;
     hostFixture.detectChanges();
 
-    expect(iconElement.hasAttribute('fixed-width')).toBeTrue();
+    expect(iconElement.hasAttribute('with-fixed-width')).toBeTrue();
   });
 
   it('should not set boolean attributes when false', () => {
-    hostComponent.fixedWidth = false;
+    hostComponent.withFixedWidth = false;
     hostFixture.detectChanges();
 
-    expect(iconElement.hasAttribute('fixed-width')).toBeFalse();
+    expect(iconElement.hasAttribute('with-fixed-width')).toBeFalse();
   });
 
   it('should expose the native element', () => {
@@ -128,13 +129,13 @@ describe('WaIconDirective', () => {
     });
   });
 
-  it('should handle string value for fixedWidth', () => {
-    hostComponent.fixedWidth = 'true';
+  it('should handle string value for withFixedWidth', () => {
+    hostComponent.withFixedWidth = 'true';
     hostFixture.detectChanges();
-    expect(iconElement.hasAttribute('fixed-width')).toBeTrue();
+    expect(iconElement.hasAttribute('with-fixed-width')).toBeTrue();
 
-    hostComponent.fixedWidth = '';
+    hostComponent.withFixedWidth = '';
     hostFixture.detectChanges();
-    expect(iconElement.hasAttribute('fixed-width')).toBeTrue();
+    expect(iconElement.hasAttribute('with-fixed-width')).toBeTrue();
   });
 });
