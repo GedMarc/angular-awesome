@@ -20,16 +20,28 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
   - wa-resize-observer (declarative ResizeObserver API wrapper)
 - Rules and example documentation files for all new components.
 - CSS custom property input setters on all chart directives for theming (fill colors, border colors, grid, etc.).
+- **Toasts: Official Web Awesome `<wa-toast>` and `<wa-toast-item>` integration:**
+  - `WaToastDirective` — Angular wrapper for `<wa-toast>`, supporting `placement` input and programmatic `create()` method.
+  - `WaToastItemDirective` — Angular wrapper for `<wa-toast-item>`, supporting `variant`, `size`, `duration` inputs and lifecycle event outputs (`wa-show`, `wa-after-show`, `wa-hide`, `wa-after-hide`).
+  - New unit tests for both directives (`toast.directive.spec.ts`, `toast-item.directive.spec.ts`).
 
 ### Changed
 - Updated package version from 3.2.1 to 3.3.1.
 - Updated package description to reference Web Awesome 3.3.x.
 - Public API surface updated to export all new directives.
+- **Toasts: Migrated from custom `wa-callout`-based implementation to official `<wa-toast>` / `<wa-toast-item>` web components:**
+  - `WaToastContainerComponent` now renders `<wa-toast>` with `<wa-toast-item>` elements instead of custom callout-based markup with manual CSS positioning.
+  - `ToastConfig.position` renamed to `ToastConfig.placement` using official placement values (`top-start`, `top-center`, `top-end`, `bottom-start`, `bottom-center`, `bottom-end`). Deprecated `ToastPosition` type alias kept for backwards compatibility.
+  - Removed `appearance`, `closable`, `gap`, and `zIndex` from `Toast` and `ToastConfig` types — these are now handled natively by the `<wa-toast>` and `<wa-toast-item>` web components via CSS custom properties (`--gap`, `--width`, `--accent-width`, etc.).
+  - Container no longer depends on `WaCalloutDirective`; imports `WaToastDirective` and `WaToastItemDirective` instead.
+  - Updated all toast service and container tests to align with the new API.
+  - Regenerated toast documentation (`toast.rules.md`, `toast.example.md`, `docs/components/toast.html`).
 
 ### Notes
 - All chart components share a common API surface with inputs for label, description, axes labels, legend position, stacking, grid, min/max, animation control, and Chart.js config/plugins.
 - The wa-option directive complements the existing wa-select and wa-combobox wrappers.
 - The wa-resize-observer follows the same pattern as wa-intersection-observer and wa-mutation-observer.
+- The toast migration is a **breaking change** for consumers using `position` (now `placement`), `closable`, `appearance`, `gap`, or `zIndex` properties. The `WaToastService` API (`show`, `success`, `warning`, `danger`, `brand`, `neutral`, `update`, `close`, `clearAll`) remains fully compatible.
 
 
 ## [3.2.1] - 2026-02-07

@@ -10,6 +10,17 @@ export function provideWaToasts(config: ToastConfig = {}): Provider[] {
   ];
 }
 
+/**
+ * WaToastService
+ *
+ * Service for managing toast notifications using the official <wa-toast> and <wa-toast-item>
+ * web components. Provides a programmatic API for showing, updating, closing, and clearing
+ * toast notifications.
+ *
+ * The service manages its own queue and visibility list, emitting changes via the toasts$ observable.
+ * The companion WaToastContainerComponent subscribes to toasts$ and renders <wa-toast-item> elements
+ * inside a <wa-toast> container.
+ */
 @Injectable({ providedIn: 'root' })
 export class WaToastService {
   private cfg: ToastConfig = { ...DEFAULT_TOAST_CONFIG, ...(inject(WA_TOAST_CONFIG, { optional: true }) || {}) };
@@ -30,15 +41,17 @@ export class WaToastService {
     this.emit();
   }
 
+  /**
+   * Show a toast notification and return its id.
+   * Options align with <wa-toast-item> properties: variant, size, duration.
+   */
   show(message: string, options: Partial<Omit<Toast, 'id' | 'message' | 'createdAt'>> = {}): string {
     const id = this.uuid();
     const toast: Toast = {
       id,
       message,
       variant: options.variant,
-      appearance: options.appearance,
       size: options.size,
-      closable: options.closable ?? true,
       duration: options.duration ?? this.config.duration,
       title: options.title,
       createdAt: Date.now()
@@ -145,13 +158,10 @@ export class WaToastService {
   }
 
   private emit() {
-    // sort by createdAt depending on newestOnTop, but keep current order
-    // We already maintain order at insertion time; just emit a shallow copy
     this.subject.next([...this.visible]);
   }
 
   private uuid(): string {
-    // Simple RFC4122 v4-ish ID
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
       const r = Math.random() * 16 | 0;
       const v = c === 'x' ? r : (r & 0x3 | 0x8);

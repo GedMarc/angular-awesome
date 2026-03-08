@@ -1,14 +1,14 @@
 # Toasts Examples
 
-This page shows how to use the Toasts system built on top of `wa-callout` via the `WaToastService` and the `wa-toast-container` component.
+This page shows how to use the official `<wa-toast>` and `<wa-toast-item>` web components via the `WaToastService` and the `<wa-toast-container>` component.
 
 ## Basic Setup
 
-Add the container once near the application root (e.g., in `app.component.html`). It will position the stack and render incoming toasts.
+Add the container once near the application root (e.g., in `app.component.html`). It renders `<wa-toast>` with `<wa-toast-item>` elements for each notification.
 
 ```html
 <!-- app.component.html -->
-<wa-toast-container position="top-right"></wa-toast-container>
+<wa-toast-container placement="top-end"></wa-toast-container>
 ```
 
 Optionally configure defaults during bootstrap:
@@ -19,7 +19,7 @@ import { provideWaToasts } from 'angular-awesome';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    ...provideWaToasts({ position: 'bottom-left', max: 3, duration: 4000, newestOnTop: true, gap: 12, zIndex: 10000 })
+    ...provideWaToasts({ placement: 'bottom-start', max: 3, duration: 4000, newestOnTop: true })
   ]
 });
 ```
@@ -43,7 +43,7 @@ export class DemoToastsComponent {
   constructor(private toasts: WaToastService) {}
 
   saved() {
-    this.toasts.success('Profile saved', { closable: true });
+    this.toasts.success('Profile saved');
   }
 
   sync() {
@@ -54,20 +54,56 @@ export class DemoToastsComponent {
 }
 ```
 
-## Positioning
+## Placement
 
-Change where the container renders on the screen with the `position` input:
+Change where the toast stack renders on the screen with the `placement` input, using the official `<wa-toast>` placement values:
 
 ```html
-<wa-toast-container position="bottom-center"></wa-toast-container>
+<wa-toast-container placement="bottom-center"></wa-toast-container>
 ```
 
-Supported positions: `top-right`, `top-left`, `bottom-right`, `bottom-left`, `top-center`, `bottom-center`.
+Supported placements: `top-start`, `top-center`, `top-end`, `bottom-start`, `bottom-center`, `bottom-end`.
 
-## Closable and Auto-dismiss
+## Using the Directive Directly
 
-- By default, toasts are closable and auto-dismiss after the configured `duration` (default 5000ms).
-- Set `duration: 0` or a negative value to make a toast sticky until it is explicitly closed.
+You can also use the `<wa-toast>` directive directly for full control:
+
+```html
+<wa-toast placement="top-end">
+  <wa-toast-item variant="success" duration="5000">
+    Record saved successfully!
+  </wa-toast-item>
+</wa-toast>
+```
+
+## Programmatic Creation via Native API
+
+The `WaToastDirective` exposes the native `create()` method:
+
+```ts
+import { Component, ViewChild } from '@angular/core';
+import { WaToastDirective } from 'angular-awesome';
+
+@Component({
+  selector: 'demo-native-toast',
+  template: `
+    <wa-toast #toast placement="top-end"></wa-toast>
+    <button (click)="showToast()">Show Toast</button>
+  `
+})
+export class DemoNativeToastComponent {
+  @ViewChild('toast') toast!: WaToastDirective;
+
+  showToast() {
+    this.toast.create('Hello from native API!', { variant: 'success', duration: 3000 });
+  }
+}
+```
+
+## Auto-dismiss and Sticky Toasts
+
+- By default, toasts auto-dismiss after the configured `duration` (default 5000ms).
+- Set `duration: 0` to make a toast sticky until it is explicitly closed.
 
 ```ts
 this.toasts.show('Sticky notice', { duration: 0 });
@@ -87,13 +123,12 @@ this.toasts.success('T2');
 this.toasts.success('T3 (queued)');
 ```
 
-## Appearance and Size
+## Size
 
-Toast visuals reuse `wa-callout` tokens:
+Toast items support three sizes via the official `<wa-toast-item>` size property:
 
 ```ts
-this.toasts.show('Filled outlined large', {
-  appearance: 'filled-outlined',
-  size: 'large'
-});
+this.toasts.show('Small toast', { size: 'small' });
+this.toasts.show('Medium toast', { size: 'medium' });
+this.toasts.show('Large toast', { size: 'large' });
 ```

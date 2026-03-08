@@ -100,4 +100,6 @@ export * from './directives/resize-observer/resize-observer.directive';
 // Toasts
 export * from './services/toast/toast.types';
 export * from './services/toast/toast.service';
+export * from './directives/toast/toast.directive';
+export * from './directives/toast/toast-item.directive';
 export * from './directives/toast/toast-container.component';
