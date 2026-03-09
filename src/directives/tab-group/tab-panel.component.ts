@@ -7,7 +7,6 @@ import {
   AfterViewInit,
   OnDestroy,
   ContentChild,
-  ViewContainerRef,
   AfterContentInit
 } from '@angular/core';
 import { WaTabContent } from './tab-content.directive';

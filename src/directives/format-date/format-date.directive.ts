@@ -69,7 +69,6 @@ export class WaFormatDateDirective implements OnInit, OnChanges, ControlValueAcc
   }
 
   private applyInputs() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set date attribute
     this.setDateAttr('date', this.date);

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaPopoverDirective
@@ -26,7 +26,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
   selector: 'wa-popover',
   standalone: true
 })
-export class WaPopoverDirective implements OnInit, OnDestroy {
+export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
   // String inputs
   @Input() anchor?: string;
   // Allow using HTML's label-like API: for/htmlFor. We alias to properties that map to `anchor`.

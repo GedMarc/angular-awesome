@@ -309,7 +309,6 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
    * Moves children into a DocumentFragment when closed, and restores when opened.
    */
   private updateProjectedContentVisibility(): void {
-    const host = this.el.nativeElement as HTMLElement;
     const shouldHaveContent = this.isDialogOpen();
 
     if (shouldHaveContent) {

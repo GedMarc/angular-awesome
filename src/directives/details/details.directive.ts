@@ -104,7 +104,6 @@ export class WaDetailsDirective implements OnInit, OnChanges {
   }
 
   private applyInputs() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
     this.setAttr('summary', this.summary);

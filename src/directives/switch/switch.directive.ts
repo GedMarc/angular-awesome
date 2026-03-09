@@ -214,7 +214,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
     const isRequired = this.required === true || this.required === '' || this.required === 'true' || (host.hasAttribute && host.hasAttribute('required'));
     if (!isRequired) return null;
     const val = control?.value;
-    return !!val ? null : { required: true };
+    return val ? null : { required: true };
   }
 
   registerOnValidatorChange?(fn: () => void): void {

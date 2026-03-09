@@ -39,7 +39,7 @@ export type DropdownPlacement =
     }
   ]
 })
-export class WaDropdownDirective implements OnInit, ControlValueAccessor {
+export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Structural inputs
   @Input() placement?: DropdownPlacement | string;
   @Input() disabled?: boolean | string;
@@ -213,8 +213,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
     if (value != null) {
       setTimeout(() => {
         const dropdownItems = this.el.nativeElement.querySelectorAll('wa-dropdown-item[value]');
-        for (let i = 0; i < dropdownItems.length; i++) {
-          const item = dropdownItems[i];
+        for (const item of dropdownItems) {
           if (item.getAttribute('value') === value) {
             item.selected = true;
             break;

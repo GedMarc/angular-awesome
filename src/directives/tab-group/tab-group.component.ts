@@ -68,7 +68,7 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   }
   private _value: string | null = null;
 
-  onChange = (value: any) => {};
+  onChange = (_value: any) => {};
   onTouched = () => {};
 
   onTabShow(event: CustomEvent) {

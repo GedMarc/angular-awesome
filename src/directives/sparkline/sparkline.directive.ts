@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnChanges, AfterViewInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, AfterViewInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: 'wa-sparkline',

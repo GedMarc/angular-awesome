@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnChanges,
   Output,
   EventEmitter,
   HostListener,
@@ -14,7 +15,7 @@ import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../
   exportAs: 'waTag',
   standalone: true
 })
-export class WaTagDirective {
+export class WaTagDirective implements OnChanges {
   constructor(private el: ElementRef<HTMLElement>) {}
 
   // Inputs

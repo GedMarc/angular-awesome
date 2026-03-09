@@ -349,7 +349,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
         if (raw == null) {
           raw = el?.value ?? '';
         }
-        let currentKeys: string[] = Array.isArray(raw)
+        const currentKeys: string[] = Array.isArray(raw)
           ? raw
           : String(raw).split(' ').filter(v => v !== '');
         if (currentKeys.length > max) {
