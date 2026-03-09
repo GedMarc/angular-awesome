@@ -1,5 +1,5 @@
-﻿### `wa-pie-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-pie-chart>` Web Component**
+### `wa-pie-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-pie-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-pie-chart` Web Component. Pie charts work best with a small number of categories where the relative proportions matter more than exact values.

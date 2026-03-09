@@ -1,5 +1,5 @@
-﻿### `wa-polar-area-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-polar-area-chart>` Web Component**
+### `wa-polar-area-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-polar-area-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-polar-area-chart` Web Component. Polar area charts compare magnitudes without visual bias using equal angles and varying radius.

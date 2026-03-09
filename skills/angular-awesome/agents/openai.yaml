@@ -1,5 +1,5 @@
 interface:
   display_name: "Angular Awesome"
   short_description: "Use Angular Awesome wrapper directives for Web Awesome web components"
-  default_prompt: "Use $angular-awesome to implement UI with Web Awesome components in Angular 19+."
+  default_prompt: "Use $angular-awesome to implement UI with Web Awesome components in Angular 20+."
 

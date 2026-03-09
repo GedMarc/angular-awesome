@@ -1,5 +1,5 @@
-﻿### `wa-line-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-line-chart>` Web Component**
+### `wa-line-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-line-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-line-chart` Web Component. Line charts emphasize the shape and direction of data when the x-axis represents a sequential dimension.

@@ -1,5 +1,5 @@
-﻿### `wa-doughnut-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-doughnut-chart>` Web Component**
+### `wa-doughnut-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-doughnut-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-doughnut-chart` Web Component. Doughnut charts offer a cleaner look than pie charts that works well in dashboards and are best suited for a small number of categories.

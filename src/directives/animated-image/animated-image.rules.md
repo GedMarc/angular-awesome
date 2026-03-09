@@ -1,6 +1,6 @@
 ### 🎨 `wa-animated-image.rules.md`
 
-**Angular 19 Directive Rules for `<wa-animated-image>` Web Component**
+**Angular 20 Directive Rules for `<wa-animated-image>` Web Component**
 
 ---
 
@@ -119,7 +119,7 @@ Requires `<wa-icon>` component for slot support.
 
 ## ✅ Status
 
-**Stable** for Angular 19+ integration with declarative usage and shadow DOM compatibility.
+**Stable** for Angular 20+ integration with declarative usage and shadow DOM compatibility.
 
 ---
 

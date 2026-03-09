@@ -1,5 +1,5 @@
-﻿### `wa-radar-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-radar-chart>` Web Component**
+### `wa-radar-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-radar-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-radar-chart` Web Component. Radar charts are well-suited for comparing profiles across several dimensions, such as skill assessments or performance metrics.

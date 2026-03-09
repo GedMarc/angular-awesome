@@ -1,13 +1,13 @@
 ---
 name: angular-awesome
-description: "Use Angular Awesome wrapper directives for Web Awesome web components in Angular 19+ projects. Trigger when tasks mention wa-* components (wa-button, wa-input, wa-dialog, wa-toast, wa-select, wa-checkbox, etc.), Angular Awesome directives, Web Awesome Angular integration, component variants/appearance/size tokens, slot projection, form control binding, or angular-awesome imports. Covers component usage, layout utilities, services (toast), theming, and accessibility."
+description: "Use Angular Awesome wrapper directives for Web Awesome web components in Angular 20+ projects. Trigger when tasks mention wa-* components (wa-button, wa-input, wa-dialog, wa-toast, wa-select, wa-checkbox, etc.), Angular Awesome directives, Web Awesome Angular integration, component variants/appearance/size tokens, slot projection, form control binding, or angular-awesome imports. Covers component usage, layout utilities, services (toast), theming, and accessibility."
 metadata:
   short-description: Use Angular Awesome web component wrappers
 ---
 
 # Angular Awesome
 
-Angular 19+ standalone directives wrapping Web Awesome 3.3.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
+Angular 20+ standalone directives wrapping Web Awesome 3.3.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
 
 ## Quick Start
 

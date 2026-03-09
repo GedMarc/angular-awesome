@@ -1,5 +1,5 @@
-﻿### `wa-bar-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-bar-chart>` Web Component**
+### `wa-bar-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-bar-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-bar-chart` Web Component. Bar charts work well for comparing quantities across categories, showing rankings, and highlighting differences between groups.

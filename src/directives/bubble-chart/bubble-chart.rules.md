@@ -1,5 +1,5 @@
-﻿### `wa-bubble-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-bubble-chart>` Web Component**
+### `wa-bubble-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-bubble-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-bubble-chart` Web Component. Bubble charts are useful for visualizing relationships where a third variable adds meaning beyond a simple x/y correlation.

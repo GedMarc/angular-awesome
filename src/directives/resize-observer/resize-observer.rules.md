@@ -1,6 +1,6 @@
 ### `wa-resize-observer.rules.md`
 
-**Angular 19 Directive Rules for `<wa-resize-observer>` Web Component**
+**Angular 20 Directive Rules for `<wa-resize-observer>` Web Component**
 
 ---
 

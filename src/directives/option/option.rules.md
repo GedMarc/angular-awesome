@@ -1,6 +1,6 @@
 ### `wa-option.rules.md`
 
-**Angular 19 Directive Rules for `<wa-option>` Web Component**
+**Angular 20 Directive Rules for `<wa-option>` Web Component**
 
 ---
 

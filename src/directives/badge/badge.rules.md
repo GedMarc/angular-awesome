@@ -6,7 +6,7 @@
 
 ## 📝 Purpose
 
-Wrap the `<wa-badge>` Web Component inside an Angular 19 directive to allow declarative usage, input/output binding, and integration with Angular templates.
+Wrap the `<wa-badge>` Web Component inside an Angular 20 directive to allow declarative usage, input/output binding, and integration with Angular templates.
 
 ---
 

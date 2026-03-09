@@ -1,5 +1,5 @@
-﻿### `wa-scatter-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-scatter-chart>` Web Component**
+### `wa-scatter-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-scatter-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-scatter-chart` Web Component. Scatter charts are ideal for identifying correlations, clusters, and outliers in datasets.

@@ -1,5 +1,5 @@
-﻿### `wa-chart.rules.md`
-**Angular 19 Directive Rules for `<wa-chart>` Web Component**
+### `wa-chart.rules.md`
+**Angular 20 Directive Rules for `<wa-chart>` Web Component**
 ---
 ## Overview
 Angular directive support for the `wa-chart` Web Component. Use this component for advanced configuration such as mixed chart types, custom plugins, and direct Chart.js access.
