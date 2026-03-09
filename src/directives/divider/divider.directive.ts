@@ -18,7 +18,7 @@ import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Rendere
 })
 export class WaDividerDirective implements OnInit, OnChanges {
   // Boolean inputs
-  @Input() orientation?: 'vertical' | 'horizontal' | string;
+  @Input() orientation?: 'vertical' | 'horizontal';
   @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
 
   // Style inputs
@@ -27,8 +27,8 @@ export class WaDividerDirective implements OnInit, OnChanges {
   @Input() spacing?: string;
 
   // Injected services
-  private el = inject(ElementRef);
-  private renderer = inject(Renderer2);
+  private readonly el = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
 
   ngOnInit() {
     this.applyInputs();
@@ -40,11 +40,16 @@ export class WaDividerDirective implements OnInit, OnChanges {
 
   private applyInputs() {
     const el = this.el.nativeElement;
-    // Set boolean attributes (only if true)
-    if (this.orientation === 'vertical') {
-      this.renderer.setAttribute(el, 'orientation', 'vertical');
+
+    // When an explicit orientation is provided, set it directly and clear the
+    // deprecated vertical boolean attribute.  This covers both 'horizontal'
+    // and 'vertical' (as well as any future value the WC may support).
+    if (this.orientation != null) {
+      this.renderer.setAttribute(el, 'orientation', this.orientation);
       this.renderer.removeAttribute(el, 'vertical');
     } else if (this.vertical === true || this.vertical === 'true' || this.vertical === '') {
+      // Fall back to the deprecated vertical boolean attribute when
+      // orientation is not provided.
       this.renderer.setAttribute(el, 'vertical', '');
       this.renderer.removeAttribute(el, 'orientation');
     } else {
@@ -74,15 +79,4 @@ export class WaDividerDirective implements OnInit, OnChanges {
     }
   }
 
-  /**
-   * Sets a boolean attribute on the native element if the value is truthy
-   * For boolean attributes, the presence of the attribute (with empty value) indicates true
-   */
-  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
-    if (value === true || value === 'true' || value === '') {
-      this.renderer.setAttribute(this.el.nativeElement, name, '');
-    } else {
-      this.renderer.removeAttribute(this.el.nativeElement, name);
-    }
-  }
 }
