@@ -239,7 +239,7 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
-    } else if (value === false || value === 'false') {
+    } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
