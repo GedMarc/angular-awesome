@@ -110,6 +110,8 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
       if (!isNaN(n as number)) {
         this.renderer.setAttribute(this.el, name, String(n));
       }
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 

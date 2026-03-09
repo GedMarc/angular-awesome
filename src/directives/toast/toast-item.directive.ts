@@ -58,9 +58,7 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
   private applyInputs() {
     this.setAttr('variant', this.variant);
     this.setAttr('size', this.size);
-    if (this.duration != null) {
-      this.setAttr('duration', String(this.duration));
-    }
+    this.setAttr('duration', this.duration != null ? String(this.duration) : null);
   }
 
   private setupEventListeners() {

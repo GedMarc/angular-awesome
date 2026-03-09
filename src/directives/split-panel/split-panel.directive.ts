@@ -117,6 +117,8 @@ export class WaSplitPanelDirective implements OnInit, OnChanges {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

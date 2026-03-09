@@ -134,6 +134,8 @@ export class WaQrCodeDirective implements OnInit, OnChanges, ControlValueAccesso
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

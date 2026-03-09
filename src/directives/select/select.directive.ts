@@ -397,6 +397,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

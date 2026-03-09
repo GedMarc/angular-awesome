@@ -166,6 +166,8 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
           (this.el.nativeElement as any)[name] = numericValue;
         }
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

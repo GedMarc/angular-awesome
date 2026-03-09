@@ -164,6 +164,8 @@ export class WaProgressBarDirective implements OnInit, OnChanges, ControlValueAc
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
