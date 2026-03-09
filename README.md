@@ -3,7 +3,7 @@
 [![CI](https://github.com/GedMarc/angular-awesome/actions/workflows/ci.yml/badge.svg)](https://github.com/GedMarc/angular-awesome/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/angular-awesome.svg)](https://www.npmjs.com/package/angular-awesome)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Angular](https://img.shields.io/badge/Angular-19%2B-dd0031.svg?logo=angular)](https://angular.dev)
+[![Angular](https://img.shields.io/badge/Angular-20%2B-dd0031.svg?logo=angular)](https://angular.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 > Angular 19+ wrapper directives for the [Web Awesome](https://www.webawesome.com/) web-components framework.
@@ -21,7 +21,7 @@
 
 | Dependency | Version |
 |------------|---------|
-| Angular    | `^19.2` |
+| Angular    | `^20.0` |
 | Node.js    | `20+`   |
 | Web Awesome | `3.3.x` |
 

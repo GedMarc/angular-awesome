@@ -10,10 +10,6 @@ export type ToastPlacement =
   | 'bottom-center'
   | 'bottom-end';
 
-/**
- * @deprecated Use ToastPlacement instead. Kept for backwards compatibility.
- */
-export type ToastPosition = ToastPlacement;
 
 /**
  * Represents a programmatically managed toast notification.

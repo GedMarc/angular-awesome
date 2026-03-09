@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaMutationObserverDirective
@@ -7,8 +7,12 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleCh
  *
  * Features:
  * - Binds target and options inputs
- * - Re-emits wa-mutation events
+ * - Native wa-mutation events are available via (wa-mutation) template binding
  * - Supports default slot projection (observed content)
+ *
+ * Event binding:
+ * Consumers bind directly to the native DOM event: `(wa-mutation)="onMutation($event)"`.
+ * Angular handles this as a standard custom-element event binding.
  */
 @Directive({
   selector: 'wa-mutation-observer',
@@ -22,20 +26,12 @@ export class WaMutationObserverDirective implements OnInit, OnChanges {
   @Input() options?: any;
   @Input() disabled?: boolean | string;
 
-  // Events
-  @Output('wa-mutation') waMutation = new EventEmitter<CustomEvent>();
-
   // Services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit(): void {
-    const nativeEl = this.el.nativeElement as HTMLElement;
-
     this.applyInputs();
-
-    // Events
-    this.renderer.listen(nativeEl, 'wa-mutation', (event: CustomEvent) => this.waMutation.emit(event));
   }
 
   ngOnChanges(_: SimpleChanges): void {

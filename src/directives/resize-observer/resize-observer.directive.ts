@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaResizeObserverDirective
@@ -8,8 +8,13 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleCh
  *
  * Features:
  * - Binds disabled input
- * - Re-emits wa-resize events
+ * - Native wa-resize events are available via (wa-resize) template binding
  * - Supports default slot projection (observed content)
+ *
+ * Event binding:
+ * Consumers bind directly to the native DOM event: `(wa-resize)="onResize($event)"`.
+ * Angular handles this as a standard custom-element event binding — no @Output wrapper
+ * is needed, which avoids double-emission issues when an @Output alias matches a DOM event name.
  */
 @Directive({
   selector: 'wa-resize-observer',
@@ -19,18 +24,12 @@ export class WaResizeObserverDirective implements OnInit, OnChanges {
   // Inputs
   @Input() disabled?: boolean | string;
 
-  // Events
-  @Output('wa-resize') waResize = new EventEmitter<CustomEvent>();
-
   // Services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit(): void {
     this.applyInputs();
-
-    // Events
-    this.renderer.listen(this.el.nativeElement, 'wa-resize', (event: CustomEvent) => this.waResize.emit(event));
   }
 
   ngOnChanges(_: SimpleChanges): void {
@@ -49,4 +48,3 @@ export class WaResizeObserverDirective implements OnInit, OnChanges {
     }
   }
 }
-

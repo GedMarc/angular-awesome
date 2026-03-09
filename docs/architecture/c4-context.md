@@ -13,12 +13,10 @@ C4Context
     }
     System_Ext(webAwesome, "Web Awesome Components", "Canonical web components & styles")
     System_Ext(rulesRepo, "Enterprise Rules Repository", "Submodule providing RULES, GUIDES, and glossary topics")
-    System_Ext(browserstack, "BrowserStack", "Remote execution for Karma/Jasmine cross-browser tests")
 
     Rel(dev, ngWrapper, "Builds features with", "docs-first workflow")
     Rel(ngWrapper, webAwesome, "Delegates rendering/events to")
     Rel(ngWrapper, rulesRepo, "Constrained by", "rules/generative frontend+language guides")
-    Rel(ngWrapper, browserstack, "Validates via", "scripts/run-checkbox-tests.js")
 ```
 
 ## Traceability

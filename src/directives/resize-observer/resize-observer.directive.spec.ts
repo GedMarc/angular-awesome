@@ -86,8 +86,7 @@ describe('WaResizeObserverDirective', () => {
     });
     observerElement.dispatchEvent(customEvent);
 
-    // Event fires twice: once from native DOM event, once from @Output re-emit
-    expect(hostComponent.resizeEvents.length).toBe(2);
+    expect(hostComponent.resizeEvents.length).toBe(1);
     expect(hostComponent.resizeEvents[0].detail).toEqual({ entries: [] });
   });
 
@@ -100,9 +99,8 @@ describe('WaResizeObserverDirective', () => {
       observerElement.dispatchEvent(event);
     }
 
-    // Each dispatch triggers 2 events (DOM + @Output re-emit)
-    expect(hostComponent.resizeEvents.length).toBe(6);
-    expect(hostComponent.resizeEvents[4].detail).toEqual({ index: 2 });
+    expect(hostComponent.resizeEvents.length).toBe(3);
+    expect(hostComponent.resizeEvents[2].detail).toEqual({ index: 2 });
   });
 
   it('should update content projection when content changes', () => {

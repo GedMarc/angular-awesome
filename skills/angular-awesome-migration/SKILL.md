@@ -24,7 +24,7 @@ Workflow for migrating wrapper implementations when the upstream Web Awesome com
 4. **Update existing directive** — add/remove/rename inputs, update `applyInputs()`.
 5. **Update container/service** (if applicable) — swap internal rendering.
 6. **Update tests** — fix all specs to use new API; add tests for new behavior.
-7. **Add deprecation aliases** where possible for backwards compatibility.
+7. **Use official names only** — do not create deprecated aliases; use the upstream property and type names directly.
 8. **Update documentation** — rules.md, example.md, CHANGELOG.md.
 9. **Build + test** — `npx ng build` && scoped test run.
 10. **Regenerate docs** — `node docs/generate-docs.js`.
@@ -41,12 +41,12 @@ Changes made:
 - Updated `WaToastContainerComponent` template from `<wa-callout>` to `<wa-toast>` + `<wa-toast-item>`
 - Renamed `ToastConfig.position` → `ToastConfig.placement` with new values (`top-start`/`top-end` instead of `top-left`/`top-right`)
 - Removed `appearance`, `closable`, `gap`, `zIndex` from types (handled natively)
-- Added deprecated `ToastPosition` type alias
+- Removed legacy `ToastPosition` type — use `ToastPlacement` instead
 - Updated all tests and docs
 
 ## Backwards Compatibility Checklist
 
-- [ ] Add `@deprecated` type aliases for renamed types
+- [ ] Use only official upstream property and type names — do not create deprecated aliases
 - [ ] Document breaking changes clearly in CHANGELOG.md Notes section
 - [ ] List removed properties and their replacements
 - [ ] Note which service methods remain compatible

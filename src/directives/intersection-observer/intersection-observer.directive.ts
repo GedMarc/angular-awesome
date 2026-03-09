@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaIntersectionObserverDirective
@@ -7,8 +7,12 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleCh
  *
  * Features:
  * - Binds threshold and rootMargin inputs
- * - Re-emits wa-change events
+ * - Native wa-change events are available via (wa-change) template binding
  * - Supports default slot projection (observed content)
+ *
+ * Event binding:
+ * Consumers bind directly to the native DOM event: `(wa-change)="onChange($event)"`.
+ * Angular handles this as a standard custom-element event binding.
  */
 @Directive({
   selector: 'wa-intersection-observer',
@@ -20,20 +24,12 @@ export class WaIntersectionObserverDirective implements OnInit, OnChanges {
   @Input() rootMargin?: string;
   @Input() disabled?: boolean | string;
 
-  // Events
-  @Output('wa-change') waChange = new EventEmitter<CustomEvent>();
-
   // Services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit(): void {
-    const nativeEl = this.el.nativeElement as HTMLElement;
-
     this.applyInputs();
-
-    // Events (hyphenated custom event)
-    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => this.waChange.emit(event));
   }
 
   ngOnChanges(_: SimpleChanges): void {

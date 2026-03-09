@@ -31,7 +31,7 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 - Public API surface updated to export all new directives.
 - **Toasts: Migrated from custom `wa-callout`-based implementation to official `<wa-toast>` / `<wa-toast-item>` web components:**
   - `WaToastContainerComponent` now renders `<wa-toast>` with `<wa-toast-item>` elements instead of custom callout-based markup with manual CSS positioning.
-  - `ToastConfig.position` renamed to `ToastConfig.placement` using official placement values (`top-start`, `top-center`, `top-end`, `bottom-start`, `bottom-center`, `bottom-end`). Deprecated `ToastPosition` type alias kept for backwards compatibility.
+  - `ToastConfig.position` renamed to `ToastConfig.placement` using official placement values (`top-start`, `top-center`, `top-end`, `bottom-start`, `bottom-center`, `bottom-end`). The legacy `ToastPosition` type has been removed — use `ToastPlacement` instead.
   - Removed `appearance`, `closable`, `gap`, and `zIndex` from `Toast` and `ToastConfig` types — these are now handled natively by the `<wa-toast>` and `<wa-toast-item>` web components via CSS custom properties (`--gap`, `--width`, `--accent-width`, etc.).
   - Container no longer depends on `WaCalloutDirective`; imports `WaToastDirective` and `WaToastItemDirective` instead.
   - Updated all toast service and container tests to align with the new API.

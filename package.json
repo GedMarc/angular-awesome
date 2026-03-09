@@ -23,7 +23,6 @@
     "lint": "ng lint",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
-    "test:checkbox": "node scripts/run-checkbox-tests.js",
     "docs:generate": "node docs/generate-docs.js",
     "docs:build": "npm run docs:generate && ng build",
     "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add"

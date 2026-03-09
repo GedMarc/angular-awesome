@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { WaToastService } from '../../services/toast/toast.service';
 import { DEFAULT_TOAST_CONFIG, Toast, ToastPlacement } from '../../services/toast/toast.types';
 import { WaToastDirective } from './toast.directive';
@@ -47,7 +48,7 @@ export class WaToastContainerComponent implements OnInit, OnDestroy {
   placementValue = this.placementSig;
 
   toasts = signal<Toast[]>([]);
-  private subscription?: any;
+  private subscription?: Subscription;
 
   ngOnInit(): void {
     this.toasts.set([]);
@@ -60,7 +61,7 @@ export class WaToastContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe?.();
+      this.subscription.unsubscribe();
     }
   }
 
