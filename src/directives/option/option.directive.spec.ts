@@ -131,5 +131,136 @@ describe('WaOptionDirective', () => {
     expect(optionElement.hasAttribute('disabled')).toBeTrue();
     expect(optionElement.hasAttribute('selected')).toBeTrue();
   });
+
+  // --- Attribute reflection: toggling adds and removes attributes ---
+
+  it('should remove the disabled attribute when toggled from true to false', () => {
+    hostComponent.disabled = true;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeTrue();
+
+    hostComponent.disabled = false;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeFalse();
+  });
+
+  it('should remove the selected attribute when toggled from true to false', () => {
+    hostComponent.selected = true;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('selected')).toBeTrue();
+
+    hostComponent.selected = false;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('selected')).toBeFalse();
+  });
+
+  it('should remove the disabled attribute when toggled from string "true" to undefined', () => {
+    hostComponent.disabled = 'true';
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeTrue();
+
+    hostComponent.disabled = undefined;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeFalse();
+  });
+
+  it('should remove the value attribute when cleared', () => {
+    hostComponent.value = 'some-value';
+    hostFixture.detectChanges();
+    expect(optionElement.getAttribute('value')).toBe('some-value');
+
+    hostComponent.value = undefined;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('value')).toBeFalse();
+  });
+
+  it('should remove the value attribute when set to empty string', () => {
+    hostComponent.value = 'some-value';
+    hostFixture.detectChanges();
+    expect(optionElement.getAttribute('value')).toBe('some-value');
+
+    hostComponent.value = '';
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('value')).toBeFalse();
+  });
+
+  it('should remove the label attribute when cleared', () => {
+    hostComponent.label = 'My Label';
+    hostFixture.detectChanges();
+    expect(optionElement.getAttribute('label')).toBe('My Label');
+
+    hostComponent.label = undefined;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('label')).toBeFalse();
+  });
+
+  // --- ngOnChanges updates attributes through change detection ---
+
+  it('should update disabled attribute across multiple change detection cycles', () => {
+    hostComponent.disabled = true;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeTrue();
+
+    hostComponent.disabled = false;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeFalse();
+
+    hostComponent.disabled = true;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('disabled')).toBeTrue();
+  });
+
+  it('should update selected attribute across multiple change detection cycles', () => {
+    hostComponent.selected = false;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('selected')).toBeFalse();
+
+    hostComponent.selected = true;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('selected')).toBeTrue();
+
+    hostComponent.selected = false;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('selected')).toBeFalse();
+  });
+
+  it('should reflect label changes via ngOnChanges', () => {
+    hostComponent.label = 'First';
+    hostFixture.detectChanges();
+    expect(optionElement.getAttribute('label')).toBe('First');
+
+    hostComponent.label = 'Second';
+    hostFixture.detectChanges();
+    expect(optionElement.getAttribute('label')).toBe('Second');
+
+    hostComponent.label = undefined;
+    hostFixture.detectChanges();
+    expect(optionElement.hasAttribute('label')).toBeFalse();
+  });
+
+  it('should reflect all attributes correctly after toggling multiple inputs', () => {
+    hostComponent.value = 'v1';
+    hostComponent.disabled = true;
+    hostComponent.selected = false;
+    hostComponent.label = 'L1';
+    hostFixture.detectChanges();
+
+    expect(optionElement.getAttribute('value')).toBe('v1');
+    expect(optionElement.hasAttribute('disabled')).toBeTrue();
+    expect(optionElement.hasAttribute('selected')).toBeFalse();
+    expect(optionElement.getAttribute('label')).toBe('L1');
+
+    // Toggle everything
+    hostComponent.value = 'v2';
+    hostComponent.disabled = false;
+    hostComponent.selected = true;
+    hostComponent.label = undefined;
+    hostFixture.detectChanges();
+
+    expect(optionElement.getAttribute('value')).toBe('v2');
+    expect(optionElement.hasAttribute('disabled')).toBeFalse();
+    expect(optionElement.hasAttribute('selected')).toBeTrue();
+    expect(optionElement.hasAttribute('label')).toBeFalse();
+  });
 });
 
