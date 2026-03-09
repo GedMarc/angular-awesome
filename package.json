@@ -33,16 +33,16 @@
   "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
-    "@angular/common": "^19.2.0",
-    "@angular/core": "^19.2.0",
-    "@angular/forms": "^19.2.0"
+    "@angular/common": "^20.3.17",
+    "@angular/core": "^20.3.17",
+    "@angular/forms": "^20.3.17"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.11",
-    "@angular/cli": "^19.2.0",
-    "@angular/compiler-cli": "^19.2.0",
-    "@angular/platform-browser": "^19.2.0",
-    "@angular/platform-browser-dynamic": "^19.2.0",
+    "@angular/build": "^20.3.19",
+    "@angular/cli": "^20.3.19",
+    "@angular/compiler-cli": "^20.3.17",
+    "@angular/platform-browser": "^20.3.17",
+    "@angular/platform-browser-dynamic": "^20.3.17",
     "@eslint/js": "^10.0.1",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "21.3.0",
@@ -57,10 +57,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "marked": "^9.1.6",
-    "ng-packagr": "^19.2.0",
+    "ng-packagr": "^20.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "typescript": "~5.7.2",
+    "typescript": "~5.9.3",
     "typescript-eslint": "8.56.1",
     "zone.js": "~0.15.0"
   }
