@@ -161,6 +161,8 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

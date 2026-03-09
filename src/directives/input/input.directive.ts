@@ -292,6 +292,8 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

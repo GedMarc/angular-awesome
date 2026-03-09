@@ -42,6 +42,8 @@ export class WaOptionDirective implements OnInit, OnChanges {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null && value !== '') {
       this.renderer.setAttribute(this.el.nativeElement, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

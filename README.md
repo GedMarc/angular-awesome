@@ -6,7 +6,7 @@
 [![Angular](https://img.shields.io/badge/Angular-20%2B-dd0031.svg?logo=angular)](https://angular.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-> Angular 19+ wrapper directives for the [Web Awesome](https://www.webawesome.com/) web-components framework.
+> Angular 20+ wrapper directives for the [Web Awesome](https://www.webawesome.com/) web-components framework.
 
 ## Overview
 

@@ -33,6 +33,8 @@ export class WaSparklineDirective implements AfterViewInit, OnChanges {
   private setAttr(name: string, value: any) {
     if (value !== undefined && value !== null && value !== '') {
       this.renderer.setAttribute(this.host.nativeElement, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.host.nativeElement, name);
     }
   }
   private setStyle(name: string, value: string | undefined) {

@@ -89,6 +89,8 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
   private setAttr(name: string, value: any): void {
     if (value !== undefined && value !== null) {
       this.renderer.setAttribute(this.el, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 

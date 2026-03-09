@@ -66,7 +66,11 @@ export class WaPieChartDirective implements OnInit, OnChanges {
     if (this.plugins != null) { (nativeEl as any).plugins = this.plugins; }
   }
   private setAttr(name: string, value: string | number | null | undefined) {
-    if (value != null && value !== '') { this.renderer.setAttribute(this.el.nativeElement, name, String(value)); }
+    if (value != null && value !== '') {
+      this.renderer.setAttribute(this.el.nativeElement, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
   }
   private setNumericAttr(name: string, value: number | null | undefined) {
     if (value != null) { this.renderer.setAttribute(this.el.nativeElement, name, String(value)); }
