@@ -155,8 +155,12 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'minlength' in changes || 'maxlength' in changes
+      || 'min' in changes || 'max' in changes || 'pattern' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -348,6 +352,7 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
   // Validator implementation: expose validation errors to Angular forms

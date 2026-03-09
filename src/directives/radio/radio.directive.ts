@@ -134,8 +134,11 @@ export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAcc
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -231,6 +234,7 @@ export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAcc
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation: when required, ensure a selection exists

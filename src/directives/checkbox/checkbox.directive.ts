@@ -227,8 +227,11 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -396,5 +399,6 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     // Reflect disabled in both property and attribute space
     this.renderer.setProperty(this.el.nativeElement, 'disabled', !!isDisabled);
     this.toggleBooleanAttr('disabled', !!isDisabled);
+    this.validatorChange?.();
   }
 }

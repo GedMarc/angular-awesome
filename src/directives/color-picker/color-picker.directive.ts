@@ -429,6 +429,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation

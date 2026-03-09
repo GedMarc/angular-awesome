@@ -300,8 +300,11 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs(): void {
@@ -482,6 +485,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation so Angular forms can reflect validity state (e.g., required)

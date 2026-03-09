@@ -4,7 +4,9 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 import {
@@ -74,7 +76,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     '(wa-invalid)': 'waInvalid.emit($event)'
   }
 })
-export class WaTextareaComponent implements ControlValueAccessor, Validator {
+export class WaTextareaComponent implements ControlValueAccessor, Validator, OnChanges {
   get normalizedAppearance(): string | undefined {
     return normalizeAppearance(this.appearance as any);
   }
@@ -121,6 +123,12 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator {
 
   constructor(private host: ElementRef<HTMLElement>) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('required' in changes || 'minlength' in changes || 'maxlength' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
   writeValue(val: any): void {
     this._value = val ?? '';
     this.host.nativeElement.setAttribute('value', this._value);
@@ -137,6 +145,7 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.host.nativeElement.toggleAttribute('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
   handleInput(event: Event): void {

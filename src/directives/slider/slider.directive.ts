@@ -158,8 +158,11 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'min' in changes || 'max' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -332,6 +335,7 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation: expose required, min, and max errors to Angular forms

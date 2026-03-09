@@ -240,8 +240,11 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   ngOnDestroy(): void {
@@ -383,6 +386,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator

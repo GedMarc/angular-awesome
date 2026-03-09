@@ -116,8 +116,11 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -204,6 +207,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
   // Validator implementation: expose required error to Angular forms
