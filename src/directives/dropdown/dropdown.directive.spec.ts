@@ -168,6 +168,9 @@ describe('WaDropdownDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
+    (dropdownElement as any).show = () => {};
+    (dropdownElement as any).hide = () => {};
+    (dropdownElement as any).reposition = () => {};
     spyOn(dropdownElement as any, 'show');
     spyOn(dropdownElement as any, 'hide');
     spyOn(dropdownElement as any, 'reposition');
@@ -178,9 +181,9 @@ describe('WaDropdownDirective', () => {
     dropdownDirective.reposition();
 
     // Verify the native methods were called
-    expect(dropdownElement.show).toHaveBeenCalled();
-    expect(dropdownElement.hide).toHaveBeenCalled();
-    expect(dropdownElement.reposition).toHaveBeenCalled();
+    expect((dropdownElement as any).show).toHaveBeenCalled();
+    expect((dropdownElement as any).hide).toHaveBeenCalled();
+    expect((dropdownElement as any).reposition).toHaveBeenCalled();
   });
 
   it('should emit events correctly', () => {

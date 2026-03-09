@@ -65,6 +65,7 @@ describe('wa-color-picker dynamic [format] with [(ngModel)]', () => {
   it('should re-derive format after user/input changes update the model', async () => {
     // Simulate the WC reflecting a new hex value, then firing input
     nativeEl.setAttribute('value', '#123456');
+    (nativeEl as any).value = '#123456';
     nativeEl.dispatchEvent(new Event('input', { bubbles: true }));
     fixture.detectChanges();
     await fixture.whenStable();

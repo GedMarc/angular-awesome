@@ -46,11 +46,13 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
   @Input() label?: string;
   @Input() hint?: string;
   @Input() withClear?: boolean | string;
+  @Input() set clearable(v: boolean | string | undefined) { this.withClear = v; }
   @Input() placeholder?: string;
   @Input() readonly?: boolean | string;
   @Input() passwordToggle?: boolean | string;
   @Input() passwordVisible?: boolean | string;
   @Input() withoutSpinButtons?: boolean | string;
+  @Input() set noSpinButtons(v: boolean | string | undefined) { this.withoutSpinButtons = v; }
   @Input() form?: string | null;
   @Input() required?: boolean | string;
   @Input() pattern?: string;
@@ -153,8 +155,12 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'minlength' in changes || 'maxlength' in changes
+      || 'min' in changes || 'max' in changes || 'pattern' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -290,6 +296,8 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -310,7 +318,7 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -321,6 +329,8 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -342,20 +352,75 @@ export class WaInputDirective implements OnInit, OnChanges, ControlValueAccessor
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
-  // Validator implementation: expose required error to Angular forms
+  // Validator implementation: expose validation errors to Angular forms
   validate(control: AbstractControl): ValidationErrors | null {
     // If the underlying element is disabled, treat as valid
     const el: any = this.el?.nativeElement;
     if (!el || el.disabled) return null;
 
-    const isRequired = this.required === true || this.required === '' || this.required === 'true';
-    if (!isRequired) return null;
-
+    const errors: ValidationErrors = {};
     const val = control?.value;
-    const isEmpty = val === null || val === undefined || val === '';
-    return isEmpty ? { required: true } : null;
+
+    // Required
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (isRequired) {
+      const isEmpty = val === null || val === undefined || val === '';
+      if (isEmpty) {
+        errors['required'] = true;
+      }
+    }
+
+    // Only run remaining validations when there is a non-empty value
+    if (val != null && val !== '') {
+      const strVal = String(val);
+
+      // Minlength
+      if (this.minlength != null) {
+        const min = typeof this.minlength === 'string' ? parseInt(this.minlength, 10) : this.minlength;
+        if (!isNaN(min) && strVal.length < min) {
+          errors['minlength'] = { requiredLength: min, actualLength: strVal.length };
+        }
+      }
+
+      // Maxlength
+      if (this.maxlength != null) {
+        const max = typeof this.maxlength === 'string' ? parseInt(this.maxlength, 10) : this.maxlength;
+        if (!isNaN(max) && strVal.length > max) {
+          errors['maxlength'] = { requiredLength: max, actualLength: strVal.length };
+        }
+      }
+
+      // Pattern
+      if (this.pattern != null && this.pattern !== '') {
+        const regex = new RegExp(`^${this.pattern}$`);
+        if (!regex.test(strVal)) {
+          errors['pattern'] = { requiredPattern: `^${this.pattern}$`, actualValue: strVal };
+        }
+      }
+
+      // Min (numeric)
+      if (this.min != null) {
+        const numVal = parseFloat(strVal);
+        const minNum = typeof this.min === 'string' ? parseFloat(this.min) : this.min;
+        if (!isNaN(numVal) && !isNaN(minNum) && numVal < minNum) {
+          errors['min'] = { min: minNum, actual: numVal };
+        }
+      }
+
+      // Max (numeric)
+      if (this.max != null) {
+        const numVal = parseFloat(strVal);
+        const maxNum = typeof this.max === 'string' ? parseFloat(this.max) : this.max;
+        if (!isNaN(numVal) && !isNaN(maxNum) && numVal > maxNum) {
+          errors['max'] = { max: maxNum, actual: numVal };
+        }
+      }
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
   }
 
   registerOnValidatorChange?(fn: () => void): void {

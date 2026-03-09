@@ -18,7 +18,7 @@ export class WaTabComponent {
 
   @Input() set activeTabColor(value: string) {
     if (value) {
-      this.renderer.setStyle(this.el.nativeElement, '--active-tab-color', value);
+      this.el.nativeElement.style.setProperty('--active-tab-color', value);
     }
   }
 }

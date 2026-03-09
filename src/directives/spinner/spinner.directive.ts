@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, OnChanges, inject } from '@angular/core';
 
 /**
  * WaSpinnerDirective
@@ -16,7 +16,7 @@ import { Component, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   standalone: true,
   template: '<ng-content></ng-content>'
 })
-export class WaSpinnerDirective implements OnInit {
+export class WaSpinnerDirective implements OnInit, OnChanges {
   // Style inputs
   @Input() fontSize?: string;
   @Input() trackWidth?: string;
@@ -26,9 +26,16 @@ export class WaSpinnerDirective implements OnInit {
 
   // Injected services
   private el = inject(ElementRef);
-  private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges() {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set style attributes directly on the host element
     this.setStyle('font-size', this.fontSize);
 
@@ -51,7 +58,7 @@ export class WaSpinnerDirective implements OnInit {
    */
   private setStyle(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -60,7 +67,7 @@ export class WaSpinnerDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

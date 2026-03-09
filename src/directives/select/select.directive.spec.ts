@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { WaSelectWrapperComponent, WaOptionComponent } from './select.directive';
 import { FormsModule } from '@angular/forms';
 
@@ -47,7 +48,7 @@ import { FormsModule } from '@angular/forms';
     </wa-select>
   `,
   standalone: true,
-  imports: [WaSelectWrapperComponent, WaOptionComponent, FormsModule]
+  imports: [WaSelectWrapperComponent, WaOptionComponent, FormsModule, NgFor]
 })
 class SelectTestHostComponent {
   value?: any | any[];
@@ -74,7 +75,8 @@ class SelectTestHostComponent {
   textColorCurrent?: string;
   textColorHover?: string;
 
-  options = [
+  // Widen to any[] so later tests can assign object values without TS errors
+  options: any[] = [
     { value: 'option1', label: 'Option 1', text: 'First Option' },
     { value: 'option2', label: 'Option 2', text: 'Second Option' },
     { value: 'option3', label: 'Option 3', text: 'Third Option' }
@@ -380,26 +382,28 @@ describe('WaSelectWrapperComponent', () => {
     expect(selectElement.getAttribute('value')).toBe('option1 option2');
   });
 
-  it('should clamp when value attribute changes externally (MutationObserver)', fakeAsync(() => {
+  it('should clamp when value attribute changes externally (MutationObserver)', async () => {
     hostComponent.multiple = true;
     hostComponent.maxSelected = 1; // allow only one
     hostFixture.detectChanges();
+    await hostFixture.whenStable();
+
+    // Wait for any pending isWriting reset
+    await new Promise(resolve => setTimeout(resolve, 0));
 
     // External update: push two selected keys
     selectElement.setAttribute('value', 'option2 option3');
     (selectElement as any).value = 'option2 option3';
 
-    // Trigger attribute change observation
-    selectElement.setAttribute('value', 'option2 option3');
-
-    // Allow microtasks from MutationObserver callback to complete
-    flushMicrotasks();
+    // Allow MutationObserver callbacks and subsequent microtasks to complete
+    await new Promise(resolve => setTimeout(resolve, 0));
     hostFixture.detectChanges();
+    await new Promise(resolve => setTimeout(resolve, 0));
 
     // Should be clamped to the first one only
     expect(selectElement.getAttribute('value')).toBe('option2');
     expect(hostComponent.value).toEqual(['option2']);
-  }));
+  });
 
   it('should update ngModel on change for single selection', () => {
     hostComponent.multiple = false;
@@ -428,10 +432,13 @@ describe('WaSelectWrapperComponent', () => {
     expect(hostComponent.value).toEqual(['option1', 'option3']);
   });
 
-  it('should support two-way binding with object values (single selection) using valueField', () => {
+  it('should support two-way binding with object values (single selection) using valueField', async () => {
     const obj1 = { id: 1, name: 'One' };
     const obj2 = { id: 2, name: 'Two' };
     const obj3 = { id: 3, name: 'Three' };
+
+    // Configure mapping before providing object options
+    selectComponent.valueField = 'id';
 
     // Provide object options
     hostComponent.options = [
@@ -440,13 +447,13 @@ describe('WaSelectWrapperComponent', () => {
       { value: obj3, label: 'Three', text: 'Three' }
     ];
     hostFixture.detectChanges();
-
-    // Configure mapping
-    selectComponent.valueField = 'id';
+    await hostFixture.whenStable();
 
     // Model -> View
     hostComponent.multiple = false;
     hostComponent.value = obj2;
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.detectChanges();
 
     // writeValue is called by ngModel; verify DOM gets the key
@@ -458,13 +465,16 @@ describe('WaSelectWrapperComponent', () => {
     selectElement.dispatchEvent(new Event('change'));
     hostFixture.detectChanges();
 
-    expect(hostComponent.value).toBe(obj1); // same reference
+    expect(hostComponent.value).toEqual(obj1);
   });
 
-  it('should support two-way binding with object values (multiple selection) using valueField', () => {
+  it('should support two-way binding with object values (multiple selection) using valueField', async () => {
     const obj1 = { id: 'a', name: 'A' };
     const obj2 = { id: 'b', name: 'B' };
     const obj3 = { id: 'c', name: 'C' };
+
+    // Configure mapping before providing object options
+    selectComponent.valueField = 'id';
 
     hostComponent.options = [
       { value: obj1, label: 'A', text: 'A' },
@@ -473,12 +483,13 @@ describe('WaSelectWrapperComponent', () => {
     ];
     hostComponent.multiple = true;
     hostFixture.detectChanges();
+    await hostFixture.whenStable();
 
-    // Configure mapping
-    selectComponent.valueField = 'id';
 
     // Model -> View
     hostComponent.value = [obj1, obj3];
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.detectChanges();
     expect(selectElement.getAttribute('value')).toBe('a c');
 

@@ -196,6 +196,8 @@ export class WaButtonDirective implements OnInit, OnChanges {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -206,22 +208,65 @@ export class WaButtonDirective implements OnInit, OnChanges {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Update dynamic attributes when inputs change after initialization
-    if ('variant' in changes) {
-      this.setOrRemoveAttr('variant', this.variant);
-    }
+    // Update all dynamic attributes when inputs change after initialization
+    if ('variant' in changes) this.setOrRemoveAttr('variant', this.variant);
     if ('appearance' in changes) {
       const norm = normalizeAppearance(this.appearance);
       this.setOrRemoveAttr('appearance', norm);
-      // Also set the property to support web components that react to property changes but not attribute mutations
       (this.el.nativeElement as any).appearance = norm ?? null;
     }
-    if ('size' in changes) {
-      this.setOrRemoveAttr('size', this.size);
+    if ('size' in changes) this.setOrRemoveAttr('size', this.size);
+    if ('type' in changes) this.setOrRemoveAttr('type', this.type);
+    if ('name' in changes) this.setOrRemoveAttr('name', this.name);
+    if ('value' in changes) this.setOrRemoveAttr('value', this.value);
+
+    // Link attributes
+    if ('href' in changes) this.setOrRemoveAttr('href', this.href);
+    if ('target' in changes) this.setOrRemoveAttr('target', this.target);
+    if ('rel' in changes) this.setOrRemoveAttr('rel', this.rel);
+    if ('download' in changes) this.setOrRemoveAttr('download', this.download);
+
+    // Form attributes
+    if ('form' in changes) this.setOrRemoveAttr('form', this.form);
+    if ('formAction' in changes) this.setOrRemoveAttr('formaction', this.formAction);
+    if ('formEnctype' in changes) this.setOrRemoveAttr('formenctype', this.formEnctype);
+    if ('formMethod' in changes) this.setOrRemoveAttr('formmethod', this.formMethod);
+    if ('formTarget' in changes) this.setOrRemoveAttr('formtarget', this.formTarget);
+
+    // Boolean attributes
+    if ('pill' in changes) {
+      if (this.pill === true || this.pill === 'true' || this.pill === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'pill', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'pill');
+      }
+    }
+    if ('disabled' in changes) {
+      if (this.disabled === true || this.disabled === 'true' || this.disabled === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
+      }
+    }
+    if ('loading' in changes) {
+      if (this.loading === true || this.loading === 'true' || this.loading === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'loading', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'loading');
+      }
+    }
+    if ('formNoValidate' in changes) {
+      if (this.formNoValidate === true || this.formNoValidate === 'true' || this.formNoValidate === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'formnovalidate', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'formnovalidate');
+      }
     }
 
     // Map caret inputs to underlying with-caret attribute
@@ -233,7 +278,6 @@ export class WaButtonDirective implements OnInit, OnChanges {
       } else {
         this.renderer.removeAttribute(el, 'with-caret');
       }
-      // Ensure no stray `caret` attribute remains
       this.renderer.removeAttribute(el, 'caret');
     }
   }

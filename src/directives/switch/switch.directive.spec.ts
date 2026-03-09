@@ -158,15 +158,17 @@ describe('WaSwitchDirective', () => {
     expect(switchElement.style.getPropertyValue('--width')).toBe('48px');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', async () => {
     // Initial state
     expect(hostComponent.isChecked).toBe(false);
-    expect(switchElement.hasAttribute('checked')).toBe(false);
+    expect((switchElement as any).checked).toBeFalsy();
 
     // Update model -> view
     hostComponent.isChecked = true;
     hostFixture.detectChanges();
-    expect(switchElement.hasAttribute('checked')).toBe(true);
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    expect((switchElement as any).checked).toBe(true);
   });
 
   it('should update ngModel when native change event fires (user toggles on)', () => {
@@ -183,10 +185,12 @@ describe('WaSwitchDirective', () => {
     expect(hostComponent.isChecked).toBeTrue();
   });
 
-  it('should update ngModel when native change event fires (user toggles off)', () => {
+  it('should update ngModel when native change event fires (user toggles off)', async () => {
     hostComponent.isChecked = true;
     hostFixture.detectChanges();
-    expect(switchElement.hasAttribute('checked')).toBeTrue();
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    expect((switchElement as any).checked).toBe(true);
 
     // Simulate unchecking and dispatch 'wa-change'
     (switchElement as any).checked = false;

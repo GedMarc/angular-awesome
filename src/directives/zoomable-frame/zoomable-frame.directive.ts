@@ -47,6 +47,8 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
   private setAttr(name: string, value: any) {
     if (value !== undefined && value !== null) {
       this.renderer.setAttribute(this.host.nativeElement, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.host.nativeElement, name);
     }
   }
   private setNumericAttr(name: string, value: number | string | null | undefined) {
@@ -55,6 +57,8 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
       if (!isNaN(n as number)) {
         this.renderer.setAttribute(this.host.nativeElement, name, String(n));
       }
+    } else {
+      this.renderer.removeAttribute(this.host.nativeElement, name);
     }
   }
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {

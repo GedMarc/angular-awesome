@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — Docs"
+  short_description: "Generate and maintain Angular Awesome documentation and changelog"
+  default_prompt: "Use $angular-awesome-docs to create or update component docs, regenerate the docs site, or update the changelog."
+

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaDividerDirective
@@ -16,9 +16,9 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-divider',
   standalone: true
 })
-export class WaDividerDirective implements OnInit {
+export class WaDividerDirective implements OnInit, OnChanges {
   // Boolean inputs
-  @Input() orientation?: 'vertical' | 'horizontal' | string;
+  @Input() orientation?: 'vertical' | 'horizontal';
   @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
 
   // Style inputs
@@ -27,17 +27,34 @@ export class WaDividerDirective implements OnInit {
   @Input() spacing?: string;
 
   // Injected services
-  private el = inject(ElementRef);
-  private renderer = inject(Renderer2);
+  private readonly el = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
-    // Set boolean attributes (only if true)
-    if (this.orientation === 'vertical') {
-      this.renderer.setAttribute(this.el.nativeElement, 'orientation', 'vertical');
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    const el = this.el.nativeElement;
+
+    // When an explicit orientation is provided, set it directly and clear the
+    // deprecated vertical boolean attribute.  This covers both 'horizontal'
+    // and 'vertical' (as well as any future value the WC may support).
+    if (this.orientation != null) {
+      this.renderer.setAttribute(el, 'orientation', this.orientation);
+      this.renderer.removeAttribute(el, 'vertical');
+    } else if (this.vertical === true || this.vertical === 'true' || this.vertical === '') {
+      // Fall back to the deprecated vertical boolean attribute when
+      // orientation is not provided.
+      this.renderer.setAttribute(el, 'vertical', '');
+      this.renderer.removeAttribute(el, 'orientation');
     } else {
-      this.setBooleanAttr('vertical', this.vertical);
+      this.renderer.removeAttribute(el, 'vertical');
+      this.renderer.removeAttribute(el, 'orientation');
     }
 
     // Set style attributes
@@ -58,17 +75,8 @@ export class WaDividerDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
-  /**
-   * Sets a boolean attribute on the native element if the value is truthy
-   * For boolean attributes, the presence of the attribute (with empty value) indicates true
-   */
-  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
-    if (value === true || value === 'true' || value === '') {
-      this.renderer.setAttribute(this.el.nativeElement, name, '');
-    }
-  }
 }

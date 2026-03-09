@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component, forwardRef } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { WaCheckboxDirective } from './checkbox.directive';
@@ -370,9 +370,11 @@ describe('WaCheckboxDirective - Form Integration', () => {
       expect(component.isChecked).toBeTrue();
     });
 
-    it('should update ngModel back to false when unchecked via change', () => {
+    it('should update ngModel back to false when unchecked via change', fakeAsync(() => {
       // Start true in the model and view
       component.isChecked = true;
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
       expect(checkboxElement.hasAttribute('checked')).toBeTrue();
 
@@ -382,18 +384,22 @@ describe('WaCheckboxDirective - Form Integration', () => {
       const changeEvent = new Event('change');
       checkboxElement.dispatchEvent(changeEvent);
       fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
 
       expect(component.isChecked).toBeFalse();
-    });
+    }));
 
-    it('should update the view when model changes', () => {
+    it('should update the view when model changes', fakeAsync(() => {
       // Change the model
       component.isChecked = true;
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
 
       // The view should be updated
       expect(checkboxElement.hasAttribute('checked')).toBeTrue();
-    });
+    }));
   });
 
   describe('Reactive forms', () => {

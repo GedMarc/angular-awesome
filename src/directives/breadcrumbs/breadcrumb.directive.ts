@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaBreadcrumbDirective
@@ -16,7 +16,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-breadcrumb',
   standalone: true
 })
-export class WaBreadcrumbDirective implements OnInit {
+export class WaBreadcrumbDirective implements OnInit, OnChanges {
   @Input() label?: string;
 
   private el = inject(ElementRef);
@@ -26,12 +26,18 @@ export class WaBreadcrumbDirective implements OnInit {
     this.setAttr('label', this.label);
   }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.setAttr('label', this.label);
+  }
+
   /**
    * Sets an attribute on the native element if the value is not null or undefined
    */
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

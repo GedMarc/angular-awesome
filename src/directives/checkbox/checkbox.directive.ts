@@ -227,8 +227,11 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -331,6 +334,8 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -341,6 +346,8 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -360,7 +367,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -392,5 +399,6 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     // Reflect disabled in both property and attribute space
     this.renderer.setProperty(this.el.nativeElement, 'disabled', !!isDisabled);
     this.toggleBooleanAttr('disabled', !!isDisabled);
+    this.validatorChange?.();
   }
 }

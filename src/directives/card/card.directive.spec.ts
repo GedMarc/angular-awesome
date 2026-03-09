@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaCardDirective } from './card.directive';
 
 // Create a test host component to test the card directive
@@ -19,7 +20,7 @@ import { WaCardDirective } from './card.directive';
     </wa-card>
   `,
   standalone: true,
-  imports: [WaCardDirective]
+  imports: [WaCardDirective, NgIf]
 })
 class TestHostComponent {
   appearance?: string;

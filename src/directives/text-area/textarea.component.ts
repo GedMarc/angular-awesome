@@ -4,12 +4,18 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
-  NG_VALUE_ACCESSOR
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator
 } from '@angular/forms';
 import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
 
@@ -21,6 +27,11 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => WaTextareaComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => WaTextareaComponent),
       multi: true
     }
@@ -65,7 +76,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     '(wa-invalid)': 'waInvalid.emit($event)'
   }
 })
-export class WaTextareaComponent implements ControlValueAccessor {
+export class WaTextareaComponent implements ControlValueAccessor, Validator, OnChanges {
   get normalizedAppearance(): string | undefined {
     return normalizeAppearance(this.appearance as any);
   }
@@ -99,22 +110,24 @@ export class WaTextareaComponent implements ControlValueAccessor {
   @Input() boxShadow?: string;
 
   @Output() waFocus = new EventEmitter<FocusEvent>();
-  @Output('wa-focus') waFocusHyphen = this.waFocus;
   @Output() waBlur = new EventEmitter<FocusEvent>();
-  @Output('wa-blur') waBlurHyphen = this.waBlur;
   @Output() waInput = new EventEmitter<Event>();
-  @Output('wa-input') waInputHyphen = this.waInput;
   @Output() waChange = new EventEmitter<Event>();
-  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
-  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
   @Output() valueChange = new EventEmitter<string>();
 
   private _value = '';
   onChange = (_: any) => {};
   onTouched = () => {};
+  private validatorChange?: () => void;
 
   constructor(private host: ElementRef<HTMLElement>) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('required' in changes || 'minlength' in changes || 'maxlength' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
 
   writeValue(val: any): void {
     this._value = val ?? '';
@@ -132,6 +145,7 @@ export class WaTextareaComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.host.nativeElement.toggleAttribute('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
   handleInput(event: Event): void {
@@ -157,5 +171,49 @@ export class WaTextareaComponent implements ControlValueAccessor {
   onBlur(event: FocusEvent) {
     this.onTouched();
     this.waBlur.emit(event);
+  }
+
+  // Validator implementation: expose validation errors to Angular forms
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (this.disabled) return null;
+
+    const errors: ValidationErrors = {};
+    const val = control?.value;
+
+    // Required
+    const isRequired = this.required === true;
+    if (isRequired) {
+      const isEmpty = val === null || val === undefined || val === '';
+      if (isEmpty) {
+        errors['required'] = true;
+      }
+    }
+
+    // Only run remaining validations when there is a non-empty value
+    if (val != null && val !== '') {
+      const strVal = String(val);
+
+      // Minlength
+      if (this.minlength != null) {
+        const min = typeof this.minlength === 'string' ? parseInt(this.minlength as any, 10) : this.minlength;
+        if (!isNaN(min) && strVal.length < min) {
+          errors['minlength'] = { requiredLength: min, actualLength: strVal.length };
+        }
+      }
+
+      // Maxlength
+      if (this.maxlength != null) {
+        const max = typeof this.maxlength === 'string' ? parseInt(this.maxlength as any, 10) : this.maxlength;
+        if (!isNaN(max) && strVal.length > max) {
+          errors['maxlength'] = { requiredLength: max, actualLength: strVal.length };
+        }
+      }
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -25,7 +25,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaFormatBytesDirective implements OnInit, ControlValueAccessor {
+export class WaFormatBytesDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Inputs
   @Input() value?: number;
   @Input() unit?: 'byte' | 'bit';
@@ -41,8 +41,14 @@ export class WaFormatBytesDirective implements OnInit, ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set numeric attributes
     this.setNumericAttr('value', this.value);
 
@@ -65,6 +71,8 @@ export class WaFormatBytesDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

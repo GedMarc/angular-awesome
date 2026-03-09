@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — New Component"
+  short_description: "Scaffold a new Angular Awesome component wrapper for a Web Awesome element"
+  default_prompt: "Use $angular-awesome-new-component to add a new wa-* wrapper directive with tests, rules, examples, and docs."
+

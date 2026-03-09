@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { WaTagDirective } from './tag.directive';
 
 // Create a test host component for the tag directive
@@ -8,7 +7,6 @@ import { WaTagDirective } from './tag.directive';
   selector: 'test-host',
   template: `
     <wa-tag
-      ngModel
       [variant]="variant"
       [appearance]="appearance"
       [size]="size"
@@ -20,7 +18,7 @@ import { WaTagDirective } from './tag.directive';
     </wa-tag>
   `,
   standalone: true,
-  imports: [WaTagDirective, FormsModule]
+  imports: [WaTagDirective]
 })
 class TestHostComponent {
   variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -26,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
+export class WaRelativeTimeDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
   @Input() format?: 'long' | 'short' | 'narrow' | string;
   @Input() numeric?: 'auto' | 'always' | string;
@@ -51,16 +51,7 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set string attributes
-    this.setAttr('format', this.format);
-    this.setAttr('numeric', this.numeric);
-    this.setAttr('lang', this.lang);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('sync', this.sync);
-
-    // Set style attributes
-    this.setCssVar('--display', this.display);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
@@ -76,6 +67,23 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
     });
   }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set string attributes
+    this.setAttr('format', this.format);
+    this.setAttr('numeric', this.numeric);
+    this.setAttr('lang', this.lang);
+
+    // Set boolean attributes (only if true)
+    this.setBooleanAttr('sync', this.sync);
+
+    // Set style attributes
+    this.setCssVar('--display', this.display);
+  }
+
   /**
    * Exposes the native element for direct interaction
    */
@@ -89,6 +97,8 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -97,7 +107,7 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -108,6 +118,8 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

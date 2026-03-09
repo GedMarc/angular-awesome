@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaRadioGroupDirective, WaRadioDirective, WaRadioButtonDirective } from './radio.directive';
 import { FormsModule } from '@angular/forms';
 
@@ -109,7 +110,7 @@ class RadioTestHostComponent {
     </wa-radio>
   `,
   standalone: true,
-  imports: [WaRadioDirective]
+  imports: [WaRadioDirective, NgIf]
 })
 class RadioButtonTestHostComponent {
   value?: string;
@@ -159,13 +160,15 @@ describe('WaRadioGroupDirective', () => {
     expect(radioGroupDirective).toBeTruthy();
   });
 
-  it('should set string attributes correctly', () => {
+  it('should set string attributes correctly', fakeAsync(() => {
     hostComponent.value = 'option1';
     hostComponent.label = 'Select an option';
     hostComponent.hint = 'Choose one of the options';
     hostComponent.name = 'options';
     hostComponent.orientation = 'horizontal';
     hostComponent.size = 'large';
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(radioGroupElement.getAttribute('value')).toBe('option1');
@@ -174,7 +177,7 @@ describe('WaRadioGroupDirective', () => {
     expect(radioGroupElement.getAttribute('name')).toBe('options');
     expect(radioGroupElement.getAttribute('orientation')).toBe('horizontal');
     expect(radioGroupElement.getAttribute('size')).toBe('large');
-  });
+  }));
 
   it('should set boolean attributes correctly', () => {
     hostComponent.required = true;

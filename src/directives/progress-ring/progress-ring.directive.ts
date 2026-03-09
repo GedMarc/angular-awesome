@@ -128,7 +128,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
       return;
     }
     this._lastPercentApplied = clamped;
-    this.renderer.setStyle(this.el.nativeElement, '--percentage', `${clamped}%`);
+    this.el.nativeElement.style.setProperty('--percentage', `${clamped}%`);
   }
 
   /**
@@ -144,6 +144,8 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -164,6 +166,8 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
           (this.el.nativeElement as any)[name] = numericValue;
         }
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -172,7 +176,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

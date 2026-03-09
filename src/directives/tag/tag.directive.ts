@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnChanges,
   Output,
   EventEmitter,
   HostListener,
@@ -14,7 +15,7 @@ import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../
   exportAs: 'waTag',
   standalone: true
 })
-export class WaTagDirective {
+export class WaTagDirective implements OnChanges {
   constructor(private el: ElementRef<HTMLElement>) {}
 
   // Inputs
@@ -30,6 +31,9 @@ export class WaTagDirective {
 
   @HostListener('wa-remove', ['$event'])
   onRemove(event: Event) {
+    // Guard against re-entrant calls from our own emit
+    if ((event as any).__waHandled) return;
+    (event as any).__waHandled = true;
     this.waRemove.emit(event);
   }
 

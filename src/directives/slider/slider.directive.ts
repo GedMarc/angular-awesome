@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -29,10 +29,15 @@ import { SizeToken } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaSliderDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaSliderDirective),
+      multi: true
     }
   ]
 })
-export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccessor {
+export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() min?: number;
   @Input() max?: number;
@@ -88,6 +93,7 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
   private valueFormatter?: (value: number) => string;
+  private validatorChange?: () => void;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -152,8 +158,11 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
     });
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'min' in changes || 'max' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs() {
@@ -252,6 +261,8 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -264,6 +275,8 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -272,7 +285,7 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -283,6 +296,8 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -315,6 +330,42 @@ export class WaSliderDirective implements OnInit, OnChanges, ControlValueAccesso
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.setBooleanAttr('disabled', isDisabled);
+    if (isDisabled) {
+      this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
+    }
+    this.validatorChange?.();
+  }
+
+  // Validator implementation: expose required, min, and max errors to Angular forms
+  validate(control: AbstractControl): ValidationErrors | null {
+    const el: any = this.el?.nativeElement;
+    if (!el || el.disabled) return null;
+
+    const errors: ValidationErrors = {};
+    const val = control?.value;
+
+    // Required validation
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (isRequired && (val === null || val === undefined)) {
+      errors['required'] = true;
+    }
+
+    // Min validation (for non-range sliders)
+    if (this.min != null && val != null && typeof val === 'number' && val < this.min) {
+      errors['min'] = { min: this.min, actual: val };
+    }
+
+    // Max validation (for non-range sliders)
+    if (this.max != null && val != null && typeof val === 'number' && val > this.max) {
+      errors['max'] = { max: this.max, actual: val };
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }

@@ -91,6 +91,8 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
   private setAttr(name: string, value: any): void {
     if (value !== undefined && value !== null) {
       this.renderer.setAttribute(this.el, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 
@@ -108,12 +110,14 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
       if (!isNaN(n as number)) {
         this.renderer.setAttribute(this.el, name, String(n));
       }
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 
   private setStyle(prop: string, value: string) {
     if (value) {
-      this.renderer.setStyle(this.el, prop, value);
+      this.el.style.setProperty(prop, value);
     }
   }
 

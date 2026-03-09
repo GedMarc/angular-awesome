@@ -86,18 +86,6 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
       return !(item as HTMLElement).querySelector('wa-tree-item');
     };
 
-    const hasDataOrValue = (item: any): boolean => {
-      return item.__waValue !== undefined || item.__waData !== undefined || item.getAttribute?.('value') != null;
-    };
-
-    const pickIdentity = (item: any): any => {
-      const pref = (item.__waValue !== undefined ? item.__waValue
-                  : item.__waData !== undefined ? item.__waData
-                  : item.getAttribute?.('value') ?? undefined);
-      if (pref !== undefined && pref !== null) return pref;
-      // fallback to label, but only if we didn't require data/value; requirement says "data tags"
-      return (item.textContent || '').trim();
-    };
 
     const computeValues = (): any[] => {
       const selectedItems = this.el.nativeElement.querySelectorAll('wa-tree-item[selected]');
@@ -254,7 +242,7 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

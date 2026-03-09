@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf, NgFor } from '@angular/common';
 import { WaCarouselDirective } from './carousel.directive';
 import { WaCarouselItemDirective } from './carousel-item.directive';
 
@@ -27,7 +28,7 @@ import { WaCarouselItemDirective } from './carousel-item.directive';
     </wa-carousel>
   `,
   standalone: true,
-  imports: [WaCarouselDirective, WaCarouselItemDirective]
+  imports: [WaCarouselDirective, WaCarouselItemDirective, NgIf, NgFor]
 })
 class TestHostComponent {
   loop?: boolean | string;
@@ -178,6 +179,9 @@ describe('WaCarouselDirective', () => {
 
   it('should expose methods for programmatic control', () => {
     // Mock the native element methods
+    (carouselElement as any).next = () => {};
+    (carouselElement as any).previous = () => {};
+    (carouselElement as any).goToSlide = (_: number) => {};
     spyOn(carouselElement as any, 'next');
     spyOn(carouselElement as any, 'previous');
     spyOn(carouselElement as any, 'goToSlide');
@@ -188,16 +192,16 @@ describe('WaCarouselDirective', () => {
     carouselDirective.goToSlide(2);
 
     // Verify the native methods were called
-    expect(carouselElement.next).toHaveBeenCalled();
-    expect(carouselElement.previous).toHaveBeenCalled();
-    expect(carouselElement.goToSlide).toHaveBeenCalledWith(2);
+    expect((carouselElement as any).next).toHaveBeenCalled();
+    expect((carouselElement as any).previous).toHaveBeenCalled();
+    expect((carouselElement as any).goToSlide).toHaveBeenCalledWith(2);
   });
 
   it('should emit events correctly', () => {
     spyOn(hostComponent, 'onSlideChange');
 
     // Create mock event
-    const slideChangeEvent = new CustomEvent('slideChange', {
+    const slideChangeEvent = new CustomEvent('wa-slide-change', {
       detail: { index: 2 }
     });
 

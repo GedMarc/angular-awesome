@@ -87,8 +87,8 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Toast Component <span class="version-badge">synced with Web Awesome 3.2.x</span></h1>
-                <p class="subtitle">Toasts are small, contextual notifications that appear in a corner of the screen and disappear automatically or can be dismissed by the user. This implementation supports:</p>
+                <h1>Toast Component <span class="version-badge">synced with Web Awesome 3.3.x</span></h1>
+                <p class="subtitle">Toasts are small, contextual notifications that appear on the screen and disappear automatically or can be dismissed by the user. This implementation uses the official Web Awesome toast components and supports:</p>
             </header>
 
             <main>
@@ -109,11 +109,11 @@ import { WaToastDirective } from 'angular-awesome/toast';</pre>
       <section>
         <h2>Examples</h2>
         <h1>Toasts Examples</h1>
-<p>This page shows how to use the Toasts system built on top of <code>wa-callout</code> via the <code>WaToastService</code> and the <code>wa-toast-container</code> component.</p>
+<p>This page shows how to use the official <code>&lt;wa-toast&gt;</code> and <code>&lt;wa-toast-item&gt;</code> web components via the <code>WaToastService</code> and the <code>&lt;wa-toast-container&gt;</code> component.</p>
 <h2>Basic Setup</h2>
-<p>Add the container once near the application root (e.g., in <code>app.component.html</code>). It will position the stack and render incoming toasts.</p>
+<p>Add the container once near the application root (e.g., in <code>app.component.html</code>). It renders <code>&lt;wa-toast&gt;</code> with <code>&lt;wa-toast-item&gt;</code> elements for each notification.</p>
 <pre><code class="language-html">&lt;!-- app.component.html --&gt;
-&lt;wa-toast-container position=&quot;top-right&quot;&gt;&lt;/wa-toast-container&gt;
+&lt;wa-toast-container placement=&quot;top-end&quot;&gt;&lt;/wa-toast-container&gt;
 </code></pre>
 <p>Optionally configure defaults during bootstrap:</p>
 <pre><code class="language-ts">// main.ts (bootstrapApplication)
@@ -121,7 +121,7 @@ import { provideWaToasts } from &#39;angular-awesome&#39;;
 
 bootstrapApplication(AppComponent, {
   providers: [
-    ...provideWaToasts({ position: &#39;bottom-left&#39;, max: 3, duration: 4000, newestOnTop: true, gap: 12, zIndex: 10000 })
+    ...provideWaToasts({ placement: &#39;bottom-start&#39;, max: 3, duration: 4000, newestOnTop: true })
   ]
 });
 </code></pre>
@@ -141,7 +141,7 @@ export class DemoToastsComponent {
   constructor(private toasts: WaToastService) {}
 
   saved() {
-    this.toasts.success(&#39;Profile saved&#39;, { closable: true });
+    this.toasts.success(&#39;Profile saved&#39;);
   }
 
   sync() {
@@ -151,15 +151,43 @@ export class DemoToastsComponent {
   }
 }
 </code></pre>
-<h2>Positioning</h2>
-<p>Change where the container renders on the screen with the <code>position</code> input:</p>
-<pre><code class="language-html">&lt;wa-toast-container position=&quot;bottom-center&quot;&gt;&lt;/wa-toast-container&gt;
+<h2>Placement</h2>
+<p>Change where the toast stack renders on the screen with the <code>placement</code> input, using the official <code>&lt;wa-toast&gt;</code> placement values:</p>
+<pre><code class="language-html">&lt;wa-toast-container placement=&quot;bottom-center&quot;&gt;&lt;/wa-toast-container&gt;
 </code></pre>
-<p>Supported positions: <code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>top-center</code>, <code>bottom-center</code>.</p>
-<h2>Closable and Auto-dismiss</h2>
+<p>Supported placements: <code>top-start</code>, <code>top-center</code>, <code>top-end</code>, <code>bottom-start</code>, <code>bottom-center</code>, <code>bottom-end</code>.</p>
+<h2>Using the Directive Directly</h2>
+<p>You can also use the <code>&lt;wa-toast&gt;</code> directive directly for full control:</p>
+<pre><code class="language-html">&lt;wa-toast placement=&quot;top-end&quot;&gt;
+  &lt;wa-toast-item variant=&quot;success&quot; duration=&quot;5000&quot;&gt;
+    Record saved successfully!
+  &lt;/wa-toast-item&gt;
+&lt;/wa-toast&gt;
+</code></pre>
+<h2>Programmatic Creation via Native API</h2>
+<p>The <code>WaToastDirective</code> exposes the native <code>create()</code> method:</p>
+<pre><code class="language-ts">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaToastDirective } from &#39;angular-awesome&#39;;
+
+@Component({
+  selector: &#39;demo-native-toast&#39;,
+  template: `
+    &lt;wa-toast #toast placement=&quot;top-end&quot;&gt;&lt;/wa-toast&gt;
+    &lt;button (click)=&quot;showToast()&quot;&gt;Show Toast&lt;/button&gt;
+  `
+})
+export class DemoNativeToastComponent {
+  @ViewChild(&#39;toast&#39;) toast!: WaToastDirective;
+
+  showToast() {
+    this.toast.create(&#39;Hello from native API!&#39;, { variant: &#39;success&#39;, duration: 3000 });
+  }
+}
+</code></pre>
+<h2>Auto-dismiss and Sticky Toasts</h2>
 <ul>
-<li>By default, toasts are closable and auto-dismiss after the configured <code>duration</code> (default 5000ms).</li>
-<li>Set <code>duration: 0</code> or a negative value to make a toast sticky until it is explicitly closed.</li>
+<li>By default, toasts auto-dismiss after the configured <code>duration</code> (default 5000ms).</li>
+<li>Set <code>duration: 0</code> to make a toast sticky until it is explicitly closed.</li>
 </ul>
 <pre><code class="language-ts">this.toasts.show(&#39;Sticky notice&#39;, { duration: 0 });
 </code></pre>
@@ -173,12 +201,11 @@ this.toasts.success(&#39;T1&#39;);
 this.toasts.success(&#39;T2&#39;);
 this.toasts.success(&#39;T3 (queued)&#39;);
 </code></pre>
-<h2>Appearance and Size</h2>
-<p>Toast visuals reuse <code>wa-callout</code> tokens:</p>
-<pre><code class="language-ts">this.toasts.show(&#39;Filled outlined large&#39;, {
-  appearance: &#39;filled-outlined&#39;,
-  size: &#39;large&#39;
-});
+<h2>Size</h2>
+<p>Toast items support three sizes via the official <code>&lt;wa-toast-item&gt;</code> size property:</p>
+<pre><code class="language-ts">this.toasts.show(&#39;Small toast&#39;, { size: &#39;small&#39; });
+this.toasts.show(&#39;Medium toast&#39;, { size: &#39;medium&#39; });
+this.toasts.show(&#39;Large toast&#39;, { size: &#39;large&#39; });
 </code></pre>
 
       </section>

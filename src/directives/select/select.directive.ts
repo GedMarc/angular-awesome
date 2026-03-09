@@ -300,8 +300,11 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   private applyInputs(): void {
@@ -349,7 +352,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
         if (raw == null) {
           raw = el?.value ?? '';
         }
-        let currentKeys: string[] = Array.isArray(raw)
+        const currentKeys: string[] = Array.isArray(raw)
           ? raw
           : String(raw).split(' ').filter(v => v !== '');
         if (currentKeys.length > max) {
@@ -383,6 +386,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -395,6 +400,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -403,7 +410,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -414,6 +421,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -476,6 +485,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation so Angular forms can reflect validity state (e.g., required)
@@ -572,6 +582,8 @@ export class WaOptionComponent implements OnInit, OnChanges {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -580,7 +592,7 @@ export class WaOptionComponent implements OnInit, OnChanges {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -591,6 +603,8 @@ export class WaOptionComponent implements OnInit, OnChanges {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

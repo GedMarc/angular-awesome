@@ -55,7 +55,6 @@ export class WaBadgeDirective implements OnInit, OnChanges {
   }
 
   private applyInputs(): void {
-    const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.setAttr('variant', this.variant);
     this.setAttr('appearance', normalizeAppearance(this.appearance as any));

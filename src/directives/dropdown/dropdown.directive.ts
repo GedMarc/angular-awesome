@@ -39,7 +39,7 @@ export type DropdownPlacement =
     }
   ]
 })
-export class WaDropdownDirective implements OnInit, ControlValueAccessor {
+export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Structural inputs
   @Input() placement?: DropdownPlacement | string;
   @Input() disabled?: boolean | string;
@@ -169,6 +169,8 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -189,7 +191,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -200,6 +202,8 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -211,8 +215,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
     if (value != null) {
       setTimeout(() => {
         const dropdownItems = this.el.nativeElement.querySelectorAll('wa-dropdown-item[value]');
-        for (let i = 0; i < dropdownItems.length; i++) {
-          const item = dropdownItems[i];
+        for (const item of dropdownItems) {
           if (item.getAttribute('value') === value) {
             item.selected = true;
             break;

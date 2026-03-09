@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, inject, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 
 /**ple
@@ -326,7 +326,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -429,6 +429,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation

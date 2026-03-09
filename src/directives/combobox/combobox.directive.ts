@@ -240,8 +240,11 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
   }
 
   ngOnDestroy(): void {
@@ -321,7 +324,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
 
   private setCssVar(name: string, value: string | null | undefined): void {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     } else {
       this.el.nativeElement.style.removeProperty(name);
     }
@@ -383,6 +386,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator
