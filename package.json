@@ -20,6 +20,7 @@
   "homepage": "https://gedmarc.github.io/angular-awesome",
   "scripts": {
     "build": "ng build",
+    "lint": "ng lint",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
     "test:checkbox": "node scripts/run-checkbox-tests.js",
@@ -38,12 +39,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.11",
-    "@angular/cli": "21.2.1",
+    "@angular/cli": "^19.2.0",
     "@angular/compiler-cli": "^19.2.0",
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
+    "@eslint/js": "^10.0.1",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "21.3.0",
     "cross-env": "^7.0.3",
+    "eslint": "^10.0.2",
     "gh-pages": "^6.1.1",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
@@ -57,6 +61,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typescript": "~5.7.2",
+    "typescript-eslint": "8.56.1",
     "zone.js": "~0.15.0"
   }
 }

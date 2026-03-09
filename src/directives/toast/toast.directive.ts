@@ -44,7 +44,7 @@ export class WaToastDirective implements OnInit, OnChanges {
    * Exposes the native toast element for direct interaction.
    * Use nativeElement.create() to programmatically create toast items.
    */
-  public get nativeElement(): HTMLElement & { create: (message: string, options?: any) => any } {
+  public get nativeElement(): WaToastNativeElement {
     return this.el.nativeElement;
   }
 
@@ -52,7 +52,7 @@ export class WaToastDirective implements OnInit, OnChanges {
    * Programmatically creates a toast notification and adds it to the stack.
    * Delegates to the native <wa-toast> element's create() method.
    */
-  public create(message: string, options?: ToastCreateOptions): any {
+  public create(message: string, options?: ToastCreateOptions): HTMLElement {
     return this.nativeElement.create(message, options);
   }
 
@@ -64,6 +64,15 @@ export class WaToastDirective implements OnInit, OnChanges {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
     }
   }
+}
+
+/**
+ * Typed interface for the native <wa-toast> element, providing type-safe access
+ * to the create() method and other native properties.
+ */
+export interface WaToastNativeElement extends HTMLElement {
+  /** Programmatically creates a toast notification and adds it to the stack. */
+  create(message: string, options?: ToastCreateOptions): HTMLElement;
 }
 
 /**

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — Migration"
+  short_description: "Migrate Angular Awesome wrappers when Web Awesome APIs change"
+  default_prompt: "Use $angular-awesome-migration to migrate a component wrapper to an updated Web Awesome API."
+
