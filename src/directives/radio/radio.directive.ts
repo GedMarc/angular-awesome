@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaRadioGroupDirective
@@ -32,7 +33,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAccessor, Validator {
+export class WaRadioGroupDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: string | null;
   @Input() label?: string;
@@ -64,6 +65,9 @@ export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAcc
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -74,6 +78,7 @@ export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAcc
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     const forwardInput = (event: Event) => {
@@ -139,6 +144,22 @@ export class WaRadioGroupDirective implements OnInit, OnChanges, ControlValueAcc
     if ('required' in changes || 'disabled' in changes) {
       this.validatorChange?.();
     }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 
   private applyInputs() {

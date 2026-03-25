@@ -42,6 +42,7 @@ Wrap the `<wa-badge>` Web Component inside an Angular 20 directive to allow decl
 @Input() appearance: 'accent' | 'filled' | 'outlined' = 'accent';
 @Input() pill?: boolean | null;
 @Input() pulse?: boolean | null;
+@Input() attention?: 'none' | 'pulse' | 'bounce';
 @Input() fontSize?: string; // Optional font-size override (var token or fixed size)
 
 @Input() backgroundColor?: string; // --background-color

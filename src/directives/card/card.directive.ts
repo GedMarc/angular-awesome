@@ -28,7 +28,11 @@ export class WaCardDirective implements OnInit, OnChanges {
   // Boolean inputs
   @Input() withHeader?: boolean | string;
   @Input() withImage?: boolean | string;
+  @Input() withMedia?: boolean | string;
   @Input() withFooter?: boolean | string;
+
+  // Layout
+  @Input() orientation?: 'horizontal' | 'vertical' | string;
 
   // Direct styling inputs
   @Input() color?: string;
@@ -64,7 +68,9 @@ export class WaCardDirective implements OnInit, OnChanges {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-header', this.withHeader);
     this.setBooleanAttr('with-image', this.withImage);
+    this.setBooleanAttr('with-media', this.withMedia);
     this.setBooleanAttr('with-footer', this.withFooter);
+    this.setAttr('orientation', this.orientation);
 
     // Apply direct styling inputs
     if (this.color) nativeEl.style.color = this.color;

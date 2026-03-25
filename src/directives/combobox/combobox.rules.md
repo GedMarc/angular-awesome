@@ -30,7 +30,15 @@ The native `<wa-combobox>` Web Awesome component combines a filterable text inpu
 | `withLabel` | `boolean` | SSR hint for label slot. |
 | `withHint` | `boolean` | SSR hint for hint slot. |
 | `allowCustomValue` | `boolean` | When true, accept text not matching any option (single select only). |
+| `allowCreate` | `boolean` | When true, shows a "Create [value]" option for non-matching text. Fires `wa-create` event. |
+| `open` | `boolean` | Whether the dropdown panel is visible. |
+| `inputValue` | `string` | The current text value in the input field. |
 | `autocomplete` | `'list' \| 'none'` | Controls default filtering strategy. |
+| `autocapitalize` | `'off' \| 'none' \| 'on' \| 'sentences' \| 'words' \| 'characters'` | Controls text input capitalization. |
+| `autocorrect` | `'on' \| 'off' \| boolean` | Enables/disables browser autocorrect. |
+| `inputmode` | `'none' \| 'text' \| 'decimal' \| 'numeric' \| 'tel' \| 'search' \| 'email' \| 'url'` | Virtual keyboard type hint. |
+| `enterkeyhint` | `'enter' \| 'done' \| 'go' \| 'next' \| 'previous' \| 'search' \| 'send'` | Enter key label on virtual keyboards. |
+| `spellcheck` | `boolean` | Enables spell checking on the combobox. |
 | `validationTarget` | `string` | Anchor native constraint tooltips. |
 | `filter` | `(option: WaOption, query: string) => boolean` | Custom filter predicate. Assign via property binding. |
 | `getTag` | `(option: WaOption, index: number) => TemplateResult \| string \| HTMLElement` | Custom renderer for multiselect tags. |
@@ -57,6 +65,7 @@ The native `<wa-combobox>` Web Awesome component combines a filterable text inpu
 | `showEvent` / `afterShowEvent` | Panel lifecycle events (`wa-show`, `wa-after-show`). |
 | `hideEvent` / `afterHideEvent` | Panel lifecycle events (`wa-hide`, `wa-after-hide`). |
 | `invalidEvent` | Mirrors `wa-invalid` for Angular validators. |
+| `waCreate` | Fires when user selects the "create" option (`wa-create`). Call `event.preventDefault()` to handle creation yourself. |
 
 ## Usage
 

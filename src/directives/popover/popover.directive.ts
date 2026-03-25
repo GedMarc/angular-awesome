@@ -42,7 +42,9 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
 
   // Boolean inputs
   @Input() active?: boolean | string;
+  @Input() open?: boolean | string;
   @Input() arrow?: boolean | string;
+  @Input() withoutArrow?: boolean | string;
   @Input() flip?: boolean | string;
   @Input() shift?: boolean | string;
   @Input() hoverBridge?: boolean | string;
@@ -97,6 +99,7 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
 
     // Set boolean attributes (only if true) — DO NOT set `active` yet
     this.setBooleanAttr('arrow', this.arrow);
+    this.setBooleanAttr('without-arrow', this.withoutArrow);
     this.setBooleanAttr('flip', this.flip);
     this.setBooleanAttr('shift', this.shift);
     this.setBooleanAttr('hover-bridge', this.hoverBridge);
@@ -144,13 +147,17 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
     this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.waAfterShow.emit(event));
     this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.waAfterHide.emit(event));
 
-    // If the popover starts active or `active` input is set, render content BEFORE enabling active
+    // If the popover starts active/open, render content BEFORE enabling active
     const wantsActive = (this.active === true || this.active === 'true' || this.active === '');
-    if (nativeEl.hasAttribute('active') || wantsActive) {
+    const wantsOpen = (this.open === true || this.open === 'true' || this.open === '');
+    if (nativeEl.hasAttribute('active') || nativeEl.hasAttribute('open') || wantsActive || wantsOpen) {
       this.renderContentFromFragment();
       // Now set active if requested via input so the component opens with content already present
       if (wantsActive && !nativeEl.hasAttribute('active')) {
         this.setBooleanAttr('active', true);
+      }
+      if (wantsOpen && !nativeEl.hasAttribute('open')) {
+        this.setBooleanAttr('open', true);
       }
     }
 
@@ -173,10 +180,12 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
     if (changes['arrowPlacement']) this.setAttr('arrow-placement', this.arrowPlacement);
 
     if (changes['arrow']) this.setBooleanAttr('arrow', this.arrow);
+    if (changes['withoutArrow']) this.setBooleanAttr('without-arrow', this.withoutArrow);
     if (changes['flip']) this.setBooleanAttr('flip', this.flip);
     if (changes['shift']) this.setBooleanAttr('shift', this.shift);
     if (changes['hoverBridge']) this.setBooleanAttr('hover-bridge', this.hoverBridge);
     if (changes['active']) this.setBooleanAttr('active', this.active);
+    if (changes['open']) this.setBooleanAttr('open', this.open);
 
     if (changes['distance']) this.setNumericAttr('distance', this.distance);
     if (changes['skidding']) this.setNumericAttr('skidding', this.skidding);

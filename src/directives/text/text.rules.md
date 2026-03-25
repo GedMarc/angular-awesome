@@ -19,7 +19,7 @@ Inputs
 - `waFormControlText?: 'label' | 'value' | 'placeholder' | 'hint'`
 - `waFontSize?: '2xs'|'xs'|'s'|'m'|'l'|'xl'|'2xl'|'3xl'|'4xl | 'wa-font-size-*'`
 - `waFontWeight?: 'light'|'normal'|'semibold'|'bold'`
-- `waColorText?: 'quiet'|'normal'|'link'`
+- `waColorText?: 'quiet'|'normal'|'link'|'brand'|'neutral'|'success'|'warning'|'danger'|'accent'|'info'|'wa-color-text-*'`
 - `waTextTruncate?: boolean`
 
 Notes

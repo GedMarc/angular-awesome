@@ -22,6 +22,10 @@ import { FormsModule } from '@angular/forms';
       [required]="required"
       [maxOptionsVisible]="maxOptionsVisible"
       [maxSelected]="maxSelected"
+      [name]="name"
+      [open]="open"
+      [withLabel]="withLabel"
+      [withHint]="withHint"
       [form]="form"
       [backgroundColor]="backgroundColor"
       [borderColor]="borderColor"
@@ -65,6 +69,10 @@ class SelectTestHostComponent {
   required?: boolean | string;
   maxOptionsVisible?: number | string;
   maxSelected?: number | string;
+  name?: string;
+  open?: boolean | string;
+  withLabel?: boolean | string;
+  withHint?: boolean | string;
   form?: string;
   backgroundColor?: string;
   borderColor?: string;
@@ -293,6 +301,42 @@ describe('WaSelectWrapperComponent', () => {
     expect(hostComponent.onHide).toHaveBeenCalled();
     expect(hostComponent.onAfterHide).toHaveBeenCalled();
     expect(hostComponent.onInvalid).toHaveBeenCalled();
+  });
+
+  it('should set name attribute correctly', () => {
+    hostComponent.name = 'fruit-select';
+    hostFixture.detectChanges();
+    expect(selectElement.getAttribute('name')).toBe('fruit-select');
+  });
+
+  it('should set open boolean attribute correctly', () => {
+    hostComponent.open = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('open')).toBeTrue();
+
+    hostComponent.open = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('open')).toBeFalse();
+  });
+
+  it('should set with-label boolean attribute correctly', () => {
+    hostComponent.withLabel = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-label')).toBeTrue();
+
+    hostComponent.withLabel = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-label')).toBeFalse();
+  });
+
+  it('should set with-hint boolean attribute correctly', () => {
+    hostComponent.withHint = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-hint')).toBeTrue();
+
+    hostComponent.withHint = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-hint')).toBeFalse();
   });
 
   it('should not have an active class on the first option by default', () => {

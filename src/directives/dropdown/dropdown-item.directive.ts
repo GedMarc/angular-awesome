@@ -39,7 +39,8 @@ export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueA
   @Input() loading?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() label?: string;
-  @Input() variant?: 'danger' | string;
+  @Input() variant?: 'danger' | 'default' | string;
+  @Input() submenuOpen?: boolean | string;
 
   // Style inputs
   @Input() backgroundColorHover?: string;
@@ -103,6 +104,7 @@ export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueA
     this.setBooleanAttr('checked', this.checked);
     this.setBooleanAttr('loading', this.loading);
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('submenu-open', this.submenuOpen);
 
     // Set style attributes
     this.setCssVar('--background-color-hover', this.backgroundColorHover);

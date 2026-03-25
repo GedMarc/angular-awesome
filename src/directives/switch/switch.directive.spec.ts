@@ -11,6 +11,11 @@ import { WaSwitchDirective } from './switch.directive';
       [disabled]="disabled"
       [hint]="hint"
       [size]="size"
+      [name]="name"
+      [value]="value"
+      [checked]="checked"
+      [required]="required"
+      [withHint]="withHint"
       [backgroundColor]="backgroundColor"
       [backgroundColorChecked]="backgroundColorChecked"
       [borderColor]="borderColor"
@@ -38,6 +43,11 @@ class TestHostComponent {
   disabled?: boolean | string;
   hint?: string;
   size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  name?: string;
+  value?: string | null;
+  checked?: boolean | string;
+  required?: boolean | string;
+  withHint?: boolean | string;
 
   backgroundColor?: string;
   backgroundColorChecked?: string;
@@ -111,10 +121,44 @@ describe('WaSwitchDirective', () => {
   it('should set string attributes correctly', () => {
     hostComponent.hint = 'Test hint';
     hostComponent.size = 'large';
+    hostComponent.name = 'testName';
+    hostComponent.value = 'testValue';
     hostFixture.detectChanges();
 
     expect(switchElement.getAttribute('hint')).toBe('Test hint');
     expect(switchElement.getAttribute('size')).toBe('large');
+    expect(switchElement.getAttribute('name')).toBe('testName');
+    expect(switchElement.getAttribute('value')).toBe('testValue');
+  });
+
+  it('should set checked boolean attribute correctly', () => {
+    hostComponent.checked = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('checked')).toBeTrue();
+
+    hostComponent.checked = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('checked')).toBeFalse();
+  });
+
+  it('should set required boolean attribute correctly', () => {
+    hostComponent.required = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('required')).toBeTrue();
+
+    hostComponent.required = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('required')).toBeFalse();
+  });
+
+  it('should set with-hint boolean attribute correctly', () => {
+    hostComponent.withHint = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('with-hint')).toBeTrue();
+
+    hostComponent.withHint = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('with-hint')).toBeFalse();
   });
 
   it('should set boolean attributes correctly', () => {

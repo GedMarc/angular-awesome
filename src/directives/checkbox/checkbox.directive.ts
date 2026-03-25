@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, Injector, Input, OnInit, OnChanges, SimpleChanges, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaCheckboxDirective
@@ -34,7 +35,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, ControlValueAccessor, Validator {
+export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoCheck, ControlValueAccessor, Validator {
   // Dialog integration
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -84,6 +85,9 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -140,6 +144,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
@@ -234,6 +239,10 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     }
   }
 
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
   private applyInputs() {
     // Set standard attributes
     this.setAttr('value', this.value);
@@ -269,6 +278,18 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, Contro
     try {
       this.attrObserver?.disconnect();
     } catch {}
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 
   // Validator implementation to participate in Angular forms validity (e.g., required)

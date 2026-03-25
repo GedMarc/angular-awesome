@@ -21,11 +21,20 @@ import {WaOptionComponent} from '../select';
       [required]="required"
       [maxOptionsVisible]="maxOptionsVisible"
       [allowCustomValue]="allowCustomValue"
+      [allowCreate]="allowCreate"
+      [open]="open"
+      [inputValue]="inputValue"
+      [autocapitalize]="autocapitalize"
+      [autocorrect]="autocorrect"
+      [inputmode]="inputmode"
+      [enterkeyhint]="enterkeyhint"
+      [spellcheck]="spellcheck"
       (wa-input)="onInput($event)"
       (wa-change)="onChange($event)"
       (wa-focus)="onFocus($event)"
       (wa-blur)="onBlur($event)"
       (wa-clear)="onClear($event)"
+      (wa-create)="onCreate($event)"
     >
       <wa-option value="apple">Apple</wa-option>
       <wa-option value="banana">Banana</wa-option>
@@ -50,12 +59,21 @@ class ComboboxHostComponent {
   required?: boolean | string;
   maxOptionsVisible?: number | string;
   allowCustomValue?: boolean | string;
+  allowCreate?: boolean | string;
+  open?: boolean | string;
+  inputValue?: string;
+  autocapitalize?: string;
+  autocorrect?: string;
+  inputmode?: string;
+  enterkeyhint?: string;
+  spellcheck?: boolean | string;
 
   onInput(_: Event) {}
   onChange(_: Event) {}
   onFocus(_: FocusEvent) {}
   onBlur(_: FocusEvent) {}
   onClear(_: CustomEvent) {}
+  onCreate(_: CustomEvent) {}
 }
 
 describe('WaComboboxComponent', () => {
@@ -106,6 +124,9 @@ describe('WaComboboxComponent', () => {
     host.disabled = 'true';
     host.multiple = true;
     host.required = true;
+    host.allowCreate = true;
+    host.open = true;
+    host.spellcheck = true;
     fixture.detectChanges();
 
     expect(comboboxEl.hasAttribute('pill')).toBeTrue();
@@ -113,6 +134,35 @@ describe('WaComboboxComponent', () => {
     expect(comboboxEl.hasAttribute('disabled')).toBeTrue();
     expect(comboboxEl.hasAttribute('multiple')).toBeTrue();
     expect(comboboxEl.hasAttribute('required')).toBeTrue();
+    expect(comboboxEl.hasAttribute('allow-create')).toBeTrue();
+    expect(comboboxEl.hasAttribute('open')).toBeTrue();
+    expect(comboboxEl.hasAttribute('spellcheck')).toBeTrue();
+  });
+
+  it('should set new string attributes from 3.4.1', () => {
+    host.inputValue = 'test query';
+    host.autocapitalize = 'sentences';
+    host.autocorrect = 'on';
+    host.inputmode = 'numeric';
+    host.enterkeyhint = 'search';
+    fixture.detectChanges();
+
+    expect(comboboxEl.getAttribute('input-value')).toBe('test query');
+    expect(comboboxEl.getAttribute('autocapitalize')).toBe('sentences');
+    expect(comboboxEl.getAttribute('autocorrect')).toBe('on');
+    expect(comboboxEl.getAttribute('inputmode')).toBe('numeric');
+    expect(comboboxEl.getAttribute('enterkeyhint')).toBe('search');
+  });
+
+  it('should not set boolean attributes when false', () => {
+    host.allowCreate = false;
+    host.open = false;
+    host.spellcheck = false;
+    fixture.detectChanges();
+
+    expect(comboboxEl.hasAttribute('allow-create')).toBeFalse();
+    expect(comboboxEl.hasAttribute('open')).toBeFalse();
+    expect(comboboxEl.hasAttribute('spellcheck')).toBeFalse();
   });
 
   it('should set numeric attributes', () => {
@@ -148,13 +198,15 @@ describe('WaComboboxComponent', () => {
     spyOn(host, 'onFocus');
     spyOn(host, 'onBlur');
     spyOn(host, 'onClear');
+    spyOn(host, 'onCreate');
 
     const events = [
       new Event('wa-input'),
       new Event('wa-change'),
       new FocusEvent('wa-focus'),
       new FocusEvent('wa-blur'),
-      new CustomEvent('wa-clear')
+      new CustomEvent('wa-clear'),
+      new CustomEvent('wa-create')
     ];
 
     events.forEach(event => comboboxEl.dispatchEvent(event));
@@ -165,6 +217,7 @@ describe('WaComboboxComponent', () => {
     expect(host.onFocus).toHaveBeenCalled();
     expect(host.onBlur).toHaveBeenCalled();
     expect(host.onClear).toHaveBeenCalled();
+    expect(host.onCreate).toHaveBeenCalled();
   });
 });
 

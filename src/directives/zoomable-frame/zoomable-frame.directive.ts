@@ -18,6 +18,7 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
   @Input() zoomLevels?: string;
   @Input() withoutControls?: boolean | string;
   @Input() withoutInteraction?: boolean | string;
+  @Input() withThemeSync?: boolean | string;
 
   // Events
   @Output() load = new EventEmitter<Event>();
@@ -35,6 +36,7 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
     this.setAttr('zoom-levels', this.zoomLevels);
     this.setBooleanAttr('without-controls', this.withoutControls);
     this.setBooleanAttr('without-interaction', this.withoutInteraction);
+    this.setBooleanAttr('with-theme-sync', this.withThemeSync);
 
     // Events passthrough from internal iframe are re-dispatched by web component
     this.renderer.listen(el, 'load', (e: Event) => this.load.emit(e));

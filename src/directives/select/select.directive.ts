@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaSelectWrapperComponent
@@ -33,7 +34,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     }
   ]
 })
-export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
+export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: any | any[];
   @Input() label?: string;
@@ -50,6 +51,10 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   @Input() maxOptionsVisible?: number | string;
   // Maximum number of selections allowed when multiple is enabled
   @Input() maxSelected?: number | string;
+  @Input() name?: string;
+  @Input() open?: boolean | string;
+  @Input() withLabel?: boolean | string;
+  @Input() withHint?: boolean | string;
   @Input() form?: string;
   // Custom tag renderer for multiselect tags
   @Input() getTag?: any;
@@ -90,6 +95,9 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // Object binding support
   @Input() valueField?: string; // property name to use as key when value is an object
@@ -170,6 +178,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     const handleValueRead = () => {
@@ -307,6 +316,22 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     }
   }
 
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
   private applyInputs(): void {
     // Set string attributes
     this.setAttr('label', this.label);
@@ -315,18 +340,22 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     this.setAttr('appearance', normalizeAppearance(this.appearance as any));
     this.setAttr('size', this.size);
     this.setAttr('placement', this.placement);
+    this.setAttr('name', this.name);
     this.setAttr('form', this.form);
     this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
 
     // Set boolean attributes (only if true)
     // First clear booleans then reapply to allow toggling off
     const host = this.el.nativeElement as HTMLElement;
-    ['pill','with-clear','disabled','multiple','required'].forEach(a => host.removeAttribute(a));
+    ['pill','with-clear','disabled','multiple','required','open','with-label','with-hint'].forEach(a => host.removeAttribute(a));
     this.setBooleanAttr('pill', this.pill);
     this.setBooleanAttr('with-clear', this.withClear);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('multiple', this.multiple);
     this.setBooleanAttr('required', this.required);
+    this.setBooleanAttr('open', this.open);
+    this.setBooleanAttr('with-label', this.withLabel);
+    this.setBooleanAttr('with-hint', this.withHint);
 
     // Styles
     this.setCssVar('--background-color', this.backgroundColor);

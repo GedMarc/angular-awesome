@@ -23,6 +23,11 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 | `src`             | `string`  | No               | URL to an SVG resource for custom icons.            |
 | `label`           | `string`  | No               | Accessible label for assistive technologies.        |
 | `withFixedWidth`  | `boolean` | No               | If true, forces a fixed 1em width.                  |
+| `autoWidth`       | `boolean` | No               | Sets width to match cropped SVG viewBox (like `fa-width-auto`). |
+| `swapOpacity`     | `boolean` | No               | Swaps the opacity of duotone icons.                 |
+| `rotate`          | `number`  | No               | Sets the rotation degree of the icon.               |
+| `flip`            | `'x' \| 'y' \| 'both'` | No   | Flips the icon along the specified axis.            |
+| `animation`       | `string`  | No               | Sets the animation (e.g., `spin`, `beat`, `fade`).  |
 | `color`           | `string`  | No               | Sets the icon's text color directly.                |
 | `backgroundColor` | `string`  | No               | Sets the icon's background color.                   |
 | `fontSize`        | `string`  | No               | Adjusts the icon's font size.                       |

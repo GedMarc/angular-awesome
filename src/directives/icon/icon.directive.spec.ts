@@ -13,6 +13,11 @@ import { WaIconDirective } from './icon.directive';
       [src]="src"
       [label]="label"
       [withFixedWidth]="withFixedWidth"
+      [autoWidth]="autoWidth"
+      [swapOpacity]="swapOpacity"
+      [rotate]="rotate"
+      [flip]="flip"
+      [animation]="animation"
     >
     </wa-icon>
   `,
@@ -28,6 +33,11 @@ class TestHostComponent {
   label?: string;
   // Allow string coercion in tests
   withFixedWidth?: boolean | string;
+  autoWidth?: boolean | string;
+  swapOpacity?: boolean | string;
+  rotate?: number | string;
+  flip?: 'x' | 'y' | 'both' | string;
+  animation?: string;
 }
 
 describe('WaIconDirective', () => {
@@ -137,5 +147,59 @@ describe('WaIconDirective', () => {
     hostComponent.withFixedWidth = '';
     hostFixture.detectChanges();
     expect(iconElement.hasAttribute('with-fixed-width')).toBeTrue();
+  });
+
+  it('should set autoWidth boolean attribute', () => {
+    hostComponent.autoWidth = true;
+    hostFixture.detectChanges();
+    expect(iconElement.hasAttribute('auto-width')).toBeTrue();
+
+    hostComponent.autoWidth = false;
+    hostFixture.detectChanges();
+    expect(iconElement.hasAttribute('auto-width')).toBeFalse();
+  });
+
+  it('should set swapOpacity boolean attribute', () => {
+    hostComponent.swapOpacity = true;
+    hostFixture.detectChanges();
+    expect(iconElement.hasAttribute('swap-opacity')).toBeTrue();
+
+    hostComponent.swapOpacity = false;
+    hostFixture.detectChanges();
+    expect(iconElement.hasAttribute('swap-opacity')).toBeFalse();
+  });
+
+  it('should set rotate attribute', () => {
+    hostComponent.rotate = 90;
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('rotate')).toBe('90');
+
+    hostComponent.rotate = 180;
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('rotate')).toBe('180');
+  });
+
+  it('should set flip attribute', () => {
+    hostComponent.flip = 'x';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('flip')).toBe('x');
+
+    hostComponent.flip = 'y';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('flip')).toBe('y');
+
+    hostComponent.flip = 'both';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('flip')).toBe('both');
+  });
+
+  it('should set animation attribute', () => {
+    hostComponent.animation = 'spin';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('animation')).toBe('spin');
+
+    hostComponent.animation = 'pulse';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('animation')).toBe('pulse');
   });
 });

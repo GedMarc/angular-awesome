@@ -85,6 +85,9 @@ export * from './directives/polar-area-chart/polar-area-chart.directive';
 export * from './directives/radar-chart/radar-chart.directive';
 export * from './directives/scatter-chart/scatter-chart.directive';
 
+// Shared type tokens
+export * from './types/tokens';
+
 // Toast service and directives
 export * from './services/toast/toast.types';
 export * from './services/toast/toast.service';

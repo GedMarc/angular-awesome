@@ -22,6 +22,9 @@ export class WaIntersectionObserverDirective implements OnInit, OnChanges {
   // Inputs
   @Input() threshold?: number | number[] | string;
   @Input() rootMargin?: string;
+  @Input() root?: string;
+  @Input() intersectClass?: string;
+  @Input() once?: boolean | string;
   @Input() disabled?: boolean | string;
 
   // Services
@@ -44,6 +47,9 @@ export class WaIntersectionObserverDirective implements OnInit, OnChanges {
       this.setAttr('threshold', this.threshold as any);
     }
     this.setAttr('root-margin', this.rootMargin);
+    this.setAttr('root', this.root);
+    this.setAttr('intersect-class', this.intersectClass);
+    this.setBooleanAttr('once', this.once);
     this.setBooleanAttr('disabled', this.disabled);
   }
 
