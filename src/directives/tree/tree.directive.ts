@@ -30,9 +30,9 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   /** Name of the tree, used for querySelector targeting */
   @Input() name?: string;
 
-  // Outputs
+  // Outputs — camelCase only; hyphenated alias removed to prevent infinite
+  // re-dispatch loop (see tree-item.directive.ts for explanation).
   @Output() waSelectionChange = new EventEmitter<any>();
-  @Output('wa-selection-change') waSelectionChangeHyphen = this.waSelectionChange;
 
   // Styling inputs
   @Input() indentSize?: string;
@@ -50,6 +50,9 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   private onTouched: () => void = () => {};
   private isDisabled = false;
   private modelValue: any[] | any = [];
+
+  /** Guard flag – prevents re-entrant HostListener → emit → HostListener loops. */
+  private emitting = false;
 
   ngOnChanges() {
     const tree = this.el.nativeElement as HTMLElement;
@@ -79,6 +82,9 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   // Re-emit native selection change for Angular consumers and update ngModel
   @HostListener('wa-selection-change', ['$event'])
   onSelectionChanged(event: CustomEvent) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try {
     this.waSelectionChange.emit(event);
 
     const isLeaf = (item: Element): boolean => {
@@ -186,9 +192,10 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
         finalize(settled);
       }
     });
+    } finally {
+      this.emitting = false;
+    }
   }
-
-  // ControlValueAccessor implementation
   writeValue(obj: any): void {
     this.modelValue = obj;
     // Reflect into DOM selection state if possible

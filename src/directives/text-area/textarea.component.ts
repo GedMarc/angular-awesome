@@ -1,11 +1,15 @@
 import {
   Component,
+  DoCheck,
   ElementRef,
   EventEmitter,
   forwardRef,
   Input,
+  Injector,
+  inject,
   OnChanges,
   Output,
+  Renderer2,
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
@@ -14,10 +18,12 @@ import {
   ControlValueAccessor,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  NgControl,
   ValidationErrors,
   Validator
 } from '@angular/forms';
 import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 @Component({
   selector: 'wa-textarea',
@@ -76,7 +82,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     '(wa-invalid)': 'waInvalid.emit($event)'
   }
 })
-export class WaTextareaComponent implements ControlValueAccessor, Validator, OnChanges {
+export class WaTextareaComponent implements ControlValueAccessor, Validator, OnChanges, DoCheck {
   get normalizedAppearance(): string | undefined {
     return normalizeAppearance(this.appearance as any);
   }
@@ -120,6 +126,10 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
   onChange = (_: any) => {};
   onTouched = () => {};
   private validatorChange?: () => void;
+  private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   constructor(private host: ElementRef<HTMLElement>) {}
 
@@ -127,6 +137,18 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
     if ('required' in changes || 'minlength' in changes || 'maxlength' in changes || 'disabled' in changes) {
       this.validatorChange?.();
     }
+  }
+
+  ngDoCheck(): void {
+    syncFormValidationState(this.host, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 
   writeValue(val: any): void {

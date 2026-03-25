@@ -1,13 +1,15 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
+import { Component, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  NgControl,
   ValidationErrors,
   Validator
 } from '@angular/forms';
 import { Appearance, SizeToken, normalizeAppearance } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaComboboxComponent
@@ -32,7 +34,7 @@ import { Appearance, SizeToken, normalizeAppearance } from '../../types/tokens';
     }
   ]
 })
-export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, ControlValueAccessor, Validator {
+export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoCheck, ControlValueAccessor, Validator {
   // Core inputs
   @Input() value?: any | any[];
   @Input() name?: string;
@@ -51,7 +53,15 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
   @Input() withLabel?: boolean | string;
   @Input() withHint?: boolean | string;
   @Input() allowCustomValue?: boolean | string;
+  @Input() allowCreate?: boolean | string;
+  @Input() open?: boolean | string;
+  @Input() inputValue?: string;
   @Input() autocomplete?: 'list' | 'none' | string;
+  @Input() autocapitalize?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters' | string;
+  @Input() autocorrect?: 'on' | 'off' | boolean | string;
+  @Input() inputmode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | string;
+  @Input() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' | string;
+  @Input() spellcheck?: boolean | string;
   @Input() validationTarget?: string;
 
   // Rich behavior inputs
@@ -93,10 +103,15 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
   @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
   @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() waCreate = new EventEmitter<CustomEvent>();
+  @Output('wa-create') waCreateHyphen = this.waCreate;
   @Output() valueChange = new EventEmitter<any>();
 
   private el = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
@@ -159,6 +174,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
   ngOnInit(): void {
     const nativeEl = this.el.nativeElement;
     this.applyInputs();
+    this.syncValidationState();
 
     const handleValueRead = () => {
       const el: any = this.el.nativeElement;
@@ -215,6 +231,9 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
       this.waInvalid.emit(event);
       this.validatorChange?.();
     });
+    this.renderer.listen(nativeEl, 'wa-create', (event: CustomEvent) => {
+      this.waCreate.emit(event);
+    });
 
     try {
       this.attrObserver = new MutationObserver(mutations => {
@@ -247,8 +266,24 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     }
   }
 
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
   ngOnDestroy(): void {
     this.attrObserver?.disconnect();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 
   private applyInputs(): void {
@@ -265,7 +300,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
 
     const host = this.el.nativeElement;
-    ['pill', 'with-clear', 'disabled', 'multiple', 'required', 'allow-custom-value', 'with-label', 'with-hint'].forEach(attr =>
+    ['pill', 'with-clear', 'disabled', 'multiple', 'required', 'allow-custom-value', 'allow-create', 'with-label', 'with-hint', 'open', 'spellcheck'].forEach(attr =>
       host.removeAttribute(attr)
     );
 
@@ -275,8 +310,17 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, Contro
     this.setBooleanAttr('multiple', this.multiple);
     this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('allow-custom-value', this.allowCustomValue);
+    this.setBooleanAttr('allow-create', this.allowCreate);
+    this.setBooleanAttr('open', this.open);
     this.setBooleanAttr('with-label', this.withLabel);
     this.setBooleanAttr('with-hint', this.withHint);
+    this.setBooleanAttr('spellcheck', this.spellcheck);
+
+    this.setAttr('input-value', this.inputValue);
+    this.setAttr('autocapitalize', this.autocapitalize);
+    this.setAttr('autocorrect', this.autocorrect != null ? String(this.autocorrect) : undefined);
+    this.setAttr('inputmode', this.inputmode);
+    this.setAttr('enterkeyhint', this.enterkeyhint);
 
     this.setCssVar('--background-color', this.backgroundColor);
     this.setCssVar('--border-color', this.borderColor);

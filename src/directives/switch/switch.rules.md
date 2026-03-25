@@ -23,8 +23,13 @@ Wraps the `<wa-switch>` Web Component to expose Angular-style inputs/outputs and
 | Input      | Type      | Description                                                |         |             |                                        |
 | ---------- | --------- | ---------------------------------------------------------- | ------- | ----------- | -------------------------------------- |
 | `ngModel`  | `boolean` | Whether the switch is checked. Maps to the `checked` attr. |         |             |                                        |
+| `name`     | `string`  | Switch name for form submission.                           |         |             |                                        |
+| `value`    | `string`  | Switch value for form submission.                          |         |             |                                        |
+| `checked`  | `boolean` | Whether the switch is checked.                             |         |             |                                        |
 | `disabled` | `boolean` | Disables the switch. Maps to `disabled`.                   |         |             |                                        |
+| `required` | `boolean` | Makes the switch required in forms.                        |         |             |                                        |
 | `hint`     | `string`  | Hint text. Maps to `hint` attribute.                       |         |             |                                        |
+| `withHint` | `boolean` | SSR helper for slotted hint.                               |         |             |                                        |
 | `size`     | \`'small' | 'medium'                                                   | 'large' | 'inherit'\` | Switch size. Maps to `size` attribute. |
 
 ### Outputs

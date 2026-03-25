@@ -42,6 +42,8 @@ export type DropdownPlacement =
 export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Structural inputs
   @Input() placement?: DropdownPlacement | string;
+  @Input() open?: boolean | string;
+  @Input() size?: 'small' | 'medium' | 'large' | string;
   @Input() disabled?: boolean | string;
   @Input() stayOpenOnSelect?: boolean | string;
   @Input() containingElement?: HTMLElement;
@@ -111,8 +113,10 @@ export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAcces
     // Set string attributes
     this.setAttr('placement', this.placement);
     this.setAttr('sync', this.sync);
+    this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
+    this.setBooleanAttr('open', this.open);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('stay-open-on-select', this.stayOpenOnSelect);
 

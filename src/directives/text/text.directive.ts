@@ -11,8 +11,9 @@ export type WaFontWeight = 'light' | 'normal' | 'semibold' | 'bold'
   | 'wa-font-weight-light' | 'wa-font-weight-normal' | 'wa-font-weight-semibold' | 'wa-font-weight-bold';
 
 export type WaTextColor = 'quiet' | 'normal' | 'link'
-  | 'wa-color-text-quiet' | 'wa-color-text-normal' | 'wa-color-text-link'
-  | 'wa-color-quiet' | 'wa-color-normal' | 'wa-color-link';
+  | 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'accent' | 'info'
+  | 'wa-color-quiet' | 'wa-color-normal' | 'wa-color-link'
+  | `wa-color-text-${string}`;
 
 /**
  * [waText] — Angular helper to apply Web Awesome Text Utility classes with typed options.
@@ -226,7 +227,17 @@ export class WaTextDirective implements OnChanges {
       case 'wa-color-text-link':
       case 'wa-color-link':
         return 'wa-color-text-link';
+      case 'brand':
+      case 'neutral':
+      case 'success':
+      case 'warning':
+      case 'danger':
+      case 'accent':
+      case 'info':
+        return `wa-color-text-${s}`;
       default:
+        // Passthrough for full wa-color-text-* class names
+        if (s.startsWith('wa-color-text-')) return s;
         return undefined;
     }
   }

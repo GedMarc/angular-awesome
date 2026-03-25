@@ -15,6 +15,8 @@ Wraps a `<wa-dropdown>` element that exposes additional content in a popover pan
 #### Structural Inputs
 
 * `placement: DropdownPlacement` – Preferred placement of the dropdown. Options: `'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end'`.
+* `open: boolean | string` – Whether the dropdown panel is open. Can be toggled programmatically.
+* `size: 'small' | 'medium' | 'large'` – The dropdown's size.
 * `disabled: boolean | string` – Disables the dropdown trigger.
 * `stayOpenOnSelect: boolean | string` – Prevents dropdown from closing on item selection.
 * `containingElement: HTMLElement` – Custom element that controls close-on-outside-click behavior.

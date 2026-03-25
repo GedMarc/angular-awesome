@@ -20,7 +20,7 @@ Wraps the `<wa-details>` Web Awesome component, which displays a collapsible sec
 | `disabled`     | `boolean`                               | Prevents the details from expanding when true.                                 |
 | `appearance`   | `'filled' \| 'outlined' \| 'plain'`     | The visual appearance of the details element.                                  |
 | `open`         | `boolean`                               | Whether the details is expanded.                                               |
-| `iconPosition` | `'start' \| 'end'`                      | Position of the expand/collapse icon. Default is 'end'.                        |
+| `iconPlacement` | `'start' \| 'end'`                      | Position of the expand/collapse icon. Default is 'end'. (Alias: `iconPosition`) |
 | `name`         | `string`                                | Groups related details elements. When one opens, others with the same name close. |
 
 ### Outputs
@@ -77,7 +77,7 @@ The following CSS parts can be styled using `::part()` selectors:
   summary="Click to expand"
   [open]="isOpen"
   [disabled]="isDisabled"
-  iconPosition="start"
+  iconPlacement="start"
   appearance="filled"
   name="group-1"
   [spacing]="'1rem'"
@@ -98,5 +98,5 @@ The following CSS parts can be styled using `::part()` selectors:
 * Use the `show()` and `hide()` methods for programmatic control.
 * The component automatically adapts to right-to-left languages.
 * Custom icons can be provided using the `expand-icon` and `collapse-icon` slots.
-* The `iconPosition` attribute controls whether the icon appears at the start or end of the summary.
+* The `iconPlacement` attribute controls whether the icon appears at the start or end of the summary. The legacy `iconPosition` alias is still supported.
 * The component emits events during the opening and closing process, both at the start and after animations complete.

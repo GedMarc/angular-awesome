@@ -27,18 +27,15 @@ export class WaTreeItemDirective implements OnChanges {
   /** Optional value key; if provided, will be used as value identity */
   @Input() value: any;
 
-  // Outputs
+  // Outputs — camelCase only; hyphenated aliases removed to prevent infinite
+  // re-dispatch loops (HostListener catches native event → emit → Output alias
+  // dispatches it back as the same native event → HostListener catches it again).
   @Output() waExpand = new EventEmitter<void>();
-  @Output('wa-expand') waExpandHyphen = this.waExpand;
   @Output() waAfterExpand = new EventEmitter<void>();
-  @Output('wa-after-expand') waAfterExpandHyphen = this.waAfterExpand;
   @Output() waCollapse = new EventEmitter<void>();
-  @Output('wa-collapse') waCollapseHyphen = this.waCollapse;
   @Output() waAfterCollapse = new EventEmitter<void>();
-  @Output('wa-after-collapse') waAfterCollapseHyphen = this.waAfterCollapse;
   @Output() lazyChange = new EventEmitter<boolean>();
   @Output() waLazyLoad = new EventEmitter<void>();
-  @Output('wa-lazy-load') waLazyLoadHyphen = this.waLazyLoad;
 
   // Styling inputs
   @Input() selectionBackgroundColor?: string;
@@ -51,38 +48,51 @@ export class WaTreeItemDirective implements OnChanges {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  /** Guard flag – prevents re-entrant HostListener → emit → HostListener loops. */
+  private emitting = false;
+
   private isTruthy(value: boolean | string | null | undefined): boolean {
     return value === '' || value === true || value === 'true';
   }
 
-  @HostListener('wa-expand')
-  onExpand() {
+  @HostListener('wa-expand', ['$event'])
+  onExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (!this.isTruthy(this.disabled)) {
-      this.waExpand.emit();
+      this.emitting = true;
+      try { this.waExpand.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-expand')
-  onAfterExpand() {
-    this.waAfterExpand.emit();
+  @HostListener('wa-after-expand', ['$event'])
+  onAfterExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterExpand.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-collapse')
-  onCollapse() {
+  @HostListener('wa-collapse', ['$event'])
+  onCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (!this.isTruthy(this.disabled)) {
-      this.waCollapse.emit();
+      this.emitting = true;
+      try { this.waCollapse.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-collapse')
-  onAfterCollapse() {
-    this.waAfterCollapse.emit();
+  @HostListener('wa-after-collapse', ['$event'])
+  onAfterCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterCollapse.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-lazy-load')
-  onLazyLoad() {
+  @HostListener('wa-lazy-load', ['$event'])
+  onLazyLoad(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (this.isTruthy(this.lazy) && !this.isTruthy(this.disabled)) {
-      this.waLazyLoad.emit();
+      this.emitting = true;
+      try { this.waLazyLoad.emit(); } finally { this.emitting = false; }
     }
   }
 

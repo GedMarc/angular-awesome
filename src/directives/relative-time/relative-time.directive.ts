@@ -28,6 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaRelativeTimeDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
+  @Input() date?: Date | string;
   @Input() format?: 'long' | 'short' | 'narrow' | string;
   @Input() numeric?: 'auto' | 'always' | string;
   @Input() lang?: string;
@@ -72,6 +73,11 @@ export class WaRelativeTimeDirective implements OnInit, OnChanges, ControlValueA
   }
 
   private applyInputs() {
+    // Set date property (can be Date or string)
+    if (this.date != null) {
+      const dateStr = this.date instanceof Date ? this.date.toISOString() : this.date;
+      this.setAttr('date', dateStr);
+    }
     // Set string attributes
     this.setAttr('format', this.format);
     this.setAttr('numeric', this.numeric);

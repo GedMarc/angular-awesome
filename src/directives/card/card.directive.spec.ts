@@ -11,7 +11,9 @@ import { WaCardDirective } from './card.directive';
       [size]="size"
       [withHeader]="withHeader"
       [withImage]="withImage"
+wh      [withMedia]="withMedia"
       [withFooter]="withFooter"
+      [orientation]="orientation"
     >
       <div slot="header" *ngIf="showHeader">Header Content</div>
       <img slot="image" *ngIf="showImage" src="test.jpg" alt="Test Image">
@@ -27,7 +29,9 @@ class TestHostComponent {
   size?: string;
   withHeader?: boolean;
   withImage?: boolean;
+  withMedia?: boolean;
   withFooter?: boolean;
+  orientation?: 'horizontal' | 'vertical' | string;
   cardText = 'Card Text';
   showHeader = false;
   showImage = false;
@@ -80,23 +84,37 @@ describe('WaCardDirective', () => {
   it('should set boolean attributes correctly', () => {
     hostComponent.withHeader = true;
     hostComponent.withImage = true;
+    hostComponent.withMedia = true;
     hostComponent.withFooter = true;
     hostFixture.detectChanges();
 
     expect(cardElement.hasAttribute('with-header')).toBeTrue();
     expect(cardElement.hasAttribute('with-image')).toBeTrue();
+    expect(cardElement.hasAttribute('with-media')).toBeTrue();
     expect(cardElement.hasAttribute('with-footer')).toBeTrue();
   });
 
   it('should not set boolean attributes when false', () => {
     hostComponent.withHeader = false;
     hostComponent.withImage = false;
+    hostComponent.withMedia = false;
     hostComponent.withFooter = false;
     hostFixture.detectChanges();
 
     expect(cardElement.hasAttribute('with-header')).toBeFalse();
     expect(cardElement.hasAttribute('with-image')).toBeFalse();
+    expect(cardElement.hasAttribute('with-media')).toBeFalse();
     expect(cardElement.hasAttribute('with-footer')).toBeFalse();
+  });
+
+  it('should set orientation attribute correctly', () => {
+    hostComponent.orientation = 'horizontal';
+    hostFixture.detectChanges();
+    expect(cardElement.getAttribute('orientation')).toBe('horizontal');
+
+    hostComponent.orientation = 'vertical';
+    hostFixture.detectChanges();
+    expect(cardElement.getAttribute('orientation')).toBe('vertical');
   });
 
   it('should project content correctly', () => {

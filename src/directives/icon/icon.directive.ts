@@ -27,6 +27,11 @@ export class WaIconDirective implements OnInit, OnChanges {
   @Input() src?: string;
   @Input() label?: string;
   @Input() withFixedWidth?: boolean | string;
+  @Input() autoWidth?: boolean | string;
+  @Input() swapOpacity?: boolean | string;
+  @Input() rotate?: number | string;
+  @Input() flip?: 'x' | 'y' | 'both' | string;
+  @Input() animation?: string;
 
   // Direct styling inputs
   @Input() color?: string;
@@ -68,6 +73,17 @@ export class WaIconDirective implements OnInit, OnChanges {
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-fixed-width', this.withFixedWidth);
+    this.setBooleanAttr('auto-width', this.autoWidth);
+    this.setBooleanAttr('swap-opacity', this.swapOpacity);
+
+    // Set new attributes
+    if (this.rotate != null) {
+      this.setAttr('rotate', String(this.rotate));
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, 'rotate');
+    }
+    this.setAttr('flip', this.flip);
+    this.setAttr('animation', this.animation);
 
     // Apply styling inputs using CSS custom properties
     this.setCssStyle('text-color', this.color);

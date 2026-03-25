@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
   template: `
     <wa-relative-time
       [(ngModel)]="date"
+      [date]="directDate"
       [format]="format"
       [numeric]="numeric"
       [lang]="lang"
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 })
 class TestHostComponent {
   date?: string | Date;
+  directDate?: Date | string;
   format?: 'long' | 'short' | 'narrow' | string;
   numeric?: 'auto' | 'always' | string;
   lang?: string;
@@ -64,6 +66,19 @@ describe('WaRelativeTimeDirective', () => {
     expect(hostComponent).toBeTruthy();
     expect(relativeTimeElement).toBeTruthy();
     expect(relativeTimeDirective).toBeTruthy();
+  });
+
+  it('should set date attribute from direct date input as ISO string', () => {
+    const testDate = new Date('2025-06-15T10:30:00Z');
+    hostComponent.directDate = testDate;
+    hostFixture.detectChanges();
+    expect(relativeTimeElement.getAttribute('date')).toBe(testDate.toISOString());
+  });
+
+  it('should set date attribute from direct string input', () => {
+    hostComponent.directDate = '2025-01-01T00:00:00Z';
+    hostFixture.detectChanges();
+    expect(relativeTimeElement.getAttribute('date')).toBe('2025-01-01T00:00:00Z');
   });
 
   it('should set string attributes correctly', () => {

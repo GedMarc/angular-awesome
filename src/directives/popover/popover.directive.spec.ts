@@ -12,6 +12,8 @@ import { WaPopoverDirective } from './popover.directive';
       [placement]="placement"
       [distance]="distance"
       [arrow]="showArrow"
+      [open]="isOpen"
+      [withoutArrow]="withoutArrow"
       (waReposition)="onReposition($event)"
     >
       <div class="popover-content">Test Popover Content</div>
@@ -27,6 +29,8 @@ class TestComponent {
   placement = 'top';
   distance = 10;
   showArrow = true;
+  isOpen = false;
+  withoutArrow = false;
   repositionCount = 0;
 
   onReposition(event: CustomEvent) {
@@ -88,6 +92,30 @@ describe('WaPopoverDirective', () => {
     component.showArrow = false;
     fixture.detectChanges();
     expect(popoverElement.hasAttribute('arrow')).toBeFalse();
+  });
+
+  it('should set open attribute when isOpen is true', () => {
+    component.isOpen = true;
+    fixture.detectChanges();
+    expect(popoverElement.hasAttribute('open')).toBeTrue();
+  });
+
+  it('should remove open attribute when isOpen is false', () => {
+    component.isOpen = false;
+    fixture.detectChanges();
+    expect(popoverElement.hasAttribute('open')).toBeFalse();
+  });
+
+  it('should set without-arrow attribute when withoutArrow is true', () => {
+    component.withoutArrow = true;
+    fixture.detectChanges();
+    expect(popoverElement.hasAttribute('without-arrow')).toBeTrue();
+  });
+
+  it('should remove without-arrow attribute when withoutArrow is false', () => {
+    component.withoutArrow = false;
+    fixture.detectChanges();
+    expect(popoverElement.hasAttribute('without-arrow')).toBeFalse();
   });
 
   it('should update attributes when inputs change', () => {

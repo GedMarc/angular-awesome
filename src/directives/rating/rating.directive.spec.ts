@@ -173,14 +173,22 @@ describe('WaRatingDirective', () => {
     });
   });
 
-  it('should set custom symbol function', () => {
-    // Create a spy for the getSymbol function
-    const getSymbolFn = (value: number) => `<wa-icon name="star"></wa-icon>`;
+  it('should set custom symbol function with updated signature', () => {
+    // Create a spy for the getSymbol function with two args (value, isSelected)
+    const getSymbolFn = (value: number, isSelected: boolean) =>
+      isSelected ? `<wa-icon name="star"></wa-icon>` : `<wa-icon name="star" variant="regular"></wa-icon>`;
 
     // Set the getSymbol function
     ratingDirective.getSymbol = getSymbolFn;
 
     // Verify the function was set on the native element
     expect((ratingElement as any).getSymbol).toBe(getSymbolFn);
+
+    // Verify function accepts both arguments
+    const result = (ratingElement as any).getSymbol(3, true);
+    expect(result).toBe('<wa-icon name="star"></wa-icon>');
+
+    const resultUnselected = (ratingElement as any).getSymbol(3, false);
+    expect(resultUnselected).toBe('<wa-icon name="star" variant="regular"></wa-icon>');
   });
 });

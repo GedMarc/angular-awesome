@@ -42,7 +42,13 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   @Input() fontSize?: string;
 
   // Custom symbol function
-  private _getSymbol?: (value: number) => string;
+  private _getSymbol?: (value: number, isSelected: boolean) => string;
+  @Input() set getSymbol(fn: ((value: number, isSelected: boolean) => string) | undefined) {
+    this._getSymbol = fn;
+    if (fn && this.el?.nativeElement) {
+      (this.el.nativeElement as any).getSymbol = fn;
+    }
+  }
 
   // Event outputs
   @Output() waChange = new EventEmitter<number>();
@@ -134,17 +140,6 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  /**
-   * Sets a custom symbol function for the rating component
-   */
-  public set getSymbol(fn: (value: number) => string) {
-    this._getSymbol = fn;
-
-    // If the element is already initialized, set the property directly
-    if (this.el?.nativeElement) {
-      (this.el.nativeElement as any).getSymbol = fn;
-    }
-  }
 
   /**
    * Exposes the native rating element for direct interaction

@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaSwitchDirective
@@ -30,16 +31,20 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccessor, Validator {
+export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
   @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
   @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Core input attributes
+  @Input() name?: string;
+  @Input() value?: string | null;
+  @Input() checked?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() required?: boolean | string;
   @Input() hint?: string;
+  @Input() withHint?: boolean | string;
   @Input() size?: SizeToken | string;
 
   // Style inputs
@@ -67,6 +72,9 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -77,6 +85,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     const forwardInput = (event: Event) => {
@@ -123,14 +132,34 @@ export class WaSwitchDirective implements OnInit, OnChanges, ControlValueAccesso
     }
   }
 
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
   private applyInputs() {
     // Set string attributes
+    this.setAttr('name', this.name);
+    this.setAttr('value', this.value);
     this.setAttr('hint', this.hint);
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
+    this.setBooleanAttr('checked', this.checked);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('required', this.required);
+    this.setBooleanAttr('with-hint', this.withHint);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);

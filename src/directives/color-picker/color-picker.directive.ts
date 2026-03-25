@@ -1,6 +1,7 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnDestroy, Output, Renderer2, inject, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { AfterViewInit, Directive, DoCheck, ElementRef, EventEmitter, Injector, Input, OnInit, OnDestroy, Output, Renderer2, inject, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**ple
  * WaColorPickerDirective
@@ -34,7 +35,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy, OnChanges, ControlValueAccessor, Validator {
+export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Color picker inputs
   @Input() label?: string;
   @Input() hint?: string;
@@ -93,6 +94,9 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor callbacks
   private onChange: (value: any) => void = () => {};
@@ -134,6 +138,7 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
     // Apply all inputs on init
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
@@ -228,6 +233,10 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
     if (changes['required'] || changes['pattern'] || changes['minlength'] || changes['maxlength'] || changes['disabled']) {
       this.validatorChange?.();
     }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
   }
 
   ngAfterViewInit() {
@@ -491,5 +500,17 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
 
   registerOnValidatorChange?(fn: () => void): void {
     this.validatorChange = fn;
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 }

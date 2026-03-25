@@ -13,6 +13,9 @@
 **Angular Awesome** provides first-class Angular directives that wrap every Web Awesome web component, giving you:
 
 - **Native Angular binding** — `@Input()` properties, `@Output()` events, and two-way binding via `ngModel` / Reactive Forms where applicable.
+- **Template form error-state management** — wrappers participate in Angular validation so template-driven errors and state flags are available without extra plumbing.
+- **No custom schema required** — importing standalone wrappers avoids needing `CUSTOM_ELEMENTS_SCHEMA` just to use Web Awesome tags.
+- **Lazy loading where it matters** — selected components support lazy-loading patterns to reduce initial bundle and render cost.
 - **Full component coverage** — 70+ directives including layout primitives, form controls, navigation, overlays, charts, toasts, and more.
 - **Type safety** — full TypeScript declarations with strict mode support.
 - **Lightweight** — thin wrappers with zero extra runtime dependencies beyond Angular and Web Awesome.
@@ -23,7 +26,7 @@
 |------------|---------|
 | Angular    | `^20.0` |
 | Node.js    | `20+`   |
-| Web Awesome | `3.3.x` |
+| Web Awesome | `3.4.x` |
 
 ## Installation
 

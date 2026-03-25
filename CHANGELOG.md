@@ -4,6 +4,66 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.4.0] - 2026-03-25
+### Added
+- **wa-badge:** New `attention` input (`'none' | 'pulse' | 'bounce'`) to control attention-drawing animation style.
+- **wa-card:** New `withMedia` boolean input (renders `with-media` attribute) and `orientation` input (`'horizontal' | 'vertical'`).
+- **wa-combobox:** Eight new inputs aligned with Web Awesome 3.4.1 spec:
+  - `inputValue` (string — maps to `input-value` attribute)
+  - `open` (boolean)
+  - `allowCreate` (boolean — maps to `allow-create`)
+  - `autocapitalize`, `autocorrect`, `inputmode`, `enterkeyhint`, `spellcheck` (text input behavior attributes)
+  - New `waCreate` / `wa-create` event output — fires when the user creates a new option via `allowCreate`.
+- **wa-dropdown:** New `open` boolean input and `size` input (`'small' | 'medium' | 'large'`).
+- **wa-dropdown-item:** New `submenuOpen` boolean input (renders `submenu-open` attribute); `variant` type expanded to include `'default'`.
+- **wa-icon:** Five new inputs:
+  - `autoWidth` (boolean — renders `auto-width`)
+  - `swapOpacity` (boolean — renders `swap-opacity`)
+  - `rotate` (number — degrees)
+  - `flip` (`'x' | 'y' | 'both'`)
+  - `animation` (string)
+- **wa-intersection-observer:** New `root` (string), `intersectClass` (string — renders `intersect-class`), and `once` (boolean) inputs.
+- **wa-mutation-observer:** New `attr` (string), `attrOldValue` (boolean — renders `attr-old-value`), `charData` (boolean — renders `char-data`), `charDataOldValue` (boolean — renders `char-data-old-value`), and `childList` (boolean — renders `child-list`) inputs.
+- **wa-popover:** New `open` (boolean) and `withoutArrow` (boolean — renders `without-arrow`) inputs.
+- **wa-page:** New `disableNavigationToggle` boolean input (renders `disable-navigation-toggle`).
+- **wa-select:** New `name` (string), `open` (boolean), `withLabel` (boolean — renders `with-label`), and `withHint` (boolean — renders `with-hint`) inputs.
+- **wa-switch:** New `name` (string), `value` (string), `checked` (boolean), `required` (boolean), and `withHint` (boolean — renders `with-hint`) inputs.
+- **wa-relative-time:** New `date` input (`Date | string`) — renders the `date` attribute as an ISO 8601 string.
+- **wa-zoomable-frame:** New `withThemeSync` boolean input (renders `with-theme-sync`).
+
+### Changed
+- **wa-details:** Renamed `iconPosition` to `iconPlacement` (attribute `icon-placement`). The old `iconPosition` input is preserved as a deprecated backwards-compatible alias.
+- **wa-rating:** Updated `getSymbol` input signature from `(value: number) => string` to `(value: number, isSelected: boolean) => string` to match the Web Awesome 3.4.1 API.
+- Updated `llms.txt` version reference from 3.4.0 to 3.4.1.
+- Updated package version from 3.3.2 to 3.4.0.
+- Updated package description to reference Web Awesome 3.4.x.
+- Updated docs template version badge to "synced with Web Awesome 3.4.x".
+
+### Tests
+- Updated existing test suites for all 16 affected components to cover new inputs, events, boolean attribute coercion, and attribute name mappings.
+- Created five new spec files for components that previously lacked tests:
+  - `details.directive.spec.ts` — full coverage including `iconPlacement`, deprecated `iconPosition` alias, events, CSS vars, and programmatic `show()`/`hide()`.
+  - `dropdown-item.directive.spec.ts` — full coverage including `submenuOpen`, `variant` values, ControlValueAccessor.
+  - `intersection-observer.directive.spec.ts` — full coverage including `root`, `intersectClass`, `once`, threshold arrays.
+  - `mutation-observer.directive.spec.ts` — full coverage including `attr`, `attrOldValue`, `charData`, `charDataOldValue`, `childList`.
+  - `zoomable-frame.directive.spec.ts` — full coverage including `withThemeSync`, `zoom`, `srcdoc`, boolean attributes.
+- Total test count: **929 specs, 0 failures**.
+
+### Documentation
+- Updated Angular Awesome rules files for combobox, details, icon, badge, popover, dropdown, and switch.
+- Created `PROMPT_JWEBMP_341_SYNC.md` — a ready-to-execute prompt for downstream JWebMP Java wrapper consumers detailing all 16 component changes with Java code examples and enum patterns.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.4.1** component specification (`llms.txt`).
+- 16 components updated, ~40 new/updated properties, 1 new event (`wa-create`), 1 property rename (`iconPosition` → `iconPlacement`).
+- The `iconPosition` → `iconPlacement` rename includes a deprecated backwards-compatible alias setter to avoid breaking existing consumers.
+- The `getSymbol` signature change on `wa-rating` is a **minor breaking change** for consumers passing a custom symbol function — update to `(value: number, isSelected: boolean) => string`.
+
+
+## [3.3.2] - 2026-03-10
+### Fixed
+- Exported shared type tokens (`VariantToken`, `SizeToken`, `AppearanceToken`, `Appearance`, `BooleanLike`) and the `normalizeAppearance` utility function from the public API surface. Previously, these types were used internally by directive inputs (e.g., `WaBadgeDirective.variant: VariantToken`) but were not importable by consumers of the library, causing TypeScript compilation errors when trying to reference them.
+
 ## [3.3.1] - 2026-03-08
 ### Added
 - Angular wrappers and exports for new Web Awesome 3.3.1 components:
@@ -114,3 +174,6 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 
 [3.0.4]: https://github.com/GedMarc/angular-awesome/compare/3.0.3...3.0.4
 [3.2.1]: https://github.com/GedMarc/angular-awesome/compare/3.0.4...3.2.1
+[3.3.1]: https://github.com/GedMarc/angular-awesome/compare/3.2.1...3.3.1
+[3.3.2]: https://github.com/GedMarc/angular-awesome/compare/3.3.1...3.3.2
+[3.4.0]: https://github.com/GedMarc/angular-awesome/compare/3.3.2...3.4.0

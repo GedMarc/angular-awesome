@@ -24,6 +24,8 @@ Popover is a low-level utility built specifically for positioning elements. Do n
 | ------------------------ | --------- | ----------------------------------------------------------------------------------------------------------------- |
 | `anchor`                 | `string`  | The element the popover will be anchored to. If the anchor lives outside of the popover, you can provide the anchor element id. |
 | `active`                 | `boolean` | Activates the positioning logic and shows the popover. When this attribute is removed, the positioning logic is torn down and the popover will be hidden. |
+| `open`                   | `boolean` | Shows or hides the popover (alias for `active` on `<wa-popover>`).                                               |
+| `withoutArrow`           | `boolean` | Removes the arrow from the popover.                                                                               |
 | `placement`              | \`'top'   | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end'\` | The preferred placement of the popover. Note that the actual placement will vary as configured to keep the panel inside of the viewport. |
 | `boundary`               | `string`  | Which bounding box to use for flipping, shifting, and auto-sizing? Options: 'viewport' or 'scroll'. Default is 'viewport'. |
 | `distance`               | `number`  | The distance in pixels from which to offset the panel away from its anchor. Default is 0. |

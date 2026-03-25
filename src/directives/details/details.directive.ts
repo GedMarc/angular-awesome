@@ -27,7 +27,9 @@ export class WaDetailsDirective implements OnInit, OnChanges {
   @Input() disabled?: boolean | string;
   @Input() appearance?: Appearance | string;
   @Input() open?: boolean | string;
-  @Input() iconPosition?: 'start' | 'end' | string;
+  @Input() iconPlacement?: 'start' | 'end' | string;
+  /** @deprecated Use iconPlacement instead */
+  @Input() set iconPosition(val: 'start' | 'end' | string | undefined) { this.iconPlacement = val; }
   @Input() name?: string;
 
   // CSS custom property inputs
@@ -108,7 +110,7 @@ export class WaDetailsDirective implements OnInit, OnChanges {
     // Set standard attributes
     this.setAttr('summary', this.summary);
     this.setAttr('appearance', normalizeAppearance(this.appearance));
-    this.setAttr('icon-position', this.iconPosition);
+    this.setAttr('icon-placement', this.iconPlacement);
     this.setAttr('name', this.name);
 
     // Set boolean attributes (only if true)

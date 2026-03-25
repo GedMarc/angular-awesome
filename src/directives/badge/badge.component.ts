@@ -35,6 +35,7 @@ export class WaBadgeDirective implements OnInit, OnChanges {
   @Input() appearance: BadgeAppearance = 'accent';
   @Input() pill?: boolean | string | null;
   @Input() pulse?: boolean | string | null;
+  @Input() attention?: 'none' | 'pulse' | 'bounce' | string;
   @Input() fontSize?: string;
 
   @Input() backgroundColor?: string;
@@ -60,6 +61,7 @@ export class WaBadgeDirective implements OnInit, OnChanges {
     this.setAttr('appearance', normalizeAppearance(this.appearance as any));
     this.setBoolAttr('pill', this.pill);
     this.setBoolAttr('pulse', this.pulse);
+    this.setAttr('attention', this.attention);
 
     // Styles
     this.setStyleValue('fontSize', this.fontSize);
