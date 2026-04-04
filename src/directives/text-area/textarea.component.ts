@@ -63,6 +63,7 @@ import { syncFormValidationState } from '../shared/form-validation-state';
     '[attr.inputmode]': 'inputmode',
     '[attr.with-label]': 'withLabel ? true : null',
     '[attr.with-hint]': 'withHint ? true : null',
+    '[attr.with-count]': 'withCount ? true : null',
     '[attr.readonly]': 'readonly || null',
     '[attr.disabled]': 'disabled || null',
 
@@ -98,7 +99,7 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
   @Input() minlength?: number;
   @Input() maxlength?: number;
   @Input() autocapitalize?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
-  @Input() autocorrect?: string;
+  @Input() autocorrect?: boolean | string;
   @Input() autocomplete?: string;
   @Input() autofocus?: boolean;
   @Input() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
@@ -108,6 +109,7 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
   @Input() disabled?: boolean;
   @Input() withLabel?: boolean;
   @Input() withHint?: boolean;
+  @Input() withCount?: boolean;
 
   // CSS custom properties
   @Input() backgroundColor?: string;

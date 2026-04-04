@@ -45,6 +45,9 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   // String inputs
   @Input() label?: string;
 
+  // SSR inputs
+  @Input() withFooter?: boolean | string;
+
   // Style inputs
   @Input() backgroundColor?: string;
   @Input() borderRadius?: string;
@@ -210,10 +213,12 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       this.setBooleanAttr('open', openBool);
       this.setBooleanAttr('without-header', withoutHeaderBool);
       this.setBooleanAttr('light-dismiss', lightDismissBool);
+      this.setBooleanAttr('with-footer', this.parseBool(this.withFooter));
 
       this.setPropertySafe('open', openBool);
       this.setPropertySafe('withoutHeader', withoutHeaderBool);
       this.setPropertySafe('lightDismiss', lightDismissBool);
+      this.setPropertySafe('withFooter', this.parseBool(this.withFooter));
 
       // Style CSS variables
       this.setCssVar('--background-color', this.backgroundColor);

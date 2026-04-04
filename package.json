@@ -1,8 +1,8 @@
 {
   "name": "angular-awesome",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "private": false,
-  "description": "Angular 20+ wrappers for the Web Awesome 3.4.x web components framework",
+  "description": "Angular 20+ wrappers for the Web Awesome 3.5.x web components framework",
   "keywords": [
     "angular",
     "web-awesome",

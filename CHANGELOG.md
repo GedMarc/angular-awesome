@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.5.0] - 2026-04-03
+### Added
+- **wa-button:** New `withStart` and `withEnd` SSR boolean inputs (render `with-start` / `with-end` attributes).
+- **wa-color-picker:** New `placement` input for popup positioning, plus `withLabel` and `withHint` SSR boolean inputs.
+- **wa-dialog:** New `withFooter` SSR boolean input (renders `with-footer` attribute).
+- **wa-drawer:** New `withFooter` SSR boolean input (renders `with-footer` attribute).
+- **wa-toast-item:** New `withIcon` SSR boolean input (renders `with-icon` attribute).
+- **wa-textarea:** New `withCount` SSR boolean input (renders `with-count` attribute).
+- **wa-rating:** Promoted to a form control — new `name`, `defaultValue`, `required`, and `form` inputs; new `wa-invalid` event output; new `setCustomValidity()` and `resetValidity()` methods.
+- **wa-markdown:** New `WaMarkdownDirective` wrapping the `<wa-markdown>` web component with `tabSize` input and `getMarked()`, `updateAll()`, `renderMarkdown()` methods. Exported from the public API.
+- **wa-page:** Promoted from Web Awesome Pro to Free — now available in the standard distribution.
+
+### Changed
+- **wa-textarea:** `autocorrect` input type widened from `string` to `boolean | string` to match the updated Web Awesome spec.
+- Updated `llms.txt` to Web Awesome 3.5.0.
+
+### Removed
+- **wa-rating:** Removed deprecated `focus()` and `blur()` methods (replaced by `setCustomValidity()` / `resetValidity()`).
+
+### Tests
+- Updated `rating.directive.spec.ts` to cover new form-control methods and remove references to deleted `focus()`/`blur()` methods.
+- Total test count: **929 specs, 0 failures**.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.5.0** component specification.
+- 8 components updated, 1 new component (`wa-markdown`), 1 component promoted to free (`wa-page`), ~15 new/updated properties, 1 new event (`wa-invalid` on rating), 2 removed methods.
+
+
 ## [3.4.0] - 2026-03-25
 ### Added
 - **wa-badge:** New `attention` input (`'none' | 'pulse' | 'bounce'`) to control attention-drawing animation style.
@@ -177,3 +205,4 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 [3.3.1]: https://github.com/GedMarc/angular-awesome/compare/3.2.1...3.3.1
 [3.3.2]: https://github.com/GedMarc/angular-awesome/compare/3.3.1...3.3.2
 [3.4.0]: https://github.com/GedMarc/angular-awesome/compare/3.3.2...3.4.0
+[3.5.0]: https://github.com/GedMarc/angular-awesome/compare/3.4.0...3.5.0
