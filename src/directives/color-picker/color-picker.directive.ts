@@ -54,6 +54,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
   @Input() name?: string | null;
   @Input() form?: string | null;
   @Input() swatches?: string | string[];
+  @Input() placement?: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string;
+
+  // SSR inputs
+  @Input() withLabel?: boolean | string;
+  @Input() withHint?: boolean | string;
 
   // Direct styling inputs (apply to host element styles)
   @Input() color?: string;
@@ -400,6 +405,11 @@ export class WaColorPickerDirective implements OnInit, AfterViewInit, OnDestroy,
     if (should('uppercase')) setBool('uppercase', this.uppercase);
     if (should('disabled')) setBool('disabled', this.disabled);
     if (should('required')) setBool('required', this.required);
+    if (should('withLabel')) setBool('with-label', this.withLabel);
+    if (should('withHint')) setBool('with-hint', this.withHint);
+
+    // Placement
+    if (should('placement')) set('placement', this.placement as any);
 
     // Swatches
     if (should('swatches')) {

@@ -36,6 +36,12 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   @Input() disabled?: boolean | string;
   @Input() size?: SizeToken | string;
 
+  // Form control inputs (new in 3.5)
+  @Input() name?: string | null;
+  @Input() defaultValue?: number | string;
+  @Input() required?: boolean | string;
+  @Input() form?: string;
+
   // Direct styling inputs
   @Input() color?: string;
   @Input() backgroundColor?: string;
@@ -59,6 +65,8 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   @Output('wa-focus') waFocusHyphen = this.waFocus;
   @Output() waBlur = new EventEmitter<FocusEvent>();
   @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
   @Output() valueChange = new EventEmitter<number>();
 
   // Injected services
@@ -100,6 +108,10 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
     this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
       this.waBlur.emit(event as unknown as FocusEvent);
     });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: Event) => {
+      this.waInvalid.emit(event);
+    });
   }
 
   ngOnChanges(_: SimpleChanges): void {
@@ -123,6 +135,12 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('readonly', this.readonly);
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('required', this.required);
+
+    // Form control attributes
+    this.setAttr('name', this.name);
+    this.setNumericAttr('default-value', this.defaultValue);
+    this.setAttr('form', this.form);
 
     // Apply direct styling inputs
     if (this.color) nativeEl.style.color = this.color;
@@ -149,17 +167,21 @@ export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   }
 
   /**
-   * Sets focusNative on the rating component
+   * Sets a custom validation message on the rating.
    */
-  public focus(): void {
-    this.el.nativeElement.focus();
+  public setCustomValidity(message: string): void {
+    if (typeof this.el.nativeElement.setCustomValidity === 'function') {
+      this.el.nativeElement.setCustomValidity(message);
+    }
   }
 
   /**
-   * Removes focusNative from the rating component
+   * Resets validity, removing manual custom errors and native validation.
    */
-  public blur(): void {
-    this.el.nativeElement.blur();
+  public resetValidity(): void {
+    if (typeof this.el.nativeElement.resetValidity === 'function') {
+      this.el.nativeElement.resetValidity();
+    }
   }
 
   /**

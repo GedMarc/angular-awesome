@@ -27,6 +27,9 @@ export class WaDrawerDirective implements OnInit, OnChanges {
   @Input() withoutHeader?: boolean | string;
   @Input() lightDismiss?: boolean | string;
 
+  // SSR inputs
+  @Input() withFooter?: boolean | string;
+
   // String inputs
   @Input() label?: string;
   @Input() placement?: 'top' | 'end' | 'bottom' | 'start' | string;
@@ -93,6 +96,7 @@ export class WaDrawerDirective implements OnInit, OnChanges {
     this.setBooleanAttr('open', this.open);
     this.setBooleanAttr('without-header', this.withoutHeader);
     this.setBooleanAttr('light-dismiss', this.lightDismiss);
+    this.setBooleanAttr('with-footer', this.withFooter);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);
