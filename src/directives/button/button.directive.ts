@@ -268,18 +268,10 @@ export class WaButtonDirective implements OnInit, OnChanges {
       }
     }
     if ('withStart' in changes) {
-      if (this.withStart === true || this.withStart === 'true' || this.withStart === '') {
-        this.renderer.setAttribute(this.el.nativeElement, 'with-start', '');
-      } else {
-        this.renderer.removeAttribute(this.el.nativeElement, 'with-start');
-      }
+      this.setBooleanAttr('with-start', this.withStart);
     }
     if ('withEnd' in changes) {
-      if (this.withEnd === true || this.withEnd === 'true' || this.withEnd === '') {
-        this.renderer.setAttribute(this.el.nativeElement, 'with-end', '');
-      } else {
-        this.renderer.removeAttribute(this.el.nativeElement, 'with-end');
-      }
+      this.setBooleanAttr('with-end', this.withEnd);
     }
     if ('formNoValidate' in changes) {
       if (this.formNoValidate === true || this.formNoValidate === 'true' || this.formNoValidate === '') {
