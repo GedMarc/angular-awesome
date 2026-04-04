@@ -18,7 +18,6 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 
 ### Changed
 - **wa-textarea:** `autocorrect` input type widened from `string` to `boolean | string` to match the updated Web Awesome spec.
-- Updated `llms.txt` to Web Awesome 3.5.0.
 
 ### Removed
 - **wa-rating:** Removed deprecated `focus()` and `blur()` methods (replaced by `setCustomValidity()` / `resetValidity()`).
