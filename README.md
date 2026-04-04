@@ -26,7 +26,7 @@
 |------------|---------|
 | Angular    | `^20.0` |
 | Node.js    | `20+`   |
-| Web Awesome | `3.4.x` |
+| Web Awesome | `3.5.x` |
 
 ## Installation
 
@@ -72,7 +72,7 @@ export class MyComponent {
 | **Progress** | `wa-progress-bar`, `wa-progress-ring`, `wa-spinner` |
 | **Formatting** | `wa-format-bytes`, `wa-format-date`, `wa-format-number`, `wa-relative-time` |
 | **Media** | `wa-animated-image`, `wa-animation`, `wa-zoomable-frame` |
-| **Utilities** | `wa-divider`, `wa-dropdown`, `wa-include`, `wa-intersection-observer`, `wa-mutation-observer`, `wa-resize-observer`, `wa-scroller`, `wa-split-panel` |
+| **Utilities** | `wa-divider`, `wa-dropdown`, `wa-include`, `wa-intersection-observer`, `wa-markdown`, `wa-mutation-observer`, `wa-resize-observer`, `wa-scroller`, `wa-split-panel` |
 
 </details>
 

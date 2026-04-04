@@ -128,16 +128,16 @@ describe('WaRatingDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(ratingElement as any, 'focus');
-    spyOn(ratingElement as any, 'blur');
+    (ratingElement as any).setCustomValidity = jasmine.createSpy('setCustomValidity');
+    (ratingElement as any).resetValidity = jasmine.createSpy('resetValidity');
 
     // Call the directive methods
-    ratingDirective.focus();
-    ratingDirective.blur();
+    ratingDirective.setCustomValidity('Required');
+    ratingDirective.resetValidity();
 
     // Verify the native methods were called
-    expect(ratingElement.focus).toHaveBeenCalled();
-    expect(ratingElement.blur).toHaveBeenCalled();
+    expect((ratingElement as any).setCustomValidity).toHaveBeenCalledWith('Required');
+    expect((ratingElement as any).resetValidity).toHaveBeenCalled();
   });
 
   it('should expose the native element', () => {

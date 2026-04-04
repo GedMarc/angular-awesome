@@ -37,6 +37,10 @@ export class WaButtonDirective implements OnInit, OnChanges {
   @Input() disabled?: boolean | string;
   @Input() loading?: boolean | string;
 
+  // SSR inputs
+  @Input() withStart?: boolean | string;
+  @Input() withEnd?: boolean | string;
+
   // Button type inputs
   @Input() type?: 'button' | 'submit' | 'reset' | string;
   @Input() name?: string;
@@ -110,6 +114,8 @@ export class WaButtonDirective implements OnInit, OnChanges {
     // Do not set a standalone `caret` attribute on the element, as the Web Component uses `with-caret`
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('loading', this.loading);
+    this.setBooleanAttr('with-start', this.withStart);
+    this.setBooleanAttr('with-end', this.withEnd);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);
 
     // Dialog attribute
@@ -260,6 +266,12 @@ export class WaButtonDirective implements OnInit, OnChanges {
       } else {
         this.renderer.removeAttribute(this.el.nativeElement, 'loading');
       }
+    }
+    if ('withStart' in changes) {
+      this.setBooleanAttr('with-start', this.withStart);
+    }
+    if ('withEnd' in changes) {
+      this.setBooleanAttr('with-end', this.withEnd);
     }
     if ('formNoValidate' in changes) {
       if (this.formNoValidate === true || this.formNoValidate === 'true' || this.formNoValidate === '') {

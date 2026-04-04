@@ -84,6 +84,7 @@ export * from './directives/pie-chart/pie-chart.directive';
 export * from './directives/polar-area-chart/polar-area-chart.directive';
 export * from './directives/radar-chart/radar-chart.directive';
 export * from './directives/scatter-chart/scatter-chart.directive';
+export * from './directives/markdown/markdown.directive';
 
 // Shared type tokens
 export * from './types/tokens';

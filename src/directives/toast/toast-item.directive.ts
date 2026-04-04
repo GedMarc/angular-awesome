@@ -31,6 +31,9 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
    */
   @Input() duration?: number | string;
 
+  /** SSR: Set to true if slotting in an icon element. */
+  @Input() withIcon?: boolean | string;
+
   // Event outputs
   @Output() waShow = new EventEmitter<Event>();
   @Output('wa-show') waShowHyphen = this.waShow;
@@ -59,6 +62,7 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
     this.setAttr('variant', this.variant);
     this.setAttr('size', this.size);
     this.setAttr('duration', this.duration != null ? String(this.duration) : null);
+    this.setBooleanAttr('with-icon', this.withIcon);
   }
 
   private setupEventListeners() {
@@ -95,6 +99,14 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
+  }
+
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
+    if (value === true || value === 'true' || value === '') {
+      this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);
     }
