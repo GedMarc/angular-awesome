@@ -76,13 +76,20 @@ export class WaMarkdownDirective implements OnInit, OnChanges {
   }
 
   private setNumericAttr(name: string, value: number | string | null | undefined) {
-    if (value != null) {
-      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
-      if (!isNaN(numericValue)) {
-        this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
-      }
-    } else {
+    if (value == null) {
       this.renderer.removeAttribute(this.el.nativeElement, name);
+      return;
     }
+
+    const numericValue = typeof value === 'string'
+      ? (value.trim() === '' ? NaN : parseFloat(value))
+      : value;
+
+    if (isNaN(numericValue)) {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+      return;
+    }
+
+    this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
   }
 }
