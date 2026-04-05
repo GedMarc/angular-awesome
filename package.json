@@ -1,6 +1,6 @@
 {
   "name": "angular-awesome",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "private": false,
   "description": "Angular 20+ wrappers for the Web Awesome 3.5.x web components framework",
   "keywords": [
@@ -32,9 +32,9 @@
   "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
-    "@angular/common": "^20.3.17",
-    "@angular/core": "^20.3.17",
-    "@angular/forms": "^20.3.17"
+    "@angular/common": ">=20.0.0",
+    "@angular/core": ">=20.0.0",
+    "@angular/forms": ">=20.0.0"
   },
   "devDependencies": {
     "@angular/build": "^20.3.19",

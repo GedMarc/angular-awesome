@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.5.1] - 2026-04-05
+### Fixed
+- **Peer dependencies:** Widened `@angular/common`, `@angular/core`, and `@angular/forms` peer dependency ranges from `^20.3.17` (which only accepted Angular 20.x) to `>=20.0.0`, allowing the library to install and work correctly on Angular 21+ and future Angular versions. The library uses only stable Angular APIs and `compilationMode: "partial"`, so it is fully forward-compatible.
+
+### Notes
+- This is a patch release addressing installation failures when consumers use Angular versions newer than 20.x.
+
+
 ## [3.5.0] - 2026-04-03
 ### Added
 - **wa-button:** New `withStart` and `withEnd` SSR boolean inputs (render `with-start` / `with-end` attributes).
@@ -205,3 +213,4 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 [3.3.2]: https://github.com/GedMarc/angular-awesome/compare/3.3.1...3.3.2
 [3.4.0]: https://github.com/GedMarc/angular-awesome/compare/3.3.2...3.4.0
 [3.5.0]: https://github.com/GedMarc/angular-awesome/compare/3.4.0...3.5.0
+[3.5.1]: https://github.com/GedMarc/angular-awesome/compare/3.5.0...3.5.1

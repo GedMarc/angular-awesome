@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/angular-awesome.svg)](https://www.npmjs.com/package/angular-awesome)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Angular](https://img.shields.io/badge/Angular-20%2B-dd0031.svg?logo=angular)](https://angular.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 > Angular 20+ wrapper directives for the [Web Awesome](https://www.webawesome.com/) web-components framework.
 
