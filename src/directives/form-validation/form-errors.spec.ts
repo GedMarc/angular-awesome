@@ -516,7 +516,7 @@ describe('WaSelectWrapperComponent — Form Validation', () => {
 @Component({
   template: `
     <form [formGroup]="form">
-      <wa-switch waSwitch formControlName="notifications" [required]="true">Notifications</wa-switch>
+      <wa-switch formControlName="notifications" [required]="true">Notifications</wa-switch>
     </form>
   `,
   standalone: true,
@@ -532,7 +532,7 @@ class SwitchReactiveHost {
 @Component({
   template: `
     <form #f="ngForm">
-      <wa-switch waSwitch [(ngModel)]="notifications" name="notifications" required>Notifications</wa-switch>
+      <wa-switch [(ngModel)]="notifications" name="notifications" required>Notifications</wa-switch>
     </form>
   `,
   standalone: true,
@@ -2184,7 +2184,7 @@ describe('WaSelectWrapperComponent — Extended Coverage', () => {
 @Component({
   template: `
     <form [formGroup]="form">
-      <wa-switch waSwitch formControlName="agree" [required]="true">Agree</wa-switch>
+      <wa-switch formControlName="agree" [required]="true">Agree</wa-switch>
     </form>
   `,
   standalone: true,

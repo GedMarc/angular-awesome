@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.5.2] - 2026-04-05
+### Fixed
+- **wa-switch:** Changed directive selector from `wa-switch[waSwitch]` to `wa-switch`, matching the convention used by all other component directives (e.g. `wa-checkbox`, `wa-button`). Previously, consumers had to add the `waSwitch` attribute for the directive to activate; without it, Angular could not bind `@Input()` properties like `[checked]`, causing `NG8002: Can't bind to 'checked' since it isn't a known property of 'wa-switch'`.
+- **wa-switch:** Added `WaSwitchEvent` typed event interface. The `(wa-change)` and `(wa-input)` outputs now emit `WaSwitchEvent` instead of plain `Event`, giving consumers type-safe access to `$event.target.checked` and `$event.target.value` in templates without `TS2339` errors.
+
+### Notes
+- This is a patch release. Existing usages with `waSwitch` continue to work; the attribute is simply no longer required.
+- `WaSwitchEvent` is exported from the public API for consumers who need the type explicitly.
+
+
 ## [3.5.1] - 2026-04-05
 ### Fixed
 - **Peer dependencies:** Widened `@angular/common`, `@angular/core`, and `@angular/forms` peer dependency ranges from `^20.3.17` (which only accepted Angular 20.x) to `>=20.0.0`, allowing the library to install and work correctly on Angular 21+ and future Angular versions. The library uses only stable Angular APIs and `compilationMode: "partial"`, so it is fully forward-compatible.

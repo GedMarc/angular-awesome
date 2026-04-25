@@ -103,47 +103,47 @@
         <h2>Import</h2>
         <p>Import the switch directive from the angular-awesome package:</p>
         <pre>// Import the switch directive
-import { WaSwitchDirective } from 'angular-awesome/switch';</pre>
+import {Directive } from 'angular-awesome/switch';</pre>
       </section>
 
       <section>
         <h2>Examples</h2>
         <h1>Switch Examples</h1>
 <h2>Basic Usage</h2>
-<pre><code class="language-html">&lt;wa-switch waSwitch&gt;&lt;/wa-switch&gt;
+<pre><code class="language-html">&lt;wa-switch&gt;&lt;/wa-switch&gt;
 </code></pre>
 <h2>Disabled State</h2>
-<pre><code class="language-html">&lt;wa-switch waSwitch disabled&gt;&lt;/wa-switch&gt;
+<pre><code class="language-html">&lt;wa-switch disabled&gt;&lt;/wa-switch&gt;
 </code></pre>
 <h2>With Hint Text</h2>
-<pre><code class="language-html">&lt;wa-switch waSwitch hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
+<pre><code class="language-html">&lt;wa-switch hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
 </code></pre>
 <h2>Different Sizes</h2>
 <pre><code class="language-html">&lt;!-- Small size --&gt;
-&lt;wa-switch waSwitch size=&quot;small&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch size=&quot;small&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Medium size (default) --&gt;
-&lt;wa-switch waSwitch size=&quot;medium&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch size=&quot;medium&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Large size --&gt;
-&lt;wa-switch waSwitch size=&quot;large&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch size=&quot;large&quot;&gt;&lt;/wa-switch&gt;
 </code></pre>
 <h2>Custom Styling</h2>
 <pre><code class="language-html">&lt;!-- Custom background color --&gt;
-&lt;wa-switch waSwitch [backgroundColor]=&quot;&#39;#e0e0e0&#39;&quot; [backgroundColorChecked]=&quot;&#39;#4CAF50&#39;&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch [backgroundColor]=&quot;&#39;#e0e0e0&#39;&quot; [backgroundColorChecked]=&quot;&#39;#4CAF50&#39;&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Custom border --&gt;
-&lt;wa-switch waSwitch [borderColor]=&quot;&#39;#999&#39;&quot; [borderColorChecked]=&quot;&#39;#2196F3&#39;&quot; [borderWidth]=&quot;&#39;2px&#39;&quot; [borderStyle]=&quot;&#39;solid&#39;&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch [borderColor]=&quot;&#39;#999&#39;&quot; [borderColorChecked]=&quot;&#39;#2196F3&#39;&quot; [borderWidth]=&quot;&#39;2px&#39;&quot; [borderStyle]=&quot;&#39;solid&#39;&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Custom thumb --&gt;
-&lt;wa-switch waSwitch [thumbColor]=&quot;&#39;#fff&#39;&quot; [thumbColorChecked]=&quot;&#39;#fff&#39;&quot; [thumbSize]=&quot;&#39;16px&#39;&quot; [thumbShadow]=&quot;&#39;0 0 4px rgba(0,0,0,0.3)&#39;&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch [thumbColor]=&quot;&#39;#fff&#39;&quot; [thumbColorChecked]=&quot;&#39;#fff&#39;&quot; [thumbSize]=&quot;&#39;16px&#39;&quot; [thumbShadow]=&quot;&#39;0 0 4px rgba(0,0,0,0.3)&#39;&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Custom dimensions --&gt;
-&lt;wa-switch waSwitch [width]=&quot;&#39;60px&#39;&quot; [height]=&quot;&#39;30px&#39;&quot;&gt;&lt;/wa-switch&gt;
+&lt;wa-switch [width]=&quot;&#39;60px&#39;&quot; [height]=&quot;&#39;30px&#39;&quot;&gt;&lt;/wa-switch&gt;
 
 &lt;!-- Combined custom styling --&gt;
 &lt;wa-switch 
-  waSwitch 
+  
   [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
   [backgroundColorChecked]=&quot;&#39;#673AB7&#39;&quot; 
   [borderColor]=&quot;&#39;#ccc&#39;&quot; 
@@ -161,18 +161,18 @@ import { WaSwitchDirective } from 'angular-awesome/switch';</pre>
 <h2>Using with Angular Forms</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
 import { FormsModule } from &#39;@angular/forms&#39;;
-import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-demo&#39;,
   template: `
     &lt;div class=&quot;form-group&quot;&gt;
-      &lt;wa-switch waSwitch [(ngModel)]=&quot;isEnabled&quot; hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
+      &lt;wa-switch [(ngModel)]=&quot;isEnabled&quot; hint=&quot;Enable feature&quot;&gt;&lt;/wa-switch&gt;
       &lt;p&gt;Feature is {{ isEnabled ? &#39;enabled&#39; : &#39;disabled&#39; }}&lt;/p&gt;
     &lt;/div&gt;
     
     &lt;div class=&quot;form-group&quot;&gt;
-      &lt;wa-switch waSwitch [(ngModel)]=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
+      &lt;wa-switch [(ngModel)]=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
       &lt;p&gt;Dark mode is {{ darkMode ? &#39;on&#39; : &#39;off&#39; }}&lt;/p&gt;
     &lt;/div&gt;
   `,
@@ -186,13 +186,13 @@ export class SwitchDemoComponent {
 </code></pre>
 <h2>Event Handling</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
-import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-events-demo&#39;,
   template: `
     &lt;wa-switch 
-      waSwitch 
+      
       [hint]=&quot;&#39;Notifications&#39;&quot;
       (changeEvent)=&quot;onSwitchChange($event)&quot;
       (inputEvent)=&quot;onSwitchInput($event)&quot;
@@ -236,22 +236,22 @@ export class SwitchEventsDemoComponent {
 <h2>Reactive Forms</h2>
 <pre><code class="language-typescript">import { Component, OnInit } from &#39;@angular/core&#39;;
 import { FormBuilder, FormGroup, ReactiveFormsModule } from &#39;@angular/forms&#39;;
-import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
+import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-reactive-form-demo&#39;,
   template: `
     &lt;form [formGroup]=&quot;settingsForm&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;
       &lt;div class=&quot;form-group&quot;&gt;
-        &lt;wa-switch waSwitch formControlName=&quot;notifications&quot; hint=&quot;Enable notifications&quot;&gt;&lt;/wa-switch&gt;
+        &lt;wa-switch formControlName=&quot;notifications&quot; hint=&quot;Enable notifications&quot;&gt;&lt;/wa-switch&gt;
       &lt;/div&gt;
       
       &lt;div class=&quot;form-group&quot;&gt;
-        &lt;wa-switch waSwitch formControlName=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
+        &lt;wa-switch formControlName=&quot;darkMode&quot; hint=&quot;Dark mode&quot;&gt;&lt;/wa-switch&gt;
       &lt;/div&gt;
       
       &lt;div class=&quot;form-group&quot;&gt;
-        &lt;wa-switch waSwitch formControlName=&quot;autoSave&quot; hint=&quot;Auto-save&quot; [disabled]=&quot;!settingsForm.get(&#39;notifications&#39;)?.value&quot;&gt;&lt;/wa-switch&gt;
+        &lt;wa-switch formControlName=&quot;autoSave&quot; hint=&quot;Auto-save&quot; [disabled]=&quot;!settingsForm.get(&#39;notifications&#39;)?.value&quot;&gt;&lt;/wa-switch&gt;
         &lt;p class=&quot;hint&quot;&gt;Auto-save requires notifications to be enabled&lt;/p&gt;
       &lt;/div&gt;
       

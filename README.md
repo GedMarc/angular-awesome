@@ -24,7 +24,7 @@
 
 | Dependency | Version |
 |------------|---------|
-| Angular    | `^20.0` |
+| Angular    | `>=20.0` |
 | Node.js    | `20+`   |
 | Web Awesome | `3.5.x` |
 

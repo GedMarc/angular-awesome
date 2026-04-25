@@ -4,6 +4,15 @@ import { SizeToken } from '../../types/tokens';
 import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
+ * Typed event interface for wa-switch change/input events.
+ * Provides type-safe access to `target.checked` so consumers
+ * can use `$event.target.checked` in templates without TS errors.
+ */
+export interface WaSwitchEvent extends Event {
+  target: EventTarget & { checked: boolean; value: string };
+}
+
+/**
  * WaSwitchDirective
  *
  * Angular wrapper for the <wa-switch> Web Component that allows declarative usage,
@@ -16,7 +25,7 @@ import { syncFormValidationState } from '../shared/form-validation-state';
  * - Supports ngModel for form integration
  */
 @Directive({
-  selector: 'wa-switch[waSwitch]',
+  selector: 'wa-switch',
   standalone: true,
   providers: [
     {
@@ -63,8 +72,8 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
   @Input() width?: string;
 
   // Event outputs
-  @Output('wa-change') changeEvent = new EventEmitter<Event>();
-  @Output('wa-input') inputEvent = new EventEmitter<Event>();
+  @Output('wa-change') changeEvent = new EventEmitter<WaSwitchEvent>();
+  @Output('wa-input') inputEvent = new EventEmitter<WaSwitchEvent>();
   @Output('wa-focus') focusEvent = new EventEmitter<FocusEvent>();
   @Output('wa-blur') blurEvent = new EventEmitter<FocusEvent>();
   @Output() checkedChange = new EventEmitter<boolean>();
@@ -89,7 +98,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
 
     // Set up event listeners
     const forwardInput = (event: Event) => {
-      this.inputEvent.emit(event);
+      this.inputEvent.emit(event as WaSwitchEvent);
       const target = event.target as HTMLInputElement;
       this.onChange(target.checked);
       this.checkedChange.emit(target.checked);
@@ -99,7 +108,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
     this.renderer.listen(nativeEl, 'wa-input', forwardInput);
 
     const forwardChange = (event: Event) => {
-      this.changeEvent.emit(event);
+      this.changeEvent.emit(event as WaSwitchEvent);
       const target = event.target as HTMLInputElement;
       this.onChange(!!target.checked);
       this.checkedChange.emit(!!target.checked);
