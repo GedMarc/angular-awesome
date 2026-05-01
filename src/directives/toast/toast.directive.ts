@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaToastDirective
@@ -82,7 +83,7 @@ export interface WaToastNativeElement extends HTMLElement {
  */
 export interface ToastCreateOptions {
   variant?: 'brand' | 'success' | 'warning' | 'danger' | 'neutral';
-  size?: 'small' | 'medium' | 'large';
+  size?: SizeToken;
   duration?: number;
   icon?: string;
 }

@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnChanges, AfterViewInit, Output, Renderer2 } from '@angular/core';
+import {SizeToken} from '../../types/tokens';
 
 @Directive({
   selector: 'wa-number-input',
@@ -10,7 +11,7 @@ export class WaNumberInputDirective implements AfterViewInit, OnChanges {
   // Properties (subset mapped from llms.txt)
   @Input() value?: string | number;
   @Input() defaultValue?: string | null;
-  @Input() size: 'small' | 'medium' | 'large' | string = 'medium';
+  @Input() size: SizeToken | string = 'medium';
   @Input() appearance: 'filled' | 'outlined' | 'filled-outlined' | string = 'outlined';
   @Input() pill?: boolean | string;
   @Input() label?: string;

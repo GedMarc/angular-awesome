@@ -7,7 +7,7 @@ metadata:
 
 # Angular Awesome
 
-Angular 20+ standalone directives wrapping Web Awesome 3.3.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
+Angular 20+ standalone directives wrapping Web Awesome 3.6.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ export class MyComponent { save() {} }
 
 ```ts
 type VariantToken = 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit';
-type SizeToken    = 'small' | 'medium' | 'large' | 'inherit';
+type SizeToken    = 'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large' | 'inherit';
 type Appearance   = 'accent' | 'filled' | 'outlined' | 'plain' | 'filled-outlined';
 ```
 

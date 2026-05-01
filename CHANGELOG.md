@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.6.0] - 2026-05-01
+### Changed
+- **SizeToken:** Expanded size type to include shorthand tokens `'xs' | 's' | 'm' | 'l' | 'xl'` alongside the existing `'small' | 'medium' | 'large'`, matching Web Awesome 3.6.0. This affects all components with a `size` property: `wa-button`, `wa-callout`, `wa-checkbox`, `wa-color-picker`, `wa-combobox`, `wa-dropdown`, `wa-file-input`, `wa-input`, `wa-number-input`, `wa-radio`, `wa-radio-group`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-tag`, `wa-textarea`, `wa-toast-item`.
+- **Default size:** Web Awesome 3.6.0 changed the default size from `'medium'` to `'m'`. Angular wrappers pass through whatever value is set; unset inputs continue to use the web component's built-in default.
+
+### Notes
+- The legacy size values (`small`, `medium`, `large`) remain supported for backwards compatibility.
+- This is a minor release aligned with Web Awesome 3.6.0. No breaking changes.
+
+
 ## [3.5.2] - 2026-04-05
 ### Fixed
 - **wa-switch:** Changed directive selector from `wa-switch[waSwitch]` to `wa-switch`, matching the convention used by all other component directives (e.g. `wa-checkbox`, `wa-button`). Previously, consumers had to add the `waSwitch` attribute for the directive to activate; without it, Angular could not bind `@Input()` properties like `[checked]`, causing `NG8002: Can't bind to 'checked' since it isn't a known property of 'wa-switch'`.

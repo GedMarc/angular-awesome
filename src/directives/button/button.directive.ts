@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { Appearance, normalizeAppearance } from '../../types/tokens';
+import { Appearance, normalizeAppearance, SizeToken } from '../../types/tokens';
 
 /**
  * WaButtonDirective
@@ -28,7 +28,7 @@ export class WaButtonDirective implements OnInit, OnChanges {
    * Strictly typed to known tokens only.
    */
   @Input() appearance?: Appearance;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // Boolean inputs
   @Input() pill?: boolean | string;
