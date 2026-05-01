@@ -4,7 +4,7 @@
 
 ### Selector
 
-`waSwitch`
+`wa-switch`
 
 ### Purpose
 
@@ -13,7 +13,7 @@ Wraps the `<wa-switch>` Web Component to expose Angular-style inputs/outputs and
 ### Usage
 
 ```html
-<wa-switch waSwitch [(ngModel)]="checked" [disabled]="isDisabled" hint="Toggle feature" size="medium">
+<wa-switch [(ngModel)]="checked" [disabled]="isDisabled" hint="Toggle feature" size="medium">
   Enable Feature
 </wa-switch>
 ```
@@ -75,7 +75,6 @@ This directive supports `ngModel` two-way binding. The `ngModel` value controls 
 ```html
 <form #form="ngForm">
   <wa-switch
-    waSwitch
     name="newsletter"
     [(ngModel)]="model.newsletter"
     hint="Receive monthly updates"

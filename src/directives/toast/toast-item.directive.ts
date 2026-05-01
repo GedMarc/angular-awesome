@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, Renderer2, inject } from '@angular/core';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * WaToastItemDirective
@@ -23,7 +24,7 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
   @Input() variant?: 'brand' | 'success' | 'warning' | 'danger' | 'neutral' | string;
 
   /** The toast item's size. */
-  @Input() size?: 'small' | 'medium' | 'large' | string;
+  @Input() size?: SizeToken | string;
 
   /**
    * The length of time in milliseconds before the toast item is automatically dismissed.

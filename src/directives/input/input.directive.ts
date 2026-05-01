@@ -1,6 +1,6 @@
 import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
-import { Appearance, normalizeAppearance } from '../../types/tokens';
+import { Appearance, normalizeAppearance, SizeToken } from '../../types/tokens';
 import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
@@ -41,7 +41,7 @@ export class WaInputDirective implements OnInit, OnChanges, DoCheck, ControlValu
   // Core input attributes
   @Input() type?: string;
   @Input() value?: string | number | null;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
   @Input() appearance?: Appearance | string;
   @Input() pill?: boolean | string;
   @Input() label?: string;

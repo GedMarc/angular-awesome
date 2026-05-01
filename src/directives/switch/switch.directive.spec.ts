@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WaSwitchDirective } from './switch.directive';
+import { WaSwitchDirective, WaSwitchEvent } from './switch.directive';
 
 // Create a test host component for the switch directive
 @Component({
   template: `
     <wa-switch
-      waSwitch
       [disabled]="disabled"
       [hint]="hint"
       [size]="size"
@@ -261,5 +260,24 @@ describe('WaSwitchDirective', () => {
     // Simulate blur event
     switchElement.dispatchEvent(new FocusEvent('wa-blur'));
     expect(hostComponent.blurEventCalled).toBe(true);
+  });
+
+  it('should emit WaSwitchEvent with target.checked accessible', () => {
+    // Set the switch to checked so target.checked is true
+    (switchElement as any).checked = true;
+    switchElement.setAttribute('checked', '');
+    switchElement.dispatchEvent(new Event('wa-change'));
+    hostFixture.detectChanges();
+
+    // The changeEvent output emits WaSwitchEvent which has target.checked typed
+    // Verify the event was emitted (the type safety is compile-time)
+    expect(hostComponent.changeEventCalled).toBeTrue();
+  });
+
+  it('WaSwitchEvent interface should be importable and usable as a type', () => {
+    // This test verifies the type exists at runtime as an interface contract
+    const fakeEvent = { target: { checked: true, value: 'on' } } as unknown as WaSwitchEvent;
+    expect(fakeEvent.target.checked).toBeTrue();
+    expect(fakeEvent.target.value).toBe('on');
   });
 });

@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * Type definition for dropdown placement options
@@ -43,7 +44,7 @@ export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAcces
   // Structural inputs
   @Input() placement?: DropdownPlacement | string;
   @Input() open?: boolean | string;
-  @Input() size?: 'small' | 'medium' | 'large' | string;
+  @Input() size?: SizeToken | string;
   @Input() disabled?: boolean | string;
   @Input() stayOpenOnSelect?: boolean | string;
   @Input() containingElement?: HTMLElement;

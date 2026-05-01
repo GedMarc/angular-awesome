@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnChanges, AfterViewInit, Output, Renderer2 } from '@angular/core';
+import {SizeToken} from '../../types/tokens';
 
 @Directive({
   selector: 'wa-file-input',
@@ -8,7 +9,7 @@ export class WaFileInputDirective implements AfterViewInit, OnChanges {
   constructor(private host: ElementRef<HTMLElement>, private renderer: Renderer2) {}
 
   // Properties
-  @Input() size: 'small' | 'medium' | 'large' | string = 'medium';
+  @Input() size: SizeToken | string = 'medium';
   @Input() label?: string;
   @Input() hint?: string;
   @Input() multiple?: boolean | string;
