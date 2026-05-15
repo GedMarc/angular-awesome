@@ -96,7 +96,7 @@ Exposed shadow DOM parts for theming:
 ## Dependencies
 
 * [`<wa-icon>`](../icon/icon.rules.md)
-* [`<wa-icon-button>`](../icon-button/icon-button.rules.md)
+* [`<wa-button>`](../button/button.rules.md) (for icon buttons)
 
 ---
 

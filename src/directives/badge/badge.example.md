@@ -49,6 +49,14 @@ The `WaBadgeComponent` is an Angular wrapper for the Web Awesome `<wa-badge>` we
   [textColor]="'#0050b3'">
   Custom
 </wa-badge>
+
+<!-- Custom pulse color -->
+<wa-badge 
+  variant="danger" 
+  [pulse]="true" 
+  [pulseColor]="'rgba(255, 0, 0, 0.5)'">
+  Alert
+</wa-badge>
 ```
 
 ## Dynamic Content

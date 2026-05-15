@@ -1,5 +1,7 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, forwardRef, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, Injector, Input, OnInit, OnChanges, SimpleChanges, OnDestroy, Output, Renderer2, forwardRef, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaCheckboxDirective
@@ -10,7 +12,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * Features:
  * - Binds all supported checkbox attributes as @Input() properties
  * - Supports boolean attributes like checked, disabled, required, indeterminate
- * - Emits checkbox events (checkedChange, blur, focus, change, waInvalid)
+ * - Emits checkbox events (change, input, blurNative, focusNative, waInvalid); also re-emits checkedChange for compatibility
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for label and hint content
  * - Supports custom styling via CSS variables
@@ -25,10 +27,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaCheckboxDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaCheckboxDirective),
+      multi: true
     }
   ]
 })
-export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
+export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoCheck, ControlValueAccessor, Validator {
+  // Dialog integration
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Value inputs
   @Input() checked?: boolean | string;
   @Input() value?: string | null;
@@ -42,7 +54,7 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   @Input() indeterminate?: boolean | string;
 
   // Appearance inputs
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // CSS custom property inputs
   @Input() backgroundColor?: string;
@@ -54,27 +66,184 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   @Input() borderWidth?: string;
   @Input() boxShadow?: string;
   @Input() checkedIconColor?: string;
+  @Input() checkedIconScale?: string;
   @Input() toggleSize?: string;
 
   // Event outputs
   @Output() checkedChange = new EventEmitter<boolean>();
-  @Output() input = new EventEmitter<Event>();
-  @Output() blurEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<Event>();
-  @Output() change = new EventEmitter<Event>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waBlur = new EventEmitter<Event>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<Event>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+  /**
+   * Internal flag to suppress model updates when we are writing programmatically
+   * to the underlying element (prevents feedback loops with MutationObserver/events).
+   */
+  private isWriting = false;
+  private attrObserver?: MutationObserver;
+  private validatorChange?: () => void;
+
+  /**
+   * Safely determine the current checked state by preferring the property and
+   * falling back to attributes some environments/components use.
+   */
+  private getCurrentChecked(): boolean {
+    const el = this.el.nativeElement as HTMLElement & { checked?: boolean };
+    // Prefer native/WebComponent property
+    if (typeof (el as any).checked === 'boolean') {
+      return !!(el as any).checked;
+    }
+    // Fallbacks: boolean attribute, aria-checked, value="true"
+    if (el.hasAttribute('checked')) {
+      return true;
+    }
+    const ariaChecked = el.getAttribute('aria-checked');
+    if (ariaChecked === 'true') {
+      return true;
+    }
+    const valueAttr = el.getAttribute('value');
+    if (valueAttr != null && valueAttr.toLowerCase() === 'true') {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Safely derive the checked value from a change/input CustomEvent if available.
+   */
+  private getCheckedFromEvent(event: any): boolean | undefined {
+    // Direct boolean detail
+    if (event && typeof event.detail === 'boolean') {
+      return !!event.detail;
+    }
+    // Detail object with checked property
+    if (event && event.detail && typeof event.detail.checked === 'boolean') {
+      return !!event.detail.checked;
+    }
+    return undefined;
+  }
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+    this.syncValidationState();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
+      this.checkedChange.emit(event.detail);
+      this.onChange(event.detail);
+    });
+
+    // Standard DOM events
+    this.renderer.listen(nativeEl, 'input', (event) => {
+      this.waInput.emit(event);
+      // Update model on input to reflect current checked state
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+    this.renderer.listen(nativeEl, 'change', (event) => {
+      this.waChange.emit(event);
+      // Update model on change to reflect current checked state
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    // WebAwesome custom events (some environments emit wa-input/wa-change)
+    this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      this.waInput.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      this.waChange.emit(event as unknown as Event);
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
+
+    // Fallback: ensure model sync on click toggle
+    this.renderer.listen(nativeEl, 'click', () => {
+      const currentChecked = this.getCurrentChecked();
+      this.onChange(currentChecked);
+      this.checkedChange.emit(currentChecked);
+      this.validatorChange?.();
+    });
+
+    // Observe 'checked' attribute changes to sync when WC toggles via attributes
+    try {
+      this.attrObserver = new MutationObserver((mutations) => {
+        if (this.isWriting) { return; }
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'checked') {
+            const currentChecked = (this.el.nativeElement as any).checked === true || this.el.nativeElement.hasAttribute('checked');
+            this.onChange(!!currentChecked);
+            this.checkedChange.emit(!!currentChecked);
+            this.validatorChange?.();
+          }
+        }
+      });
+      this.attrObserver.observe(nativeEl, { attributes: true, attributeFilter: ['checked'] });
+    } catch {}
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('value', this.value);
     this.setAttr('name', this.name);
@@ -98,21 +267,49 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--border-width', this.borderWidth);
     this.setCssVar('--box-shadow', this.boxShadow);
     this.setCssVar('--checked-icon-color', this.checkedIconColor);
+    this.setCssVar('--checked-icon-scale', this.checkedIconScale);
     this.setCssVar('--toggle-size', this.toggleSize);
 
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
-      this.checkedChange.emit(event.detail);
-      this.onChange(event.detail);
-    });
-    this.renderer.listen(nativeEl, 'input', (event) => this.input.emit(event));
-    this.renderer.listen(nativeEl, 'blur', (event) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'change', (event) => this.change.emit(event));
-    this.renderer.listen(nativeEl, 'waInvalid', (event) => this.waInvalid.emit(event));
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
+  }
+
+  ngOnDestroy(): void {
+    try {
+      this.attrObserver?.disconnect();
+    } catch {}
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
+  // Validator implementation to participate in Angular forms validity (e.g., required)
+  validate(control: AbstractControl): ValidationErrors | null {
+    const host: any = this.el?.nativeElement;
+    if (!host) return null;
+    // Disabled controls are considered valid
+    if (host.disabled || host.hasAttribute?.('disabled')) return null;
+
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (!isRequired) return null;
+
+    // For a single checkbox, validity means it must be checked when required
+    const value = control?.value;
+    const isChecked = !!value;
+    return isChecked ? null : { required: true };
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 
   /**
@@ -130,14 +327,14 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   }
 
   /**
-   * Sets focus on the checkbox
+   * Sets focusNative on the checkbox
    */
   public focus(): void {
     this.el.nativeElement.focus();
   }
 
   /**
-   * Removes focus from the checkbox
+   * Removes focusNative from the checkbox
    */
   public blur(): void {
     this.el.nativeElement.blur();
@@ -158,6 +355,8 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -168,6 +367,19 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
+  }
+
+  /**
+   * Toggles a boolean attribute based on a boolean value (adds when true, removes when false)
+   */
+  private toggleBooleanAttr(name: string, isOn: boolean | null | undefined) {
+    if (isOn) {
+      this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -176,14 +388,23 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
     if (value !== undefined) {
-      this.renderer.setProperty(this.el.nativeElement, 'checked', !!value);
+      const isChecked = !!value;
+      this.isWriting = true;
+      try {
+        this.renderer.setProperty(this.el.nativeElement, 'checked', isChecked);
+        // Ensure attribute reflects current state for Web Components relying on attributes
+        this.toggleBooleanAttr('checked', isChecked);
+      } finally {
+        // Use a microtask to allow MutationObserver to settle without emitting back
+        Promise.resolve().then(() => (this.isWriting = false));
+      }
     }
   }
 
@@ -196,6 +417,9 @@ export class WaCheckboxDirective implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.setBooleanAttr('disabled', isDisabled);
+    // Reflect disabled in both property and attribute space
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', !!isDisabled);
+    this.toggleBooleanAttr('disabled', !!isDisabled);
+    this.validatorChange?.();
   }
 }

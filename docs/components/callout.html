@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Callout Component <span class="version-badge">v1.0.1</span></h1>
+                <h1>Callout Component <span class="version-badge">synced with Web Awesome 3.4.x</span></h1>
                 <p class="subtitle"><wa-callout> displays inline messages or alerts. It supports color variants, size and appearance options, and an optional icon via slot.</p>
             </header>
 
@@ -161,7 +161,7 @@ import { WaCalloutDirective } from 'angular-awesome/callout';</pre>
   This callout has a plain style without borders.
 &lt;/wa-callout&gt;
 
-&lt;wa-callout appearance=&quot;outlined filled&quot;&gt;
+&lt;wa-callout appearance=&quot;filled-outlined&quot;&gt;
   &lt;strong&gt;Outlined Filled Appearance&lt;/strong&gt;&lt;br /&gt;
   This callout has both an outline and a filled background.
 &lt;/wa-callout&gt;
@@ -185,25 +185,25 @@ import { WaCalloutDirective } from 'angular-awesome/callout';</pre>
 &lt;/wa-callout&gt;
 </code></pre>
 <h2>With Icon</h2>
-<pre><code class="language-html">&lt;wa-callout variant=&quot;success&quot; appearance=&quot;outlined filled&quot; size=&quot;medium&quot;&gt;
+<pre><code class="language-html">&lt;wa-callout variant=&quot;success&quot; appearance=&quot;filled-outlined&quot; size=&quot;medium&quot;&gt;
   &lt;wa-icon slot=&quot;icon&quot; name=&quot;circle-check&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
   &lt;strong&gt;Success!&lt;/strong&gt;&lt;br /&gt;
   Your changes have been saved.
 &lt;/wa-callout&gt;
 
-&lt;wa-callout variant=&quot;warning&quot; appearance=&quot;outlined filled&quot; size=&quot;medium&quot;&gt;
+&lt;wa-callout variant=&quot;warning&quot; appearance=&quot;filled-outlined&quot; size=&quot;medium&quot;&gt;
   &lt;wa-icon slot=&quot;icon&quot; name=&quot;triangle-exclamation&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
   &lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;
   This action cannot be undone.
 &lt;/wa-callout&gt;
 
-&lt;wa-callout variant=&quot;danger&quot; appearance=&quot;outlined filled&quot; size=&quot;medium&quot;&gt;
+&lt;wa-callout variant=&quot;danger&quot; appearance=&quot;filled-outlined&quot; size=&quot;medium&quot;&gt;
   &lt;wa-icon slot=&quot;icon&quot; name=&quot;circle-xmark&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
   &lt;strong&gt;Error!&lt;/strong&gt;&lt;br /&gt;
   There was a problem processing your request.
 &lt;/wa-callout&gt;
 
-&lt;wa-callout variant=&quot;neutral&quot; appearance=&quot;outlined filled&quot; size=&quot;medium&quot;&gt;
+&lt;wa-callout variant=&quot;neutral&quot; appearance=&quot;filled-outlined&quot; size=&quot;medium&quot;&gt;
   &lt;wa-icon slot=&quot;icon&quot; name=&quot;circle-info&quot; variant=&quot;regular&quot;&gt;&lt;/wa-icon&gt;
   &lt;strong&gt;Information&lt;/strong&gt;&lt;br /&gt;
   Here&#39;s some additional information you might find useful.

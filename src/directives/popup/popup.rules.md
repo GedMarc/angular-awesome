@@ -1,10 +1,10 @@
-## Popup Component Rules
+## Popup Component Rules (also known as Popover)
 
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
 ### Component: `<wa-popup>`
 
-Popup is a utility that lets you declaratively anchor "popup" containers to another element. It uses Floating UI under the hood to provide a well-tested, lightweight, and fully declarative positioning utility for tooltips, dropdowns, and more.
+Popup (also referred to as Popover in some contexts) is a utility that lets you declaratively anchor "popup" containers to another element. It uses Floating UI under the hood to provide a well-tested, lightweight, and fully declarative positioning utility for tooltips, dropdowns, and more.
 
 Popup doesn't provide any styles — just positioning! The popup's preferred placement, distance, and skidding (offset) can be configured using attributes. An arrow that points to the anchor can be shown and customized to your liking.
 

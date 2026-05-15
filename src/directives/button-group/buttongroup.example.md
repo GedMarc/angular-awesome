@@ -156,14 +156,14 @@ export class MyComponent {
 ```css
 wa-button-group.custom-group::part(base) {
   background-color: var(--wa-color-neutral-50);
-  padding: var(--wa-space-xs);
+  padding: 0.25em; /* Changed from var(--wa-space-xs) to relative em value */
   border-radius: var(--wa-border-radius-m);
   box-shadow: var(--wa-shadow-s);
 }
 
 /* Add spacing between button groups */
 wa-button-group:not(:last-child) {
-  margin-right: var(--wa-space-m);
+  margin-right: 1em; /* Changed from var(--wa-space-m) to relative em value */
 }
 ```
 

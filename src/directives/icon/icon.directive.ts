@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaIconDirective
@@ -8,7 +8,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
  *
  * Features:
  * - Binds all supported icon attributes as @Input() properties
- * - Supports name, family, variant, library, src, label, and fixedWidth customization
+ * - Supports name, family, variant, library, src, label, and withFixedWidth customization
  * - Enables Angular-style class and style bindings
  * - Supports custom styling via CSS variables
  * - Provides accessibility support through label attribute
@@ -18,7 +18,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-icon',
   standalone: true
 })
-export class WaIconDirective implements OnInit {
+export class WaIconDirective implements OnInit, OnChanges {
   // Icon inputs
   @Input() name?: string;
   @Input() family?: string;
@@ -26,12 +26,23 @@ export class WaIconDirective implements OnInit {
   @Input() library?: string;
   @Input() src?: string;
   @Input() label?: string;
-  @Input() fixedWidth?: boolean | string;
+  @Input() withFixedWidth?: boolean | string;
+  @Input() autoWidth?: boolean | string;
+  @Input() swapOpacity?: boolean | string;
+  @Input() rotate?: number | string;
+  @Input() flip?: 'x' | 'y' | 'both' | string;
+  @Input() animation?: string;
 
   // Direct styling inputs
   @Input() color?: string;
   @Input() backgroundColor?: string;
   @Input() fontSize?: string;
+
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
 
   // Duotone icon inputs
   @Input() primaryColor?: string;
@@ -44,8 +55,14 @@ export class WaIconDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('name', this.name);
     this.setAttr('family', this.family);
@@ -55,7 +72,18 @@ export class WaIconDirective implements OnInit {
     this.setAttr('label', this.label);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('fixed-width', this.fixedWidth);
+    this.setBooleanAttr('with-fixed-width', this.withFixedWidth);
+    this.setBooleanAttr('auto-width', this.autoWidth);
+    this.setBooleanAttr('swap-opacity', this.swapOpacity);
+
+    // Set new attributes
+    if (this.rotate != null) {
+      this.setAttr('rotate', String(this.rotate));
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, 'rotate');
+    }
+    this.setAttr('flip', this.flip);
+    this.setAttr('animation', this.animation);
 
     // Apply styling inputs using CSS custom properties
     this.setCssStyle('text-color', this.color);
@@ -67,6 +95,9 @@ export class WaIconDirective implements OnInit {
     this.setCssVar('--primary-opacity', this.primaryOpacity);
     this.setCssVar('--secondary-color', this.secondaryColor);
     this.setCssVar('--secondary-opacity', this.secondaryOpacity);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
   }
 
   /**
@@ -82,6 +113,8 @@ export class WaIconDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -92,6 +125,8 @@ export class WaIconDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -100,7 +135,7 @@ export class WaIconDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -109,7 +144,7 @@ export class WaIconDirective implements OnInit {
    */
   private setCssStyle(name: string, value: string | null | undefined) {
     if (value) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

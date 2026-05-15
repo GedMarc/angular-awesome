@@ -1,4 +1,4 @@
-import {Input, ElementRef, OnInit, inject} from '@angular/core';
+import {Input, ElementRef, OnInit, OnChanges, SimpleChanges, inject} from '@angular/core';
 
 /**
  * WaBadgeComponent
@@ -14,49 +14,96 @@ import {Input, ElementRef, OnInit, inject} from '@angular/core';
  * - Supports custom styling via CSS variables
  */
 import { Directive,  Renderer2 } from '@angular/core';
+import { VariantToken, normalizeAppearance } from '../../types/tokens';
+
+// Badge-specific appearance tokens and combinations (Web Awesome 3.0.0)
+// Support hyphenated combined token as well as legacy space-delimited for backwards-compat
+// Prefer using '<base>-outlined' going forward (e.g., 'filled-outlined')
+type BadgeAppearanceBase = 'accent' | 'filled' | 'tinted' | 'outlined' | 'text' | 'plain';
+export type BadgeAppearance =
+  | BadgeAppearanceBase
+  | `${BadgeAppearanceBase} outlined` // legacy form
+  | `${BadgeAppearanceBase}-outlined`; // new form
 
 @Directive({
   selector: 'wa-badge',
   standalone: true
 })
-export class WaBadgeDirective implements OnInit {
-  @Input() variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
-  @Input() appearance: 'accent' | 'filled' | 'outlined' = 'accent';
-  @Input() pill?: boolean | null;
-  @Input() pulse?: boolean | null;
+export class WaBadgeDirective implements OnInit, OnChanges {
+  @Input() variant: VariantToken = 'inherit';
+  // Allowed appearances derived from Java enum: lowercased, underscores replaced with spaces
+  @Input() appearance: BadgeAppearance = 'accent';
+  @Input() pill?: boolean | string | null;
+  @Input() pulse?: boolean | string | null;
+  @Input() attention?: 'none' | 'pulse' | 'bounce' | string;
   @Input() fontSize?: string;
 
   @Input() backgroundColor?: string;
   @Input() borderColor?: string;
   @Input() textColor?: string;
+  @Input() pulseColor?: string;
 
   el = inject(ElementRef)
   renderer = inject(Renderer2)
 
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
-
-    this.setAttr('variant', this.variant);
-    this.setAttr('appearance', this.appearance);
-    this.setBoolAttr('pill', this.pill);
-    this.setBoolAttr('pulse', this.pulse);
-
-    if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
-    if (this.backgroundColor) nativeEl.style.setProperty('--background-color', this.backgroundColor);
-    if (this.borderColor) nativeEl.style.setProperty('--border-color', this.borderColor);
-    if (this.textColor) nativeEl.style.setProperty('--text-color', this.textColor);
+    this.applyInputs();
   }
 
-  private setAttr(name: string, value: string | null) {
+  ngOnChanges(_changes: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
+
+    this.setAttr('variant', this.variant);
+    this.setAttr('appearance', normalizeAppearance(this.appearance as any));
+    this.setBoolAttr('pill', this.pill);
+    this.setBoolAttr('pulse', this.pulse);
+    this.setAttr('attention', this.attention);
+
+    // Styles
+    this.setStyleValue('fontSize', this.fontSize);
+    this.setCssVar('--background-color', this.backgroundColor);
+    this.setCssVar('--border-color', this.borderColor);
+    this.setCssVar('--text-color', this.textColor);
+    this.setCssVar('--pulse-color', this.pulseColor);
+  }
+
+  private setAttr(name: string, value: string | null | undefined) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
     if (value != null) {
-      this.renderer.setAttribute(this.el.nativeElement, name, value);
+      this.renderer.setAttribute(nativeEl, name, String(value));
+    } else {
+      this.renderer.removeAttribute(nativeEl, name);
     }
   }
 
-  private setBoolAttr(name: string, value: boolean | null | undefined) {
-    if (value) {
-      this.renderer.setAttribute(this.el.nativeElement, name, '');
+  private setBoolAttr(name: string, value: boolean | string | null | undefined) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    if (value === true || value === 'true' || value === '') {
+      this.renderer.setAttribute(nativeEl, name, '');
+    } else {
+      this.renderer.removeAttribute(nativeEl, name);
+    }
+  }
+
+  private setStyleValue(styleProp: 'fontSize', value?: string) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    if (value != null) {
+      (nativeEl.style as any)[styleProp] = value;
+    } else {
+      (nativeEl.style as any)[styleProp] = '';
+    }
+  }
+
+  private setCssVar(varName: string, value?: string) {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+    if (value != null) {
+      nativeEl.style.setProperty(varName, value);
+    } else {
+      nativeEl.style.removeProperty(varName);
     }
   }
 }

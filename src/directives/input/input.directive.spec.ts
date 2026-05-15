@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { WaInputDirective } from './input.directive';
 import { FormsModule } from '@angular/forms';
@@ -41,12 +41,12 @@ import { FormsModule } from '@angular/forms';
       [borderColor]="borderColor"
       [borderWidth]="borderWidth"
       [boxShadow]="boxShadow"
-      (input)="onInput($event)"
-      (change)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (waClear)="onClear($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-clear)="onClear($event)"
+      (wa-invalid)="onInvalid($event)"
     ></wa-input>
   `,
   standalone: true,
@@ -130,7 +130,7 @@ describe('WaInputDirective', () => {
     expect(inputDirective).toBeTruthy();
   });
 
-  it('should set string attributes correctly', () => {
+  it('should set string attributes correctly', fakeAsync(() => {
     hostComponent.type = 'email';
     hostComponent.value = 'test@example.com';
     hostComponent.size = 'large';
@@ -145,6 +145,8 @@ describe('WaInputDirective', () => {
     hostComponent.autocomplete = 'email';
     hostComponent.enterkeyhint = 'next';
     hostComponent.inputmode = 'email';
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(inputElement.getAttribute('type')).toBe('email');
@@ -161,7 +163,7 @@ describe('WaInputDirective', () => {
     expect(inputElement.getAttribute('autocomplete')).toBe('email');
     expect(inputElement.getAttribute('enterkeyhint')).toBe('next');
     expect(inputElement.getAttribute('inputmode')).toBe('email');
-  });
+  }));
 
   it('should set numeric attributes correctly', () => {
     hostComponent.minlength = 5;
@@ -199,11 +201,11 @@ describe('WaInputDirective', () => {
     hostFixture.detectChanges();
 
     expect(inputElement.hasAttribute('pill')).toBeTrue();
-    expect(inputElement.hasAttribute('clearable')).toBeTrue();
+    expect(inputElement.hasAttribute('with-clear')).toBeTrue();
     expect(inputElement.hasAttribute('readonly')).toBeTrue();
     expect(inputElement.hasAttribute('password-toggle')).toBeTrue();
     expect(inputElement.hasAttribute('password-visible')).toBeTrue();
-    expect(inputElement.hasAttribute('no-spin-buttons')).toBeTrue();
+    expect(inputElement.hasAttribute('without-spin-buttons')).toBeTrue();
     expect(inputElement.hasAttribute('required')).toBeTrue();
     expect(inputElement.hasAttribute('autofocus')).toBeTrue();
     expect(inputElement.hasAttribute('spellcheck')).toBeTrue();
@@ -226,11 +228,11 @@ describe('WaInputDirective', () => {
     hostFixture.detectChanges();
 
     expect(inputElement.hasAttribute('pill')).toBeFalse();
-    expect(inputElement.hasAttribute('clearable')).toBeFalse();
+    expect(inputElement.hasAttribute('with-clear')).toBeFalse();
     expect(inputElement.hasAttribute('readonly')).toBeFalse();
     expect(inputElement.hasAttribute('password-toggle')).toBeFalse();
     expect(inputElement.hasAttribute('password-visible')).toBeFalse();
-    expect(inputElement.hasAttribute('no-spin-buttons')).toBeFalse();
+    expect(inputElement.hasAttribute('without-spin-buttons')).toBeFalse();
     expect(inputElement.hasAttribute('required')).toBeFalse();
     expect(inputElement.hasAttribute('autofocus')).toBeFalse();
     expect(inputElement.hasAttribute('spellcheck')).toBeFalse();
@@ -244,7 +246,7 @@ describe('WaInputDirective', () => {
     hostFixture.detectChanges();
 
     expect(inputElement.hasAttribute('pill')).toBeTrue();
-    expect(inputElement.hasAttribute('clearable')).toBeTrue();
+    expect(inputElement.hasAttribute('with-clear')).toBeTrue();
   });
 
   it('should set style attributes correctly', () => {
@@ -261,15 +263,23 @@ describe('WaInputDirective', () => {
   });
 
   it('should expose methods for programmatic interaction', () => {
+    // Define mock methods on the native element (don't exist in test DOM)
+    (inputElement as any).select = () => {};
+    (inputElement as any).setSelectionRange = () => {};
+    (inputElement as any).setRangeText = () => {};
+    (inputElement as any).showPicker = () => {};
+    (inputElement as any).stepUp = () => {};
+    (inputElement as any).stepDown = () => {};
+
     // Mock the native element methods
-    spyOn(inputElement, 'focus');
-    spyOn(inputElement, 'blur');
-    spyOn(inputElement, 'select');
-    spyOn(inputElement, 'setSelectionRange');
-    spyOn(inputElement, 'setRangeText');
-    spyOn(inputElement, 'showPicker');
-    spyOn(inputElement, 'stepUp');
-    spyOn(inputElement, 'stepDown');
+    spyOn(inputElement as any, 'focus');
+    spyOn(inputElement as any, 'blur');
+    spyOn(inputElement as any, 'select');
+    spyOn(inputElement as any, 'setSelectionRange');
+    spyOn(inputElement as any, 'setRangeText');
+    spyOn(inputElement as any, 'showPicker');
+    spyOn(inputElement as any, 'stepUp');
+    spyOn(inputElement as any, 'stepDown');
 
     // Call the directive methods
     inputDirective.focus();
@@ -284,12 +294,12 @@ describe('WaInputDirective', () => {
     // Verify the methods were called
     expect(inputElement.focus).toHaveBeenCalled();
     expect(inputElement.blur).toHaveBeenCalled();
-    expect(inputElement.select).toHaveBeenCalled();
-    expect(inputElement.setSelectionRange).toHaveBeenCalledWith(0, 5, 'forward');
-    expect(inputElement.setRangeText).toHaveBeenCalledWith('test', 0, 4, 'select');
-    expect(inputElement.showPicker).toHaveBeenCalled();
-    expect(inputElement.stepUp).toHaveBeenCalled();
-    expect(inputElement.stepDown).toHaveBeenCalled();
+    expect((inputElement as any).select).toHaveBeenCalled();
+    expect((inputElement as any).setSelectionRange).toHaveBeenCalledWith(0, 5, 'forward');
+    expect((inputElement as any).setRangeText).toHaveBeenCalledWith('test', 0, 4, 'select');
+    expect((inputElement as any).showPicker).toHaveBeenCalled();
+    expect((inputElement as any).stepUp).toHaveBeenCalled();
+    expect((inputElement as any).stepDown).toHaveBeenCalled();
   });
 
   it('should expose the native element', () => {
@@ -305,12 +315,12 @@ describe('WaInputDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const inputEvent = new Event('input');
-    const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
-    const clearEvent = new CustomEvent('waClear');
-    const invalidEvent = new CustomEvent('waInvalid');
+    const inputEvent = new Event('wa-input');
+    const changeEvent = new Event('wa-change');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
+    const clearEvent = new CustomEvent('wa-clear');
+    const invalidEvent = new CustomEvent('wa-invalid');
 
     // Dispatch events on the native element
     inputElement.dispatchEvent(inputEvent);
@@ -327,6 +337,19 @@ describe('WaInputDirective', () => {
     expect(hostComponent.onBlur).toHaveBeenCalled();
     expect(hostComponent.onClear).toHaveBeenCalled();
     expect(hostComponent.onInvalid).toHaveBeenCalled();
+  });
+
+  it('should update ngModel when native change event fires', () => {
+    hostComponent.value = '';
+    hostFixture.detectChanges();
+
+    // Simulate user typing then blurring causing a change
+    (inputElement as any).value = 'hello world';
+    inputElement.setAttribute('value', 'hello world');
+    inputElement.dispatchEvent(new Event('wa-change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.value).toBe('hello world');
   });
 
   it('should handle different size values', () => {

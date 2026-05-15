@@ -8,31 +8,36 @@
 
 ## Inputs
 
-| Name             | Type                                          | Binding Required | Notes                                                                                     |
-| ---------------- | --------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
-| `label`          | `string`                                      | No               | Always set for accessibility. Supports `slot` alternative.                                |
-| `hint`           | `string`                                      | No               | Descriptive hint; use `slot="hint"` for HTML hints.                                       |
-| `value`          | `string \| null`                              | Yes              | Format depends on `format`/`opacity`. Binds via `ngModel`; do not use custom `[(value)]`. |
-| `format`         | `'hex' \| 'rgb' \| 'hsl' \| 'hsv'`            | No               | Affects the internal format and toggle behavior.                                          |
-| `noFormatToggle` | `boolean`                                     | Yes              | Disables user toggle; bind explicitly.                                                    |
-| `opacity`        | `boolean`                                     | Yes              | Enables alpha slider.                                                                     |
-| `uppercase`      | `boolean`                                     | Yes              | Outputs uppercase color strings.                                                          |
-| `size`           | `'small' \| 'medium' \| 'large' \| 'inherit'` | No               | Trigger button sizing.                                                                    |
-| `disabled`       | `boolean`                                     | Yes              | Disables picker.                                                                          |
-| `required`       | `boolean`                                     | Yes              | Marks input as required.                                                                  |
-| `name`           | `string \| null`                              | No               | Used in form submissions.                                                                 |
-| `form`           | `string \| null`                              | No               | Link to external form by ID.                                                              |
-| `swatches`       | `string \| string[]`                          | Yes if dynamic   | Semicolon-separated string or JS array of color values.                                   |
+| Name                 | Type                                          | Binding Required | Notes                                                                                     |
+| -------------------- | --------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
+| `label`              | `string`                                      | No               | Always set for accessibility. Supports `slot` alternative.                                |
+| `hint`               | `string`                                      | No               | Descriptive hint; use `slot="hint"` for HTML hints.                                       |
+| `value`              | `string \| null`                              | Yes              | Format depends on `format`/`opacity`. Binds via `ngModel`; do not use custom `[(value)]`. |
+| `defaultValue`       | `string \| null`                              | No               | Default/reset value of the control.                                                       |
+| `format`             | `'hex' \| 'rgb' \| 'hsl' \| 'hsv'`            | No               | Affects the internal format and toggle behavior.                                          |
+| `withoutFormatToggle`| `boolean`                                     | Yes              | Removes the format toggle button.                                                         |
+| `opacity`            | `boolean`                                     | Yes              | Enables alpha slider.                                                                     |
+| `uppercase`          | `boolean`                                     | Yes              | Outputs uppercase color strings.                                                          |
+| `size`               | `'small' \| 'medium' \| 'large' \| 'inherit'` | No               | Trigger button sizing.                                                                    |
+| `disabled`           | `boolean`                                     | Yes              | Disables picker.                                                                          |
+| `required`           | `boolean`                                     | Yes              | Marks input as required.                                                                  |
+| `name`               | `string \| null`                              | No               | Used in form submissions.                                                                 |
+| `form`               | `string \| null`                              | No               | Link to external form by ID.                                                              |
+| `swatches`           | `string \| string[]`                          | Yes if dynamic   | Semicolon-separated string or JS array of color values.                                   |
 
 ## Outputs
 
-| Event       | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| `change`    | Fires when the value changes. Required for `ngModel` binding. |
-| `input`     | Fires on every user input.                                    |
-| `focus`     | Fires when input gains focus.                                 |
-| `blur`      | Fires when input loses focus.                                 |
-| `waInvalid` | Fires on failed validity check.                               |
+| Event          | Description                                                   |
+| -------------- | ------------------------------------------------------------- |
+| `change`       | Emitted when the color picker's value changes.                |
+| `input`        | Emitted when the color picker receives input.                 |
+| `wa-show`      | Fired when the color picker panel starts to open.             |
+| `wa-after-show`| Fired after the color picker panel has opened.                |
+| `wa-hide`      | Fired when the color picker panel starts to close.            |
+| `wa-after-hide`| Fired after the color picker panel has closed.                |
+| `focus`        | Emitted when the color picker receives focus.                 |
+| `blur`         | Emitted when the color picker loses focus.                    |
+| `wa-invalid`   | Emitted when the control is checked for validity and fails.   |
 
 ## Two-Way Binding (Template-Driven)
 
@@ -63,7 +68,42 @@ The `name` attribute is required for `ngModel` in forms.
 
 ## Styling
 
-Expose design tokens and custom part styling via Angular host bindings or encapsulation where needed.
+CSS custom properties and parts supported by the underlying component:
+
+CSS custom properties
+- --grid-width: The width of the color grid.
+- --grid-height: The height of the color grid.
+- --grid-handle-size: The size of the color grid's handle.
+- --slider-height: The height of the hue and alpha sliders.
+- --slider-handle-size: The diameter of the slider's handle.
+
+CSS parts
+- base: The component's base wrapper.
+- trigger: The color picker's dropdown trigger.
+- swatches: The container that holds the swatches.
+- swatch: Each individual swatch.
+- grid: The color grid.
+- grid-handle: The color grid's handle.
+- slider: Hue and opacity sliders.
+- slider-handle: Hue and opacity slider handles.
+- hue-slider: The hue slider.
+- hue-slider-handle: The hue slider's handle.
+- opacity-slider: The opacity slider.
+- opacity-slider-handle: The opacity slider's handle.
+- preview: The preview color.
+- input: The text input.
+- eyedropper-button: The eye dropper button.
+- eyedropper-button__base: The eye dropper button's exported button part.
+- eyedropper-button__start: The eye dropper button's exported start part.
+- eyedropper-button__label: The eye dropper button's exported label part.
+- eyedropper-button__end: The eye dropper button's exported end part.
+- eyedropper-button__caret: The eye dropper button's exported caret part.
+- format-button: The format button.
+- format-button__base: The format button's exported button part.
+- format-button__start: The format button's exported start part.
+- format-button__label: The format button's exported label part.
+- format-button__end: The format button's exported end part.
+- format-button__caret: The format button's exported caret part.
 
 ## Child Dependencies
 

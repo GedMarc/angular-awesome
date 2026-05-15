@@ -1,113 +1,69 @@
-## Web Awesome Angular Wrapper: Textarea
+# Textarea Directive Rules
 
-📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
+The `wa-textarea` wraps the `<wa-textarea>` Web Awesome component. Textareas collect data from the user and allow multiple lines of text.
 
-### Component Selector
+## Overview
+- Selector: `wa-textarea` (native tag selector)
+- Works with standard `<form>` elements and supports template-driven forms via `[(ngModel)]`.
 
-`waTextarea`
-
-### Description
-
-Angular wrapper for the `<wa-textarea>` Web Awesome component. It collects multiline user input with optional labels, hints, resize behaviors, and appearance customization.
-
-### Inputs
-
-| Input            | Type       | Description                                  |                          |             |                       |                                  |                           |                          |                        |
-| ---------------- | ---------- | -------------------------------------------- | ------------------------ | ----------- | --------------------- | -------------------------------- | ------------------------- | ------------------------ | ---------------------- |
-| `value`          | `string`   | The current value of the textarea.           |                          |             |                       |                                  |                           |                          |                        |
-| `placeholder`    | `string`   | Placeholder text when the input is empty.    |                          |             |                       |                                  |                           |                          |                        |
-| `label`          | `string`   | A label for accessibility.                   |                          |             |                       |                                  |                           |                          |                        |
-| `hint`           | `string`   | A hint that describes how to use the input.  |                          |             |                       |                                  |                           |                          |                        |
-| `rows`           | `number`   | The number of rows shown by default.         |                          |             |                       |                                  |                           |                          |                        |
-| `resize`         | \`'none'   | 'vertical'                                   | 'horizontal'             | 'both'      | 'auto'\`              | Resize behavior of the textarea. |                           |                          |                        |
-| `size`           | \`'small'  | 'medium'                                     | 'large'                  | 'inherit'\` | Size of the textarea. |                                  |                           |                          |                        |
-| `appearance`     | \`'filled' | 'outlined'\`                                 | Visual appearance style. |             |                       |                                  |                           |                          |                        |
-| `disabled`       | `boolean`  | Disables the textarea.                       |                          |             |                       |                                  |                           |                          |                        |
-| `readonly`       | `boolean`  | Makes the textarea read-only.                |                          |             |                       |                                  |                           |                          |                        |
-| `name`           | `string`   | Name used in form submission.                |                          |             |                       |                                  |                           |                          |                        |
-| `required`       | `boolean`  | Makes the textarea a required field.         |                          |             |                       |                                  |                           |                          |                        |
-| `minlength`      | `number`   | Minimum length constraint.                   |                          |             |                       |                                  |                           |                          |                        |
-| `maxlength`      | `number`   | Maximum length constraint.                   |                          |             |                       |                                  |                           |                          |                        |
-| `autocapitalize` | \`'off'    | 'none'                                       | 'on'                     | 'sentences' | 'words'               | 'characters'\`                   | Auto-capitalization mode. |                          |                        |
-| `autocorrect`    | `string`   | Enables/disables browser autocorrection.     |                          |             |                       |                                  |                           |                          |                        |
-| `autocomplete`   | `string`   | Autocomplete hint for browsers.              |                          |             |                       |                                  |                           |                          |                        |
-| `autofocus`      | `boolean`  | Automatically focus this field on page load. |                          |             |                       |                                  |                           |                          |                        |
-| `enterkeyhint`   | \`'enter'  | 'done'                                       | 'go'                     | 'next'      | 'previous'            | 'search'                         | 'send'\`                  | Keyboard enter key hint. |                        |
-| `spellcheck`     | `boolean`  | Whether spellchecking is enabled.            |                          |             |                       |                                  |                           |                          |                        |
-| `inputmode`      | \`'none'   | 'text'                                       | 'decimal'                | 'numeric'   | 'tel'                 | 'search'                         | 'email'                   | 'url'\`                  | Virtual keyboard type. |
-| `withLabel`      | `boolean`  | SSR helper when using `label` slot.          |                          |             |                       |                                  |                           |                          |                        |
-| `withHint`       | `boolean`  | SSR helper when using `hint` slot.           |                          |             |                       |                                  |                           |                          |                        |
-
-### Outputs
-
-| Output        | Description                             |
-| ------------- | --------------------------------------- |
-| `focusEvent`  | Emits when the textarea gains focus.    |
-| `blurEvent`   | Emits when the textarea loses focus.    |
-| `inputEvent`  | Emits on every value change.            |
-| `changeEvent` | Emits when value is committed by user.  |
-| `invalid`     | Emits when the form control is invalid. |
-
-### Styling Inputs
-
-| Input             | Description                   |
-| ----------------- | ----------------------------- |
-| `backgroundColor` | Maps to `--background-color`. |
-| `borderColor`     | Maps to `--border-color`.     |
-| `borderWidth`     | Maps to `--border-width`.     |
-| `boxShadow`       | Maps to `--box-shadow`.       |
-
-These inputs set CSS custom properties directly on the host element.
-
-### CSS States
-
-* `:state(blank)` — applied when the textarea is empty
-
-### CSS Parts
-
-* `label`
-* `form-control-input`
-* `hint`
-* `textarea`
-* `base`
-
-### Methods (optional)
-
-| Method                | Description                |
-| --------------------- | -------------------------- |
-| `focus()`             | Sets focus to the control. |
-| `blur()`              | Removes focus.             |
-| `select()`            | Selects all text.          |
-| `scrollPosition()`    | Gets/sets scroll position. |
-| `setSelectionRange()` | Sets the selection range.  |
-| `setRangeText()`      | Replaces a range of text.  |
-
-### Form Integration
-
-This component uses `ngModel` for two-way binding.
-
+## Usage
 ```html
-<wa-textarea [(ngModel)]="value"></wa-textarea>
+<!-- Basic -->
+<wa-textarea label="Type something', will ya"></wa-textarea>
 ```
 
-### Slots
+## Slots
+- label — The textarea's label. Alternatively, you can use the `label` attribute.
+- hint — Text that describes how to use the input. Alternatively, you can use the `hint` attribute.
 
-* `label`
-* `hint`
+## Attributes & Properties
+- name: string | null — The name of the textarea, submitted with form data. Default null
+- value: string — The current value of the input, submitted with form data.
+- defaultValue: string — The default value of the form control. Primarily used for resetting the form control.
+- size: 'small' | 'medium' | 'large' — The textarea's size. Default 'medium'
+- appearance: 'filled' | 'outlined' — Visual appearance. Default 'outlined'
+- label: string — The textarea's label. If you need to display HTML, use the label slot instead.
+- hint: string — The textarea's hint. If you need to display HTML, use the hint slot instead.
+- placeholder: string — Placeholder text to show as a hint when the input is empty.
+- rows: number — The number of rows to display by default. Default 4
+- resize: 'none' | 'vertical' | 'horizontal' | 'both' | 'auto' — Controls how the textarea can be resized. Default 'vertical'
+- disabled: boolean — Disables the textarea.
+- readonly: boolean — Makes the textarea readonly.
+- form: string | null — Associate the control to a form by id when outside a form. Default null
+- required: boolean — Makes the textarea a required field.
+- minlength: number — The minimum length of input that will be considered valid.
+- maxlength: number — The maximum length of input that will be considered valid.
+- autocapitalize: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters' — Auto-capitalization mode.
+- autocorrect: string — Browser autocorrect hint.
+- autocomplete: string — Browser autocomplete hint (see MDN for values).
+- autofocus: boolean — Focus on load.
+- enterkeyhint: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' — Enter key hint for virtual keyboards.
+- spellcheck: boolean — Enables spell checking. Default true
+- inputmode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' — Virtual keyboard type.
+- withLabel: boolean — SSR helper when a label element is slotted.
+- withHint: boolean — SSR helper when hint is slotted.
 
-### Example
+## Methods
+- focus(options?: FocusOptions) — Sets focus on the textarea.
+- blur() — Removes focus from the textarea.
+- select() — Selects all the text in the textarea.
+- scrollPosition(position?: { top?: number; left?: number }) — Gets or sets the textarea's scroll position.
+- setSelectionRange(selectionStart: number, selectionEnd: number, selectionDirection: 'forward' | 'backward' | 'none') — Sets selection range.
+- setRangeText(replacement: string, start: number, end: number, selectMode: 'select' | 'start' | 'end' | 'preserve') — Replaces a range of text.
 
-```html
-<wa-textarea
-  label="Feedback"
-  hint="Please tell us what you think."
-  rows="6"
-  resize="auto"
-  size="medium"
-  [(ngModel)]="feedback"
-></wa-textarea>
-```
+## Events
+- blur — Emitted when the control loses focus.
+- change — Emitted when an alteration to the control's value is committed by the user.
+- focus — Emitted when the control gains focus.
+- input — Emitted when the control receives input.
+- wa-invalid — Emitted when validity is checked and constraints aren't satisfied.
 
----
+## Custom States
+- blank — The textarea is empty. CSS selector: `:state(blank)`
 
-*Last updated: 2025-06-04*
+## CSS parts
+- label — The label
+- form-control-input — The input's wrapper.
+- hint — The hint's wrapper.
+- textarea — The internal `<textarea>` control.
+- base — The wrapper around the `<textarea>` control.

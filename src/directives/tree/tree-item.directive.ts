@@ -16,19 +16,26 @@ import {
   standalone: true
 })
 export class WaTreeItemDirective implements OnChanges {
-  // Inputs
-  @Input() expanded = false;
-  @Input() selected = false;
-  @Input() disabled = false;
-  @Input() lazy = false;
+  // Inputs (boolean-like inputs accept boolean or string for plain attribute support)
+  @Input() expanded: boolean | string = false;
+  @Input() selected: boolean | string = false;
+  @Input() disabled: boolean | string = false;
+  @Input() lazy: boolean | string = false;
 
-  // Outputs
-  @Output() expand = new EventEmitter<void>();
-  @Output() afterExpand = new EventEmitter<void>();
-  @Output() collapse = new EventEmitter<void>();
-  @Output() afterCollapse = new EventEmitter<void>();
+  /** Optional data payload bound to this tree item. Used for two-way binding via ngModel */
+  @Input() data: any;
+  /** Optional value key; if provided, will be used as value identity */
+  @Input() value: any;
+
+  // Outputs — camelCase only; hyphenated aliases removed to prevent infinite
+  // re-dispatch loops (HostListener catches native event → emit → Output alias
+  // dispatches it back as the same native event → HostListener catches it again).
+  @Output() waExpand = new EventEmitter<void>();
+  @Output() waAfterExpand = new EventEmitter<void>();
+  @Output() waCollapse = new EventEmitter<void>();
+  @Output() waAfterCollapse = new EventEmitter<void>();
   @Output() lazyChange = new EventEmitter<boolean>();
-  @Output() lazyLoad = new EventEmitter<void>();
+  @Output() waLazyLoad = new EventEmitter<void>();
 
   // Styling inputs
   @Input() selectionBackgroundColor?: string;
@@ -41,45 +48,74 @@ export class WaTreeItemDirective implements OnChanges {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
-  @HostListener('wa-expand')
-  onExpand() {
-    if (!this.disabled) {
-      this.expand.emit();
+  /** Guard flag – prevents re-entrant HostListener → emit → HostListener loops. */
+  private emitting = false;
+
+  private isTruthy(value: boolean | string | null | undefined): boolean {
+    return value === '' || value === true || value === 'true';
+  }
+
+  @HostListener('wa-expand', ['$event'])
+  onExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    if (!this.isTruthy(this.disabled)) {
+      this.emitting = true;
+      try { this.waExpand.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-expand')
-  onAfterExpand() {
-    this.afterExpand.emit();
+  @HostListener('wa-after-expand', ['$event'])
+  onAfterExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterExpand.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-collapse')
-  onCollapse() {
-    if (!this.disabled) {
-      this.collapse.emit();
+  @HostListener('wa-collapse', ['$event'])
+  onCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    if (!this.isTruthy(this.disabled)) {
+      this.emitting = true;
+      try { this.waCollapse.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-collapse')
-  onAfterCollapse() {
-    this.afterCollapse.emit();
+  @HostListener('wa-after-collapse', ['$event'])
+  onAfterCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterCollapse.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-lazy-load')
-  onLazyLoad() {
-    if (this.lazy && !this.disabled) {
-      this.lazyLoad.emit();
+  @HostListener('wa-lazy-load', ['$event'])
+  onLazyLoad(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    if (this.isTruthy(this.lazy) && !this.isTruthy(this.disabled)) {
+      this.emitting = true;
+      try { this.waLazyLoad.emit(); } finally { this.emitting = false; }
     }
   }
 
   ngOnChanges() {
-    const item = this.el.nativeElement;
+    const item = this.el.nativeElement as any;
 
     // Set boolean attributes
     this.setBooleanAttr('expanded', this.expanded);
     this.setBooleanAttr('selected', this.selected);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('lazy', this.lazy);
+
+    // Store data/value on the DOM element for wa-tree to collect
+    if (this.data !== undefined) {
+      item.__waData = this.data;
+    }
+    if (this.value !== undefined) {
+      item.__waValue = this.value;
+      // Mirror as attribute when it's a primitive for potential CSS/selector usage
+      if (typeof this.value === 'string' || typeof this.value === 'number' || typeof this.value === 'boolean') {
+        try { this.renderer.setAttribute(item, 'value', String(this.value)); } catch {}
+      }
+    }
 
     // Apply custom CSS properties for styling
     this.setCssVar('--selection-background-color', this.selectionBackgroundColor);
@@ -94,7 +130,7 @@ export class WaTreeItemDirective implements OnChanges {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -102,8 +138,9 @@ export class WaTreeItemDirective implements OnChanges {
    * Sets a boolean attribute on the native element if the value is truthy
    * For boolean attributes, the presence of the attribute (with empty value) indicates true
    */
-  private setBooleanAttr(name: string, value: boolean) {
-    if (value) {
+  private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
+    const truthy = value === '' || value === true || value === 'true';
+    if (truthy) {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);

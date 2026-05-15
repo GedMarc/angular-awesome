@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf, NgFor } from '@angular/common';
 import { WaButtonGroupDirective } from './button-group.directive';
 import { WaButtonDirective } from '../button/button.directive';
 
@@ -27,7 +28,7 @@ import { WaButtonDirective } from '../button/button.directive';
     </div>
   `,
   standalone: true,
-  imports: [WaButtonGroupDirective, WaButtonDirective]
+  imports: [WaButtonGroupDirective, WaButtonDirective, NgIf, NgFor]
 })
 class TestHostComponent {
   label?: string;

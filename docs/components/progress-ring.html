@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>ProgressRing Component <span class="version-badge">v1.0.1</span></h1>
+                <h1>ProgressRing Component <span class="version-badge">synced with Web Awesome 3.4.x</span></h1>
                 <p class="subtitle"><wa-progress-ring> provides progress ring functionality for Angular applications.</p>
             </header>
 
@@ -109,48 +109,67 @@ import { WaProgressRingDirective } from 'angular-awesome/progress-ring';</pre>
       <section>
         <h2>Examples</h2>
         <h1>Progress Ring Examples</h1>
-<h2>Basic Usage</h2>
-<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot;&gt;&lt;/wa-progress-ring&gt;
+<p>Progress rings are used to show the progress of a determinate operation in a circular fashion.</p>
+<h2>Basic</h2>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;25&quot;&gt;&lt;/wa-progress-ring&gt;
 </code></pre>
-<h2>With Label</h2>
-<pre><code class="language-html">&lt;wa-progress-ring value=&quot;75&quot; label=&quot;Loading...&quot;&gt;&lt;/wa-progress-ring&gt;
+<h2>Size</h2>
+<p>Use the <code>--size</code> custom property to set the diameter of the progress ring.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; style=&quot;--size: 200px;&quot;&gt;&lt;/wa-progress-ring&gt;
 </code></pre>
-<h2>Different Sizes</h2>
-<pre><code class="language-html">&lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;100px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+<h2>Track and Indicator Width</h2>
+<p>Use the <code>--track-width</code> and <code>--indicator-width</code> custom properties to set the width of the progress ring&#39;s track and indicator.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; style=&quot;--track-width: 6px; --indicator-width: 12px;&quot;&gt;&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Colors</h2>
+<p>To change the color, use the <code>--track-color</code> and <code>--indicator-color</code> custom properties.</p>
+<pre><code class="language-html">&lt;wa-progress-ring
+  value=&quot;50&quot;
+  style=&quot;
+    --track-color: pink;
+    --indicator-color: deeppink;
+  &quot;
+&gt;
+&lt;/wa-progress-ring&gt;
+</code></pre>
+<h2>Labels</h2>
+<p>Use the default slot to show a label inside the progress ring.</p>
+<pre><code class="language-html">&lt;wa-progress-ring value=&quot;50&quot; class=&quot;progress-ring-values&quot; style=&quot;margin-bottom: .5rem;&quot;&gt;50%&lt;/wa-progress-ring&gt;
+&lt;br /&gt;
+&lt;wa-button circle&gt;&lt;wa-icon name=&quot;minus&quot; variant=&quot;solid&quot; label=&quot;Decrease&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-button&gt;
+&lt;wa-button circle&gt;&lt;wa-icon name=&quot;plus&quot; variant=&quot;solid&quot; label=&quot;Increase&quot;&gt;&lt;/wa-icon&gt;&lt;/wa-button&gt;
+
+&lt;script&gt;
+  const progressRing = document.querySelector(&#39;.progress-ring-values&#39;);
+  const subtractButton = progressRing.nextElementSibling.nextElementSibling;
+  const addButton = subtractButton.nextElementSibling;
+
+  addButton.addEventListener(&#39;click&#39;, () =&gt; {
+    const value = Math.min(100, (progressRing.value || 50) + 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+
+  subtractButton.addEventListener(&#39;click&#39;, () =&gt; {
+    const value = Math.max(0, (progressRing.value || 50) - 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+&lt;/script&gt;
+</code></pre>
+<hr>
+<h2>Angular bindings (alternative)</h2>
+<p>The same can be expressed using Angular inputs (mapped to CSS variables) and ngModel.</p>
+<pre><code class="language-html">&lt;!-- Different sizes via [size] input (maps to --size) --&gt;
+&lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;100px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
 &lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;150px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
 &lt;wa-progress-ring value=&quot;60&quot; [size]=&quot;&#39;200px&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
-</code></pre>
-<h2>Custom Styling</h2>
-<pre><code class="language-html">&lt;!-- Custom track width and color --&gt;
-&lt;wa-progress-ring 
-  value=&quot;40&quot; 
-  [trackWidth]=&quot;&#39;4px&#39;&quot; 
-  [trackColor]=&quot;&#39;#e0e0e0&#39;&quot;&gt;
-&lt;/wa-progress-ring&gt;
 
-&lt;!-- Custom indicator width and color --&gt;
-&lt;wa-progress-ring 
-  value=&quot;65&quot; 
-  [indicatorWidth]=&quot;&#39;6px&#39;&quot; 
-  [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;
-&lt;/wa-progress-ring&gt;
-
-&lt;!-- Custom transition duration --&gt;
-&lt;wa-progress-ring 
-  value=&quot;80&quot; 
-  [indicatorTransitionDuration]=&quot;&#39;1.5s&#39;&quot;&gt;
-&lt;/wa-progress-ring&gt;
-
-&lt;!-- Combining multiple style customizations --&gt;
-&lt;wa-progress-ring 
-  value=&quot;70&quot; 
-  [size]=&quot;&#39;120px&#39;&quot; 
-  [trackWidth]=&quot;&#39;3px&#39;&quot; 
-  [trackColor]=&quot;&#39;#f5f5f5&#39;&quot; 
-  [indicatorWidth]=&quot;&#39;5px&#39;&quot; 
-  [indicatorColor]=&quot;&#39;#2196f3&#39;&quot; 
-  [indicatorTransitionDuration]=&quot;&#39;0.8s&#39;&quot;&gt;
-&lt;/wa-progress-ring&gt;
+&lt;!-- Custom styling via inputs that map to CSS variables --&gt;
+&lt;wa-progress-ring value=&quot;40&quot; [trackWidth]=&quot;&#39;4px&#39;&quot; [trackColor]=&quot;&#39;#e0e0e0&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;65&quot; [indicatorWidth]=&quot;&#39;6px&#39;&quot; [indicatorColor]=&quot;&#39;#4caf50&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;80&quot; [indicatorTransitionDuration]=&quot;&#39;1.5s&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
+&lt;wa-progress-ring value=&quot;70&quot; [size]=&quot;&#39;120px&#39;&quot; [trackWidth]=&quot;&#39;3px&#39;&quot; [trackColor]=&quot;&#39;#f5f5f5&#39;&quot; [indicatorWidth]=&quot;&#39;5px&#39;&quot; [indicatorColor]=&quot;&#39;#2196f3&#39;&quot; [indicatorTransitionDuration]=&quot;&#39;0.8s&#39;&quot;&gt;&lt;/wa-progress-ring&gt;
 </code></pre>
 <h2>Using with Angular Bindings</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;

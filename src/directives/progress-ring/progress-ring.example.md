@@ -1,58 +1,79 @@
 # Progress Ring Examples
 
-## Basic Usage
+Progress rings are used to show the progress of a determinate operation in a circular fashion.
 
+## Basic
 ```html
-<wa-progress-ring value="50"></wa-progress-ring>
+<wa-progress-ring value="25"></wa-progress-ring>
 ```
 
-## With Label
-
+## Size
+Use the `--size` custom property to set the diameter of the progress ring.
 ```html
-<wa-progress-ring value="75" label="Loading..."></wa-progress-ring>
+<wa-progress-ring value="50" style="--size: 200px;"></wa-progress-ring>
 ```
 
-## Different Sizes
-
+## Track and Indicator Width
+Use the `--track-width` and `--indicator-width` custom properties to set the width of the progress ring's track and indicator.
 ```html
+<wa-progress-ring value="50" style="--track-width: 6px; --indicator-width: 12px;"></wa-progress-ring>
+```
+
+## Colors
+To change the color, use the `--track-color` and `--indicator-color` custom properties.
+```html
+<wa-progress-ring
+  value="50"
+  style="
+    --track-color: pink;
+    --indicator-color: deeppink;
+  "
+>
+</wa-progress-ring>
+```
+
+## Labels
+Use the default slot to show a label inside the progress ring.
+```html
+<wa-progress-ring value="50" class="progress-ring-values" style="margin-bottom: .5rem;">50%</wa-progress-ring>
+<br />
+<wa-button circle><wa-icon name="minus" variant="solid" label="Decrease"></wa-icon></wa-button>
+<wa-button circle><wa-icon name="plus" variant="solid" label="Increase"></wa-icon></wa-button>
+
+<script>
+  const progressRing = document.querySelector('.progress-ring-values');
+  const subtractButton = progressRing.nextElementSibling.nextElementSibling;
+  const addButton = subtractButton.nextElementSibling;
+
+  addButton.addEventListener('click', () => {
+    const value = Math.min(100, (progressRing.value || 50) + 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+
+  subtractButton.addEventListener('click', () => {
+    const value = Math.max(0, (progressRing.value || 50) - 10);
+    progressRing.value = value;
+    progressRing.textContent = `${value}%`;
+  });
+</script>
+```
+
+---
+
+## Angular bindings (alternative)
+The same can be expressed using Angular inputs (mapped to CSS variables) and ngModel.
+```html
+<!-- Different sizes via [size] input (maps to --size) -->
 <wa-progress-ring value="60" [size]="'100px'"></wa-progress-ring>
 <wa-progress-ring value="60" [size]="'150px'"></wa-progress-ring>
 <wa-progress-ring value="60" [size]="'200px'"></wa-progress-ring>
-```
 
-## Custom Styling
-
-```html
-<!-- Custom track width and color -->
-<wa-progress-ring 
-  value="40" 
-  [trackWidth]="'4px'" 
-  [trackColor]="'#e0e0e0'">
-</wa-progress-ring>
-
-<!-- Custom indicator width and color -->
-<wa-progress-ring 
-  value="65" 
-  [indicatorWidth]="'6px'" 
-  [indicatorColor]="'#4caf50'">
-</wa-progress-ring>
-
-<!-- Custom transition duration -->
-<wa-progress-ring 
-  value="80" 
-  [indicatorTransitionDuration]="'1.5s'">
-</wa-progress-ring>
-
-<!-- Combining multiple style customizations -->
-<wa-progress-ring 
-  value="70" 
-  [size]="'120px'" 
-  [trackWidth]="'3px'" 
-  [trackColor]="'#f5f5f5'" 
-  [indicatorWidth]="'5px'" 
-  [indicatorColor]="'#2196f3'" 
-  [indicatorTransitionDuration]="'0.8s'">
-</wa-progress-ring>
+<!-- Custom styling via inputs that map to CSS variables -->
+<wa-progress-ring value="40" [trackWidth]="'4px'" [trackColor]="'#e0e0e0'"></wa-progress-ring>
+<wa-progress-ring value="65" [indicatorWidth]="'6px'" [indicatorColor]="'#4caf50'"></wa-progress-ring>
+<wa-progress-ring value="80" [indicatorTransitionDuration]="'1.5s'"></wa-progress-ring>
+<wa-progress-ring value="70" [size]="'120px'" [trackWidth]="'3px'" [trackColor]="'#f5f5f5'" [indicatorWidth]="'5px'" [indicatorColor]="'#2196f3'" [indicatorTransitionDuration]="'0.8s'"></wa-progress-ring>
 ```
 
 ## Using with Angular Bindings

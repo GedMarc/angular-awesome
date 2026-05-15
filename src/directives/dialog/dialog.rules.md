@@ -93,7 +93,7 @@ To prevent close behavior (e.g. for validation or confirmation), listen to `waHi
 This component depends on:
 
 * [`<wa-icon>`](../icon/icon.rules.md)
-* [`<wa-icon-button>`](../icon-button/icon-button.rules.md)
+* [`<wa-button>`](../button/button.rules.md) (for icon buttons)
 
 ### Examples
 

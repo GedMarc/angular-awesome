@@ -82,11 +82,13 @@ export class DrawerExampleComponent {
 
 ```html
 <wa-drawer label="Custom Header Drawer" [(open)]="isCustomHeaderOpen">
-  <wa-icon-button 
+  <wa-button 
+    appearance="plain" 
+    size="small" 
     slot="header-actions" 
-    name="info-circle"
     aria-label="More information">
-  </wa-icon-button>
+    <wa-icon name="info-circle"></wa-icon>
+  </wa-button>
   
   <p>This drawer has custom actions in the header.</p>
   <wa-button slot="footer" data-drawer="close">Close</wa-button>
@@ -289,25 +291,25 @@ export class DrawerExampleComponent {
   placement="start"
   size="250px">
   
-  <wa-menu>
-    <wa-menu-item (click)="navigate('home'); isNavOpen = false;">
-      <wa-icon name="home" slot="prefix"></wa-icon>
+  <div class="navigation-items">
+    <wa-dropdown-item (click)="navigate('home'); isNavOpen = false;">
+      <wa-icon name="home" slot="start"></wa-icon>
       Home
-    </wa-menu-item>
-    <wa-menu-item (click)="navigate('profile'); isNavOpen = false;">
-      <wa-icon name="user" slot="prefix"></wa-icon>
+    </wa-dropdown-item>
+    <wa-dropdown-item (click)="navigate('profile'); isNavOpen = false;">
+      <wa-icon name="user" slot="start"></wa-icon>
       Profile
-    </wa-menu-item>
-    <wa-menu-item (click)="navigate('settings'); isNavOpen = false;">
-      <wa-icon name="cog" slot="prefix"></wa-icon>
+    </wa-dropdown-item>
+    <wa-dropdown-item (click)="navigate('settings'); isNavOpen = false;">
+      <wa-icon name="cog" slot="start"></wa-icon>
       Settings
-    </wa-menu-item>
+    </wa-dropdown-item>
     <wa-divider></wa-divider>
-    <wa-menu-item (click)="logout(); isNavOpen = false;">
-      <wa-icon name="sign-out-alt" slot="prefix"></wa-icon>
+    <wa-dropdown-item (click)="logout(); isNavOpen = false;">
+      <wa-icon name="sign-out-alt" slot="start"></wa-icon>
       Logout
-    </wa-menu-item>
-  </wa-menu>
+    </wa-dropdown-item>
+  </div>
 </wa-drawer>
 
 <wa-button (click)="isNavOpen = true">Open Navigation</wa-button>

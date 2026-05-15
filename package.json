@@ -1,11 +1,12 @@
 {
   "name": "angular-awesome",
-  "version": "1.0.4",
+  "version": "3.6.0",
   "private": false,
-  "description": "Angular wrapper for the web awesome framework",
+  "description": "Angular 20+ wrappers for the Web Awesome 3.6.x web components framework",
   "keywords": [
     "angular",
     "web-awesome",
+    "web-components",
     "wrapper",
     "components",
     "directives"
@@ -17,29 +18,35 @@
     "url": "https://github.com/GedMarc/angular-awesome.git"
   },
   "homepage": "https://gedmarc.github.io/angular-awesome",
-
   "scripts": {
     "build": "ng build",
+    "lint": "ng lint",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
     "docs:generate": "node docs/generate-docs.js",
     "docs:build": "npm run docs:generate && ng build",
-    "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome"
+    "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add"
   },
   "main": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "module": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
   "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
-    "@angular/common": "^19.2.0",
-    "@angular/core": "^19.2.0",
-    "@angular/forms": "^19.2.0"
+    "@angular/common": ">=20.0.0",
+    "@angular/core": ">=20.0.0",
+    "@angular/forms": ">=20.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^20.3.6",
-    "@angular/cli": "^19.2.11",
-    "@angular/compiler-cli": "^19.2.0",
+    "@angular/build": "^20.3.19",
+    "@angular/cli": "^20.3.19",
+    "@angular/compiler-cli": "^20.3.17",
+    "@angular/platform-browser": "^20.3.17",
+    "@angular/platform-browser-dynamic": "^20.3.17",
+    "@eslint/js": "^9.0.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "^20.7.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.0.0",
     "gh-pages": "^6.1.1",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
@@ -48,10 +55,11 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "marked": "^9.1.6",
-    "ng-packagr": "^19.2.0",
+    "ng-packagr": "^20.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "typescript": "~5.7.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "8.56.1",
     "zone.js": "~0.15.0"
   }
 }

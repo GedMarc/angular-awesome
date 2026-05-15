@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaButtonDirective } from './button.directive';
 
 // Create a test host component to test the button directive
@@ -26,17 +27,17 @@ import { WaButtonDirective } from './button.directive';
       [formMethod]="formMethod"
       [formNoValidate]="formNoValidate"
       [formTarget]="formTarget"
-      (blur)="onBlur($event)"
-      (focus)="onFocus($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-invalid)="onInvalid($event)"
     >
-      <div slot="prefix" *ngIf="showPrefix">Prefix</div>
+      <div slot="start" *ngIf="showPrefix">Prefix</div>
       {{ buttonText }}
-      <div slot="suffix" *ngIf="showSuffix">Suffix</div>
+      <div slot="end" *ngIf="showSuffix">Suffix</div>
     </wa-button>
   `,
   standalone: true,
-  imports: [WaButtonDirective]
+  imports: [WaButtonDirective, NgIf]
 })
 class TestHostComponent {
   variant?: string;
@@ -121,7 +122,7 @@ describe('WaButtonDirective', () => {
     hostFixture.detectChanges();
 
     expect(buttonElement.hasAttribute('pill')).toBeTrue();
-    expect(buttonElement.hasAttribute('caret')).toBeTrue();
+    expect(buttonElement.hasAttribute('with-caret')).toBeTrue();
     expect(buttonElement.hasAttribute('disabled')).toBeTrue();
     expect(buttonElement.hasAttribute('loading')).toBeTrue();
   });
@@ -132,7 +133,7 @@ describe('WaButtonDirective', () => {
     hostFixture.detectChanges();
 
     expect(buttonElement.hasAttribute('pill')).toBeFalse();
-    expect(buttonElement.hasAttribute('caret')).toBeFalse();
+    expect(buttonElement.hasAttribute('with-caret')).toBeFalse();
   });
 
   it('should set link attributes correctly', () => {
@@ -172,8 +173,8 @@ describe('WaButtonDirective', () => {
     hostComponent.showSuffix = true;
     hostFixture.detectChanges();
 
-    const prefixSlot = hostFixture.nativeElement.querySelector('[slot="prefix"]');
-    const suffixSlot = hostFixture.nativeElement.querySelector('[slot="suffix"]');
+    const prefixSlot = hostFixture.nativeElement.querySelector('[slot="start"]');
+    const suffixSlot = hostFixture.nativeElement.querySelector('[slot="end"]');
 
     expect(prefixSlot).toBeTruthy();
     expect(prefixSlot.textContent?.trim()).toBe('Prefix');
@@ -183,9 +184,9 @@ describe('WaButtonDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(buttonElement, 'click');
-    spyOn(buttonElement, 'focus');
-    spyOn(buttonElement, 'blur');
+    spyOn(buttonElement as any, 'click');
+    spyOn(buttonElement as any, 'focus');
+    spyOn(buttonElement as any, 'blur');
 
     // Call the directive methods
     buttonDirective.click();
@@ -208,9 +209,9 @@ describe('WaButtonDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new Event('blur');
-    const focusEvent = new Event('focus');
-    const invalidEvent = new Event('waInvalid');
+    const blurEvent = new Event('wa-blur');
+    const focusEvent = new Event('wa-focus');
+    const invalidEvent = new Event('wa-invalid');
 
     // Dispatch events on the native element
     buttonElement.dispatchEvent(blurEvent);
@@ -221,5 +222,44 @@ describe('WaButtonDirective', () => {
     expect(hostComponent.onBlur).toHaveBeenCalled();
     expect(hostComponent.onFocus).toHaveBeenCalled();
     expect(hostComponent.onInvalid).toHaveBeenCalled();
+  });
+  it('should open dialog by id on click even if dialog is added later', () => {
+    // Ensure no dialog initially
+    expect(document.getElementById('testDialog')).toBeFalsy();
+
+    // Set data-dialog attribute after init to simulate dynamic usage
+    buttonElement.setAttribute('data-dialog', 'open testDialog');
+
+    // Create dialog element later (after button init)
+    const dialogEl: any = document.createElement('wa-dialog');
+    dialogEl.id = 'testDialog';
+    dialogEl.show = jasmine.createSpy('show');
+    dialogEl.hide = jasmine.createSpy('hide');
+    document.body.appendChild(dialogEl);
+
+    // Click the button
+    buttonElement.click();
+
+    expect(dialogEl.show).toHaveBeenCalled();
+
+    // Cleanup
+    document.body.removeChild(dialogEl);
+  });
+
+  it('should update variant and appearance when inputs change', () => {
+    // Initial values
+    hostComponent.variant = 'neutral';
+    hostComponent.appearance = 'filled';
+    hostFixture.detectChanges();
+    expect(buttonElement.getAttribute('variant')).toBe('neutral');
+    expect(buttonElement.getAttribute('appearance')).toBe('filled');
+
+    // Update values
+    hostComponent.variant = 'danger';
+    hostComponent.appearance = 'outlined';
+    hostFixture.detectChanges();
+
+    expect(buttonElement.getAttribute('variant')).toBe('danger');
+    expect(buttonElement.getAttribute('appearance')).toBe('outlined');
   });
 });

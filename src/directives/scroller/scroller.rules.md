@@ -1,8 +1,8 @@
-### Scroller Wrapper Rules
+### Scroller Directive Rules
 
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
-The `wa-scroller-wrapper` component wraps the `<wa-scroller>` Web Awesome element and provides Angular-style bindings for all relevant attributes and styles.
+The `WaScrollerDirective` attaches directly to the `<wa-scroller>` Web Awesome element and provides Angular-style bindings for all relevant attributes and styles. Backward compatibility for the legacy `wa-scroller-wrapper` selector is maintained, but new code should use `<wa-scroller>`.
 
 #### ✅ Inputs
 

@@ -20,6 +20,7 @@ export class WaPageComponent implements OnChanges {
   @Input() navOpen?: boolean;
   @Input() disableSticky?: string;
   @Input() navigationPlacement?: 'start' | 'end';
+  @Input() disableNavigationToggle?: boolean | string;
 
   @Input() menuWidth?: string;
   @Input() mainWidth?: string;
@@ -51,6 +52,11 @@ export class WaPageComponent implements OnChanges {
     if (this.navigationPlacement !== undefined) {
       el.setAttribute('navigation-placement', this.navigationPlacement);
     }
+    if (this.disableNavigationToggle === true || this.disableNavigationToggle === 'true' || this.disableNavigationToggle === '') {
+      el.setAttribute('disable-navigation-toggle', '');
+    } else if (this.disableNavigationToggle === false || this.disableNavigationToggle === 'false') {
+      el.removeAttribute('disable-navigation-toggle');
+    }
 
     this.setCssVar('--menu-width', this.menuWidth || '');
     this.setCssVar('--main-width', this.mainWidth || '');
@@ -74,7 +80,7 @@ export class WaPageComponent implements OnChanges {
 
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

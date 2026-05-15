@@ -60,7 +60,7 @@
   This callout has a plain style without borders.
 </wa-callout>
 
-<wa-callout appearance="outlined filled">
+<wa-callout appearance="filled-outlined">
   <strong>Outlined Filled Appearance</strong><br />
   This callout has both an outline and a filled background.
 </wa-callout>
@@ -90,25 +90,25 @@
 ## With Icon
 
 ```html
-<wa-callout variant="success" appearance="outlined filled" size="medium">
+<wa-callout variant="success" appearance="filled-outlined" size="medium">
   <wa-icon slot="icon" name="circle-check" variant="regular"></wa-icon>
   <strong>Success!</strong><br />
   Your changes have been saved.
 </wa-callout>
 
-<wa-callout variant="warning" appearance="outlined filled" size="medium">
+<wa-callout variant="warning" appearance="filled-outlined" size="medium">
   <wa-icon slot="icon" name="triangle-exclamation" variant="regular"></wa-icon>
   <strong>Warning!</strong><br />
   This action cannot be undone.
 </wa-callout>
 
-<wa-callout variant="danger" appearance="outlined filled" size="medium">
+<wa-callout variant="danger" appearance="filled-outlined" size="medium">
   <wa-icon slot="icon" name="circle-xmark" variant="regular"></wa-icon>
   <strong>Error!</strong><br />
   There was a problem processing your request.
 </wa-callout>
 
-<wa-callout variant="neutral" appearance="outlined filled" size="medium">
+<wa-callout variant="neutral" appearance="filled-outlined" size="medium">
   <wa-icon slot="icon" name="circle-info" variant="regular"></wa-icon>
   <strong>Information</strong><br />
   Here's some additional information you might find useful.

@@ -1,6 +1,211 @@
 # Select Examples
 
-## Basic Usage
+Selects allow you to choose items from a menu of predefined options. Use the native `wa-select` tag (not a wrapper) so the Web Awesome library detects it.
+
+## Basic
+```html
+<wa-select>
+  <wa-option value="">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+  <wa-option value="option-4">Option 4</wa-option>
+  <wa-option value="option-5">Option 5</wa-option>
+  <wa-option value="option-6">Option 6</wa-option>
+</wa-select>
+```
+
+## Labels
+```html
+<wa-select label="Select one">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Hint
+```html
+<wa-select label="Experience" hint="Please tell us your skill level.">
+  <wa-option value="1">Novice</wa-option>
+  <wa-option value="2">Intermediate</wa-option>
+  <wa-option value="3">Advanced</wa-option>
+</wa-select>
+```
+
+## Placeholders
+```html
+<wa-select placeholder="Select one">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Clearable
+```html
+<wa-select with-clear value="option-1">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Appearance
+```html
+<wa-select appearance="filled">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Pill
+```html
+<wa-select pill>
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Disabled
+```html
+<wa-select placeholder="Disabled" disabled>
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Multiple
+```html
+<wa-select label="Select a Few" multiple with-clear>
+  <wa-option value="option-1" selected>Option 1</wa-option>
+  <wa-option value="option-2" selected>Option 2</wa-option>
+  <wa-option value="option-3" selected>Option 3</wa-option>
+  <wa-option value="option-4">Option 4</wa-option>
+  <wa-option value="option-5">Option 5</wa-option>
+  <wa-option value="option-6">Option 6</wa-option>
+</wa-select>
+```
+
+## Setting Initial Values
+```html
+<wa-select>
+  <wa-option value="option-1" selected>Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+  <wa-option value="option-4">Option 4</wa-option>
+</wa-select>
+
+<wa-select multiple with-clear>
+  <wa-option value="option-1" selected>Option 1</wa-option>
+  <wa-option value="option-2" selected>Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+  <wa-option value="option-4">Option 4</wa-option>
+</wa-select>
+```
+
+## Grouping Options
+```html
+<wa-select>
+  <small>Section 1</small>
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+  <wa-divider></wa-divider>
+  <small>Section 2</small>
+  <wa-option value="option-4">Option 4</wa-option>
+  <wa-option value="option-5">Option 5</wa-option>
+  <wa-option value="option-6">Option 6</wa-option>
+</wa-select>
+```
+
+## Sizes
+```html
+<wa-select placeholder="Small" size="small">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+
+<wa-select placeholder="Medium" size="medium">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+
+<wa-select placeholder="Large" size="large">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Placement
+```html
+<wa-select placement="top">
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Start & End Decorations
+```html
+<wa-select placeholder="Small" size="small" with-clear>
+  <wa-icon slot="start" name="house" variant="solid"></wa-icon>
+  <wa-icon slot="end" name="flag-checkered"></wa-icon>
+  <wa-option value="option-1">Option 1</wa-option>
+  <wa-option value="option-2">Option 2</wa-option>
+  <wa-option value="option-3">Option 3</wa-option>
+</wa-select>
+```
+
+## Custom Tags (multiple)
+```html
+<wa-select placeholder="Select one" multiple with-clear class="custom-tag">
+  <wa-option value="email" selected>
+    <wa-icon slot="start" name="envelope" variant="solid"></wa-icon>
+    Email
+  </wa-option>
+  <wa-option value="phone" selected>
+    <wa-icon slot="start" name="phone" variant="solid"></wa-icon>
+    Phone
+  </wa-option>
+  <wa-option value="chat">
+    <wa-icon slot="start" name="comment" variant="solid"></wa-icon>
+    Chat
+  </wa-option>
+</wa-select>
+
+<script type="module">
+  await customElements.whenDefined('wa-select');
+  const select = document.querySelector('.custom-tag');
+  if (select && 'updateComplete' in select) {
+    await select.updateComplete;
+  }
+  select.getTag = (option, index) => {
+    const icon = option.querySelector('wa-icon[slot="start"]');
+    const name = icon && icon.getAttribute('name') ? icon.getAttribute('name') : '';
+    const label = option.getAttribute('label') || (option.textContent || '').trim();
+    return `
+      <wa-tag with-remove>
+        <wa-icon name="${name}" style="padding-inline-end: .5rem;"></wa-icon>
+        ${label}
+      </wa-tag>
+    `;
+  };
+</script>
+```
+
+## Lazy loading notes
+- If a `<wa-select>` starts empty but has a `value`, it will update when matching options are later added.
+- For `multiple`, initially missing selected options will be added to selection when they appear (unless user changed selection).
+
+---
+
+## Legacy wrapper examples (deprecated)
 
 ```html
 <wa-select-wrapper label="Choose an option">
@@ -77,12 +282,12 @@
 </wa-select-wrapper>
 ```
 
-## Clearable Select
+## Select with Clear Button
 
 ```html
 <wa-select-wrapper 
-  label="Clearable Select" 
-  [clearable]="true"
+  label="Select with Clear Button" 
+  [withClear]="true"
   placeholder="Select an option">
   <wa-option value="option1">Option 1</wa-option>
   <wa-option value="option2">Option 2</wa-option>
@@ -226,7 +431,7 @@
 </wa-select-wrapper>
 ```
 
-```typescript
+```text
 // In your component
 onSelectInput(event: Event): void {
   console.log('Select input:', (event.target as HTMLSelectElement).value);
@@ -286,7 +491,7 @@ import { Component } from '@angular/core';
       [required]="isRequired" 
       [disabled]="isDisabled"
       [multiple]="isMultiple"
-      [clearable]="isClearable"
+      [withClear]="isWithClear"
       (changeEvent)="onSelectionChange($event)">
       <wa-option *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">
         {{ option.label }}
@@ -305,7 +510,7 @@ export class SelectDemoComponent {
   isRequired = true;
   isDisabled = false;
   isMultiple = false;
-  isClearable = true;
+  isWithClear = true;
   
   options = [
     { value: 'option1', label: 'Option 1', disabled: false },
@@ -359,7 +564,7 @@ interface Country {
       
       <wa-select-wrapper 
         label="Country" 
-        [clearable]="true"
+        [withClear]="true"
         placeholder="Select your country"
         [(ngModel)]="selectedCountry"
         (changeEvent)="onCountryChange($event)"
@@ -433,7 +638,7 @@ export class CountrySelectorComponent implements OnInit {
 ```html
 <wa-select-wrapper 
   label="Select a Destination" 
-  [clearable]="true"
+  [withClear]="true"
   placeholder="Choose a destination"
   [backgroundColor]="'#f8f9fa'"
   [borderColor]="'#007bff'"

@@ -1,143 +1,143 @@
 # Angular Awesome
 
-Angular Awesome is an Angular 19+ wrapper library for the [Web Awesome](https://backers.webawesome.com/) UI framework. It provides idiomatic Angular bindings for `wa-*` custom elements, allowing full integration with Angular forms, events, styles, and lifecycle mechanisms.
+[![CI](https://github.com/GedMarc/angular-awesome/actions/workflows/ci.yml/badge.svg)](https://github.com/GedMarc/angular-awesome/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/angular-awesome.svg)](https://www.npmjs.com/package/angular-awesome)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Angular](https://img.shields.io/badge/Angular-20%2B-dd0031.svg?logo=angular)](https://angular.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
+> Angular 20+ wrapper directives for the [Web Awesome](https://www.webawesome.com/) web-components framework.
 
+## Overview
 
+**Angular Awesome** provides first-class Angular directives that wrap every Web Awesome web component, giving you:
 
-📦 Version: `1.0.4`
+- **Native Angular binding** — `@Input()` properties, `@Output()` events, and two-way binding via `ngModel` / Reactive Forms where applicable.
+- **Template form error-state management** — wrappers participate in Angular validation so template-driven errors and state flags are available without extra plumbing.
+- **No custom schema required** — importing standalone wrappers avoids needing `CUSTOM_ELEMENTS_SCHEMA` just to use Web Awesome tags.
+- **Lazy loading where it matters** — selected components support lazy-loading patterns to reduce initial bundle and render cost.
+- **Full component coverage** — 70+ directives including layout primitives, form controls, navigation, overlays, charts, toasts, and more.
+- **Type safety** — full TypeScript declarations with strict mode support.
+- **Lightweight** — thin wrappers with zero extra runtime dependencies beyond Angular and Web Awesome.
 
-### What's New in 1.0.3
-- Enhanced checkbox directive with improved form integration
-- Updated icon and icon-button directives for better customization
-- Improved color-picker directive with additional styling options
-- Fixed issues in comparison and details directives
-- Enhanced select directive functionality
-- Updated documentation for various components
-- General bug fixes and performance improvements
+## Prerequisites
 
-🔗 [Web Awesome Component Docs](https://backers.webawesome.com/)
+| Dependency | Version |
+|------------|---------|
+| Angular    | `>=20.0` |
+| Node.js    | `20+`   |
+| Web Awesome | `3.5.x` |
 
----
-
-## 📌 About
-
-This library makes it easy to use Web Awesome's rich set of components in Angular projects. It preserves native performance and design fidelity while enabling Angular-style development patterns:
-
-* Angular `@Input()`s and `@Output()`s for binding
-* Full support for `ngModel`
-* Scoped styling via Angular-style inputs mapped to CSS custom properties
-* Web component slot and attribute integration
-* Standalone component packaging (no module needed)
-
----
-
-## 🚀 Getting Started
-
-### 1. Install the package
+## Installation
 
 ```bash
 npm install angular-awesome
 ```
 
-Make sure you’ve installed `@angular/core`, `@angular/forms`, and `@angular/common` version 19.2 or later.
+Make sure the Web Awesome stylesheet and scripts are loaded in your application (see the [Web Awesome docs](https://www.webawesome.com/docs/) for details).
 
-### 2. Import a component
+## Quick Start
 
-Each component is standalone and can be imported individually.
+Import the directives you need directly — every directive is standalone:
 
-```ts
-import { WaInputComponent } from 'angular-awesome/input';
+```typescript
+import { WaButtonDirective } from 'angular-awesome';
 
 @Component({
   standalone: true,
-  imports: [WaInputComponent, FormsModule],
-  template: `<wa-input [(ngModel)]="value" hint="Enter text"></wa-input>`
+  imports: [WaButtonDirective],
+  template: `<wa-button variant="brand" (click)="save()">Save</wa-button>`,
 })
 export class MyComponent {
-  value = '';
+  save() {
+    console.log('Saved!');
+  }
 }
 ```
 
----
+## Available Components
 
-## 📚 Components
+<details>
+<summary>Expand full component list (70+)</summary>
 
-All components and directives mirror the structure of the Web Awesome library. Check out the component-specific README files under:
+| Category | Components |
+|----------|-----------|
+| **Layout** | `wa-layout-align`, `wa-layout-cluster`, `wa-layout-flank`, `wa-layout-frame`, `wa-layout-gap`, `wa-layout-grid`, `wa-layout-split`, `wa-layout-stack` |
+| **Navigation** | `wa-breadcrumbs`, `wa-tab-group`, `wa-tree` |
+| **Buttons** | `wa-button`, `wa-button-group`, `wa-copy-button` |
+| **Form Controls** | `wa-checkbox`, `wa-color-picker`, `wa-combobox`, `wa-file-input`, `wa-input`, `wa-number-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-text-area` |
+| **Data Display** | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code` |
+| **Charts** | `wa-chart`, `wa-bar-chart`, `wa-bubble-chart`, `wa-doughnut-chart`, `wa-line-chart`, `wa-pie-chart`, `wa-polar-area-chart`, `wa-radar-chart`, `wa-scatter-chart` |
+| **Feedback** | `wa-callout`, `wa-dialog`, `wa-drawer`, `wa-popover`, `wa-popup`, `wa-toast`, `wa-toast-item`, `wa-tooltip` |
+| **Progress** | `wa-progress-bar`, `wa-progress-ring`, `wa-spinner` |
+| **Formatting** | `wa-format-bytes`, `wa-format-date`, `wa-format-number`, `wa-relative-time` |
+| **Media** | `wa-animated-image`, `wa-animation`, `wa-zoomable-frame` |
+| **Utilities** | `wa-divider`, `wa-dropdown`, `wa-include`, `wa-intersection-observer`, `wa-markdown`, `wa-mutation-observer`, `wa-resize-observer`, `wa-scroller`, `wa-split-panel` |
 
-```
-projects/angular-awesome/src/lib/<component>/README.md
-```
+</details>
 
-Each contains:
+## Development
 
-* Angular usage examples
-* Available inputs and outputs
-* Styling customizations
-* Link to general [Web Awesome Angular Rules](./RULES.md)
-
-### 📖 Documentation
-
-Visit our [GitHub Pages documentation](https://gedmarc.github.io/angular-awesome/) for comprehensive information about all components and directives, including:
-
-* Component overviews
-* API references
-* Usage examples
-* Styling options
-
----
-
-## 🎨 Styling
-
-Angular-style input bindings automatically set the corresponding Web Awesome CSS custom properties. For example:
-
-```html
-<wa-spinner [trackWidth]="'6px'" [indicatorColor]="'deeppink'"></wa-spinner>
-```
-
-These map directly to:
-
-```css
---track-width: 6px;
---indicator-color: deeppink;
-```
-
----
-
-## 🧪 Testing
-
-To run tests:
+### Build
 
 ```bash
-npm test
-```
-
-For CI or headless testing:
-
-```bash
-npm run test:headless
-```
-
----
-
-## 📦 Build
-
-To produce the production bundle:
-
-```bash
+npm install
 npm run build
 ```
 
-This uses `ng-packagr` and outputs all formats in the `dist/angular-awesome` directory.
+### Test
 
----
+```bash
+# Headless (recommended — no browser window)
+npm run test:headless
 
-## 🛠️ Contributing
+# Interactive (opens Chrome for debugging)
+npm test
+```
 
-Contributions are welcome through issues and PR's!
+### Documentation
 
----
+```bash
+npm run docs:build
+```
 
-## 🧾 License
+Generated docs are deployed to [https://gedmarc.github.io/angular-awesome](https://gedmarc.github.io/angular-awesome).
 
-2025 GedMarc
+## Project Structure
+
+```
+src/
+├── directives/       # One folder per Web Awesome component
+│   ├── button/
+│   ├── checkbox/
+│   ├── dialog/
+│   └── ...           # 70+ component directories
+├── services/         # Shared Angular services (e.g. toast service)
+├── types/            # Shared TypeScript types
+├── public-api.ts     # Library public API surface
+└── test-main.ts      # Karma test bootstrap
+```
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/my-change`).
+3. Run `npm run build` and `npm run test:headless` to verify your changes.
+4. Open a pull request against `master`.
+
+All pull requests are validated by the [CI workflow](.github/workflows/ci.yml).
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
+
+## Links
+
+- 📦 [npm package](https://www.npmjs.com/package/angular-awesome)
+- 📖 [Documentation](https://gedmarc.github.io/angular-awesome)
+- 🐛 [Issue tracker](https://github.com/GedMarc/angular-awesome/issues)
+- 📝 [Changelog](CHANGELOG.md)
+
+

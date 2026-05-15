@@ -1,25 +1,31 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { WaSelectWrapperComponent, WaOptionComponent } from './select.directive';
 import { FormsModule } from '@angular/forms';
 
 // Create a test host component for WaSelectWrapperComponent
 @Component({
   template: `
-    <wa-select-wrapper
+    <wa-select
       [(ngModel)]="value"
       [label]="label"
       [hint]="hint"
       [placeholder]="placeholder"
       [appearance]="appearance"
       [pill]="pill"
-      [clearable]="clearable"
+      [withClear]="withClear"
       [disabled]="disabled"
       [multiple]="multiple"
       [size]="size"
       [placement]="placement"
       [required]="required"
       [maxOptionsVisible]="maxOptionsVisible"
+      [maxSelected]="maxSelected"
+      [name]="name"
+      [open]="open"
+      [withLabel]="withLabel"
+      [withHint]="withHint"
       [form]="form"
       [backgroundColor]="backgroundColor"
       [borderColor]="borderColor"
@@ -29,39 +35,44 @@ import { FormsModule } from '@angular/forms';
       [backgroundColorHover]="backgroundColorHover"
       [textColorCurrent]="textColorCurrent"
       [textColorHover]="textColorHover"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (clearEvent)="onClear($event)"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (invalidEvent)="onInvalid($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-clear)="onClear($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       <wa-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
         {{ option.text }}
       </wa-option>
-    </wa-select-wrapper>
+    </wa-select>
   `,
   standalone: true,
-  imports: [WaSelectWrapperComponent, WaOptionComponent, FormsModule]
+  imports: [WaSelectWrapperComponent, WaOptionComponent, FormsModule, NgFor]
 })
 class SelectTestHostComponent {
-  value?: string | string[];
+  value?: any | any[];
   label?: string;
   hint?: string;
   placeholder?: string;
   appearance?: 'outlined' | 'filled' | string;
   pill?: boolean | string;
-  clearable?: boolean | string;
+  withClear?: boolean | string;
   disabled?: boolean | string;
   multiple?: boolean | string;
   size?: 'small' | 'medium' | 'large' | string;
   placement?: 'top' | 'bottom' | string;
   required?: boolean | string;
   maxOptionsVisible?: number | string;
+  maxSelected?: number | string;
+  name?: string;
+  open?: boolean | string;
+  withLabel?: boolean | string;
+  withHint?: boolean | string;
   form?: string;
   backgroundColor?: string;
   borderColor?: string;
@@ -72,7 +83,8 @@ class SelectTestHostComponent {
   textColorCurrent?: string;
   textColorHover?: string;
 
-  options = [
+  // Widen to any[] so later tests can assign object values without TS errors
+  options: any[] = [
     { value: 'option1', label: 'Option 1', text: 'First Option' },
     { value: 'option2', label: 'Option 2', text: 'Second Option' },
     { value: 'option3', label: 'Option 3', text: 'Third Option' }
@@ -109,7 +121,7 @@ class SelectTestHostComponent {
   imports: [WaOptionComponent]
 })
 class OptionTestHostComponent {
-  value?: string;
+  value?: any;
   label?: string;
   disabled?: boolean | string;
   backgroundColorCurrent?: string;
@@ -142,8 +154,8 @@ describe('WaSelectWrapperComponent', () => {
     hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
 
-    // Get the wa-select-wrapper element
-    selectElement = hostFixture.nativeElement.querySelector('wa-select-wrapper');
+    // Get the wa-select element
+    selectElement = hostFixture.nativeElement.querySelector('wa-select');
     selectComponent = hostFixture.debugElement.query(sel => sel.nativeElement === selectElement).injector.get(WaSelectWrapperComponent);
   });
 
@@ -180,14 +192,14 @@ describe('WaSelectWrapperComponent', () => {
 
   it('should set boolean attributes correctly', () => {
     hostComponent.pill = true;
-    hostComponent.clearable = true;
+    hostComponent.withClear = true;
     hostComponent.disabled = true;
     hostComponent.multiple = true;
     hostComponent.required = true;
     hostFixture.detectChanges();
 
     expect(selectElement.hasAttribute('pill')).toBeTrue();
-    expect(selectElement.hasAttribute('clearable')).toBeTrue();
+    expect(selectElement.hasAttribute('with-clear')).toBeTrue();
     expect(selectElement.hasAttribute('disabled')).toBeTrue();
     expect(selectElement.hasAttribute('multiple')).toBeTrue();
     expect(selectElement.hasAttribute('required')).toBeTrue();
@@ -195,7 +207,7 @@ describe('WaSelectWrapperComponent', () => {
 
   it('should not set boolean attributes when false', () => {
     hostComponent.pill = false;
-    hostComponent.clearable = false;
+    hostComponent.withClear = false;
     hostComponent.disabled = false;
     hostComponent.multiple = false;
     hostComponent.required = false;
@@ -210,11 +222,11 @@ describe('WaSelectWrapperComponent', () => {
 
   it('should handle string values for boolean attributes', () => {
     hostComponent.pill = 'true';
-    hostComponent.clearable = '';
+    hostComponent.withClear = '';
     hostFixture.detectChanges();
 
     expect(selectElement.hasAttribute('pill')).toBeTrue();
-    expect(selectElement.hasAttribute('clearable')).toBeTrue();
+    expect(selectElement.hasAttribute('with-clear')).toBeTrue();
   });
 
   it('should set style attributes correctly', () => {
@@ -255,10 +267,10 @@ describe('WaSelectWrapperComponent', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const inputEvent = new Event('input');
-    const changeEvent = new Event('change');
-    const focusEvent = new FocusEvent('focus');
-    const blurEvent = new FocusEvent('blur');
+    const inputEvent = new Event('wa-input');
+    const changeEvent = new Event('wa-change');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
     const clearEvent = new CustomEvent('wa-clear');
     const showEvent = new CustomEvent('wa-show');
     const afterShowEvent = new CustomEvent('wa-after-show');
@@ -289,6 +301,50 @@ describe('WaSelectWrapperComponent', () => {
     expect(hostComponent.onHide).toHaveBeenCalled();
     expect(hostComponent.onAfterHide).toHaveBeenCalled();
     expect(hostComponent.onInvalid).toHaveBeenCalled();
+  });
+
+  it('should set name attribute correctly', () => {
+    hostComponent.name = 'fruit-select';
+    hostFixture.detectChanges();
+    expect(selectElement.getAttribute('name')).toBe('fruit-select');
+  });
+
+  it('should set open boolean attribute correctly', () => {
+    hostComponent.open = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('open')).toBeTrue();
+
+    hostComponent.open = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('open')).toBeFalse();
+  });
+
+  it('should set with-label boolean attribute correctly', () => {
+    hostComponent.withLabel = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-label')).toBeTrue();
+
+    hostComponent.withLabel = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-label')).toBeFalse();
+  });
+
+  it('should set with-hint boolean attribute correctly', () => {
+    hostComponent.withHint = true;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-hint')).toBeTrue();
+
+    hostComponent.withHint = false;
+    hostFixture.detectChanges();
+    expect(selectElement.hasAttribute('with-hint')).toBeFalse();
+  });
+
+  it('should not have an active class on the first option by default', () => {
+    const firstOption: HTMLElement | null = hostFixture.nativeElement.querySelector('wa-option');
+    expect(firstOption).toBeTruthy();
+    // Allow any microtasks invoked in ngOnInit to run
+    hostFixture.detectChanges();
+    expect(firstOption!.classList.contains('active')).toBeFalse();
   });
 
   it('should implement ControlValueAccessor correctly', () => {
@@ -338,6 +394,157 @@ describe('WaSelectWrapperComponent', () => {
       hostFixture.detectChanges();
       expect(selectElement.getAttribute('placement')).toBe(placement);
     });
+  });
+
+  it('should enforce maxSelected when writing value in multiple mode', () => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 2;
+    hostFixture.detectChanges();
+
+    // writeValue with 3 selections should clamp to 2
+    selectComponent.writeValue(['option1', 'option2', 'option3']);
+    hostFixture.detectChanges();
+
+    expect(selectElement.getAttribute('value')).toBe('option1 option2');
+  });
+
+  it('should clamp selection to maxSelected on user change in multiple mode', () => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 2;
+    hostFixture.detectChanges();
+
+    // Simulate user selecting three values
+    selectElement.setAttribute('value', 'option1 option2 option3');
+    (selectElement as any).value = 'option1 option2 option3';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    // ngModel should receive the clamped array
+    expect(Array.isArray(hostComponent.value)).toBeTrue();
+    expect(hostComponent.value).toEqual(['option1', 'option2']);
+    // DOM should also be clamped
+    expect(selectElement.getAttribute('value')).toBe('option1 option2');
+  });
+
+  it('should clamp when value attribute changes externally (MutationObserver)', async () => {
+    hostComponent.multiple = true;
+    hostComponent.maxSelected = 1; // allow only one
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+
+    // Wait for any pending isWriting reset
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    // External update: push two selected keys
+    selectElement.setAttribute('value', 'option2 option3');
+    (selectElement as any).value = 'option2 option3';
+
+    // Allow MutationObserver callbacks and subsequent microtasks to complete
+    await new Promise(resolve => setTimeout(resolve, 0));
+    hostFixture.detectChanges();
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    // Should be clamped to the first one only
+    expect(selectElement.getAttribute('value')).toBe('option2');
+    expect(hostComponent.value).toEqual(['option2']);
+  });
+
+  it('should update ngModel on change for single selection', () => {
+    hostComponent.multiple = false;
+    hostFixture.detectChanges();
+
+    // Simulate user picking option2 by setting value attribute and dispatching 'change'
+    selectElement.setAttribute('value', 'option2');
+    (selectElement as any).value = 'option2';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.value).toBe('option2');
+  });
+
+  it('should update ngModel on change for multiple selection', () => {
+    hostComponent.multiple = true;
+    hostFixture.detectChanges();
+
+    // Simulate user picking option1 and option3
+    selectElement.setAttribute('value', 'option1 option3');
+    (selectElement as any).value = 'option1 option3';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(Array.isArray(hostComponent.value)).toBeTrue();
+    expect(hostComponent.value).toEqual(['option1', 'option3']);
+  });
+
+  it('should support two-way binding with object values (single selection) using valueField', async () => {
+    const obj1 = { id: 1, name: 'One' };
+    const obj2 = { id: 2, name: 'Two' };
+    const obj3 = { id: 3, name: 'Three' };
+
+    // Configure mapping before providing object options
+    selectComponent.valueField = 'id';
+
+    // Provide object options
+    hostComponent.options = [
+      { value: obj1, label: 'One', text: 'One' },
+      { value: obj2, label: 'Two', text: 'Two' },
+      { value: obj3, label: 'Three', text: 'Three' }
+    ];
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+
+    // Model -> View
+    hostComponent.multiple = false;
+    hostComponent.value = obj2;
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+
+    // writeValue is called by ngModel; verify DOM gets the key
+    expect(selectElement.getAttribute('value')).toBe('2');
+
+    // View -> Model: simulate user selecting obj1 by key
+    selectElement.setAttribute('value', '1');
+    (selectElement as any).value = '1';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.value).toEqual(obj1);
+  });
+
+  it('should support two-way binding with object values (multiple selection) using valueField', async () => {
+    const obj1 = { id: 'a', name: 'A' };
+    const obj2 = { id: 'b', name: 'B' };
+    const obj3 = { id: 'c', name: 'C' };
+
+    // Configure mapping before providing object options
+    selectComponent.valueField = 'id';
+
+    hostComponent.options = [
+      { value: obj1, label: 'A', text: 'A' },
+      { value: obj2, label: 'B', text: 'B' },
+      { value: obj3, label: 'C', text: 'C' }
+    ];
+    hostComponent.multiple = true;
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+
+
+    // Model -> View
+    hostComponent.value = [obj1, obj3];
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    expect(selectElement.getAttribute('value')).toBe('a c');
+
+    // View -> Model: select b and c (order matters as provided by WC)
+    selectElement.setAttribute('value', 'b c');
+    (selectElement as any).value = 'b c';
+    selectElement.dispatchEvent(new Event('change'));
+    hostFixture.detectChanges();
+
+    expect(Array.isArray(hostComponent.value)).toBeTrue();
+    expect(hostComponent.value).toEqual([obj2, obj3]);
   });
 });
 

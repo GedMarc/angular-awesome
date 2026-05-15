@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaCalloutDirective } from './callout.directive';
 
 // Create a test host component to test the callout directive
@@ -15,7 +16,7 @@ import { WaCalloutDirective } from './callout.directive';
     </wa-callout>
   `,
   standalone: true,
-  imports: [WaCalloutDirective]
+  imports: [WaCalloutDirective, NgIf]
 })
 class TestHostComponent {
   variant?: string;
@@ -61,12 +62,12 @@ describe('WaCalloutDirective', () => {
 
   it('should set appearance attributes correctly', () => {
     hostComponent.variant = 'success';
-    hostComponent.appearance = 'outlined filled';
+    hostComponent.appearance = 'filled-outlined';
     hostComponent.size = 'medium';
     hostFixture.detectChanges();
 
     expect(calloutElement.getAttribute('variant')).toBe('success');
-    expect(calloutElement.getAttribute('appearance')).toBe('outlined filled');
+    expect(calloutElement.getAttribute('appearance')).toBe('filled-outlined');
     expect(calloutElement.getAttribute('size')).toBe('medium');
   });
 
@@ -97,13 +98,18 @@ describe('WaCalloutDirective', () => {
   });
 
   it('should handle different appearance values', () => {
-    const appearances = ['accent', 'filled', 'outlined', 'plain', 'outlined filled', 'outlined accent'];
+    const appearances = ['accent', 'filled', 'outlined', 'plain', 'filled-outlined', 'outlined accent'];
 
     appearances.forEach(appearance => {
       hostComponent.appearance = appearance;
       hostFixture.detectChanges();
       expect(calloutElement.getAttribute('appearance')).toBe(appearance);
     });
+
+    // Legacy mapping should normalize to the new token
+    hostComponent.appearance = 'outlined filled' as any;
+    hostFixture.detectChanges();
+    expect(calloutElement.getAttribute('appearance')).toBe('filled-outlined');
   });
 
   it('should handle different size values', () => {

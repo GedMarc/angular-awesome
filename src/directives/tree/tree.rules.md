@@ -1,24 +1,29 @@
-## Tree & Tree Item Component Rules
+# Tree Component Rules
 
-📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
+Trees allow you to display a hierarchical list of selectable tree items. Items with children can be expanded and collapsed as desired by the user.
 
-### Component: Tree
+📌 Follows the general [Web Awesome Angular Rules](../../../RULES.md).
+
+## Component: Tree
 
 **Tag:** `<wa-tree>`
 
-#### Inputs
+### Inputs
 
-| Input name  | Type       | Description |          |                                                                           |
-| ----------- | ---------- | ----------- | -------- | ------------------------------------------------------------------------- |
-| `selection` | \`'single' | 'multiple'  | 'leaf'\` | Controls selection mode: single, multiple, or only leaf nodes selectable. |
+| Input name  | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `selection` | `'single' | 'multiple' | 'leaf'` | Controls selection mode: single, multiple, or only leaf nodes selectable. |
+| `name`      | `string` | Sets the tree's name attribute; can be used for querySelector (e.g., document.querySelector(`wa-tree[name="myTree"]`)). |
+| `ngModel`   | any | Two-way binding of selected leaf data objects. In `single` mode it's a single object or null; in `multiple` mode it's an array of objects. |
 
-#### Outputs
+### Outputs / Events
 
-| Output name       | Description                                       |
-| ----------------- | ------------------------------------------------- |
-| `selectionChange` | Emits when a tree item is selected or deselected. |
+| Name                | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `selectionChange`   | Angular output re-emitting the native `wa-selection-change`. |
+| `wa-selection-change` (native) | Emitted when a tree item is selected or deselected. |
 
-#### Styling Inputs
+### Styling (CSS Custom Properties)
 
 Set the following CSS custom properties via Angular `[style.--property]` bindings:
 
@@ -28,11 +33,11 @@ Set the following CSS custom properties via Angular `[style.--property]` binding
 * `--indent-guide-style`
 * `--indent-guide-width`
 
-### Component: Tree Item
+## Component: Tree Item
 
 **Tag:** `<wa-tree-item>`
 
-#### Inputs
+### Inputs
 
 | Input name | Type      | Description                             |
 | ---------- | --------- | --------------------------------------- |
@@ -40,8 +45,10 @@ Set the following CSS custom properties via Angular `[style.--property]` binding
 | `selected` | `boolean` | Whether the item is initially selected. |
 | `disabled` | `boolean` | Disables interaction with the item.     |
 | `lazy`     | `boolean` | Enables lazy loading.                   |
+| `data`     | `any`     | Arbitrary data object/value bound to the item; used for ngModel mapping. |
+| `value`    | `any`     | Optional primitive identifier mirrored as attribute; used for ngModel mapping. |
 
-#### Outputs
+### Outputs / Events
 
 | Output name     | Description                                                      |
 | --------------- | ---------------------------------------------------------------- |
@@ -52,7 +59,7 @@ Set the following CSS custom properties via Angular `[style.--property]` binding
 | `lazyChange`    | Fires when the `lazy` state changes.                             |
 | `lazyLoad`      | Fires when a lazy item is triggered to expand and needs loading. |
 
-#### Styling Inputs
+### Styling (CSS Custom Properties)
 
 CSS custom properties applied via Angular bindings:
 
@@ -69,9 +76,9 @@ CSS custom properties applied via Angular bindings:
 * Icon support via `<wa-icon>` in content.
 * Emits `lazyLoad` event for async loading scenarios.
 
-#### Required Slots (Optional)
+### Slots
 
-| Slot name       | Description                        |
+| Name            | Description                        |
 | --------------- | ---------------------------------- |
 | `(default)`     | Item label and nested children     |
 | `expand-icon`   | Custom icon when item is expanded  |

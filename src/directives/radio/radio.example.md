@@ -137,54 +137,73 @@
   </wa-radio>
   <wa-radio value="option2">Regular Option</wa-radio>
 </wa-radio-group>
+
+<!-- Custom checked icon scale -->
+<wa-radio-group label="Custom Checked Icon Scale">
+  <wa-radio 
+    value="small" 
+    [styleCheckedIconScale]="'0.6'">
+    Small Check Icon
+  </wa-radio>
+  <wa-radio 
+    value="medium" 
+    [styleCheckedIconScale]="'0.8'">
+    Medium Check Icon
+  </wa-radio>
+  <wa-radio 
+    value="large" 
+    [styleCheckedIconScale]="'1.0'">
+    Large Check Icon
+  </wa-radio>
+</wa-radio-group>
 ```
 
 ## Radio Buttons
 
 ```html
 <wa-radio-group label="Radio Buttons">
-  <wa-radio-button value="option1">Option 1</wa-radio-button>
-  <wa-radio-button value="option2">Option 2</wa-radio-button>
-  <wa-radio-button value="option3">Option 3</wa-radio-button>
+  <wa-radio appearance="button" value="option1">Option 1</wa-radio>
+  <wa-radio appearance="button" value="option2">Option 2</wa-radio>
+  <wa-radio appearance="button" value="option3">Option 3</wa-radio>
 </wa-radio-group>
 
 <!-- With prefix and suffix -->
 <wa-radio-group label="Radio Buttons with Icons">
-  <wa-radio-button value="home" [withPrefix]="true">
-    <wa-icon name="home" slot="prefix"></wa-icon>
+  <wa-radio appearance="button" value="home" [withPrefix]="true">
+    <wa-icon name="home" slot="start"></wa-icon>
     Home
-  </wa-radio-button>
-  <wa-radio-button value="settings" [withPrefix]="true">
-    <wa-icon name="settings" slot="prefix"></wa-icon>
+  </wa-radio>
+  <wa-radio appearance="button" value="settings" [withPrefix]="true">
+    <wa-icon name="settings" slot="start"></wa-icon>
     Settings
-  </wa-radio-button>
-  <wa-radio-button value="profile" [withPrefix]="true" [withSuffix]="true">
-    <wa-icon name="user" slot="prefix"></wa-icon>
+  </wa-radio>
+  <wa-radio appearance="button" value="profile" [withPrefix]="true" [withSuffix]="true">
+    <wa-icon name="user" slot="start"></wa-icon>
     Profile
-    <wa-badge slot="suffix">New</wa-badge>
-  </wa-radio-button>
+    <wa-badge slot="end">New</wa-badge>
+  </wa-radio>
 </wa-radio-group>
 
 <!-- Custom styled radio buttons -->
 <wa-radio-group label="Custom Styled Radio Buttons">
-  <wa-radio-button 
+  <wa-radio appearance="button"
     value="option1" 
     [styleIndicatorColor]="'#4caf50'"
     [styleIndicatorWidth]="'3px'">
     Green Option
-  </wa-radio-button>
-  <wa-radio-button 
+  </wa-radio>
+  <wa-radio appearance="button"
     value="option2" 
     [styleIndicatorColor]="'#2196f3'"
     [styleIndicatorWidth]="'3px'">
     Blue Option
-  </wa-radio-button>
-  <wa-radio-button 
+  </wa-radio>
+  <wa-radio appearance="button"
     value="option3" 
     [styleIndicatorColor]="'#f44336'"
     [styleIndicatorWidth]="'3px'">
     Red Option
-  </wa-radio-button>
+  </wa-radio>
 </wa-radio-group>
 ```
 
