@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { WaToastContainerComponent } from './toast-container.component';
 import { WaToastService, WA_TOAST_CONFIG } from '../../services/toast/toast.service';
 
@@ -16,7 +15,7 @@ describe('WaToastContainerComponent', () => {
     await TestBed.configureTestingModule({
       imports: [WaToastContainerComponent],
       providers: [
-        { provide: WA_TOAST_CONFIG, useValue: { position: 'bottom-left', max: 3, duration: 0, newestOnTop: true } }
+        { provide: WA_TOAST_CONFIG, useValue: { placement: 'bottom-start', max: 3, duration: 0, newestOnTop: true } }
       ]
     }).compileComponents();
 
@@ -25,50 +24,65 @@ describe('WaToastContainerComponent', () => {
     service = TestBed.inject(WaToastService);
   });
 
-  it('uses default position top-right when no @Input provided', () => {
+  it('uses default placement top-end when no @Input provided', () => {
     fixture.detectChanges();
 
     const host: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(getAttr(host, 'data-pos')).toBe('top-right');
-
-    const stack = host.querySelector('.wa-toast-stack') as HTMLElement;
-    expect(getAttr(stack, 'data-position')).toBe('top-right');
+    const waToast = host.querySelector('wa-toast') as HTMLElement;
+    expect(waToast).not.toBeNull();
+    expect(getAttr(waToast, 'placement')).toBe('top-end');
   });
 
-  it('accepts @Input position and overrides service config', () => {
-    component.position = 'top-center' as any;
+  it('accepts @Input placement and overrides service config', () => {
+    component.placement = 'top-center';
     fixture.detectChanges();
 
     const host: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(getAttr(host, 'data-pos')).toBe('top-center');
-
-    const stack = host.querySelector('.wa-toast-stack') as HTMLElement;
-    expect(getAttr(stack, 'data-position')).toBe('top-center');
+    const waToast = host.querySelector('wa-toast') as HTMLElement;
+    expect(getAttr(waToast, 'placement')).toBe('top-center');
   });
 
-  it('renders callouts for visible toasts with default appearance and size; close button removes', () => {
+  it('renders wa-toast-item elements for visible toasts with default variant and size', () => {
     fixture.detectChanges();
 
-    service.show('Hello World', { closable: true, appearance: undefined, size: undefined });
+    service.show('Hello World');
     fixture.detectChanges();
 
     const host: HTMLElement = fixture.nativeElement as HTMLElement;
-    const callouts = host.querySelectorAll('wa-callout');
-    expect(callouts.length).toBe(1);
+    const toastItems = host.querySelectorAll('wa-toast-item');
+    expect(toastItems.length).toBe(1);
 
     // Defaults applied by template bindings
-    const callout = callouts[0] as HTMLElement;
-    expect(getAttr(callout, 'appearance')).toBe('filled');
-    expect(getAttr(callout, 'size')).toBe('medium');
-    expect(getAttr(callout, 'variant')).toBeNull();
+    const toastItem = toastItems[0] as HTMLElement;
+    expect(getAttr(toastItem, 'variant')).toBe('neutral');
+    expect(getAttr(toastItem, 'size')).toBe('medium');
+  });
 
-    // Close button
-    const closeBtn = host.querySelector('.wa-toast__close') as HTMLButtonElement;
-    expect(closeBtn).withContext('close button should exist').not.toBeNull();
-    closeBtn.click();
+  it('renders toast items with correct variant when specified', () => {
     fixture.detectChanges();
 
-    expect(host.querySelectorAll('wa-callout').length).toBe(0);
+    service.success('Success!');
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement as HTMLElement;
+    const toastItem = host.querySelector('wa-toast-item') as HTMLElement;
+    expect(getAttr(toastItem, 'variant')).toBe('success');
+  });
+
+  it('close removes a toast item from the display', () => {
+    fixture.detectChanges();
+
+    const id = service.show('To close');
+    fixture.detectChanges();
+
+    let toastItems = fixture.nativeElement.querySelectorAll('wa-toast-item');
+    expect(toastItems.length).toBe(1);
+
+    service.close(id);
+    fixture.detectChanges();
+
+    toastItems = fixture.nativeElement.querySelectorAll('wa-toast-item');
+    expect(toastItems.length).toBe(0);
   });
 
   it('orders toasts by newestOnTop when true', () => {
@@ -80,7 +94,8 @@ describe('WaToastContainerComponent', () => {
     fixture.detectChanges();
 
     const host: HTMLElement = fixture.nativeElement as HTMLElement;
-    const messages = Array.from(host.querySelectorAll('.wa-toast__message')).map(e => e.textContent?.trim());
+    const toastItems = Array.from(host.querySelectorAll('wa-toast-item'));
+    const messages = toastItems.map(e => e.textContent?.trim());
     expect(messages).toEqual(['Second', 'First']);
   });
 
@@ -89,10 +104,64 @@ describe('WaToastContainerComponent', () => {
     service.setConfig({ duration: 5 });
     service.show('Auto');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('wa-callout').length).toBe(1);
+    expect(fixture.nativeElement.querySelectorAll('wa-toast-item').length).toBe(1);
 
     tick(6);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('wa-callout').length).toBe(0);
+    expect(fixture.nativeElement.querySelectorAll('wa-toast-item').length).toBe(0);
   }));
+
+  it('renders title in strong tag when toast has a title', () => {
+    fixture.detectChanges();
+
+    service.show('Body text', { title: 'Title' });
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement as HTMLElement;
+    const strong = host.querySelector('wa-toast-item strong');
+    expect(strong).not.toBeNull();
+    expect(strong?.textContent?.trim()).toBe('Title');
+  });
+
+  it('sets data-toast-id attribute on each toast item', () => {
+    fixture.detectChanges();
+
+    const id = service.show('Tracked');
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement as HTMLElement;
+    const toastItem = host.querySelector('wa-toast-item') as HTMLElement;
+    expect(getAttr(toastItem, 'data-toast-id')).toBe(id);
+  });
+
+  it('renders multiple toast items up to max', () => {
+    fixture.detectChanges();
+    service.setConfig({ max: 3 });
+
+    service.show('One');
+    service.show('Two');
+    service.show('Three');
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('wa-toast-item');
+    expect(items.length).toBe(3);
+  });
+
+  it('queues toasts beyond max and backfills on close', () => {
+    fixture.detectChanges();
+    service.setConfig({ max: 1 });
+
+    const id1 = service.show('Visible');
+    service.show('Queued');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('wa-toast-item').length).toBe(1);
+
+    service.close(id1);
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('wa-toast-item');
+    expect(items.length).toBe(1);
+    expect(items[0].textContent?.trim()).toBe('Queued');
+  });
 });

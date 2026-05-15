@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaButtonDirective } from './button.directive';
 
 // Create a test host component to test the button directive
@@ -26,9 +27,9 @@ import { WaButtonDirective } from './button.directive';
       [formMethod]="formMethod"
       [formNoValidate]="formNoValidate"
       [formTarget]="formTarget"
-      (blur)="onBlur($event)"
-      (focus)="onFocus($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-invalid)="onInvalid($event)"
     >
       <div slot="start" *ngIf="showPrefix">Prefix</div>
       {{ buttonText }}
@@ -36,7 +37,7 @@ import { WaButtonDirective } from './button.directive';
     </wa-button>
   `,
   standalone: true,
-  imports: [WaButtonDirective]
+  imports: [WaButtonDirective, NgIf]
 })
 class TestHostComponent {
   variant?: string;
@@ -183,9 +184,9 @@ describe('WaButtonDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(buttonElement, 'click');
-    spyOn(buttonElement, 'focus');
-    spyOn(buttonElement, 'blur');
+    spyOn(buttonElement as any, 'click');
+    spyOn(buttonElement as any, 'focus');
+    spyOn(buttonElement as any, 'blur');
 
     // Call the directive methods
     buttonDirective.click();
@@ -208,9 +209,9 @@ describe('WaButtonDirective', () => {
     spyOn(hostComponent, 'onInvalid');
 
     // Create mock events
-    const blurEvent = new Event('blur');
-    const focusEvent = new Event('focus');
-    const invalidEvent = new Event('waInvalid');
+    const blurEvent = new Event('wa-blur');
+    const focusEvent = new Event('wa-focus');
+    const invalidEvent = new Event('wa-invalid');
 
     // Dispatch events on the native element
     buttonElement.dispatchEvent(blurEvent);

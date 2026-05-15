@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — Testing"
+  short_description: "Write and run tests for Angular Awesome components and services"
+  default_prompt: "Use $angular-awesome-testing to write specs for wa-* directives, services, and components."
+

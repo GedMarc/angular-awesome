@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaAvatarDirective } from './avatar.component';
 
 // Create a test host component to test the avatar directive
@@ -20,7 +21,7 @@ import { WaAvatarDirective } from './avatar.component';
     </wa-avatar>
   `,
   standalone: true,
-  imports: [WaAvatarDirective]
+  imports: [WaAvatarDirective, NgIf]
 })
 class TestHostComponent {
   image?: string;

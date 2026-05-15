@@ -6,14 +6,14 @@ import {
   EventEmitter,
   AfterViewInit,
   OnDestroy,
-  Renderer2,
+  Renderer2, OnChanges,
 } from '@angular/core';
 
 @Directive({
   selector: 'wa-tooltip',
   standalone: true,
 })
-export class WaTooltipDirective implements AfterViewInit, OnDestroy {
+export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
 
 
   @Input() for!: string;
@@ -24,7 +24,7 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   @Input() open?: boolean | string;
   @Input() showDelay: number | string = 150;
   @Input() hideDelay: number | string = 0;
-  @Input() trigger: string = 'hover focus';
+  @Input() trigger: string = 'hover focusNative';
   @Input() withoutArrow?: boolean | string;
 
   // Styling Inputs (mapped to CSS custom properties)
@@ -45,9 +45,13 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   }
 
   @Output() waShow = new EventEmitter<CustomEvent>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<CustomEvent>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<CustomEvent>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<CustomEvent>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   private listeners: (() => void)[] = [];
 
@@ -56,11 +60,15 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   }
 
 
-  private el: ElementRef;
+  private el: HTMLElement;
 
   ngAfterViewInit(): void {
     this.setProperties();
     this.attachEvents();
+  }
+
+  ngOnChanges(): void {
+    this.setProperties();
   }
 
   ngOnDestroy(): void {
@@ -83,6 +91,8 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
   private setAttr(name: string, value: any): void {
     if (value !== undefined && value !== null) {
       this.renderer.setAttribute(this.el, name, String(value));
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 
@@ -100,12 +110,14 @@ export class WaTooltipDirective implements AfterViewInit, OnDestroy {
       if (!isNaN(n as number)) {
         this.renderer.setAttribute(this.el, name, String(n));
       }
+    } else {
+      this.renderer.removeAttribute(this.el, name);
     }
   }
 
   private setStyle(prop: string, value: string) {
     if (value) {
-      this.renderer.setStyle(this.el, prop, value);
+      this.el.style.setProperty(prop, value);
     }
   }
 

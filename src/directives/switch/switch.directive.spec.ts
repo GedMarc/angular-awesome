@@ -1,16 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WaSwitchDirective } from './switch.directive';
+import { WaSwitchDirective, WaSwitchEvent } from './switch.directive';
 
 // Create a test host component for the switch directive
 @Component({
   template: `
     <wa-switch
-      waSwitch
       [disabled]="disabled"
       [hint]="hint"
       [size]="size"
+      [name]="name"
+      [value]="value"
+      [checked]="checked"
+      [required]="required"
+      [withHint]="withHint"
       [backgroundColor]="backgroundColor"
       [backgroundColorChecked]="backgroundColorChecked"
       [borderColor]="borderColor"
@@ -25,10 +29,10 @@ import { WaSwitchDirective } from './switch.directive';
       [thumbSize]="thumbSize"
       [width]="width"
       [(ngModel)]="isChecked"
-      (changeEvent)="onChange($event)"
-      (inputEvent)="onInput($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-change)="onChange($event)"
+      (wa-input)="onInput($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     ></wa-switch>
   `,
   standalone: true,
@@ -38,6 +42,11 @@ class TestHostComponent {
   disabled?: boolean | string;
   hint?: string;
   size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  name?: string;
+  value?: string | null;
+  checked?: boolean | string;
+  required?: boolean | string;
+  withHint?: boolean | string;
 
   backgroundColor?: string;
   backgroundColorChecked?: string;
@@ -111,10 +120,44 @@ describe('WaSwitchDirective', () => {
   it('should set string attributes correctly', () => {
     hostComponent.hint = 'Test hint';
     hostComponent.size = 'large';
+    hostComponent.name = 'testName';
+    hostComponent.value = 'testValue';
     hostFixture.detectChanges();
 
     expect(switchElement.getAttribute('hint')).toBe('Test hint');
     expect(switchElement.getAttribute('size')).toBe('large');
+    expect(switchElement.getAttribute('name')).toBe('testName');
+    expect(switchElement.getAttribute('value')).toBe('testValue');
+  });
+
+  it('should set checked boolean attribute correctly', () => {
+    hostComponent.checked = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('checked')).toBeTrue();
+
+    hostComponent.checked = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('checked')).toBeFalse();
+  });
+
+  it('should set required boolean attribute correctly', () => {
+    hostComponent.required = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('required')).toBeTrue();
+
+    hostComponent.required = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('required')).toBeFalse();
+  });
+
+  it('should set with-hint boolean attribute correctly', () => {
+    hostComponent.withHint = true;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('with-hint')).toBeTrue();
+
+    hostComponent.withHint = false;
+    hostFixture.detectChanges();
+    expect(switchElement.hasAttribute('with-hint')).toBeFalse();
   });
 
   it('should set boolean attributes correctly', () => {
@@ -158,15 +201,17 @@ describe('WaSwitchDirective', () => {
     expect(switchElement.style.getPropertyValue('--width')).toBe('48px');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', async () => {
     // Initial state
     expect(hostComponent.isChecked).toBe(false);
-    expect(switchElement.hasAttribute('checked')).toBe(false);
+    expect((switchElement as any).checked).toBeFalsy();
 
     // Update model -> view
     hostComponent.isChecked = true;
     hostFixture.detectChanges();
-    expect(switchElement.hasAttribute('checked')).toBe(true);
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    expect((switchElement as any).checked).toBe(true);
   });
 
   it('should update ngModel when native change event fires (user toggles on)', () => {
@@ -174,24 +219,26 @@ describe('WaSwitchDirective', () => {
     hostFixture.detectChanges();
     expect(hostComponent.isChecked).toBeFalse();
 
-    // Simulate the underlying element becoming checked and dispatch 'change'
+    // Simulate the underlying element becoming checked and dispatch 'wa-change'
     (switchElement as any).checked = true;
     switchElement.setAttribute('checked', '');
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     hostFixture.detectChanges();
 
     expect(hostComponent.isChecked).toBeTrue();
   });
 
-  it('should update ngModel when native change event fires (user toggles off)', () => {
+  it('should update ngModel when native change event fires (user toggles off)', async () => {
     hostComponent.isChecked = true;
     hostFixture.detectChanges();
-    expect(switchElement.hasAttribute('checked')).toBeTrue();
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    expect((switchElement as any).checked).toBe(true);
 
-    // Simulate unchecking and dispatch 'change'
+    // Simulate unchecking and dispatch 'wa-change'
     (switchElement as any).checked = false;
     switchElement.removeAttribute('checked');
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     hostFixture.detectChanges();
 
     expect(hostComponent.isChecked).toBeFalse();
@@ -199,19 +246,38 @@ describe('WaSwitchDirective', () => {
 
   it('should emit events correctly', () => {
     // Simulate input event
-    switchElement.dispatchEvent(new Event('input'));
+    switchElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputEventCalled).toBe(true);
 
     // Simulate change event
-    switchElement.dispatchEvent(new Event('change'));
+    switchElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeEventCalled).toBe(true);
 
     // Simulate focus event
-    switchElement.dispatchEvent(new FocusEvent('focus'));
+    switchElement.dispatchEvent(new FocusEvent('wa-focus'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
     // Simulate blur event
-    switchElement.dispatchEvent(new FocusEvent('blur'));
+    switchElement.dispatchEvent(new FocusEvent('wa-blur'));
     expect(hostComponent.blurEventCalled).toBe(true);
+  });
+
+  it('should emit WaSwitchEvent with target.checked accessible', () => {
+    // Set the switch to checked so target.checked is true
+    (switchElement as any).checked = true;
+    switchElement.setAttribute('checked', '');
+    switchElement.dispatchEvent(new Event('wa-change'));
+    hostFixture.detectChanges();
+
+    // The changeEvent output emits WaSwitchEvent which has target.checked typed
+    // Verify the event was emitted (the type safety is compile-time)
+    expect(hostComponent.changeEventCalled).toBeTrue();
+  });
+
+  it('WaSwitchEvent interface should be importable and usable as a type', () => {
+    // This test verifies the type exists at runtime as an interface contract
+    const fakeEvent = { target: { checked: true, value: 'on' } } as unknown as WaSwitchEvent;
+    expect(fakeEvent.target.checked).toBeTrue();
+    expect(fakeEvent.target.value).toBe('on');
   });
 });

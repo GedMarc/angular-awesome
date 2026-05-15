@@ -41,7 +41,7 @@ class TestHostComponent {
   open = false;
   showDelay = 150;
   hideDelay = 0;
-  trigger = 'hover focus';
+  trigger = 'hover focusNative';
   content = 'Tooltip Content';
 
   backgroundColor?: string;
@@ -118,15 +118,15 @@ describe('WaTooltipDirective', () => {
   it('should set boolean attributes correctly', () => {
     hostComponent.disabled = true;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('disabled')).toBe('true');
+    expect(tooltipElement.hasAttribute('disabled')).toBeTrue();
 
     hostComponent.disabled = false;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('disabled')).toBe('false');
+    expect(tooltipElement.hasAttribute('disabled')).toBeFalse();
 
     hostComponent.open = true;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('open')).toBe('true');
+    expect(tooltipElement.hasAttribute('open')).toBeTrue();
   });
 
   it('should set delay attributes correctly', () => {
@@ -143,9 +143,9 @@ describe('WaTooltipDirective', () => {
     hostFixture.detectChanges();
     expect(tooltipElement.getAttribute('trigger')).toBe('hover');
 
-    hostComponent.trigger = 'focus';
+    hostComponent.trigger = 'focusNative';
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('trigger')).toBe('focus');
+    expect(tooltipElement.getAttribute('trigger')).toBe('focusNative');
 
     hostComponent.trigger = 'click';
     hostFixture.detectChanges();

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaCalloutDirective } from './callout.directive';
 
 // Create a test host component to test the callout directive
@@ -15,7 +16,7 @@ import { WaCalloutDirective } from './callout.directive';
     </wa-callout>
   `,
   standalone: true,
-  imports: [WaCalloutDirective]
+  imports: [WaCalloutDirective, NgIf]
 })
 class TestHostComponent {
   variant?: string;

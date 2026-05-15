@@ -136,6 +136,35 @@ export class DialogExampleComponent {
 }
 ```
 
+## Lazy Content (like Tab Group)
+
+There are two lazy strategies supported by wa-dialog:
+
+1) DOM-lazy (default for projected content): when the dialog is closed, the directive temporarily removes the dialog's light DOM content and restores it when opened again. This reduces DOM size but does not defer Angular component instantiation.
+
+2) True lazy instantiation using a template: wrap dialog content in <ng-template waDialogContent> to instantiate it only when the dialog opens (including when opened by default). The content will be destroyed when the dialog closes.
+
+```html
+<!-- True lazy: content creates only when open -->
+<wa-dialog label="Lazy Dialog" [(open)]="isLazyOpen">
+  <ng-template waDialogContent>
+    <expensive-child></expensive-child>
+    <wa-button slot="footer" data-dialog="close">Close</wa-button>
+  </ng-template>
+</wa-dialog>
+
+<wa-button (click)="isLazyOpen = true">Open Lazy Dialog</wa-button>
+```
+
+```html
+<!-- Initially open: template is instantiated on first render because open is true -->
+<wa-dialog label="Initially Open" [open]="true">
+  <ng-template waDialogContent>
+    <p>Rendered immediately because the dialog starts open.</p>
+  </ng-template>
+</wa-dialog>
+```
+
 ## Custom Styling
 
 ```html

@@ -52,7 +52,7 @@ export class WaLayoutSplitDirective implements OnChanges {
 
     // Collapse
     if (this.splitCollapse) {
-      this.renderer.setStyle(host, '--wa-split-collapse', this.splitCollapse);
+      host.style.setProperty('--wa-split-collapse', this.splitCollapse);
     }
   }
 

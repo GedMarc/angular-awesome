@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { Appearance, normalizeAppearance } from '../../types/tokens';
+import { Appearance, normalizeAppearance, SizeToken } from '../../types/tokens';
 
 /**
  * WaButtonDirective
@@ -10,7 +10,7 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
  * Features:
  * - Binds all supported button attributes as @Input() properties
  * - Supports boolean attributes like pill, caret, disabled, loading
- * - Emits button events (blur, focus, waInvalid)
+ * - Emits button events (blurNative, focusNative, waInvalid)
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for start, end, and default content
  * - Supports custom styling via CSS variables
@@ -28,7 +28,7 @@ export class WaButtonDirective implements OnInit, OnChanges {
    * Strictly typed to known tokens only.
    */
   @Input() appearance?: Appearance;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
 
   // Boolean inputs
   @Input() pill?: boolean | string;
@@ -36,6 +36,10 @@ export class WaButtonDirective implements OnInit, OnChanges {
   @Input() caret?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() loading?: boolean | string;
+
+  // SSR inputs
+  @Input() withStart?: boolean | string;
+  @Input() withEnd?: boolean | string;
 
   // Button type inputs
   @Input() type?: 'button' | 'submit' | 'reset' | string;
@@ -68,9 +72,12 @@ export class WaButtonDirective implements OnInit, OnChanges {
   @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
 
   // Event outputs
-  @Output() blurEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<Event>();
+  @Output() waBlur = new EventEmitter<Event>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<Event>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
   @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
 
   // Injected services
   private el = inject(ElementRef);
@@ -107,14 +114,18 @@ export class WaButtonDirective implements OnInit, OnChanges {
     // Do not set a standalone `caret` attribute on the element, as the Web Component uses `with-caret`
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('loading', this.loading);
+    this.setBooleanAttr('with-start', this.withStart);
+    this.setBooleanAttr('with-end', this.withEnd);
     this.setBooleanAttr('formnovalidate', this.formNoValidate);
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'blur', (event) => this.blurEvent.emit(event));
-    this.renderer.listen(nativeEl, 'focus', (event) => this.focusEvent.emit(event));
+    this.renderer.listen(nativeEl, 'blur', (event) => this.waBlur.emit(event));
+    this.renderer.listen(nativeEl, 'wa-blur', (event) => this.waBlur.emit(event));
+    this.renderer.listen(nativeEl, 'focus', (event) => this.waFocus.emit(event));
+    this.renderer.listen(nativeEl, 'wa-focus', (event) => this.waFocus.emit(event));
     this.renderer.listen(nativeEl, 'wa-invalid', (event) => this.waInvalid.emit(event));
 
     // Handle data-dialog at click time to avoid timing issues with Angular rendering
@@ -172,14 +183,14 @@ export class WaButtonDirective implements OnInit, OnChanges {
   }
 
   /**
-   * Sets focus on the button
+   * Sets focusNative on the button
    */
   public focus(): void {
     this.el.nativeElement.focus();
   }
 
   /**
-   * Removes focus from the button
+   * Removes focusNative from the button
    */
   public blur(): void {
     this.el.nativeElement.blur();
@@ -191,6 +202,8 @@ export class WaButtonDirective implements OnInit, OnChanges {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -201,22 +214,71 @@ export class WaButtonDirective implements OnInit, OnChanges {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Update dynamic attributes when inputs change after initialization
-    if ('variant' in changes) {
-      this.setOrRemoveAttr('variant', this.variant);
-    }
+    // Update all dynamic attributes when inputs change after initialization
+    if ('variant' in changes) this.setOrRemoveAttr('variant', this.variant);
     if ('appearance' in changes) {
       const norm = normalizeAppearance(this.appearance);
       this.setOrRemoveAttr('appearance', norm);
-      // Also set the property to support web components that react to property changes but not attribute mutations
       (this.el.nativeElement as any).appearance = norm ?? null;
     }
-    if ('size' in changes) {
-      this.setOrRemoveAttr('size', this.size);
+    if ('size' in changes) this.setOrRemoveAttr('size', this.size);
+    if ('type' in changes) this.setOrRemoveAttr('type', this.type);
+    if ('name' in changes) this.setOrRemoveAttr('name', this.name);
+    if ('value' in changes) this.setOrRemoveAttr('value', this.value);
+
+    // Link attributes
+    if ('href' in changes) this.setOrRemoveAttr('href', this.href);
+    if ('target' in changes) this.setOrRemoveAttr('target', this.target);
+    if ('rel' in changes) this.setOrRemoveAttr('rel', this.rel);
+    if ('download' in changes) this.setOrRemoveAttr('download', this.download);
+
+    // Form attributes
+    if ('form' in changes) this.setOrRemoveAttr('form', this.form);
+    if ('formAction' in changes) this.setOrRemoveAttr('formaction', this.formAction);
+    if ('formEnctype' in changes) this.setOrRemoveAttr('formenctype', this.formEnctype);
+    if ('formMethod' in changes) this.setOrRemoveAttr('formmethod', this.formMethod);
+    if ('formTarget' in changes) this.setOrRemoveAttr('formtarget', this.formTarget);
+
+    // Boolean attributes
+    if ('pill' in changes) {
+      if (this.pill === true || this.pill === 'true' || this.pill === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'pill', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'pill');
+      }
+    }
+    if ('disabled' in changes) {
+      if (this.disabled === true || this.disabled === 'true' || this.disabled === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
+      }
+    }
+    if ('loading' in changes) {
+      if (this.loading === true || this.loading === 'true' || this.loading === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'loading', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'loading');
+      }
+    }
+    if ('withStart' in changes) {
+      this.setBooleanAttr('with-start', this.withStart);
+    }
+    if ('withEnd' in changes) {
+      this.setBooleanAttr('with-end', this.withEnd);
+    }
+    if ('formNoValidate' in changes) {
+      if (this.formNoValidate === true || this.formNoValidate === 'true' || this.formNoValidate === '') {
+        this.renderer.setAttribute(this.el.nativeElement, 'formnovalidate', '');
+      } else {
+        this.renderer.removeAttribute(this.el.nativeElement, 'formnovalidate');
+      }
     }
 
     // Map caret inputs to underlying with-caret attribute
@@ -228,7 +290,6 @@ export class WaButtonDirective implements OnInit, OnChanges {
       } else {
         this.renderer.removeAttribute(el, 'with-caret');
       }
-      // Ensure no stray `caret` attribute remains
       this.renderer.removeAttribute(el, 'caret');
     }
   }

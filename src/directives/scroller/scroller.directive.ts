@@ -12,7 +12,7 @@ import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChang
  * - Supports custom styling via CSS variables
  */
 @Directive({
-  selector: 'wa-scroller, wa-scroller-wrapper',
+  selector: 'wa-scroller',
   standalone: true
 })
 export class WaScrollerDirective implements OnInit, OnChanges {
@@ -73,7 +73,7 @@ export class WaScrollerDirective implements OnInit, OnChanges {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     } else {
       this.renderer.removeStyle(this.el.nativeElement, name);
     }
