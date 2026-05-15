@@ -11,7 +11,7 @@ import { WaColorPickerDirective } from './color-picker.directive';
       [hint]="hint"
       [value]="value"
       [format]="format"
-      [noFormatToggle]="noFormatToggle"
+      [withoutFormatToggle]="noFormatToggle"
       [opacity]="opacity"
       [uppercase]="uppercase"
       [size]="size"
@@ -28,11 +28,11 @@ import { WaColorPickerDirective } from './color-picker.directive';
       [borderRadius]="borderRadius"
       [dropdownWidth]="dropdownWidth"
       [dropdownHeight]="dropdownHeight"
-      (change)="onChange($event)"
-      (input)="onInput($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (waInvalid)="onInvalid($event)"
+      (wa-change)="onChange($event)"
+      (wa-input)="onInput($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-invalid)="onInvalid($event)"
     ></wa-color-picker>
   `,
   standalone: true,
@@ -148,7 +148,7 @@ describe('WaColorPickerDirective', () => {
     hostComponent.required = true;
     hostFixture.detectChanges();
 
-    expect(colorPickerElement.hasAttribute('no-format-toggle')).toBe(true);
+    expect(colorPickerElement.hasAttribute('without-format-toggle')).toBe(true);
     expect(colorPickerElement.hasAttribute('opacity')).toBe(true);
     expect(colorPickerElement.hasAttribute('uppercase')).toBe(true);
     expect(colorPickerElement.hasAttribute('disabled')).toBe(true);
@@ -161,7 +161,7 @@ describe('WaColorPickerDirective', () => {
     hostComponent.required = false;
     hostFixture.detectChanges();
 
-    expect(colorPickerElement.hasAttribute('no-format-toggle')).toBe(false);
+    expect(colorPickerElement.hasAttribute('without-format-toggle')).toBe(false);
     expect(colorPickerElement.hasAttribute('opacity')).toBe(false);
     expect(colorPickerElement.hasAttribute('uppercase')).toBe(false);
     expect(colorPickerElement.hasAttribute('disabled')).toBe(false);
@@ -208,23 +208,23 @@ describe('WaColorPickerDirective', () => {
 
   it('should emit events correctly', () => {
     // Simulate change event
-    colorPickerElement.dispatchEvent(new Event('change'));
+    colorPickerElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeEventCalled).toBe(true);
 
     // Simulate input event
-    colorPickerElement.dispatchEvent(new Event('input'));
+    colorPickerElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputEventCalled).toBe(true);
 
     // Simulate focus event
-    colorPickerElement.dispatchEvent(new Event('focus'));
+    colorPickerElement.dispatchEvent(new Event('wa-focus'));
     expect(hostComponent.focusEventCalled).toBe(true);
 
     // Simulate blur event
-    colorPickerElement.dispatchEvent(new Event('blur'));
+    colorPickerElement.dispatchEvent(new Event('wa-blur'));
     expect(hostComponent.blurEventCalled).toBe(true);
 
-    // Simulate waInvalid event
-    colorPickerElement.dispatchEvent(new Event('waInvalid'));
+    // Simulate wa-invalid event
+    colorPickerElement.dispatchEvent(new Event('wa-invalid'));
     expect(hostComponent.invalidEventCalled).toBe(true);
   });
 });

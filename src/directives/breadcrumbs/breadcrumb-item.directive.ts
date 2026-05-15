@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaBreadcrumbItemDirective
@@ -9,25 +9,42 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
  * Features:
  * - Binds attributes: href, target, rel
  * - Enables Angular-style class and style bindings
- * - Allows slot projection for content, prefix, suffix, and custom separators
+ * - Allows slot projection for content, start, end, and custom separators
  * - Supports custom styling via CSS variables and ::part() selectors
  */
 @Directive({
   selector: 'wa-breadcrumb-item',
   standalone: true
 })
-export class WaBreadcrumbItemDirective implements OnInit {
+export class WaBreadcrumbItemDirective implements OnInit, OnChanges {
   @Input() href?: string;
   @Input() target?: '_blank' | '_parent' | '_self' | '_top';
   @Input() rel: string = 'noreferrer noopener';
+
+  // Dialog integration: support both kebab-case and camelCase bindings
+  private _dataDialog: string | null | undefined;
+  @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
+  @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
 
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     this.setAttr('href', this.href);
     this.setAttr('target', this.target);
     this.setAttr('rel', this.rel);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
   }
 
   /**
@@ -36,6 +53,8 @@ export class WaBreadcrumbItemDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

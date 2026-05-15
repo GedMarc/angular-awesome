@@ -1,4 +1,4 @@
-import {Input, ElementRef, OnInit, inject} from '@angular/core';
+import {Input, ElementRef, OnInit, OnChanges, SimpleChanges, inject} from '@angular/core';
 
 /**
  * WaAvatarDirective
@@ -19,7 +19,7 @@ import { Directive, Renderer2 } from '@angular/core';
   selector: 'wa-avatar',
   standalone: true
 })
-export class WaAvatarDirective implements OnInit {
+export class WaAvatarDirective implements OnInit, OnChanges {
   @Input() image?: string;
   @Input() label?: string;
   @Input() initials?: string;
@@ -34,23 +34,55 @@ export class WaAvatarDirective implements OnInit {
   renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
-
-    this.setAttr('image', this.image);
-    this.setAttr('label', this.label);
-    this.setAttr('initials', this.initials);
-    this.setAttr('shape', this.shape);
-    this.setAttr('loading', this.loading);
-
-    if (this.fontSize) nativeEl.style.fontSize = this.fontSize;
-    if (this.size) nativeEl.style.setProperty('--size', this.size);
-    if (this.backgroundColor) nativeEl.style.setProperty('--background-color', this.backgroundColor);
-    if (this.textColor) nativeEl.style.setProperty('--text-color', this.textColor);
+    // Initialize all attributes and styles
+    this.syncAll();
   }
 
-  private setAttr(name: string, value: string | null | undefined) {
-    if (value != null) {
-      this.renderer.setAttribute(this.el.nativeElement, name, value);
+  ngOnChanges(changes: SimpleChanges): void {
+    // Reflect only the changed inputs to the underlying element
+    const el = this.el.nativeElement as HTMLElement;
+
+    if ('image' in changes) this.setOrRemoveAttr('image', this.image);
+    if ('label' in changes) this.setOrRemoveAttr('label', this.label);
+    if ('initials' in changes) this.setOrRemoveAttr('initials', this.initials);
+    if ('shape' in changes) this.setOrRemoveAttr('shape', this.shape);
+    if ('loading' in changes) this.setOrRemoveAttr('loading', this.loading);
+
+    if ('fontSize' in changes) el.style.fontSize = this.fontSize ?? '';
+    if ('size' in changes) this.setOrRemoveCssVar('--size', this.size);
+    if ('backgroundColor' in changes) this.setOrRemoveCssVar('--background-color', this.backgroundColor);
+    if ('textColor' in changes) this.setOrRemoveCssVar('--text-color', this.textColor);
+  }
+
+  private syncAll() {
+    const el = this.el.nativeElement as HTMLElement;
+    this.setOrRemoveAttr('image', this.image);
+    this.setOrRemoveAttr('label', this.label);
+    this.setOrRemoveAttr('initials', this.initials);
+    this.setOrRemoveAttr('shape', this.shape);
+    this.setOrRemoveAttr('loading', this.loading);
+
+    el.style.fontSize = this.fontSize ?? '';
+    this.setOrRemoveCssVar('--size', this.size);
+    this.setOrRemoveCssVar('--background-color', this.backgroundColor);
+    this.setOrRemoveCssVar('--text-color', this.textColor);
+  }
+
+  private setOrRemoveAttr(name: string, value: string | null | undefined) {
+    const el = this.el.nativeElement as HTMLElement;
+    if (value === undefined || value === null || value === '') {
+      this.renderer.removeAttribute(el, name);
+    } else {
+      this.renderer.setAttribute(el, name, String(value));
+    }
+  }
+
+  private setOrRemoveCssVar(name: string, value: string | null | undefined) {
+    const el = this.el.nativeElement as HTMLElement;
+    if (value === undefined || value === null || value === '') {
+      el.style.removeProperty(name);
+    } else {
+      el.style.setProperty(name, String(value));
     }
   }
 }

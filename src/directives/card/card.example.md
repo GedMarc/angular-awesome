@@ -28,19 +28,19 @@
 </wa-card>
 ```
 
-## With Different Sizes
+## Setting Sizes on Child Elements
 
 ```html
-<wa-card size="small">
-  This is a small card.
+<wa-card>
+  <div style="font-size: 0.875rem;">This content has small text size.</div>
 </wa-card>
 
-<wa-card size="medium">
-  This is a medium card.
+<wa-card>
+  <div style="font-size: 1rem;">This content has medium text size.</div>
 </wa-card>
 
-<wa-card size="large">
-  This is a large card.
+<wa-card>
+  <div style="font-size: 1.25rem;">This content has large text size.</div>
 </wa-card>
 ```
 
@@ -76,7 +76,6 @@
 ```html
 <wa-card 
   appearance="outlined" 
-  size="medium" 
   [withHeader]="true" 
   [withImage]="true" 
   [withFooter]="true">

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
 
 /**
  * WaSplitPanelDirective
@@ -21,11 +21,12 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
     <ng-content select="[slot=divider]"></ng-content>
   `
 })
-export class WaSplitPanelDirective implements OnInit {
+export class WaSplitPanelDirective implements OnInit, OnChanges {
   // Core input attributes
   @Input() position?: number;
   @Input() positionInPixels?: number;
-  @Input() vertical?: boolean | string;
+  @Input() orientation?: 'vertical' | 'horizontal' | string;
+  @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
   @Input() disabled?: boolean | string;
   @Input() primary?: 'start' | 'end' | string;
   @Input() snap?: string;
@@ -39,7 +40,7 @@ export class WaSplitPanelDirective implements OnInit {
   @Input() max?: string;
 
   // Event outputs
-  @Output() repositionEvent = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') repositionEvent = new EventEmitter<CustomEvent>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -47,31 +48,46 @@ export class WaSplitPanelDirective implements OnInit {
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
-
-    // Set numeric attributes
-    this.setNumericAttr('position', this.position);
-    this.setNumericAttr('position-in-pixels', this.positionInPixels);
-    this.setNumericAttr('snap-threshold', this.snapThreshold);
-
-    // Set string attributes
-    this.setAttr('primary', this.primary);
-    this.setAttr('snap', this.snap);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('vertical', this.vertical);
-    this.setBooleanAttr('disabled', this.disabled);
-
-    // Set style attributes
-    this.setCssVar('--divider-color', this.dividerColor);
-    this.setCssVar('--divider-width', this.dividerWidth);
-    this.setCssVar('--divider-hit-area', this.dividerHitArea);
-    this.setCssVar('--min', this.min);
-    this.setCssVar('--max', this.max);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
       this.repositionEvent.emit(event);
     });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs(): void {
+    // Numeric attributes
+    this.setNumericAttr('position', this.position);
+    this.setNumericAttr('position-in-pixels', this.positionInPixels);
+    this.setNumericAttr('snap-threshold', this.snapThreshold);
+
+    // String attributes
+    this.setAttr('primary', this.primary);
+    this.setAttr('snap', this.snap);
+
+    // Orientation/booleans
+    const host = this.el.nativeElement as HTMLElement;
+    // Clear previous orientation attribute if needed
+    host.removeAttribute('orientation');
+    if (this.orientation === 'vertical') {
+      this.renderer.setAttribute(host, 'orientation', 'vertical');
+    }
+    // Clear boolean attrs before re-applying
+    ['vertical','disabled'].forEach(a => host.removeAttribute(a));
+    this.setBooleanAttr('vertical', this.vertical);
+    this.setBooleanAttr('disabled', this.disabled);
+
+    // CSS custom properties
+    this.setCssVar('--divider-color', this.dividerColor);
+    this.setCssVar('--divider-width', this.dividerWidth);
+    this.setCssVar('--divider-hit-area', this.dividerHitArea);
+    this.setCssVar('--min', this.min);
+    this.setCssVar('--max', this.max);
   }
 
   /**
@@ -87,6 +103,8 @@ export class WaSplitPanelDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -99,6 +117,8 @@ export class WaSplitPanelDirective implements OnInit {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -107,7 +127,7 @@ export class WaSplitPanelDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -118,6 +138,8 @@ export class WaSplitPanelDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

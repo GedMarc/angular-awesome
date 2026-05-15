@@ -8,13 +8,15 @@
 
 ### Description
 
-Wraps a `<wa-dropdown>` element that exposes additional content in a popover panel, often triggered by a button. Dropdown content usually includes a `<wa-menu>` and associated items. The Angular directive facilitates interaction, layout management, two-way binding via `ngModel`, and input/output bindings.
+Wraps a `<wa-dropdown>` element that exposes additional content in a popover panel, often triggered by a button. Dropdown content usually includes `<wa-dropdown-item>` elements. The Angular directive facilitates interaction, layout management, two-way binding via `ngModel`, and input/output bindings.
 
 ### Inputs
 
 #### Structural Inputs
 
 * `placement: DropdownPlacement` – Preferred placement of the dropdown. Options: `'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end'`.
+* `open: boolean | string` – Whether the dropdown panel is open. Can be toggled programmatically.
+* `size: 'small' | 'medium' | 'large'` – The dropdown's size.
 * `disabled: boolean | string` – Disables the dropdown trigger.
 * `stayOpenOnSelect: boolean | string` – Prevents dropdown from closing on item selection.
 * `containingElement: HTMLElement` – Custom element that controls close-on-outside-click behavior.
@@ -32,11 +34,11 @@ The following style inputs apply to the host element:
 
 ### Two-Way Binding
 
-This component supports template-driven forms using `[(ngModel)]` on the selected value from the dropdown’s menu.
+This component supports template-driven forms using `[(ngModel)]` on the selected value from the dropdown.
 
-* The menu item’s `value` attribute is used to bind the model.
+* The dropdown item's `value` attribute is used to bind the model.
 * Selection updates the `ngModel` value.
-* Only standard `<wa-menu-item>`s with values are eligible for this.
+* Only standard `<wa-dropdown-item>`s with values are eligible for this.
 
 ### Outputs
 
@@ -46,7 +48,7 @@ This component supports template-driven forms using `[(ngModel)]` on the selecte
 * `afterShowEvent: Event` → `(wa-after-show)` – Fires after dropdown animations finish.
 * `hideEvent: Event` → `(wa-hide)` – Fires when the dropdown begins closing.
 * `afterHideEvent: Event` → `(wa-after-hide)` – Fires after dropdown is fully closed.
-* `selectEvent: CustomEvent` → `(wa-select)` – Fires when a menu item is selected. Emits `{ item: HTMLElement }` in `event.detail`.
+* `selectEvent: CustomEvent` → `(wa-select)` – Fires when a dropdown item is selected. Emits `{ item: HTMLElement }` in `event.detail`.
 
 ### Methods
 
@@ -57,9 +59,9 @@ This component supports template-driven forms using `[(ngModel)]` on the selecte
 ### Features & Behavior
 
 * Slots: `trigger`, default (panel contents).
-* Submenus are supported via `<wa-menu slot="submenu">`.
-* You can listen for `(click)` on individual `<wa-menu-item>`, but it will fire even for `disabled` items.
-* You may use `[value]` attributes on menu items to simplify logic.
+* Submenus are supported via `<wa-dropdown slot="submenu">`.
+* You can listen for `(click)` on individual `<wa-dropdown-item>`, but it will fire even for `disabled` items.
+* You may use `[value]` attributes on dropdown items to simplify logic.
 
 ### Accessibility
 
@@ -71,14 +73,12 @@ This component supports template-driven forms using `[(ngModel)]` on the selecte
 * Automatically imports:
 
   * `<wa-popup>`
-  * `<wa-menu>`
-  * `<wa-menu-item>`
+  * `<wa-dropdown-item>`
   * `<wa-divider>`
   * `<wa-icon>` (if used for slot content)
 
 Also depends on the rules of:
 
-* [Menu](../menu/menu.rules.md)
 * [Button](../button/button.rules.md) (for trigger)
 
 ### Usage Example
@@ -92,11 +92,9 @@ Also depends on the rules of:
   style="--box-shadow: 0 2px 6px rgba(0,0,0,0.1);"
 >
   <wa-button slot="trigger" caret>Dropdown</wa-button>
-  <wa-menu>
-    <wa-menu-item value="cut">Cut</wa-menu-item>
-    <wa-menu-item value="copy">Copy</wa-menu-item>
-    <wa-menu-item value="paste">Paste</wa-menu-item>
-  </wa-menu>
+  <wa-dropdown-item value="cut">Cut</wa-dropdown-item>
+  <wa-dropdown-item value="copy">Copy</wa-dropdown-item>
+  <wa-dropdown-item value="paste">Paste</wa-dropdown-item>
 </wa-dropdown>
 ```
 
@@ -105,7 +103,7 @@ Also depends on the rules of:
 * Inputs of type `boolean` and `number` should support both native and string binding.
 * Outputs must be aliased to avoid conflicts with method names: e.g., `focus` → `focusEvent`, `blur` → `blurEvent`.
 * Always expose the `wa-select` event as `selectEvent`, not as a standard Angular `valueChange`.
-* This component **must** support `[(ngModel)]` for the selected menu item value.
+* This component **must** support `[(ngModel)]` for the selected dropdown item value.
 * Never use reactive forms APIs.
 
 ### Testing

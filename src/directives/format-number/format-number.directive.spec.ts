@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaFormatNumberDirective } from './format-number.directive';
@@ -12,7 +12,7 @@ import { WaFormatNumberDirective } from './format-number.directive';
       [currency]="currency"
       [currencyDisplay]="currencyDisplay"
       [lang]="lang"
-      [noGrouping]="noGrouping"
+      [withoutGrouping]="withoutGrouping"
       [minimumIntegerDigits]="minimumIntegerDigits"
       [minimumFractionDigits]="minimumFractionDigits"
       [maximumFractionDigits]="maximumFractionDigits"
@@ -35,7 +35,7 @@ class TestHostComponent {
   currency?: string;
   currencyDisplay?: 'symbol' | 'narrowSymbol' | 'code' | 'name';
   lang?: string;
-  noGrouping?: boolean | string;
+  withoutGrouping?: boolean | string;
   minimumIntegerDigits?: number | string;
   minimumFractionDigits?: number | string;
   maximumFractionDigits?: number | string;
@@ -85,13 +85,15 @@ describe('WaFormatNumberDirective', () => {
     expect(formatNumberDirective).toBeTruthy();
   });
 
-  it('should set numeric attributes correctly', () => {
+  it('should set numeric attributes correctly', fakeAsync(() => {
     hostComponent.value = 1234.56;
     hostComponent.minimumIntegerDigits = 2;
     hostComponent.minimumFractionDigits = 2;
     hostComponent.maximumFractionDigits = 4;
     hostComponent.minimumSignificantDigits = 3;
     hostComponent.maximumSignificantDigits = 5;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(formatNumberElement.getAttribute('value')).toBe('1234.56');
@@ -100,7 +102,7 @@ describe('WaFormatNumberDirective', () => {
     expect(formatNumberElement.getAttribute('maximum-fraction-digits')).toBe('4');
     expect(formatNumberElement.getAttribute('minimum-significant-digits')).toBe('3');
     expect(formatNumberElement.getAttribute('maximum-significant-digits')).toBe('5');
-  });
+  }));
 
   it('should handle string values for numeric attributes', () => {
     hostComponent.minimumIntegerDigits = '2';
@@ -127,17 +129,17 @@ describe('WaFormatNumberDirective', () => {
   });
 
   it('should set boolean attributes correctly', () => {
-    hostComponent.noGrouping = true;
+    hostComponent.withoutGrouping = true;
     hostFixture.detectChanges();
 
-    expect(formatNumberElement.hasAttribute('no-grouping')).toBeTrue();
+    expect(formatNumberElement.hasAttribute('without-grouping')).toBeTrue();
   });
 
   it('should handle string values for boolean attributes', () => {
-    hostComponent.noGrouping = 'true';
+    hostComponent.withoutGrouping = 'true';
     hostFixture.detectChanges();
 
-    expect(formatNumberElement.hasAttribute('no-grouping')).toBeTrue();
+    expect(formatNumberElement.hasAttribute('without-grouping')).toBeTrue();
   });
 
   it('should set style attributes correctly', () => {
@@ -157,9 +159,11 @@ describe('WaFormatNumberDirective', () => {
     expect(formatNumberElement.style.getPropertyValue('--padding')).toBe('10px');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', fakeAsync(() => {
     // Set the value via ngModel
     hostComponent.value = 1234.56;
+    hostFixture.detectChanges();
+    tick();
     hostFixture.detectChanges();
 
     expect(formatNumberElement.getAttribute('value')).toBe('1234.56');
@@ -167,9 +171,11 @@ describe('WaFormatNumberDirective', () => {
     // Update the value
     hostComponent.value = 7890.12;
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
 
     expect(formatNumberElement.getAttribute('value')).toBe('7890.12');
-  });
+  }));
 
   it('should expose the native element', () => {
     expect(formatNumberDirective.nativeElement).toBe(formatNumberElement);

@@ -118,15 +118,15 @@
                 <h3>Step 1: Prerequisites</h3>
                 <p>Before installing Angular Awesome, make sure you have:</p>
                 <ul>
-                    <li>Angular 19.2 or later</li>
+                    <li>Angular 20.0 or later</li>
                     <li>Node.js 16 or later</li>
                     <li>npm 7 or later</li>
                 </ul>
                 <p>Angular Awesome requires the following peer dependencies:</p>
                 <ul>
-                    <li>angular/core ^19.2.0</li>
-                    <li>angular/common ^19.2.0</li>
-                    <li>angular/forms ^19.2.0</li>
+                    <li><code>@angular/core</code> ^19.2.0</li>
+                    <li><code>@angular/common</code> ^19.2.0</li>
+                    <li><code>@angular/forms</code> ^19.2.0</li>
                 </ul>
             </div>
 
@@ -138,7 +138,11 @@
 
             <div class="step">
                 <h3>Step 3: Include Web Awesome Assets</h3>
-                <p>Angular Awesome is a wrapper for Web Awesome components. You need to include the Web Awesome assets in your project.</p>
+                <p>
+                    Angular Awesome is a wrapper for Web Awesome components. You need to include the Web Awesome assets in your project.
+                    See the official Web Awesome documentation for asset setup and guidance:
+                    <a href="https://webawesome.com/docs/" target="_blank" rel="noopener">https://webawesome.com/docs/</a>.
+                </p>
 
                 <div class="note">
                     <p><strong>Note:</strong> If you're using Font Awesome, you can add your kit code with the data-fa-kit-code attribute.</p>
@@ -163,14 +167,7 @@
                 </div>
             </div>
 
-            <div class="step">
-                <h3>Step 3: Configure Your Module</h3>
-                <p>If you're using NgModules, make sure to include CUSTOM_ELEMENTS_SCHEMA in your module.</p>
-
-                <div class="warning">
-                    <p><strong>Important:</strong> The CUSTOM_ELEMENTS_SCHEMA is required to allow Angular to recognize the Web Awesome custom elements.</p>
-                </div>
-            </div>
+            <!-- Step 3 (Configure Your Module) no longer required for standalone components; removed intentionally. -->
         </section>
 
         <section>

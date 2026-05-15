@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { WaBadgeComponent } from './badge.component';
+import { WaBadgeDirective } from './badge.component';
 
 // Create a test host component to test the badge component
 @Component({
@@ -10,6 +10,7 @@ import { WaBadgeComponent } from './badge.component';
       [appearance]="appearance"
       [pill]="pill"
       [pulse]="pulse"
+      [attention]="attention"
       [fontSize]="fontSize"
       [backgroundColor]="backgroundColor"
       [borderColor]="borderColor"
@@ -19,20 +20,21 @@ import { WaBadgeComponent } from './badge.component';
     </wa-badge>
   `,
   standalone: true,
-  imports: [WaBadgeComponent]
+  imports: [WaBadgeDirective]
 })
 class TestHostComponent {
   variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'brand';
   appearance: 'accent' | 'filled' | 'outlined' = 'accent';
   pill?: boolean | null;
   pulse?: boolean | null;
+  attention?: 'none' | 'pulse' | 'bounce' | string;
   fontSize?: string;
   backgroundColor?: string;
   borderColor?: string;
   textColor?: string;
 }
 
-describe('WaBadgeComponent', () => {
+describe('WaBadgeDirective', () => {
   let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
   let badgeElement: HTMLElement;
@@ -81,16 +83,30 @@ describe('WaBadgeComponent', () => {
     expect(badgeElement.hasAttribute('pill')).toBe(true);
   });
 
-  it('should not set pill attribute when pill is false', () => {
-    hostComponent.pill = false;
-    hostFixture.detectChanges();
-    expect(badgeElement.hasAttribute('pill')).toBe(false);
-  });
-
   it('should set pulse attribute when pulse is true', () => {
     hostComponent.pulse = true;
     hostFixture.detectChanges();
     expect(badgeElement.hasAttribute('pulse')).toBe(true);
+  });
+
+  it('should set attention attribute correctly', () => {
+    hostComponent.attention = 'pulse';
+    hostFixture.detectChanges();
+    expect(badgeElement.getAttribute('attention')).toBe('pulse');
+
+    hostComponent.attention = 'bounce';
+    hostFixture.detectChanges();
+    expect(badgeElement.getAttribute('attention')).toBe('bounce');
+
+    hostComponent.attention = 'none';
+    hostFixture.detectChanges();
+    expect(badgeElement.getAttribute('attention')).toBe('none');
+  });
+
+  it('should not set pill attribute when pill is false', () => {
+    hostComponent.pill = false;
+    hostFixture.detectChanges();
+    expect(badgeElement.hasAttribute('pill')).toBe(false);
   });
 
   it('should set font-size style when fontSize is provided', () => {

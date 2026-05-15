@@ -1,6 +1,6 @@
 ### ✨ `wa-animation.rules.md`
 
-**Angular 19 Directive Rules for `<wa-animation>` Web Component**
+**Angular 20 Directive Rules for `<wa-animation>` Web Component**
 
 ---
 

@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
+import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaCalloutDirective
@@ -17,22 +18,28 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-callout',
   standalone: true
 })
-export class WaCalloutDirective implements OnInit {
+export class WaCalloutDirective implements OnInit, OnChanges {
   // Appearance inputs
-  @Input() variant?: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' | string;
-  @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | 'outlined filled' | 'outlined accent' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() variant?: VariantToken | string;
+  @Input() appearance?: Appearance | string;
+  @Input() size?: SizeToken | string;
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('variant', this.variant);
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('size', this.size);
   }
 
@@ -49,6 +56,8 @@ export class WaCalloutDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

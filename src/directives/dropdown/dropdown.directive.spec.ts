@@ -12,15 +12,17 @@ import { WaDropdownDirective } from './dropdown.directive';
       [placement]="placement"
       [disabled]="disabled"
       [stayOpenOnSelect]="stayOpenOnSelect"
+      [open]="open"
+      [size]="size"
       [distance]="distance"
       [skidding]="skidding"
       [sync]="sync"
       [boxShadow]="boxShadow"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (selectEvent)="onSelect($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-select)="onSelect($event)"
     >
       <div slot="trigger">{{ triggerText }}</div>
       <div class="menu-container">
@@ -38,6 +40,8 @@ class TestHostComponent {
   placement?: string;
   disabled?: boolean | string;
   stayOpenOnSelect?: boolean | string;
+  open?: boolean | string;
+  size?: 'small' | 'medium' | 'large' | string;
   distance?: number | string;
   skidding?: number | string;
   sync?: 'width' | 'height' | 'both' | string;
@@ -99,28 +103,48 @@ describe('WaDropdownDirective', () => {
   it('should set boolean attributes correctly', () => {
     hostComponent.disabled = true;
     hostComponent.stayOpenOnSelect = true;
+    hostComponent.open = true;
     hostFixture.detectChanges();
 
     expect(dropdownElement.hasAttribute('disabled')).toBeTrue();
     expect(dropdownElement.hasAttribute('stay-open-on-select')).toBeTrue();
+    expect(dropdownElement.hasAttribute('open')).toBeTrue();
   });
 
   it('should not set boolean attributes when false', () => {
     hostComponent.disabled = false;
     hostComponent.stayOpenOnSelect = false;
+    hostComponent.open = false;
     hostFixture.detectChanges();
 
     expect(dropdownElement.hasAttribute('disabled')).toBeFalse();
     expect(dropdownElement.hasAttribute('stay-open-on-select')).toBeFalse();
+    expect(dropdownElement.hasAttribute('open')).toBeFalse();
   });
 
   it('should handle string values for boolean attributes', () => {
     hostComponent.disabled = 'true';
     hostComponent.stayOpenOnSelect = '';
+    hostComponent.open = 'true';
     hostFixture.detectChanges();
 
     expect(dropdownElement.hasAttribute('disabled')).toBeTrue();
     expect(dropdownElement.hasAttribute('stay-open-on-select')).toBeTrue();
+    expect(dropdownElement.hasAttribute('open')).toBeTrue();
+  });
+
+  it('should set size attribute correctly', () => {
+    hostComponent.size = 'small';
+    hostFixture.detectChanges();
+    expect(dropdownElement.getAttribute('size')).toBe('small');
+
+    hostComponent.size = 'medium';
+    hostFixture.detectChanges();
+    expect(dropdownElement.getAttribute('size')).toBe('medium');
+
+    hostComponent.size = 'large';
+    hostFixture.detectChanges();
+    expect(dropdownElement.getAttribute('size')).toBe('large');
   });
 
   it('should set numeric attributes correctly', () => {
@@ -168,6 +192,9 @@ describe('WaDropdownDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
+    (dropdownElement as any).show = () => {};
+    (dropdownElement as any).hide = () => {};
+    (dropdownElement as any).reposition = () => {};
     spyOn(dropdownElement as any, 'show');
     spyOn(dropdownElement as any, 'hide');
     spyOn(dropdownElement as any, 'reposition');
@@ -178,9 +205,9 @@ describe('WaDropdownDirective', () => {
     dropdownDirective.reposition();
 
     // Verify the native methods were called
-    expect(dropdownElement.show).toHaveBeenCalled();
-    expect(dropdownElement.hide).toHaveBeenCalled();
-    expect(dropdownElement.reposition).toHaveBeenCalled();
+    expect((dropdownElement as any).show).toHaveBeenCalled();
+    expect((dropdownElement as any).hide).toHaveBeenCalled();
+    expect((dropdownElement as any).reposition).toHaveBeenCalled();
   });
 
   it('should emit events correctly', () => {

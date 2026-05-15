@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
+import { SizeToken, VariantToken } from '../../types/tokens';
 
 /**
  * WaButtonGroupDirective
@@ -39,13 +40,13 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-button-group, [waButtonGroup]',
   standalone: true
 })
-export class WaButtonGroupDirective implements OnInit {
+export class WaButtonGroupDirective implements OnInit, OnChanges {
   // Required input for accessibility
   @Input() label?: string;
 
   // Appearance inputs that are inherited by contained buttons
-  @Input() size?: 'small' | 'medium' | 'large' | string;
-  @Input() variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | string;
+  @Input() size?: SizeToken | string;
+  @Input() variant?: VariantToken | string;
   @Input() orientation?: 'horizontal' | 'vertical' | string;
 
   // Injected services
@@ -53,8 +54,14 @@ export class WaButtonGroupDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
-    const nativeEl = this.el.nativeElement as HTMLElement;
+    this.applyInputs();
+  }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set standard attributes
     this.setAttr('label', this.label);
     this.setAttr('size', this.size);
@@ -80,6 +87,8 @@ export class WaButtonGroupDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Button Component <span class="version-badge">v1.0.1</span></h1>
+                <h1>Button Component <span class="version-badge">synced with Web Awesome 3.4.x</span></h1>
                 <p class="subtitle"><wa-button> is an interactive element that represents an action. It supports multiple variants, appearances, and sizes. It can also render as a link when href is provided.</p>
             </header>
 
@@ -167,13 +167,13 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
 </code></pre>
 <h2>With Slots</h2>
 <pre><code class="language-html">&lt;wa-button&gt;
-  &lt;wa-icon slot=&quot;prefix&quot; name=&quot;star&quot;&gt;&lt;/wa-icon&gt;
-  With Icon Prefix
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;star&quot;&gt;&lt;/wa-icon&gt;
+  With Icon Start
 &lt;/wa-button&gt;
 
 &lt;wa-button&gt;
-  With Icon Suffix
-  &lt;wa-icon slot=&quot;suffix&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
+  With Icon End
+  &lt;wa-icon slot=&quot;end&quot; name=&quot;arrow-right&quot;&gt;&lt;/wa-icon&gt;
 &lt;/wa-button&gt;
 </code></pre>
 <h2>Form Buttons</h2>
@@ -190,7 +190,7 @@ import { WaButtonDirective } from 'angular-awesome/button';</pre>
   size=&quot;large&quot; 
   [loading]=&quot;isSubmitting&quot;
   (click)=&quot;saveData()&quot;&gt;
-  &lt;wa-icon slot=&quot;prefix&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;start&quot; name=&quot;save&quot;&gt;&lt;/wa-icon&gt;
   Save Changes
 &lt;/wa-button&gt;
 

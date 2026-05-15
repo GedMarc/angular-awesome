@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
+import { Appearance, normalizeAppearance } from '../../types/tokens';
 
 /**
  * WaCardDirective
@@ -19,15 +20,19 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-card',
   standalone: true
 })
-export class WaCardDirective implements OnInit {
+export class WaCardDirective implements OnInit, OnChanges {
   // Appearance inputs
-  @Input() appearance?: 'accent' | 'filled' | 'outlined' | 'plain' | string;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() appearance?: Appearance | string;
+  @Input() size?: string;
 
   // Boolean inputs
   @Input() withHeader?: boolean | string;
   @Input() withImage?: boolean | string;
+  @Input() withMedia?: boolean | string;
   @Input() withFooter?: boolean | string;
+
+  // Layout
+  @Input() orientation?: 'horizontal' | 'vertical' | string;
 
   // Direct styling inputs
   @Input() color?: string;
@@ -46,16 +51,26 @@ export class WaCardDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
-    this.setAttr('appearance', this.appearance);
+    this.setAttr('appearance', normalizeAppearance(this.appearance));
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('with-header', this.withHeader);
     this.setBooleanAttr('with-image', this.withImage);
+    this.setBooleanAttr('with-media', this.withMedia);
     this.setBooleanAttr('with-footer', this.withFooter);
+    this.setAttr('orientation', this.orientation);
 
     // Apply direct styling inputs
     if (this.color) nativeEl.style.color = this.color;
@@ -83,6 +98,8 @@ export class WaCardDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -93,6 +110,8 @@ export class WaCardDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

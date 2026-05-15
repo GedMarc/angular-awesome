@@ -2,25 +2,28 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnChanges,
   Output,
   EventEmitter,
   HostListener,
 } from '@angular/core';
+import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../types/tokens';
 
 @Directive({
-  selector: 'wa-tag[ngModel]',
+  // Allow using <wa-tag> directly without requiring ngModel
+  selector: 'wa-tag',
   exportAs: 'waTag',
   standalone: true
 })
-export class WaTagDirective {
+export class WaTagDirective implements OnChanges {
   constructor(private el: ElementRef<HTMLElement>) {}
 
   // Inputs
-  @Input() variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
-  @Input() appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'outlined filled' = 'outlined filled';
-  @Input() size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
-  @Input() pill = false;
-  @Input() removable = false;
+  @Input() variant: VariantToken = 'inherit';
+  @Input() appearance: Appearance = 'filled-outlined';
+  @Input() size: SizeToken = 'inherit';
+  @Input() pill: boolean | string = false;
+  @Input() withRemove: boolean | string = false;
 
   // Outputs
   @Output() waRemove = new EventEmitter<Event>();
@@ -33,14 +36,14 @@ export class WaTagDirective {
   ngOnChanges() {
     const tag = this.el.nativeElement;
     tag.setAttribute('variant', this.variant);
-    tag.setAttribute('appearance', this.appearance);
+    tag.setAttribute('appearance', normalizeAppearance(this.appearance) as string);
     tag.setAttribute('size', this.size);
     this.setBooleanAttribute(tag, 'pill', this.pill);
-    this.setBooleanAttribute(tag, 'removable', this.removable);
+    this.setBooleanAttribute(tag, 'with-remove', this.withRemove);
   }
 
-  private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean) {
-    if (value) {
+  private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean | string) {
+    if (value === true || value === 'true' || value === '') {
       tag.setAttribute(name, '');
     } else {
       tag.removeAttribute(name);

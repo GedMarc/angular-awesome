@@ -1,6 +1,8 @@
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
-# `wa-checkbox` Angular Integration Rules
+# wa-checkbox: Rules, API, and Usage
+
+This file documents Angular integration for the <wa-checkbox> web component, aligning with the provided component documentation. It complements the global rules in ../../../RULES.md.
 
 ## Component Selector
 
@@ -18,17 +20,19 @@
 | `disabled`     | `boolean \| string`                           | Yes              | Disables the checkbox.                                                                    |
 | `required`     | `boolean \| string`                           | Yes              | Marks checkbox as required.                                                               |
 | `indeterminate`| `boolean \| string`                           | Yes              | Sets checkbox to indeterminate state.                                                     |
-| `size`         | `'small' \| 'medium' \| 'large' \| 'inherit'` | No               | Controls the size of the checkbox.                                                        |
+| `size`         | `'small' \| 'medium' \| 'large'` | No               | Controls the size of the checkbox.                                                        |
 
 ## Outputs
 
+Angular Output names are camelCase and map to native DOM/custom events (kebab-case) from the web component. For example, `waInvalid` listens to the DOM event `wa-invalid`.
+
 | Event           | Description                                                   |
 | --------------- | ------------------------------------------------------------- |
-| `checkedChange` | Fires when the checked state changes.                         |
+| `change`        | Fires when the checked state changes (preferred).            |
+| `checkedChange` | Legacy compatibility event when the underlying WC emits it.   |
 | `input`         | Fires on every user input.                                    |
 | `blurEvent`     | Fires when checkbox loses focus.                              |
 | `focusEvent`    | Fires when checkbox gains focus.                              |
-| `change`        | Fires when the value changes.                                 |
 | `waInvalid`     | Fires on failed validity check.                               |
 
 ## Two-Way Binding (Template-Driven)
@@ -66,10 +70,33 @@ These properties allow external styling of the checkbox through its parent, avoi
 | `--border-style`          | The style of the checkbox's borders.                |
 | `--border-width`          | The width of the checkbox's borders. Expects a single value. |
 | `--box-shadow`            | The shadow effects around the edges of the checkbox. |
-| `--checked-icon-color`    | The color of the checkbox's icon.                   |
-| `--toggle-size`           | The size of the checkbox.                           |
+| `--checked-icon-color`    | The color of the checked and indeterminate icons.    |
+| `--checked-icon-scale`    | The size of the checked and indeterminate icons relative to the checkbox. |
 
 ## Examples
+
+### Quick examples (align with component docs)
+
+```html
+<!-- Checked -->
+<wa-checkbox checked>Checked</wa-checkbox>
+
+<!-- Indeterminate -->
+<wa-checkbox indeterminate>Indeterminate</wa-checkbox>
+
+<!-- Disabled -->
+<wa-checkbox disabled>Disabled</wa-checkbox>
+
+<!-- Sizes -->
+<wa-checkbox size="small">Small</wa-checkbox>
+<br />
+<wa-checkbox size="medium">Medium</wa-checkbox>
+<br />
+<wa-checkbox size="large">Large</wa-checkbox>
+
+<!-- Hint -->
+<wa-checkbox hint="What should the user know about the checkbox?">Label</wa-checkbox>
+```
 
 ```html
 <!-- Basic checkbox -->

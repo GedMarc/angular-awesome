@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>ColorPicker Component <span class="version-badge">v1.0.1</span></h1>
+                <h1>ColorPicker Component <span class="version-badge">synced with Web Awesome 3.4.x</span></h1>
                 <p class="subtitle"><wa-color-picker> provides color picker functionality for Angular applications.</p>
             </header>
 
@@ -109,38 +109,47 @@ import { WaColorPickerDirective } from 'angular-awesome/color-picker';</pre>
       <section>
         <h2>Examples</h2>
         <h1>Color Picker Examples</h1>
+<p>Color pickers allow the user to select a color.</p>
+<p>Select a color
+<wa-color-picker label="Select a color"></wa-color-picker></p>
 <h2>Basic Usage</h2>
 <pre><code class="language-html">&lt;wa-color-picker label=&quot;Choose a color&quot;&gt;&lt;/wa-color-picker&gt;
 </code></pre>
-<h2>With Different Formats</h2>
-<pre><code class="language-html">&lt;wa-color-picker label=&quot;HEX Color&quot; format=&quot;hex&quot;&gt;&lt;/wa-color-picker&gt;
-&lt;wa-color-picker label=&quot;RGB Color&quot; format=&quot;rgb&quot;&gt;&lt;/wa-color-picker&gt;
-&lt;wa-color-picker label=&quot;HSL Color&quot; format=&quot;hsl&quot;&gt;&lt;/wa-color-picker&gt;
-&lt;wa-color-picker label=&quot;HSV Color&quot; format=&quot;hsv&quot;&gt;&lt;/wa-color-picker&gt;
+<h2>Formats</h2>
+<pre><code class="language-html">&lt;div class=&quot;wa-grid&quot; style=&quot;--min-column-size: 12ch;&quot;&gt;
+  &lt;wa-color-picker format=&quot;hex&quot; value=&quot;#4a90e2&quot; label=&quot;Pick a hex color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;rgb&quot; value=&quot;rgb(80, 227, 194)&quot; label=&quot;Pick an RGB color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;hsl&quot; value=&quot;hsl(290, 87%, 47%)&quot; label=&quot;Pick an HSL color&quot;&gt;&lt;/wa-color-picker&gt;
+  &lt;wa-color-picker format=&quot;hsv&quot; value=&quot;hsv(55, 89%, 97%)&quot; label=&quot;Pick an HSV color&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;/div&gt;
 </code></pre>
-<h2>With Opacity</h2>
-<pre><code class="language-html">&lt;wa-color-picker label=&quot;Color with Opacity&quot; [opacity]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+<h2>Opacity</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker value=&quot;#f5a623ff&quot; opacity label=&quot;Select a color&quot;&gt;&lt;/wa-color-picker&gt;
 </code></pre>
-<h2>With Initial Value</h2>
-<pre><code class="language-html">&lt;wa-color-picker label=&quot;Red Color&quot; value=&quot;#ff0000&quot;&gt;&lt;/wa-color-picker&gt;
-&lt;wa-color-picker label=&quot;Blue Color with Opacity&quot; value=&quot;rgba(0, 0, 255, 0.5)&quot; [opacity]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+<h2>Initial Value</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker value=&quot;#4a90e2&quot; label=&quot;Select a color&quot;&gt;&lt;/wa-color-picker&gt;
 </code></pre>
 <h2>With Different Sizes</h2>
 <pre><code class="language-html">&lt;wa-color-picker label=&quot;Small Color Picker&quot; size=&quot;small&quot;&gt;&lt;/wa-color-picker&gt;
 &lt;wa-color-picker label=&quot;Medium Color Picker&quot; size=&quot;medium&quot;&gt;&lt;/wa-color-picker&gt;
 &lt;wa-color-picker label=&quot;Large Color Picker&quot; size=&quot;large&quot;&gt;&lt;/wa-color-picker&gt;
 </code></pre>
-<h2>With Swatches</h2>
-<pre><code class="language-html">&lt;!-- Using a semicolon-separated string --&gt;
-&lt;wa-color-picker 
-  label=&quot;With Swatches&quot; 
-  swatches=&quot;#ff0000;#00ff00;#0000ff;#ffff00;#ff00ff;#00ffff&quot;&gt;
-&lt;/wa-color-picker&gt;
+<h2>Swatches</h2>
+<pre><code class="language-html">Select a color
+&lt;wa-color-picker
+  label=&quot;Select a color&quot;
+  swatches=&quot;
+    #d0021b; #f5a623; #f8e71c; #8b572a; #7ed321; #417505; #bd10e0; #9013fe;
+    #4a90e2; #50e3c2; #b8e986; #000; #444; #888; #ccc; #fff;
+  &quot;
+&gt;&lt;/wa-color-picker&gt;
 
 &lt;!-- Using an array --&gt;
 &lt;wa-color-picker 
   label=&quot;With Swatches Array&quot; 
-  [swatches]=&quot;[&#39;#ff0000&#39;, &#39;#00ff00&#39;, &#39;#0000ff&#39;, &#39;#ffff00&#39;, &#39;#ff00ff&#39;, &#39;#00ffff&#39;]&quot;&gt;
+  [swatches]=&quot;[&#39;#d0021b&#39;,&#39;#f5a623&#39;,&#39;#f8e71c&#39;,&#39;#8b572a&#39;,&#39;#7ed321&#39;,&#39;#417505&#39;,&#39;#bd10e0&#39;,&#39;#9013fe&#39;,&#39;#4a90e2&#39;,&#39;#50e3c2&#39;,&#39;#b8e986&#39;,&#39;#000&#39;,&#39;#444&#39;,&#39;#888&#39;,&#39;#ccc&#39;,&#39;#fff&#39;]&quot;&gt;
 &lt;/wa-color-picker&gt;
 </code></pre>
 <h2>With Hints</h2>
@@ -165,7 +174,7 @@ import { WaColorPickerDirective } from 'angular-awesome/color-picker';</pre>
 &lt;wa-color-picker label=&quot;With Format Toggle&quot;&gt;&lt;/wa-color-picker&gt;
 
 &lt;!-- Disable format toggle --&gt;
-&lt;wa-color-picker label=&quot;No Format Toggle&quot; [noFormatToggle]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;
+&lt;wa-color-picker label=&quot;No Format Toggle&quot; without-format-toggle&gt;&lt;/wa-color-picker&gt;
 </code></pre>
 <h2>Uppercase HEX Values</h2>
 <pre><code class="language-html">&lt;wa-color-picker label=&quot;Uppercase HEX&quot; format=&quot;hex&quot; [uppercase]=&quot;true&quot;&gt;&lt;/wa-color-picker&gt;

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WaTextareaComponent } from './textarea.component';
@@ -6,7 +6,7 @@ import { WaTextareaComponent } from './textarea.component';
 // Create a test host component for the textarea component
 @Component({
   template: `
-    <waTextarea
+    <wa-textarea
       [(ngModel)]="value"
       [label]="label"
       [hint]="hint"
@@ -34,12 +34,12 @@ import { WaTextareaComponent } from './textarea.component';
       [borderColor]="borderColor"
       [borderWidth]="borderWidth"
       [boxShadow]="boxShadow"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
-      (inputEvent)="onInput($event)"
-      (changeEvent)="onChange($event)"
-      (invalid)="onInvalid($event)"
-    ></waTextarea>
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
+      (wa-input)="onInput($event)"
+      (wa-change)="onChange($event)"
+      (wa-invalid)="onInvalid($event)"
+    ></wa-textarea>
   `,
   standalone: true,
   imports: [WaTextareaComponent, FormsModule]
@@ -123,8 +123,8 @@ describe('WaTextareaComponent', () => {
     hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
 
-    // Get the waTextarea element
-    textareaElement = hostFixture.nativeElement.querySelector('waTextarea');
+    // Get the wa-textarea element
+    textareaElement = hostFixture.nativeElement.querySelector('wa-textarea');
   });
 
   it('should create the textarea component', () => {
@@ -213,28 +213,30 @@ describe('WaTextareaComponent', () => {
     expect(textareaElement.style.getPropertyValue('--box-shadow')).toBe('0 4px 8px rgba(0,0,0,0.1)');
   });
 
-  it('should handle ngModel binding', () => {
+  it('should handle ngModel binding', fakeAsync(() => {
     // Update model -> view
     hostComponent.value = 'Test Value';
     hostFixture.detectChanges();
+    tick();
+    hostFixture.detectChanges();
     expect(textareaElement.getAttribute('value')).toBe('Test Value');
-  });
+  }));
 
   it('should emit events correctly', () => {
     // Simulate focus event
-    textareaElement.dispatchEvent(new FocusEvent('focus'));
+    textareaElement.dispatchEvent(new FocusEvent('wa-focus'));
     expect(hostComponent.focusCalled).toBe(true);
 
     // Simulate blur event
-    textareaElement.dispatchEvent(new FocusEvent('blur'));
+    textareaElement.dispatchEvent(new FocusEvent('wa-blur'));
     expect(hostComponent.blurCalled).toBe(true);
 
     // Simulate input event
-    textareaElement.dispatchEvent(new Event('input'));
+    textareaElement.dispatchEvent(new Event('wa-input'));
     expect(hostComponent.inputCalled).toBe(true);
 
     // Simulate change event
-    textareaElement.dispatchEvent(new Event('change'));
+    textareaElement.dispatchEvent(new Event('wa-change'));
     expect(hostComponent.changeCalled).toBe(true);
 
     // Simulate invalid event

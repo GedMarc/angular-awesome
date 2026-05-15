@@ -1,31 +1,39 @@
 # Color Picker Examples
 
+Color pickers allow the user to select a color.
+
+Select a color
+<wa-color-picker label="Select a color"></wa-color-picker>
+
 ## Basic Usage
 
 ```html
 <wa-color-picker label="Choose a color"></wa-color-picker>
 ```
 
-## With Different Formats
+## Formats
 
 ```html
-<wa-color-picker label="HEX Color" format="hex"></wa-color-picker>
-<wa-color-picker label="RGB Color" format="rgb"></wa-color-picker>
-<wa-color-picker label="HSL Color" format="hsl"></wa-color-picker>
-<wa-color-picker label="HSV Color" format="hsv"></wa-color-picker>
+<div class="wa-grid" style="--min-column-size: 12ch;">
+  <wa-color-picker format="hex" value="#4a90e2" label="Pick a hex color"></wa-color-picker>
+  <wa-color-picker format="rgb" value="rgb(80, 227, 194)" label="Pick an RGB color"></wa-color-picker>
+  <wa-color-picker format="hsl" value="hsl(290, 87%, 47%)" label="Pick an HSL color"></wa-color-picker>
+  <wa-color-picker format="hsv" value="hsv(55, 89%, 97%)" label="Pick an HSV color"></wa-color-picker>
+</div>
 ```
 
-## With Opacity
+## Opacity
 
 ```html
-<wa-color-picker label="Color with Opacity" [opacity]="true"></wa-color-picker>
+Select a color
+<wa-color-picker value="#f5a623ff" opacity label="Select a color"></wa-color-picker>
 ```
 
-## With Initial Value
+## Initial Value
 
 ```html
-<wa-color-picker label="Red Color" value="#ff0000"></wa-color-picker>
-<wa-color-picker label="Blue Color with Opacity" value="rgba(0, 0, 255, 0.5)" [opacity]="true"></wa-color-picker>
+Select a color
+<wa-color-picker value="#4a90e2" label="Select a color"></wa-color-picker>
 ```
 
 ## With Different Sizes
@@ -36,19 +44,22 @@
 <wa-color-picker label="Large Color Picker" size="large"></wa-color-picker>
 ```
 
-## With Swatches
+## Swatches
 
 ```html
-<!-- Using a semicolon-separated string -->
-<wa-color-picker 
-  label="With Swatches" 
-  swatches="#ff0000;#00ff00;#0000ff;#ffff00;#ff00ff;#00ffff">
-</wa-color-picker>
+Select a color
+<wa-color-picker
+  label="Select a color"
+  swatches="
+    #d0021b; #f5a623; #f8e71c; #8b572a; #7ed321; #417505; #bd10e0; #9013fe;
+    #4a90e2; #50e3c2; #b8e986; #000; #444; #888; #ccc; #fff;
+  "
+></wa-color-picker>
 
 <!-- Using an array -->
 <wa-color-picker 
   label="With Swatches Array" 
-  [swatches]="['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']">
+  [swatches]="['#d0021b','#f5a623','#f8e71c','#8b572a','#7ed321','#417505','#bd10e0','#9013fe','#4a90e2','#50e3c2','#b8e986','#000','#444','#888','#ccc','#fff']">
 </wa-color-picker>
 ```
 
@@ -82,7 +93,7 @@
 <wa-color-picker label="With Format Toggle"></wa-color-picker>
 
 <!-- Disable format toggle -->
-<wa-color-picker label="No Format Toggle" [noFormatToggle]="true"></wa-color-picker>
+<wa-color-picker label="No Format Toggle" without-format-toggle></wa-color-picker>
 ```
 
 ## Uppercase HEX Values

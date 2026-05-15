@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -10,7 +10,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * Features:
  * - Binds date attribute via ngModel (ISO 8601 string or Date)
  * - Supports format, numeric, lang, and sync inputs
- * - Emits focus and blur events
+ * - Emits focusNative and blurNative events
  * - Enables Angular-style class and style bindings
  * - Supports custom styling via CSS variables
  * - Implements ControlValueAccessor for ngModel support
@@ -26,8 +26,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
+export class WaRelativeTimeDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
+  @Input() date?: Date | string;
   @Input() format?: 'long' | 'short' | 'narrow' | string;
   @Input() numeric?: 'auto' | 'always' | string;
   @Input() lang?: string;
@@ -51,6 +52,32 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
+      this.focusEvent.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
+      this.blurEvent.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'input', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      this.onChange(target.value);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set date property (can be Date or string)
+    if (this.date != null) {
+      const dateStr = this.date instanceof Date ? this.date.toISOString() : this.date;
+      this.setAttr('date', dateStr);
+    }
     // Set string attributes
     this.setAttr('format', this.format);
     this.setAttr('numeric', this.numeric);
@@ -61,19 +88,6 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
 
     // Set style attributes
     this.setCssVar('--display', this.display);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      this.onChange(target.value);
-    });
   }
 
   /**
@@ -89,6 +103,8 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -97,7 +113,7 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -108,6 +124,8 @@ export class WaRelativeTimeDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

@@ -15,7 +15,7 @@
 ```html
 <wa-breadcrumb label="Site Navigation">
   <wa-breadcrumb-item href="/home">
-    <wa-icon slot="prefix" name="house" variant="solid"></wa-icon>
+    <wa-icon slot="start" name="house" variant="solid"></wa-icon>
     Home
   </wa-breadcrumb-item>
   
@@ -25,7 +25,7 @@
   
   <wa-breadcrumb-item href="/home/products/widgets">
     Widgets
-    <wa-icon slot="suffix" name="star" variant="solid"></wa-icon>
+    <wa-icon slot="end" name="star" variant="solid"></wa-icon>
   </wa-breadcrumb-item>
 </wa-breadcrumb>
 ```
@@ -59,15 +59,15 @@
   .custom-breadcrumbs wa-breadcrumb-item::part(separator) {
     color: pink;
   }
-  .custom-breadcrumbs wa-breadcrumb-item::part(prefix),
-  .custom-breadcrumbs wa-breadcrumb-item::part(suffix) {
+  .custom-breadcrumbs wa-breadcrumb-item::part(start),
+  .custom-breadcrumbs wa-breadcrumb-item::part(end) {
     color: blue;
   }
 </style>
 
 <wa-breadcrumb class="custom-breadcrumbs">
   <wa-breadcrumb-item href="/home">
-    <wa-icon slot="prefix" name="house"></wa-icon>
+    <wa-icon slot="start" name="house"></wa-icon>
     Home
   </wa-breadcrumb-item>
   <wa-breadcrumb-item>Current Page</wa-breadcrumb-item>
@@ -83,10 +83,8 @@
   <wa-breadcrumb-item>
     <wa-dropdown>
       <wa-button slot="trigger">Products</wa-button>
-      <wa-menu>
-        <wa-menu-item href="/products/category1">Category 1</wa-menu-item>
-        <wa-menu-item href="/products/category2">Category 2</wa-menu-item>
-      </wa-menu>
+      <wa-dropdown-item href="/products/category1">Category 1</wa-dropdown-item>
+      <wa-dropdown-item href="/products/category2">Category 2</wa-dropdown-item>
     </wa-dropdown>
   </wa-breadcrumb-item>
   
