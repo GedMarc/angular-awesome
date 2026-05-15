@@ -1,6 +1,6 @@
 ### 🧑‍🎨 `wa-avatar.rules.md`
 
-**Angular 19 Directive Rules for `<wa-avatar>` Web Component**
+**Angular 20 Directive Rules for `<wa-avatar>` Web Component**
 
 > ℹ️ This is a standalone component rule file for `wa-avatar`.
 > It references the shared [Web Awesome Base Rules](../../../RULES.md) and assumes global assets are preconfigured.
@@ -118,7 +118,7 @@ Also allow `[style.fontSize]` for responsive scaling.
 
 ## ✅ Status
 
-**Stable** under Angular 19 with `standalone: true`, `CUSTOM_ELEMENTS_SCHEMA`, and native shadow DOM rendering.
+**Stable** under Angular 20 with `standalone: true`, `CUSTOM_ELEMENTS_SCHEMA`, and native shadow DOM rendering.
 
 ---
 

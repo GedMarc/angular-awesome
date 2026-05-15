@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaSelectWrapperComponent
@@ -33,7 +34,7 @@ import { SizeToken, Appearance, normalizeAppearance } from '../../types/tokens';
     }
   ]
 })
-export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
+export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: any | any[];
   @Input() label?: string;
@@ -50,6 +51,10 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   @Input() maxOptionsVisible?: number | string;
   // Maximum number of selections allowed when multiple is enabled
   @Input() maxSelected?: number | string;
+  @Input() name?: string;
+  @Input() open?: boolean | string;
+  @Input() withLabel?: boolean | string;
+  @Input() withHint?: boolean | string;
   @Input() form?: string;
   // Custom tag renderer for multiselect tags
   @Input() getTag?: any;
@@ -65,20 +70,34 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   @Input() textColorHover?: string;
 
   // Event outputs
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
-  @Output() clearEvent = new EventEmitter<CustomEvent>();
-  @Output() showEvent = new EventEmitter<CustomEvent>();
-  @Output() afterShowEvent = new EventEmitter<CustomEvent>();
-  @Output() hideEvent = new EventEmitter<CustomEvent>();
-  @Output() afterHideEvent = new EventEmitter<CustomEvent>();
-  @Output() invalidEvent = new EventEmitter<CustomEvent>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waClear = new EventEmitter<CustomEvent>();
+  @Output('wa-clear') waClearHyphen = this.waClear;
+  @Output() waShow = new EventEmitter<CustomEvent>();
+  @Output('wa-show') waShowHyphen = this.waShow;
+  @Output() waAfterShow = new EventEmitter<CustomEvent>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
+  @Output() waHide = new EventEmitter<CustomEvent>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
+  @Output() waAfterHide = new EventEmitter<CustomEvent>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
+  @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // Object binding support
   @Input() valueField?: string; // property name to use as key when value is an object
@@ -159,6 +178,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     this.applyInputs();
+    this.syncValidationState();
 
     // Set up event listeners
     const handleValueRead = () => {
@@ -194,49 +214,58 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       }
       const mapped = this.mapFromKeys(newValue);
       this.onChange(mapped);
+      this.valueChange.emit(mapped);
     };
 
     // Listen to both standard and WebAwesome custom events
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.inputEvent.emit(event);
+      this.waInput.emit(event);
       handleValueRead();
     });
     this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.changeEvent.emit(event);
+      this.waChange.emit(event);
       handleValueRead();
     });
     this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
-      this.inputEvent.emit(event as unknown as Event);
+      this.waInput.emit(event as unknown as Event);
       handleValueRead();
     });
     this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
-      this.changeEvent.emit(event as unknown as Event);
+      this.waChange.emit(event as unknown as Event);
       handleValueRead();
     });
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
     });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
-      this.clearEvent.emit(event);
+      this.waClear.emit(event);
+      handleValueRead();
     });
     this.renderer.listen(nativeEl, 'wa-show', (event: CustomEvent) => {
-      this.showEvent.emit(event);
+      this.waShow.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => {
-      this.afterShowEvent.emit(event);
+      this.waAfterShow.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => {
-      this.hideEvent.emit(event);
+      this.waHide.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => {
-      this.afterHideEvent.emit(event);
+      this.waAfterHide.emit(event);
     });
     this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
-      this.invalidEvent.emit(event);
+      this.waInvalid.emit(event);
       // Notify Angular that validation might have changed
       this.validatorChange?.();
     });
@@ -272,6 +301,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
             }
             const mapped = this.mapFromKeys(newValue);
             this.onChange(mapped);
+            this.valueChange.emit(mapped);
           }
         }
       });
@@ -279,8 +309,27 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } catch {}
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
   }
 
   private applyInputs(): void {
@@ -291,18 +340,22 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     this.setAttr('appearance', normalizeAppearance(this.appearance as any));
     this.setAttr('size', this.size);
     this.setAttr('placement', this.placement);
+    this.setAttr('name', this.name);
     this.setAttr('form', this.form);
     this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
 
     // Set boolean attributes (only if true)
     // First clear booleans then reapply to allow toggling off
     const host = this.el.nativeElement as HTMLElement;
-    ['pill','with-clear','disabled','multiple','required'].forEach(a => host.removeAttribute(a));
+    ['pill','with-clear','disabled','multiple','required','open','with-label','with-hint'].forEach(a => host.removeAttribute(a));
     this.setBooleanAttr('pill', this.pill);
     this.setBooleanAttr('with-clear', this.withClear);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('multiple', this.multiple);
     this.setBooleanAttr('required', this.required);
+    this.setBooleanAttr('open', this.open);
+    this.setBooleanAttr('with-label', this.withLabel);
+    this.setBooleanAttr('with-hint', this.withHint);
 
     // Styles
     this.setCssVar('--background-color', this.backgroundColor);
@@ -328,7 +381,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
         if (raw == null) {
           raw = el?.value ?? '';
         }
-        let currentKeys: string[] = Array.isArray(raw)
+        const currentKeys: string[] = Array.isArray(raw)
           ? raw
           : String(raw).split(' ').filter(v => v !== '');
         if (currentKeys.length > max) {
@@ -362,6 +415,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -374,6 +429,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -382,7 +439,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -393,6 +450,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -455,6 +514,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
     } else {
       this.el.nativeElement.removeAttribute('disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation so Angular forms can reflect validity state (e.g., required)
@@ -494,7 +554,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, ControlValue
   standalone: true,
   template: '<ng-content></ng-content>'
 })
-export class WaOptionComponent implements OnInit {
+export class WaOptionComponent implements OnInit, OnChanges {
   @Input() value?: any;
   @Input() label?: string;
   @Input() disabled?: boolean | string;
@@ -511,6 +571,14 @@ export class WaOptionComponent implements OnInit {
   private parent = inject(WaSelectWrapperComponent, { optional: true } as any);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Compute and set the actual DOM value (string key)
     let domValue: string | undefined;
     if (this.value != null) {
@@ -526,6 +594,8 @@ export class WaOptionComponent implements OnInit {
     this.setAttr('label', this.label);
 
     // Set boolean attributes (only if true)
+    // Clear boolean attrs first
+    this.el.nativeElement.removeAttribute('disabled');
     this.setBooleanAttr('disabled', this.disabled);
 
     // Set style attributes
@@ -541,6 +611,8 @@ export class WaOptionComponent implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -549,7 +621,7 @@ export class WaOptionComponent implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -560,6 +632,8 @@ export class WaOptionComponent implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

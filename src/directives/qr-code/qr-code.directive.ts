@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -26,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
+export class WaQrCodeDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
   @Input() value?: string;
   @Input() label?: string;
@@ -45,8 +45,10 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
   @Input() styleDisplay?: string;
 
   // Event outputs
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
 
   // Injected services
   private el = inject(ElementRef);
@@ -59,6 +61,34 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'input', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      this.onChange(target.value);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set attributes
     this.setAttr('value', this.value);
     this.setAttr('label', this.label);
@@ -75,19 +105,6 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--radius', this.styleRadius);
     this.setCssVar('--color', this.styleColor);
     this.setCssVar('--display', this.styleDisplay);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      this.onChange(target.value);
-    });
   }
 
   /**
@@ -103,6 +120,8 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -115,6 +134,8 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -123,7 +144,7 @@ export class WaQrCodeDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

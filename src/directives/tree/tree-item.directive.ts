@@ -27,13 +27,15 @@ export class WaTreeItemDirective implements OnChanges {
   /** Optional value key; if provided, will be used as value identity */
   @Input() value: any;
 
-  // Outputs
-  @Output() expand = new EventEmitter<void>();
-  @Output() afterExpand = new EventEmitter<void>();
-  @Output() collapse = new EventEmitter<void>();
-  @Output() afterCollapse = new EventEmitter<void>();
+  // Outputs — camelCase only; hyphenated aliases removed to prevent infinite
+  // re-dispatch loops (HostListener catches native event → emit → Output alias
+  // dispatches it back as the same native event → HostListener catches it again).
+  @Output() waExpand = new EventEmitter<void>();
+  @Output() waAfterExpand = new EventEmitter<void>();
+  @Output() waCollapse = new EventEmitter<void>();
+  @Output() waAfterCollapse = new EventEmitter<void>();
   @Output() lazyChange = new EventEmitter<boolean>();
-  @Output() lazyLoad = new EventEmitter<void>();
+  @Output() waLazyLoad = new EventEmitter<void>();
 
   // Styling inputs
   @Input() selectionBackgroundColor?: string;
@@ -46,38 +48,51 @@ export class WaTreeItemDirective implements OnChanges {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  /** Guard flag – prevents re-entrant HostListener → emit → HostListener loops. */
+  private emitting = false;
+
   private isTruthy(value: boolean | string | null | undefined): boolean {
     return value === '' || value === true || value === 'true';
   }
 
-  @HostListener('wa-expand')
-  onExpand() {
+  @HostListener('wa-expand', ['$event'])
+  onExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (!this.isTruthy(this.disabled)) {
-      this.expand.emit();
+      this.emitting = true;
+      try { this.waExpand.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-expand')
-  onAfterExpand() {
-    this.afterExpand.emit();
+  @HostListener('wa-after-expand', ['$event'])
+  onAfterExpand(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterExpand.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-collapse')
-  onCollapse() {
+  @HostListener('wa-collapse', ['$event'])
+  onCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (!this.isTruthy(this.disabled)) {
-      this.collapse.emit();
+      this.emitting = true;
+      try { this.waCollapse.emit(); } finally { this.emitting = false; }
     }
   }
 
-  @HostListener('wa-after-collapse')
-  onAfterCollapse() {
-    this.afterCollapse.emit();
+  @HostListener('wa-after-collapse', ['$event'])
+  onAfterCollapse(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try { this.waAfterCollapse.emit(); } finally { this.emitting = false; }
   }
 
-  @HostListener('wa-lazy-load')
-  onLazyLoad() {
+  @HostListener('wa-lazy-load', ['$event'])
+  onLazyLoad(event: Event) {
+    if (this.emitting || event.target !== this.el.nativeElement) return;
     if (this.isTruthy(this.lazy) && !this.isTruthy(this.disabled)) {
-      this.lazyLoad.emit();
+      this.emitting = true;
+      try { this.waLazyLoad.emit(); } finally { this.emitting = false; }
     }
   }
 
@@ -115,7 +130,7 @@ export class WaTreeItemDirective implements OnChanges {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaPopoverDirective
@@ -26,7 +26,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
   selector: 'wa-popover',
   standalone: true
 })
-export class WaPopoverDirective implements OnInit, OnDestroy {
+export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
   // String inputs
   @Input() anchor?: string;
   // Allow using HTML's label-like API: for/htmlFor. We alias to properties that map to `anchor`.
@@ -42,7 +42,9 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
 
   // Boolean inputs
   @Input() active?: boolean | string;
+  @Input() open?: boolean | string;
   @Input() arrow?: boolean | string;
+  @Input() withoutArrow?: boolean | string;
   @Input() flip?: boolean | string;
   @Input() shift?: boolean | string;
   @Input() hoverBridge?: boolean | string;
@@ -57,10 +59,15 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
 
   // Event outputs
   @Output() waReposition = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') waRepositionHyphen = this.waReposition;
   @Output() waShow = new EventEmitter<Event>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<Event>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<Event>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<Event>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   // Injected services
   private el = inject(ElementRef);
@@ -92,6 +99,7 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
 
     // Set boolean attributes (only if true) — DO NOT set `active` yet
     this.setBooleanAttr('arrow', this.arrow);
+    this.setBooleanAttr('without-arrow', this.withoutArrow);
     this.setBooleanAttr('flip', this.flip);
     this.setBooleanAttr('shift', this.shift);
     this.setBooleanAttr('hover-bridge', this.hoverBridge);
@@ -139,13 +147,17 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
     this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.waAfterShow.emit(event));
     this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.waAfterHide.emit(event));
 
-    // If the popover starts active or `active` input is set, render content BEFORE enabling active
+    // If the popover starts active/open, render content BEFORE enabling active
     const wantsActive = (this.active === true || this.active === 'true' || this.active === '');
-    if (nativeEl.hasAttribute('active') || wantsActive) {
+    const wantsOpen = (this.open === true || this.open === 'true' || this.open === '');
+    if (nativeEl.hasAttribute('active') || nativeEl.hasAttribute('open') || wantsActive || wantsOpen) {
       this.renderContentFromFragment();
       // Now set active if requested via input so the component opens with content already present
       if (wantsActive && !nativeEl.hasAttribute('active')) {
         this.setBooleanAttr('active', true);
+      }
+      if (wantsOpen && !nativeEl.hasAttribute('open')) {
+        this.setBooleanAttr('open', true);
       }
     }
 
@@ -159,6 +171,28 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
       const resolvedAnchor = this.anchor ?? this.forAttr ?? this.htmlFor;
       this.setAttr('anchor', resolvedAnchor);
     }
+    if (changes['placement']) this.setAttr('placement', this.placement);
+    if (changes['boundary']) this.setAttr('boundary', this.boundary);
+    if (changes['flipFallbackPlacements']) this.setAttr('flip-fallback-placements', this.flipFallbackPlacements);
+    if (changes['flipFallbackStrategy']) this.setAttr('flip-fallback-strategy', this.flipFallbackStrategy);
+    if (changes['autoSize']) this.setAttr('auto-size', this.autoSize);
+    if (changes['sync']) this.setAttr('sync', this.sync);
+    if (changes['arrowPlacement']) this.setAttr('arrow-placement', this.arrowPlacement);
+
+    if (changes['arrow']) this.setBooleanAttr('arrow', this.arrow);
+    if (changes['withoutArrow']) this.setBooleanAttr('without-arrow', this.withoutArrow);
+    if (changes['flip']) this.setBooleanAttr('flip', this.flip);
+    if (changes['shift']) this.setBooleanAttr('shift', this.shift);
+    if (changes['hoverBridge']) this.setBooleanAttr('hover-bridge', this.hoverBridge);
+    if (changes['active']) this.setBooleanAttr('active', this.active);
+    if (changes['open']) this.setBooleanAttr('open', this.open);
+
+    if (changes['distance']) this.setNumericAttr('distance', this.distance);
+    if (changes['skidding']) this.setNumericAttr('skidding', this.skidding);
+    if (changes['arrowPadding']) this.setNumericAttr('arrow-padding', this.arrowPadding);
+    if (changes['flipPadding']) this.setNumericAttr('flip-padding', this.flipPadding);
+    if (changes['shiftPadding']) this.setNumericAttr('shift-padding', this.shiftPadding);
+    if (changes['autoSizePadding']) this.setNumericAttr('auto-size-padding', this.autoSizePadding);
   }
 
   ngOnDestroy(): void {
@@ -190,6 +224,8 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -212,6 +248,8 @@ export class WaPopoverDirective implements OnInit, OnDestroy {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

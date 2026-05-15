@@ -1,6 +1,6 @@
 ### 🌐 `wa-breadcrumb.rules.md`
 
-**Angular 19 Directive Rules for `<wa-breadcrumb>` and `<wa-breadcrumb-item>` Web Components**
+**Angular 20 Directive Rules for `<wa-breadcrumb>` and `<wa-breadcrumb-item>` Web Components**
 
 ---
 

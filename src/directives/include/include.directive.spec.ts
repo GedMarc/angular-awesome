@@ -9,8 +9,8 @@ import { WaIncludeDirective } from './include.directive';
       [src]="src"
       [mode]="mode"
       [allowScripts]="allowScripts"
-      (waLoad)="onLoad()"
-      (waError)="onError($event)"
+      (wa-load)="onLoad()"
+      (wa-error)="onError($event)"
     ></wa-include>
   `,
   standalone: true,
@@ -103,8 +103,8 @@ describe('WaIncludeDirective', () => {
     spyOn(hostComponent, 'onError');
 
     // Create mock events
-    const loadEvent = new Event('waLoad');
-    const errorEvent = new CustomEvent('waError', {
+    const loadEvent = new Event('wa-load');
+    const errorEvent = new CustomEvent('wa-error', {
       detail: { status: 404 }
     });
 

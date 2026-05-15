@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — Forms"
+  short_description: "Integrate Angular Awesome form controls with Angular Forms"
+  default_prompt: "Use $angular-awesome-forms to build forms with wa-input, wa-select, wa-checkbox and Angular Forms."
+

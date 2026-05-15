@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Appearance, normalizeAppearance } from '../../types/tokens';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
+import { Appearance, normalizeAppearance, SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaInputDirective
@@ -36,21 +37,23 @@ import { Appearance, normalizeAppearance } from '../../types/tokens';
     }
   ]
 })
-export class WaInputDirective implements OnInit, ControlValueAccessor, Validator {
+export class WaInputDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() type?: string;
   @Input() value?: string | number | null;
-  @Input() size?: 'small' | 'medium' | 'large' | 'inherit' | string;
+  @Input() size?: SizeToken | string;
   @Input() appearance?: Appearance | string;
   @Input() pill?: boolean | string;
   @Input() label?: string;
   @Input() hint?: string;
   @Input() withClear?: boolean | string;
+  @Input() set clearable(v: boolean | string | undefined) { this.withClear = v; }
   @Input() placeholder?: string;
   @Input() readonly?: boolean | string;
   @Input() passwordToggle?: boolean | string;
   @Input() passwordVisible?: boolean | string;
   @Input() withoutSpinButtons?: boolean | string;
+  @Input() set noSpinButtons(v: boolean | string | undefined) { this.withoutSpinButtons = v; }
   @Input() form?: string | null;
   @Input() required?: boolean | string;
   @Input() pattern?: string;
@@ -76,16 +79,26 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   @Input() boxShadow?: string;
 
   // Event outputs
-  @Output() input = new EventEmitter<Event>();
-  @Output() change = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
   @Output() waClear = new EventEmitter<CustomEvent>();
+  @Output('wa-clear') waClearHyphen = this.waClear;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<string | number | null>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -95,6 +108,83 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+    this.syncValidationState();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.waInput.emit(event);
+      const val = (event.target as any).value;
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    const forwardChange = (event: Event) => {
+      this.waChange.emit(event);
+      const val = (event.target as any).value;
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
+      this.waClear.emit(event);
+      this.onChange('');
+      this.valueChange.emit('');
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyInputs();
+    if ('required' in changes || 'minlength' in changes || 'maxlength' in changes
+      || 'min' in changes || 'max' in changes || 'pattern' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('type', this.type);
     this.setAttr('value', this.value?.toString());
@@ -140,31 +230,6 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
     this.setCssVar('--border-color', this.borderColor);
     this.setCssVar('--border-width', this.borderWidth);
     this.setCssVar('--box-shadow', this.boxShadow);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.input.emit(event);
-      this.onChange((event.target as HTMLInputElement).value);
-    });
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.change.emit(event);
-      this.onChange((event.target as HTMLInputElement).value);
-    });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'wa-clear', (event: CustomEvent) => {
-      this.waClear.emit(event);
-      this.onChange('');
-    });
-    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
-      this.waInvalid.emit(event);
-      this.validatorChange?.();
-    });
   }
 
   /**
@@ -252,6 +317,8 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -272,7 +339,7 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -283,6 +350,8 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -304,20 +373,75 @@ export class WaInputDirective implements OnInit, ControlValueAccessor, Validator
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
-  // Validator implementation: expose required error to Angular forms
+  // Validator implementation: expose validation errors to Angular forms
   validate(control: AbstractControl): ValidationErrors | null {
     // If the underlying element is disabled, treat as valid
     const el: any = this.el?.nativeElement;
     if (!el || el.disabled) return null;
 
-    const isRequired = this.required === true || this.required === '' || this.required === 'true';
-    if (!isRequired) return null;
-
+    const errors: ValidationErrors = {};
     const val = control?.value;
-    const isEmpty = val === null || val === undefined || val === '';
-    return isEmpty ? { required: true } : null;
+
+    // Required
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (isRequired) {
+      const isEmpty = val === null || val === undefined || val === '';
+      if (isEmpty) {
+        errors['required'] = true;
+      }
+    }
+
+    // Only run remaining validations when there is a non-empty value
+    if (val != null && val !== '') {
+      const strVal = String(val);
+
+      // Minlength
+      if (this.minlength != null) {
+        const min = typeof this.minlength === 'string' ? parseInt(this.minlength, 10) : this.minlength;
+        if (!isNaN(min) && strVal.length < min) {
+          errors['minlength'] = { requiredLength: min, actualLength: strVal.length };
+        }
+      }
+
+      // Maxlength
+      if (this.maxlength != null) {
+        const max = typeof this.maxlength === 'string' ? parseInt(this.maxlength, 10) : this.maxlength;
+        if (!isNaN(max) && strVal.length > max) {
+          errors['maxlength'] = { requiredLength: max, actualLength: strVal.length };
+        }
+      }
+
+      // Pattern
+      if (this.pattern != null && this.pattern !== '') {
+        const regex = new RegExp(`^${this.pattern}$`);
+        if (!regex.test(strVal)) {
+          errors['pattern'] = { requiredPattern: `^${this.pattern}$`, actualValue: strVal };
+        }
+      }
+
+      // Min (numeric)
+      if (this.min != null) {
+        const numVal = parseFloat(strVal);
+        const minNum = typeof this.min === 'string' ? parseFloat(this.min) : this.min;
+        if (!isNaN(numVal) && !isNaN(minNum) && numVal < minNum) {
+          errors['min'] = { min: minNum, actual: numVal };
+        }
+      }
+
+      // Max (numeric)
+      if (this.max != null) {
+        const numVal = parseFloat(strVal);
+        const maxNum = typeof this.max === 'string' ? parseFloat(this.max) : this.max;
+        if (!isNaN(numVal) && !isNaN(maxNum) && numVal > maxNum) {
+          errors['max'] = { max: maxNum, actual: numVal };
+        }
+      }
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
   }
 
   registerOnValidatorChange?(fn: () => void): void {

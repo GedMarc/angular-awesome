@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { SizeToken } from '../../types/tokens';
 
 /**
@@ -21,7 +21,7 @@ import { SizeToken } from '../../types/tokens';
   selector: 'wa-rating',
   standalone: true
 })
-export class WaRatingDirective implements OnInit, AfterViewInit {
+export class WaRatingDirective implements OnInit, AfterViewInit, OnChanges {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
@@ -36,23 +36,89 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   @Input() disabled?: boolean | string;
   @Input() size?: SizeToken | string;
 
+  // Form control inputs (new in 3.5)
+  @Input() name?: string | null;
+  @Input() defaultValue?: number | string;
+  @Input() required?: boolean | string;
+  @Input() form?: string;
+
   // Direct styling inputs
   @Input() color?: string;
   @Input() backgroundColor?: string;
   @Input() fontSize?: string;
 
   // Custom symbol function
-  private _getSymbol?: (value: number) => string;
+  private _getSymbol?: (value: number, isSelected: boolean) => string;
+  @Input() set getSymbol(fn: ((value: number, isSelected: boolean) => string) | undefined) {
+    this._getSymbol = fn;
+    if (fn && this.el?.nativeElement) {
+      (this.el.nativeElement as any).getSymbol = fn;
+    }
+  }
 
   // Event outputs
   @Output() waChange = new EventEmitter<number>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
   @Output() waHover = new EventEmitter<{ phase: string, value: number }>();
+  @Output('wa-hover') waHoverHyphen = this.waHover;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waInvalid = new EventEmitter<Event>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<number>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
+    this.applyInputs();
+
+    // Set up event listeners
+    const handleChange = (event: CustomEvent<number>) => {
+      const val = typeof event.detail === 'number' ? event.detail : (event.target as any).value;
+      this.waChange.emit(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'change', handleChange as any);
+    this.renderer.listen(nativeEl, 'wa-change', handleChange as any);
+
+    this.renderer.listen(nativeEl, 'hover', (event: CustomEvent<{ phase: string, value: number }>) => {
+      this.waHover.emit(event.detail);
+    });
+    this.renderer.listen(nativeEl, 'wa-hover', (event: CustomEvent<{ phase: string, value: number }>) => {
+      this.waHover.emit(event.detail);
+    });
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: Event) => {
+      this.waInvalid.emit(event);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
     // Set standard attributes
@@ -69,6 +135,12 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
     // Set boolean attributes (only if true)
     this.setBooleanAttr('readonly', this.readonly);
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('required', this.required);
+
+    // Form control attributes
+    this.setAttr('name', this.name);
+    this.setNumericAttr('default-value', this.defaultValue);
+    this.setAttr('form', this.form);
 
     // Apply direct styling inputs
     if (this.color) nativeEl.style.color = this.color;
@@ -77,15 +149,6 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'change', (event: CustomEvent<number>) => {
-      this.waChange.emit(event.detail);
-    });
-
-    this.renderer.listen(nativeEl, 'hover', (event: CustomEvent<{ phase: string, value: number }>) => {
-      this.waHover.emit(event.detail);
-    });
   }
 
   ngAfterViewInit() {
@@ -95,17 +158,6 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Sets a custom symbol function for the rating component
-   */
-  public set getSymbol(fn: (value: number) => string) {
-    this._getSymbol = fn;
-
-    // If the element is already initialized, set the property directly
-    if (this.el?.nativeElement) {
-      (this.el.nativeElement as any).getSymbol = fn;
-    }
-  }
 
   /**
    * Exposes the native rating element for direct interaction
@@ -115,17 +167,21 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   }
 
   /**
-   * Sets focusNative on the rating component
+   * Sets a custom validation message on the rating.
    */
-  public focus(): void {
-    this.el.nativeElement.focus();
+  public setCustomValidity(message: string): void {
+    if (typeof this.el.nativeElement.setCustomValidity === 'function') {
+      this.el.nativeElement.setCustomValidity(message);
+    }
   }
 
   /**
-   * Removes focusNative from the rating component
+   * Resets validity, removing manual custom errors and native validation.
    */
-  public blur(): void {
-    this.el.nativeElement.blur();
+  public resetValidity(): void {
+    if (typeof this.el.nativeElement.resetValidity === 'function') {
+      this.el.nativeElement.resetValidity();
+    }
   }
 
   /**
@@ -134,6 +190,8 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -141,12 +199,21 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
    * Sets a numeric attribute on the native element if the value is not null or undefined
    */
   private setNumericAttr(name: string, value: number | string | null | undefined) {
-    if (value != null) {
-      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
-      if (!isNaN(numericValue)) {
-        this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
-      }
+    if (value == null) {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+      return;
     }
+
+    const numericValue = typeof value === 'string'
+      ? (value.trim() === '' ? NaN : parseFloat(value))
+      : value;
+
+    if (isNaN(numericValue)) {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
+      return;
+    }
+
+    this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
   }
 
   /**
@@ -156,6 +223,8 @@ export class WaRatingDirective implements OnInit, AfterViewInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

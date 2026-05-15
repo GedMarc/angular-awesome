@@ -1,6 +1,7 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaRadioGroupDirective
@@ -32,7 +33,7 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Validator {
+export class WaRadioGroupDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() value?: string | null;
   @Input() label?: string;
@@ -49,15 +50,24 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
   @Input() styleRadiosGap?: string;
 
   // Event outputs
-  @Output() input = new EventEmitter<Event>();
-  @Output() change = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
   @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -67,6 +77,92 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+    this.syncValidationState();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.waInput.emit(event);
+      // For custom elements, prefer the host element's value property
+      const hostValue = (this.el.nativeElement as any)?.value;
+      const target = event.target as any;
+      const nextValue = hostValue ?? target?.value ?? null;
+      // Keep internal value and attribute in sync for two-way binding
+      this.value = nextValue;
+      if (nextValue == null) {
+        this.renderer.removeAttribute(this.el.nativeElement, 'value');
+        this.renderer.setProperty(this.el.nativeElement, 'value', null);
+      } else {
+        this.renderer.setProperty(this.el.nativeElement, 'value', nextValue);
+        this.renderer.setAttribute(this.el.nativeElement, 'value', String(nextValue));
+      }
+      this.onChange(nextValue);
+      this.valueChange.emit(nextValue);
+      this.validatorChange?.();
+    };
+
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    this.renderer.listen(nativeEl, 'change', (event: Event) => {
+      this.waChange.emit(event);
+      const nextValue = (this.el.nativeElement as any)?.value ?? (event.target as any)?.value;
+      this.valueChange.emit(nextValue);
+      this.validatorChange?.();
+    });
+    this.renderer.listen(nativeEl, 'wa-change', (event: Event) => {
+      this.waChange.emit(event);
+      const nextValue = (this.el.nativeElement as any)?.value ?? (event.target as any)?.value;
+      this.valueChange.emit(nextValue);
+      this.validatorChange?.();
+    });
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
+      this.waInvalid.emit(event);
+      this.validatorChange?.();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('value', this.value);
     this.setAttr('label', this.label);
@@ -83,41 +179,6 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
 
     // Set style attributes
     this.setCssVar('--gap', this.styleRadiosGap);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.input.emit(event);
-      // For custom elements, prefer the host element's value property
-      const hostValue = (this.el.nativeElement as any)?.value;
-      const target = event.target as any;
-      const nextValue = hostValue ?? target?.value ?? null;
-      // Keep internal value and attribute in sync for two-way binding
-      this.value = nextValue;
-      if (nextValue == null) {
-        this.renderer.removeAttribute(this.el.nativeElement, 'value');
-        this.renderer.setProperty(this.el.nativeElement, 'value', null);
-      } else {
-        this.renderer.setProperty(this.el.nativeElement, 'value', nextValue);
-        this.renderer.setAttribute(this.el.nativeElement, 'value', String(nextValue));
-      }
-      this.onChange(nextValue);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.change.emit(event);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-    this.renderer.listen(nativeEl, 'waInvalid', (event: CustomEvent) => {
-      this.waInvalid.emit(event);
-      this.validatorChange?.();
-    });
   }
 
   /**
@@ -133,6 +194,8 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -141,7 +204,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -152,6 +215,8 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -190,6 +255,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
     }
+    this.validatorChange?.();
   }
 
   // Validator implementation: when required, ensure a selection exists
@@ -230,7 +296,7 @@ export class WaRadioGroupDirective implements OnInit, ControlValueAccessor, Vali
   selector: 'wa-radio',
   standalone: true
 })
-export class WaRadioDirective implements OnInit {
+export class WaRadioDirective implements OnInit, OnChanges {
   // Core input attributes
   @Input() value?: string;
   @Input() form?: string | null;
@@ -266,6 +332,22 @@ export class WaRadioDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.blur.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.focus.emit(event);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('value', this.value);
     this.setAttr('form', this.form);
@@ -276,14 +358,6 @@ export class WaRadioDirective implements OnInit {
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('with-prefix', this.withPrefix);
     this.setBooleanAttr('with-suffix', this.withSuffix);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blur.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focus.emit(event);
-    });
 
     // Set style attributes
     this.setCssVar('--background-color', this.styleBackgroundColor);
@@ -309,6 +383,8 @@ export class WaRadioDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -317,7 +393,7 @@ export class WaRadioDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -328,6 +404,8 @@ export class WaRadioDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

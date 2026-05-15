@@ -128,16 +128,16 @@ describe('WaRatingDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
-    spyOn(ratingElement, 'focusNative');
-    spyOn(ratingElement, 'blurNative');
+    (ratingElement as any).setCustomValidity = jasmine.createSpy('setCustomValidity');
+    (ratingElement as any).resetValidity = jasmine.createSpy('resetValidity');
 
     // Call the directive methods
-    ratingDirective.focus();
-    ratingDirective.blur();
+    ratingDirective.setCustomValidity('Required');
+    ratingDirective.resetValidity();
 
     // Verify the native methods were called
-    expect(ratingElement.focus).toHaveBeenCalled();
-    expect(ratingElement.blur).toHaveBeenCalled();
+    expect((ratingElement as any).setCustomValidity).toHaveBeenCalledWith('Required');
+    expect((ratingElement as any).resetValidity).toHaveBeenCalled();
   });
 
   it('should expose the native element', () => {
@@ -149,8 +149,8 @@ describe('WaRatingDirective', () => {
     spyOn(hostComponent, 'onRatingHover');
 
     // Create mock events
-    const changeEvent = new CustomEvent('change', { detail: 4 });
-    const hoverEvent = new CustomEvent('hover', {
+    const changeEvent = new CustomEvent('wa-change', { detail: 4 });
+    const hoverEvent = new CustomEvent('wa-hover', {
       detail: { phase: 'start', value: 3 }
     });
 
@@ -173,14 +173,22 @@ describe('WaRatingDirective', () => {
     });
   });
 
-  it('should set custom symbol function', () => {
-    // Create a spy for the getSymbol function
-    const getSymbolFn = (value: number) => `<wa-icon name="star"></wa-icon>`;
+  it('should set custom symbol function with updated signature', () => {
+    // Create a spy for the getSymbol function with two args (value, isSelected)
+    const getSymbolFn = (value: number, isSelected: boolean) =>
+      isSelected ? `<wa-icon name="star"></wa-icon>` : `<wa-icon name="star" variant="regular"></wa-icon>`;
 
     // Set the getSymbol function
     ratingDirective.getSymbol = getSymbolFn;
 
     // Verify the function was set on the native element
     expect((ratingElement as any).getSymbol).toBe(getSymbolFn);
+
+    // Verify function accepts both arguments
+    const result = (ratingElement as any).getSymbol(3, true);
+    expect(result).toBe('<wa-icon name="star"></wa-icon>');
+
+    const resultUnselected = (ratingElement as any).getSymbol(3, false);
+    expect(resultUnselected).toBe('<wa-icon name="star" variant="regular"></wa-icon>');
   });
 });
