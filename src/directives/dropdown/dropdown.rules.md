@@ -15,6 +15,8 @@ Wraps a `<wa-dropdown>` element that exposes additional content in a popover pan
 #### Structural Inputs
 
 * `placement: DropdownPlacement` – Preferred placement of the dropdown. Options: `'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end'`.
+* `open: boolean | string` – Whether the dropdown panel is open. Can be toggled programmatically.
+* `size: 'small' | 'medium' | 'large'` – The dropdown's size.
 * `disabled: boolean | string` – Disables the dropdown trigger.
 * `stayOpenOnSelect: boolean | string` – Prevents dropdown from closing on item selection.
 * `containingElement: HTMLElement` – Custom element that controls close-on-outside-click behavior.
@@ -89,7 +91,7 @@ Also depends on the rules of:
   (selectEvent)="onSelect($event)"
   style="--box-shadow: 0 2px 6px rgba(0,0,0,0.1);"
 >
-  <wa-button slot="trigger" with-caret>Dropdown</wa-button>
+  <wa-button slot="trigger" caret>Dropdown</wa-button>
   <wa-dropdown-item value="cut">Cut</wa-dropdown-item>
   <wa-dropdown-item value="copy">Copy</wa-dropdown-item>
   <wa-dropdown-item value="paste">Paste</wa-dropdown-item>

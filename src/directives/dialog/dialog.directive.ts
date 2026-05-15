@@ -1,4 +1,5 @@
-import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, inject, ContentChild, EmbeddedViewRef } from '@angular/core';
+import { WaDialogContent } from './dialog-content.directive';
 
 /**
  * WaDialogDirective
@@ -21,6 +22,16 @@ import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
   standalone: true
 })
 export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
+  /**
+   * When dialog is closed, we move all child nodes into this fragment so that
+   * the dialog has no content in the DOM. When it opens again, we re-attach
+   * the nodes back to the host element.
+   */
+  private contentFragment: DocumentFragment | null = null;
+
+  // Optional template-based lazy content (true lazy instantiation)
+  @ContentChild(WaDialogContent) lazyContent?: WaDialogContent;
+  private lazyViewRef?: EmbeddedViewRef<any> | null;
   // Boolean inputs
   @Input() open?: boolean | string;
   @Input() withoutHeader?: boolean | string;
@@ -34,6 +45,9 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   // String inputs
   @Input() label?: string;
 
+  // SSR inputs
+  @Input() withFooter?: boolean | string;
+
   // Style inputs
   @Input() backgroundColor?: string;
   @Input() borderRadius?: string;
@@ -43,14 +57,16 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   @Input() showDuration?: string;
   @Input() hideDuration?: string;
 
-  // Two-way binding output for open state
-  @Output() openChange = new EventEmitter<boolean>();
-
   // Event outputs
+  @Output() openChange = new EventEmitter<boolean>();
   @Output() waShow = new EventEmitter<void>();
+  @Output('wa-show') waShowHyphen = this.waShow;
   @Output() waAfterShow = new EventEmitter<void>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
   @Output() waHide = new EventEmitter<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
   @Output() waAfterHide = new EventEmitter<void>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
 
   // Injected services
   private el = inject(ElementRef);
@@ -69,21 +85,48 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
     this.applyInputs();
 
+    // Ensure initial content visibility matches open state once, without reacting to mid-transition changes
+    if (this.lazyContent) {
+      // For template-based lazy content, only create the view when open
+      if (this.isDialogOpen()) {
+        this.instantiateLazyView();
+      } else {
+        this.destroyLazyView();
+      }
+    } else {
+      if (this.isDialogOpen()) {
+        this.attachProjectedContentIfNeeded();
+      } else {
+        this.detachProjectedContentIfNeeded();
+      }
+    }
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'wa-show', () => {
+      // Restore content as soon as dialog starts to open so internal logic sees correct DOM
+      if (this.lazyContent) {
+        this.instantiateLazyView();
+      } else {
+        this.attachProjectedContentIfNeeded();
+      }
       this.waShow.emit();
     });
     this.renderer.listen(nativeEl, 'wa-after-show', () => {
+      // Content should already be present; just emit events and sync two-way binding
       this.waAfterShow.emit();
-      // Ensure two-way binding reflects final state after show
       this.openChange.emit(true);
     });
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>) => {
       this.waHide.emit(event.detail);
     });
     this.renderer.listen(nativeEl, 'wa-after-hide', () => {
+      // Remove content only after it fully hides to avoid interfering with open/close sequence
+      if (this.lazyContent) {
+        this.destroyLazyView();
+      } else {
+        this.detachProjectedContentIfNeeded();
+      }
       this.waAfterHide.emit();
-      // Ensure two-way binding reflects final state after hide
       this.openChange.emit(false);
     });
 
@@ -106,6 +149,14 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(_: SimpleChanges): void {
     this.applyInputs();
+    // Sync lazy content visibility when open state changes programmatically
+    if (this.lazyContent) {
+      if (this.isDialogOpen()) {
+        this.instantiateLazyView();
+      } else {
+        this.destroyLazyView();
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -162,10 +213,12 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       this.setBooleanAttr('open', openBool);
       this.setBooleanAttr('without-header', withoutHeaderBool);
       this.setBooleanAttr('light-dismiss', lightDismissBool);
+      this.setBooleanAttr('with-footer', this.parseBool(this.withFooter));
 
       this.setPropertySafe('open', openBool);
       this.setPropertySafe('withoutHeader', withoutHeaderBool);
       this.setPropertySafe('lightDismiss', lightDismissBool);
+      this.setPropertySafe('withFooter', this.parseBool(this.withFooter));
 
       // Style CSS variables
       this.setCssVar('--background-color', this.backgroundColor);
@@ -225,6 +278,8 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -233,7 +288,7 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -247,6 +302,92 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
+  }
+
+  /** Determine whether the dialog is currently open */
+  private isDialogOpen(): boolean {
+    const host = this.el.nativeElement as any;
+    return host?.open === true || (host as HTMLElement).hasAttribute('open');
+  }
+
+  /**
+   * Ensure that projected children exist only when dialog is open.
+   * Moves children into a DocumentFragment when closed, and restores when opened.
+   */
+  private updateProjectedContentVisibility(): void {
+    const shouldHaveContent = this.isDialogOpen();
+
+    if (shouldHaveContent) {
+      if (this.lazyContent) {
+        this.instantiateLazyView();
+      } else {
+        this.attachProjectedContentIfNeeded();
+      }
+      return;
+    }
+
+    // Only detach in explicit calls (e.g., on wa-after-hide or initial setup), not on random input changes
+    if (this.lazyContent) {
+      this.destroyLazyView();
+    } else {
+      this.detachProjectedContentIfNeeded();
+    }
+  }
+
+  /** Explicitly attach content if it was previously detached */
+  private attachProjectedContentIfNeeded(): void {
+    const host = this.el.nativeElement as HTMLElement;
+    if (this.contentFragment) {
+      host.appendChild(this.contentFragment);
+      this.contentFragment = null;
+      // Reconnect label slot observer now that content is back
+      this.setupLabelSlotObserver();
+    }
+  }
+
+  /** Explicitly detach content if dialog is closed and content is present */
+  private detachProjectedContentIfNeeded(): void {
+    const host = this.el.nativeElement as HTMLElement;
+    if (!this.contentFragment && !this.isDialogOpen()) {
+      // Disconnect label observer since the slot content will be removed
+      if (this.labelSlotObserver) {
+        try { this.labelSlotObserver.disconnect(); } catch {}
+        this.labelSlotObserver = undefined;
+      }
+      const frag = document.createDocumentFragment();
+      const nodes = Array.from(host.childNodes);
+      for (const node of nodes) {
+        frag.appendChild(node);
+      }
+      this.contentFragment = frag;
+    }
+  }
+
+  // Lazy template instantiation helpers
+  private instantiateLazyView(): void {
+    if (!this.lazyContent) return;
+    if (this.lazyViewRef) return; // already created
+    const view = this.lazyContent.templateRef.createEmbeddedView({});
+    this.lazyViewRef = view;
+    // Attach nodes into the host element
+    const host = this.el.nativeElement as HTMLElement;
+    for (const node of view.rootNodes) {
+      this.renderer.appendChild(host, node);
+    }
+    // Trigger initial CD for the view
+    view.detectChanges();
+  }
+
+  private destroyLazyView(): void {
+    if (this.lazyViewRef) {
+      // Remove DOM nodes from host before destroying the view
+      const host = this.el.nativeElement as HTMLElement;
+      for (const node of this.lazyViewRef.rootNodes) {
+        try { host.removeChild(node); } catch {}
+      }
+      try { this.lazyViewRef.destroy(); } catch {}
+      this.lazyViewRef = null;
     }
   }
 }

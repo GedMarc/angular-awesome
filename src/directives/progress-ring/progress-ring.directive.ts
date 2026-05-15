@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  *
  * Features:
  * - Binds value and label attributes
- * - Emits focus and blur events
+ * - Emits focusNative and blurNative events
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content and prefix
  * - Supports custom styling via CSS variables
@@ -46,8 +46,10 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
   @Input() indicatorTransitionDuration?: string;
 
   // Event outputs
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
 
   // Injected services
   private el = inject(ElementRef);
@@ -66,10 +68,17 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
     });
     this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
       this.onTouched();
     });
     this.renderer.listen(nativeEl, 'input', (event: Event) => {
@@ -119,7 +128,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
       return;
     }
     this._lastPercentApplied = clamped;
-    this.renderer.setStyle(this.el.nativeElement, '--percentage', `${clamped}%`);
+    this.el.nativeElement.style.setProperty('--percentage', `${clamped}%`);
   }
 
   /**
@@ -135,6 +144,8 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -155,6 +166,8 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
           (this.el.nativeElement as any)[name] = numericValue;
         }
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -163,7 +176,7 @@ export class WaProgressRingDirective implements OnInit, ControlValueAccessor, On
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 

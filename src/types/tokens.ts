@@ -3,8 +3,8 @@
 // Core variants supported across components
 export type VariantToken = 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit';
 
-// Common control sizes
-export type SizeToken = 'small' | 'medium' | 'large' | 'inherit';
+// Common control sizes (Web Awesome 3.6.0 added shorthand tokens xs/s/m/l/xl)
+export type SizeToken = 'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large' | 'inherit';
 
 // Visual appearance tokens (Web Awesome 3.0.0)
 // Note: 'filled-outlined' replaces the former space-delimited 'filled outlined'

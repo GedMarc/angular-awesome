@@ -39,7 +39,7 @@
 
 ```html
 <wa-button pill>Pill Button</wa-button>
-<wa-button with-caret>Dropdown</wa-button>
+<wa-button caret>Dropdown</wa-button>
 <wa-button disabled>Disabled</wa-button>
 <wa-button loading>Loading</wa-button>
 ```

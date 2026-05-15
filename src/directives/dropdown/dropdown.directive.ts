@@ -1,5 +1,6 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizeToken } from '../../types/tokens';
 
 /**
  * Type definition for dropdown placement options
@@ -39,9 +40,11 @@ export type DropdownPlacement =
     }
   ]
 })
-export class WaDropdownDirective implements OnInit, ControlValueAccessor {
+export class WaDropdownDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Structural inputs
   @Input() placement?: DropdownPlacement | string;
+  @Input() open?: boolean | string;
+  @Input() size?: SizeToken | string;
   @Input() disabled?: boolean | string;
   @Input() stayOpenOnSelect?: boolean | string;
   @Input() containingElement?: HTMLElement;
@@ -53,11 +56,17 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   @Input() boxShadow?: string;
 
   // Event outputs
-  @Output() showEvent = new EventEmitter<Event>();
-  @Output() afterShowEvent = new EventEmitter<Event>();
-  @Output() hideEvent = new EventEmitter<Event>();
-  @Output() afterHideEvent = new EventEmitter<Event>();
-  @Output() selectEvent = new EventEmitter<{ item: HTMLElement }>();
+  @Output() waShow = new EventEmitter<Event>();
+  @Output('wa-show') waShowHyphen = this.waShow;
+  @Output() waAfterShow = new EventEmitter<Event>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
+  @Output() waHide = new EventEmitter<Event>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
+  @Output() waAfterHide = new EventEmitter<Event>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
+  @Output() waSelect = new EventEmitter<{ item: HTMLElement }>();
+  @Output('wa-select') waSelectHyphen = this.waSelect;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -71,11 +80,44 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'wa-show', (event: Event) => this.waShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.waAfterShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-hide', (event: Event) => this.waHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.waAfterHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-select', (event: CustomEvent<{ item: HTMLElement }>) => {
+      this.waSelect.emit(event.detail);
+
+      // Handle ngModel value update when a dropdown item is selected
+      const selectedItem = event.detail.item;
+      if (selectedItem && selectedItem.hasAttribute('value')) {
+        const newValue = selectedItem.getAttribute('value');
+        if (newValue !== this.value) {
+          this.value = newValue;
+          this.onChange(newValue);
+          this.valueChange.emit(newValue);
+          this.onTouched();
+        }
+      }
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    const nativeEl = this.el.nativeElement as HTMLElement;
+
     // Set string attributes
     this.setAttr('placement', this.placement);
     this.setAttr('sync', this.sync);
+    this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
+    this.setBooleanAttr('open', this.open);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('stay-open-on-select', this.stayOpenOnSelect);
 
@@ -90,26 +132,6 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
 
     // Set style attributes
     this.setCssVar('--box-shadow', this.boxShadow);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-show', (event: Event) => this.showEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => this.afterShowEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-hide', (event: Event) => this.hideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => this.afterHideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-select', (event: CustomEvent<{ item: HTMLElement }>) => {
-      this.selectEvent.emit(event.detail);
-
-      // Handle ngModel value update when a dropdown item is selected
-      const selectedItem = event.detail.item;
-      if (selectedItem && selectedItem.hasAttribute('value')) {
-        const newValue = selectedItem.getAttribute('value');
-        if (newValue !== this.value) {
-          this.value = newValue;
-          this.onChange(newValue);
-          this.onTouched();
-        }
-      }
-    });
   }
 
   /**
@@ -152,6 +174,8 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -172,7 +196,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -183,6 +207,8 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -194,8 +220,7 @@ export class WaDropdownDirective implements OnInit, ControlValueAccessor {
     if (value != null) {
       setTimeout(() => {
         const dropdownItems = this.el.nativeElement.querySelectorAll('wa-dropdown-item[value]');
-        for (let i = 0; i < dropdownItems.length; i++) {
-          const item = dropdownItems[i];
+        for (const item of dropdownItems) {
           if (item.getAttribute('value') === value) {
             item.selected = true;
             break;

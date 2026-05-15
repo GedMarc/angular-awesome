@@ -30,8 +30,9 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   /** Name of the tree, used for querySelector targeting */
   @Input() name?: string;
 
-  // Outputs
-  @Output() selectionChange = new EventEmitter<any>();
+  // Outputs — camelCase only; hyphenated alias removed to prevent infinite
+  // re-dispatch loop (see tree-item.directive.ts for explanation).
+  @Output() waSelectionChange = new EventEmitter<any>();
 
   // Styling inputs
   @Input() indentSize?: string;
@@ -49,6 +50,9 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   private onTouched: () => void = () => {};
   private isDisabled = false;
   private modelValue: any[] | any = [];
+
+  /** Guard flag – prevents re-entrant HostListener → emit → HostListener loops. */
+  private emitting = false;
 
   ngOnChanges() {
     const tree = this.el.nativeElement as HTMLElement;
@@ -78,25 +82,16 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   // Re-emit native selection change for Angular consumers and update ngModel
   @HostListener('wa-selection-change', ['$event'])
   onSelectionChanged(event: CustomEvent) {
-    this.selectionChange.emit(event);
+    if (this.emitting || event.target !== this.el.nativeElement) return;
+    this.emitting = true;
+    try {
+    this.waSelectionChange.emit(event);
 
     const isLeaf = (item: Element): boolean => {
       // A leaf has no wa-tree-item children
       return !(item as HTMLElement).querySelector('wa-tree-item');
     };
 
-    const hasDataOrValue = (item: any): boolean => {
-      return item.__waValue !== undefined || item.__waData !== undefined || item.getAttribute?.('value') != null;
-    };
-
-    const pickIdentity = (item: any): any => {
-      const pref = (item.__waValue !== undefined ? item.__waValue
-                  : item.__waData !== undefined ? item.__waData
-                  : item.getAttribute?.('value') ?? undefined);
-      if (pref !== undefined && pref !== null) return pref;
-      // fallback to label, but only if we didn't require data/value; requirement says "data tags"
-      return (item.textContent || '').trim();
-    };
 
     const computeValues = (): any[] => {
       const selectedItems = this.el.nativeElement.querySelectorAll('wa-tree-item[selected]');
@@ -197,9 +192,10 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
         finalize(settled);
       }
     });
+    } finally {
+      this.emitting = false;
+    }
   }
-
-  // ControlValueAccessor implementation
   writeValue(obj: any): void {
     this.modelValue = obj;
     // Reflect into DOM selection state if possible
@@ -253,7 +249,7 @@ export class WaTreeDirective implements OnChanges, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 }

@@ -27,8 +27,8 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     '[attr.placement]': 'placement',
     '[attr.activation]': 'activation',
     '[attr.without-scroll-controls]': 'withoutScrollControls ? "" : null',
-    '(wa-tab-show)': 'tabShow.emit($event)',
-    '(wa-tab-hide)': 'tabHide.emit($event)'
+    '(wa-tab-show)': 'onTabShow($event)',
+    '(wa-tab-hide)': 'onTabHide($event)'
   }
 })
 export class WaTabGroupComponent implements ControlValueAccessor {
@@ -37,8 +37,9 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   // Updated naming to match spec: withoutScrollControls reflects to without-scroll-controls
   @Input() withoutScrollControls = false;
 
-  @Output() tabShow = new EventEmitter<CustomEvent>();
-  @Output() tabHide = new EventEmitter<CustomEvent>();
+  @Output() waTabShow = new EventEmitter<CustomEvent>();
+  @Output() waTabHide = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string | null>();
 
   // Support binding via [active]
   @Input('active')
@@ -55,13 +56,42 @@ export class WaTabGroupComponent implements ControlValueAccessor {
   }
   set value(val: string | null) {
     this._value = val;
+    // Reflect to DOM attribute immediately so the underlying WC reacts
+    if (val == null || val === '') {
+      this.renderer.removeAttribute(this.el.nativeElement, 'active');
+    } else {
+      this.renderer.setAttribute(this.el.nativeElement, 'active', val);
+    }
     this.onChange(val);
+    this.valueChange.emit(val);
     this.onTouched();
   }
   private _value: string | null = null;
 
-  onChange = (value: any) => {};
+  onChange = (_value: any) => {};
   onTouched = () => {};
+
+  onTabShow(event: CustomEvent) {
+    // Ignore bubbled events from nested tab groups; only handle events
+    // dispatched by this wa-tab-group host element.
+    if ((event as Event).target !== this.el.nativeElement) {
+      return;
+    }
+    this.waTabShow.emit(event);
+    // Detail often contains the name of the tab being shown
+    const tabName = event.detail?.name;
+    if (tabName && tabName !== this.value) {
+      this.value = tabName;
+    }
+  }
+
+  onTabHide(event: CustomEvent) {
+    // Ignore bubbled events from nested tab groups
+    if ((event as Event).target !== this.el.nativeElement) {
+      return;
+    }
+    this.waTabHide.emit(event);
+  }
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
@@ -93,7 +123,7 @@ export class WaTabGroupComponent implements ControlValueAccessor {
 
   private setStyle(prop: string, value: string) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, prop, value);
+      this.el.nativeElement.style.setProperty(prop, value);
     }
   }
 }

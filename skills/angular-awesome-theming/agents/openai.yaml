@@ -1,0 +1,5 @@
+interface:
+  display_name: "Angular Awesome — Theming"
+  short_description: "Theme and style Angular Awesome components with design tokens and layout utilities"
+  default_prompt: "Use $angular-awesome-theming to customize component styling, apply variants, or configure layouts."
+

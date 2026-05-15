@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaPopupDirective
@@ -26,7 +26,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-popup',
   standalone: true
 })
-export class WaPopupDirective implements OnInit {
+export class WaPopupDirective implements OnInit, OnChanges {
   // String inputs
   @Input() anchor?: string;
   @Input() placement?: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string;
@@ -54,6 +54,7 @@ export class WaPopupDirective implements OnInit {
 
   // Event outputs
   @Output() waReposition = new EventEmitter<CustomEvent>();
+  @Output('wa-reposition') waRepositionHyphen = this.waReposition;
 
   // Injected services
   private el = inject(ElementRef);
@@ -62,6 +63,22 @@ export class WaPopupDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
+      this.waReposition.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
+      this.waReposition.emit(event);
+    });
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('anchor', this.anchor);
     this.setAttr('placement', this.placement);
@@ -86,14 +103,6 @@ export class WaPopupDirective implements OnInit {
     this.setNumericAttr('flip-padding', this.flipPadding);
     this.setNumericAttr('shift-padding', this.shiftPadding);
     this.setNumericAttr('auto-size-padding', this.autoSizePadding);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'reposition', (event: CustomEvent) => {
-      this.waReposition.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'wa-reposition', (event: CustomEvent) => {
-      this.waReposition.emit(event);
-    });
   }
 
   /**
@@ -116,6 +125,8 @@ export class WaPopupDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -128,6 +139,8 @@ export class WaPopupDirective implements OnInit {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -138,6 +151,8 @@ export class WaPopupDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }
