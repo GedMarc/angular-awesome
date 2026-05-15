@@ -37,7 +37,7 @@
     "@angular/forms": ">=20.0.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.19",
+    "@angular/build": "^21.2.11",
     "@angular/cli": "^21.2.11",
     "@angular/compiler-cli": "^20.3.17",
     "@angular/platform-browser": "^21.2.13",
