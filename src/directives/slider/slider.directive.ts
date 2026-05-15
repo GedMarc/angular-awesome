@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
 
 /**
  * WaSliderDirective
@@ -29,10 +30,15 @@ import { SizeToken } from '../../types/tokens';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => WaSliderDirective),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => WaSliderDirective),
+      multi: true
     }
   ]
 })
-export class WaSliderDirective implements OnInit, ControlValueAccessor {
+export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
   @Input() min?: number;
   @Input() max?: number;
@@ -68,24 +74,119 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   @Input() thumbHeight?: string;
 
   // Event outputs
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() invalidEvent = new EventEmitter<CustomEvent>();
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waChange = new EventEmitter<Event>();
+  @Output('wa-change') waChangeHyphen = this.waChange;
+  @Output() waInput = new EventEmitter<Event>();
+  @Output('wa-input') waInputHyphen = this.waInput;
+  @Output() waInvalid = new EventEmitter<CustomEvent>();
+  @Output('wa-invalid') waInvalidHyphen = this.waInvalid;
+  @Output() valueChange = new EventEmitter<any>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
   private valueFormatter?: (value: number) => string;
+  private validatorChange?: () => void;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+    this.syncValidationState();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.waInput.emit(event);
+      const target = event.target as HTMLInputElement;
+
+      let val: any;
+      // Handle range slider with dual thumbs
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        const minValue = parseFloat((target as any).minValue);
+        const maxValue = parseFloat((target as any).maxValue);
+        val = { min: minValue, max: maxValue };
+      } else {
+        // Regular slider
+        val = target.value !== '' ? parseFloat(target.value) : null;
+      }
+      this.onChange(val);
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    const forwardChange = (event: Event) => {
+      this.waChange.emit(event);
+      const target = event.target as HTMLInputElement;
+      let val: any;
+      if (this.range === true || this.range === 'true' || this.range === '') {
+        val = { min: parseFloat((target as any).minValue), max: parseFloat((target as any).maxValue) };
+      } else {
+        val = target.value !== '' ? parseFloat(target.value) : null;
+      }
+      this.valueChange.emit(val);
+    };
+
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.waFocus.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.waFocus.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+
+    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
+      this.waInvalid.emit(event);
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyInputs();
+    if ('required' in changes || 'min' in changes || 'max' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
+  private applyInputs() {
     // Set numeric attributes
     this.setNumericAttr('min', this.min);
     this.setNumericAttr('max', this.max);
@@ -121,39 +222,6 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
     this.setCssVar('--marker-height', this.markerHeight);
     this.setCssVar('--thumb-width', this.thumbWidth);
     this.setCssVar('--thumb-height', this.thumbHeight);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.inputEvent.emit(event);
-      const target = event.target as HTMLInputElement;
-
-      // Handle range slider with dual thumbs
-      if (this.range === true || this.range === 'true' || this.range === '') {
-        const minValue = parseFloat((target as any).minValue);
-        const maxValue = parseFloat((target as any).maxValue);
-        this.onChange({ min: minValue, max: maxValue });
-      } else {
-        // Regular slider
-        this.onChange(target.value !== '' ? parseFloat(target.value) : null);
-      }
-    });
-
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.changeEvent.emit(event);
-    });
-
-    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-
-    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
-
-    this.renderer.listen(nativeEl, 'wa-invalid', (event: CustomEvent) => {
-      this.invalidEvent.emit(event);
-    });
   }
 
   /**
@@ -214,6 +282,8 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -226,6 +296,8 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
       if (!isNaN(numericValue)) {
         this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
       }
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -234,7 +306,7 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -245,6 +317,8 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -277,6 +351,42 @@ export class WaSliderDirective implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.setBooleanAttr('disabled', isDisabled);
+    if (isDisabled) {
+      this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
+    }
+    this.validatorChange?.();
+  }
+
+  // Validator implementation: expose required, min, and max errors to Angular forms
+  validate(control: AbstractControl): ValidationErrors | null {
+    const el: any = this.el?.nativeElement;
+    if (!el || el.disabled) return null;
+
+    const errors: ValidationErrors = {};
+    const val = control?.value;
+
+    // Required validation
+    const isRequired = this.required === true || this.required === '' || this.required === 'true';
+    if (isRequired && (val === null || val === undefined)) {
+      errors['required'] = true;
+    }
+
+    // Min validation (for non-range sliders)
+    if (this.min != null && val != null && typeof val === 'number' && val < this.min) {
+      errors['min'] = { min: this.min, actual: val };
+    }
+
+    // Max validation (for non-range sliders)
+    if (this.max != null && val != null && typeof val === 'number' && val > this.max) {
+      errors['max'] = { max: this.max, actual: val };
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this.validatorChange = fn;
   }
 }

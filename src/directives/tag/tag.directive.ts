@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnChanges,
   Output,
   EventEmitter,
   HostListener,
@@ -14,15 +15,15 @@ import { Appearance, VariantToken, SizeToken, normalizeAppearance } from '../../
   exportAs: 'waTag',
   standalone: true
 })
-export class WaTagDirective {
+export class WaTagDirective implements OnChanges {
   constructor(private el: ElementRef<HTMLElement>) {}
 
   // Inputs
   @Input() variant: VariantToken = 'inherit';
   @Input() appearance: Appearance = 'filled-outlined';
   @Input() size: SizeToken = 'inherit';
-  @Input() pill = false;
-  @Input() withRemove = false;
+  @Input() pill: boolean | string = false;
+  @Input() withRemove: boolean | string = false;
 
   // Outputs
   @Output() waRemove = new EventEmitter<Event>();
@@ -41,8 +42,8 @@ export class WaTagDirective {
     this.setBooleanAttribute(tag, 'with-remove', this.withRemove);
   }
 
-  private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean) {
-    if (value) {
+  private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean | string) {
+    if (value === true || value === 'true' || value === '') {
       tag.setAttribute(name, '');
     } else {
       tag.removeAttribute(name);

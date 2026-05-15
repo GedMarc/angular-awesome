@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 
 /**
  * WaDrawerDirective
@@ -21,11 +21,14 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, 
   selector: 'wa-drawer',
   standalone: true
 })
-export class WaDrawerDirective implements OnInit {
+export class WaDrawerDirective implements OnInit, OnChanges {
   // Boolean inputs
   @Input() open?: boolean | string;
   @Input() withoutHeader?: boolean | string;
   @Input() lightDismiss?: boolean | string;
+
+  // SSR inputs
+  @Input() withFooter?: boolean | string;
 
   // String inputs
   @Input() label?: string;
@@ -40,12 +43,19 @@ export class WaDrawerDirective implements OnInit {
   @Input() hideDuration?: string;
 
   // Event outputs
-  @Output() showEvent = new EventEmitter<CustomEvent>();
-  @Output() afterShowEvent = new EventEmitter<CustomEvent>();
-  @Output() hideEvent = new EventEmitter<CustomEvent>();
-  @Output() afterHideEvent = new EventEmitter<CustomEvent>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output() waShow = new EventEmitter<CustomEvent>();
+  @Output('wa-show') waShowHyphen = this.waShow;
+  @Output() waAfterShow = new EventEmitter<CustomEvent>();
+  @Output('wa-after-show') waAfterShowHyphen = this.waAfterShow;
+  @Output() waHide = new EventEmitter<CustomEvent>();
+  @Output('wa-hide') waHideHyphen = this.waHide;
+  @Output() waAfterHide = new EventEmitter<CustomEvent>();
+  @Output('wa-after-hide') waAfterHideHyphen = this.waAfterHide;
+  @Output() waFocus = new EventEmitter<FocusEvent>();
+  @Output('wa-focus') waFocusHyphen = this.waFocus;
+  @Output() waBlur = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') waBlurHyphen = this.waBlur;
+  @Output() openChange = new EventEmitter<boolean>();
 
   // Injected services
   private el = inject(ElementRef);
@@ -54,6 +64,30 @@ export class WaDrawerDirective implements OnInit {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+
+    // Set up event listeners
+    this.renderer.listen(nativeEl, 'wa-show', (event: CustomEvent) => this.waShow.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => {
+      this.waAfterShow.emit(event);
+      this.openChange.emit(true);
+    });
+    this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => this.waHide.emit(event));
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => {
+      this.waAfterHide.emit(event);
+      this.openChange.emit(false);
+    });
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => this.waFocus.emit(event));
+    this.renderer.listen(nativeEl, 'wa-focus', (event: FocusEvent) => this.waFocus.emit(event));
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => this.waBlur.emit(event));
+    this.renderer.listen(nativeEl, 'wa-blur', (event: FocusEvent) => this.waBlur.emit(event));
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     // Set string attributes
     this.setAttr('label', this.label);
     this.setAttr('placement', this.placement);
@@ -62,6 +96,7 @@ export class WaDrawerDirective implements OnInit {
     this.setBooleanAttr('open', this.open);
     this.setBooleanAttr('without-header', this.withoutHeader);
     this.setBooleanAttr('light-dismiss', this.lightDismiss);
+    this.setBooleanAttr('with-footer', this.withFooter);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);
@@ -70,14 +105,6 @@ export class WaDrawerDirective implements OnInit {
     this.setCssVar('--size', this.size);
     this.setCssVar('--show-duration', this.showDuration);
     this.setCssVar('--hide-duration', this.hideDuration);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-show', (event: CustomEvent) => this.showEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-show', (event: CustomEvent) => this.afterShowEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent) => this.hideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'wa-after-hide', (event: CustomEvent) => this.afterHideEvent.emit(event));
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => this.focusEvent.emit(event));
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => this.blurEvent.emit(event));
   }
 
   /**
@@ -111,6 +138,8 @@ export class WaDrawerDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -119,7 +148,7 @@ export class WaDrawerDirective implements OnInit {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -130,6 +159,8 @@ export class WaDrawerDirective implements OnInit {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

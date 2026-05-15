@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaComparisonDirective } from './comparison.directive';
 
 // Create a test host component to test the comparison directive
@@ -7,7 +8,7 @@ import { WaComparisonDirective } from './comparison.directive';
   template: `
     <wa-comparison
       [position]="position"
-      (change)="onPositionChange($event)"
+      (wa-change)="onPositionChange($event)"
     >
       <div slot="before" *ngIf="showBefore">Before Content</div>
       <div slot="after" *ngIf="showAfter">After Content</div>
@@ -15,7 +16,7 @@ import { WaComparisonDirective } from './comparison.directive';
     </wa-comparison>
   `,
   standalone: true,
-  imports: [WaComparisonDirective]
+  imports: [WaComparisonDirective, NgIf]
 })
 class TestHostComponent {
   position?: number | string;
@@ -103,7 +104,7 @@ describe('WaComparisonDirective', () => {
     spyOn(hostComponent, 'onPositionChange');
 
     // Create mock event
-    const changeEvent = new CustomEvent('change', { detail: 42 });
+    const changeEvent = new CustomEvent('wa-change', { detail: 42 });
 
     // Dispatch event on the native element
     comparisonElement.dispatchEvent(changeEvent);

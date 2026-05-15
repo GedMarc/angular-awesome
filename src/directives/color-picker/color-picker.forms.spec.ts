@@ -96,7 +96,7 @@ describe('wa-color-picker Angular forms integration', () => {
     const control = component.form.controls['fav'];
     expect(control?.touched).toBeFalse();
 
-    nativeEl.dispatchEvent(new Event('blurNative', { bubbles: true }));
+    nativeEl.dispatchEvent(new Event('wa-blur', { bubbles: true }));
     fixture.detectChanges();
 
     expect(control?.touched).toBeTrue();

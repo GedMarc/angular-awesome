@@ -1,6 +1,16 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
+import { syncFormValidationState } from '../shared/form-validation-state';
+
+/**
+ * Typed event interface for wa-switch change/input events.
+ * Provides type-safe access to `target.checked` so consumers
+ * can use `$event.target.checked` in templates without TS errors.
+ */
+export interface WaSwitchEvent extends Event {
+  target: EventTarget & { checked: boolean; value: string };
+}
 
 /**
  * WaSwitchDirective
@@ -15,7 +25,7 @@ import { SizeToken } from '../../types/tokens';
  * - Supports ngModel for form integration
  */
 @Directive({
-  selector: 'wa-switch[waSwitch]',
+  selector: 'wa-switch',
   standalone: true,
   providers: [
     {
@@ -30,15 +40,20 @@ import { SizeToken } from '../../types/tokens';
     }
   ]
 })
-export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validator {
+export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Dialog integration: support both kebab-case and camelCase bindings
   private _dataDialog: string | null | undefined;
   @Input('data-dialog') set dataDialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
   @Input('dialog') set dialogAttr(val: string | null | undefined) { this._dataDialog = val ?? null; }
   @Input() set dataDialog(val: string | null | undefined) { this._dataDialog = val ?? null; }
   // Core input attributes
+  @Input() name?: string;
+  @Input() value?: string | null;
+  @Input() checked?: boolean | string;
   @Input() disabled?: boolean | string;
+  @Input() required?: boolean | string;
   @Input() hint?: string;
+  @Input() withHint?: boolean | string;
   @Input() size?: SizeToken | string;
 
   // Style inputs
@@ -57,14 +72,18 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   @Input() width?: string;
 
   // Event outputs
-  @Output() changeEvent = new EventEmitter<Event>();
-  @Output() inputEvent = new EventEmitter<Event>();
-  @Output() focusEvent = new EventEmitter<FocusEvent>();
-  @Output() blurEvent = new EventEmitter<FocusEvent>();
+  @Output('wa-change') changeEvent = new EventEmitter<WaSwitchEvent>();
+  @Output('wa-input') inputEvent = new EventEmitter<WaSwitchEvent>();
+  @Output('wa-focus') focusEvent = new EventEmitter<FocusEvent>();
+  @Output('wa-blur') blurEvent = new EventEmitter<FocusEvent>();
+  @Output() checkedChange = new EventEmitter<boolean>();
 
   // Injected services
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private injector = inject(Injector);
+  private ngControl: NgControl | null = null;
+  private ngControlResolved = false;
 
   // ControlValueAccessor implementation
   private onChange: (value: any) => void = () => {};
@@ -74,12 +93,82 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
+    this.applyInputs();
+    this.syncValidationState();
+
+    // Set up event listeners
+    const forwardInput = (event: Event) => {
+      this.inputEvent.emit(event as WaSwitchEvent);
+      const target = event.target as HTMLInputElement;
+      this.onChange(target.checked);
+      this.checkedChange.emit(target.checked);
+      this.validatorChange?.();
+    };
+    this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
+
+    const forwardChange = (event: Event) => {
+      this.changeEvent.emit(event as WaSwitchEvent);
+      const target = event.target as HTMLInputElement;
+      this.onChange(!!target.checked);
+      this.checkedChange.emit(!!target.checked);
+      this.validatorChange?.();
+    };
+    this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
+
+    this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => {
+      this.focusEvent.emit(event);
+    });
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => {
+      this.focusEvent.emit(event as unknown as FocusEvent);
+    });
+
+    this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
+      this.blurEvent.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.blurEvent.emit(event as unknown as FocusEvent);
+      this.onTouched();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyInputs();
+    if ('required' in changes || 'disabled' in changes) {
+      this.validatorChange?.();
+    }
+  }
+
+  ngDoCheck(): void {
+    this.syncValidationState();
+  }
+
+  private syncValidationState(): void {
+    syncFormValidationState(this.el, this.renderer, this.getNgControl());
+  }
+
+  private getNgControl(): NgControl | null {
+    if (!this.ngControlResolved) {
+      this.ngControlResolved = true;
+      this.ngControl = this.injector.get(NgControl, null, { optional: true, self: true });
+    }
+    return this.ngControl;
+  }
+
+  private applyInputs() {
     // Set string attributes
+    this.setAttr('name', this.name);
+    this.setAttr('value', this.value);
     this.setAttr('hint', this.hint);
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
+    this.setBooleanAttr('checked', this.checked);
     this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('required', this.required);
+    this.setBooleanAttr('with-hint', this.withHint);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);
@@ -98,27 +187,6 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
 
     // Dialog attribute
     this.setAttr('data-dialog', this._dataDialog);
-
-    // Set up event listeners
-    this.renderer.listen(nativeEl, 'input', (event: Event) => {
-      this.inputEvent.emit(event);
-      const target = event.target as HTMLInputElement;
-      this.onChange(target.checked);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'change', (event: Event) => {
-      this.changeEvent.emit(event);
-      const target = event.target as HTMLInputElement;
-      this.onChange(!!target.checked);
-      this.validatorChange?.();
-    });
-    this.renderer.listen(nativeEl, 'focusNative', (event: FocusEvent) => {
-      this.focusEvent.emit(event);
-    });
-    this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
-      this.blurEvent.emit(event);
-      this.onTouched();
-    });
   }
 
   /**
@@ -134,6 +202,8 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -142,7 +212,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -153,6 +223,8 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -173,6 +245,7 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
 
   setDisabledState(isDisabled: boolean): void {
     this.setBooleanAttr('disabled', isDisabled);
+    this.validatorChange?.();
   }
 
   // Validator implementation: expose required error to Angular forms
@@ -182,13 +255,10 @@ export class WaSwitchDirective implements OnInit, ControlValueAccessor, Validato
     if (host.disabled || host.hasAttribute?.('disabled')) return null;
 
     // We mirror the Checkbox semantics: if marked required, value must be truthy
-    const isRequired = (host.hasAttribute && host.hasAttribute('required')) || this as any;
-    // Prefer explicit input if available
-    const requiredInput = (this as any).required;
-    const required = (requiredInput === true || requiredInput === '' || requiredInput === 'true') || (host.hasAttribute && host.hasAttribute('required'));
-    if (!required) return null;
+    const isRequired = this.required === true || this.required === '' || this.required === 'true' || (host.hasAttribute && host.hasAttribute('required'));
+    if (!isRequired) return null;
     const val = control?.value;
-    return !!val ? null : { required: true };
+    return val ? null : { required: true };
   }
 
   registerOnValidatorChange?(fn: () => void): void {

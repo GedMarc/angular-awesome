@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { WaDrawerDirective } from './drawer.directive';
 
 // Create a test host component to test the drawer directive
@@ -17,12 +18,12 @@ import { WaDrawerDirective } from './drawer.directive';
       [size]="size"
       [showDuration]="showDuration"
       [hideDuration]="hideDuration"
-      (showEvent)="onShow($event)"
-      (afterShowEvent)="onAfterShow($event)"
-      (hideEvent)="onHide($event)"
-      (afterHideEvent)="onAfterHide($event)"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-show)="onShow($event)"
+      (wa-after-show)="onAfterShow($event)"
+      (wa-hide)="onHide($event)"
+      (wa-after-hide)="onAfterHide($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     >
       <div>Default content</div>
       <div slot="footer" *ngIf="showFooter">Footer content</div>
@@ -31,7 +32,7 @@ import { WaDrawerDirective } from './drawer.directive';
     </wa-drawer>
   `,
   standalone: true,
-  imports: [WaDrawerDirective]
+  imports: [WaDrawerDirective, NgIf]
 })
 class TestHostComponent {
   open?: boolean | string;
@@ -179,6 +180,8 @@ describe('WaDrawerDirective', () => {
 
   it('should expose methods for programmatic interaction', () => {
     // Mock the native element methods
+    (drawerElement as any).show = () => {};
+    (drawerElement as any).hide = () => {};
     spyOn(drawerElement as any, 'show');
     spyOn(drawerElement as any, 'hide');
 
@@ -187,8 +190,8 @@ describe('WaDrawerDirective', () => {
     drawerDirective.hide();
 
     // Verify the native methods were called
-    expect(drawerElement.show).toHaveBeenCalled();
-    expect(drawerElement.hide).toHaveBeenCalled();
+    expect((drawerElement as any).show).toHaveBeenCalled();
+    expect((drawerElement as any).hide).toHaveBeenCalled();
   });
 
   it('should emit events correctly', () => {
@@ -204,8 +207,8 @@ describe('WaDrawerDirective', () => {
     const afterShowEvent = new CustomEvent('wa-after-show');
     const hideEvent = new CustomEvent('wa-hide');
     const afterHideEvent = new CustomEvent('wa-after-hide');
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
 
     // Dispatch events on the native element
     drawerElement.dispatchEvent(showEvent);

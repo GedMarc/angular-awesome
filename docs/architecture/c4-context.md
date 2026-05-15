@@ -9,16 +9,14 @@ id: 3016cf03-2024-4b4b-9b40-3a2c492da276
 C4Context
     Person(dev, "Angular Developer", "Implements host applications")
     System_Boundary(angularAwesome, "Angular Awesome Library") {
-        System(ngWrapper, "Angular Wrapper Components", "Standalone Angular 19 directives bridging to web components")
+        System(ngWrapper, "Angular Wrapper Components", "Standalone Angular 20 directives bridging to web components")
     }
     System_Ext(webAwesome, "Web Awesome Components", "Canonical web components & styles")
     System_Ext(rulesRepo, "Enterprise Rules Repository", "Submodule providing RULES, GUIDES, and glossary topics")
-    System_Ext(browserstack, "BrowserStack", "Remote execution for Karma/Jasmine cross-browser tests")
 
     Rel(dev, ngWrapper, "Builds features with", "docs-first workflow")
     Rel(ngWrapper, webAwesome, "Delegates rendering/events to")
     Rel(ngWrapper, rulesRepo, "Constrained by", "rules/generative frontend+language guides")
-    Rel(ngWrapper, browserstack, "Validates via", "scripts/run-checkbox-tests.js")
 ```
 
 ## Traceability

@@ -1,33 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { WaTagDirective } from './tag.component';
+import { WaTagDirective } from './tag.directive';
 
 // Create a test host component for the tag directive
 @Component({
   selector: 'test-host',
   template: `
     <wa-tag
-      ngModel
       [variant]="variant"
       [appearance]="appearance"
       [size]="size"
       [pill]="pill"
-      [removable]="removable"
-      (waRemove)="onRemove($event)"
+      [withRemove]="withRemove"
+      (wa-remove)="onRemove($event)"
     >
       {{ content }}
     </wa-tag>
   `,
   standalone: true,
-  imports: [WaTagDirective, FormsModule]
+  imports: [WaTagDirective]
 })
 class TestHostComponent {
   variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit' = 'inherit';
   appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'filled-outlined' = 'filled-outlined';
   size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
-  pill = false;
-  removable = false;
+  pill: boolean | string = false;
+  withRemove: boolean | string = false;
   content = 'Tag Content';
 
   removeEventCalled = false;
@@ -108,14 +106,23 @@ describe('WaTagDirective', () => {
     hostFixture.detectChanges();
     expect(tagElement.hasAttribute('pill')).toBe(false);
 
-    // Test removable attribute
-    hostComponent.removable = true;
+    // Test pill as string
+    hostComponent.pill = 'true';
     hostFixture.detectChanges();
-    expect(tagElement.hasAttribute('removable')).toBe(true);
+    expect(tagElement.hasAttribute('pill')).toBe(true);
 
-    hostComponent.removable = false;
+    hostComponent.pill = '';
     hostFixture.detectChanges();
-    expect(tagElement.hasAttribute('removable')).toBe(false);
+    expect(tagElement.hasAttribute('pill')).toBe(true);
+
+    // Test withRemove attribute
+    hostComponent.withRemove = true;
+    hostFixture.detectChanges();
+    expect(tagElement.hasAttribute('with-remove')).toBe(true);
+
+    hostComponent.withRemove = false;
+    hostFixture.detectChanges();
+    expect(tagElement.hasAttribute('with-remove')).toBe(false);
   });
 
   it('should project content correctly', () => {

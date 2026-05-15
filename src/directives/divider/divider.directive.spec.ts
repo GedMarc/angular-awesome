@@ -18,7 +18,7 @@ import { WaDividerDirective } from './divider.directive';
 })
 class TestHostComponent {
   vertical?: boolean | string;
-  orientation?: 'vertical' | 'horizontal' | string;
+  orientation?: 'vertical' | 'horizontal';
   color?: string;
   width?: string;
   spacing?: string;
@@ -89,6 +89,14 @@ describe('WaDividerDirective', () => {
     hostFixture.detectChanges();
 
     expect(dividerElement.getAttribute('orientation')).toBe('vertical');
+  });
+
+  it('should set orientation to horizontal when specified', () => {
+    hostComponent.orientation = 'horizontal';
+    hostFixture.detectChanges();
+
+    expect(dividerElement.getAttribute('orientation')).toBe('horizontal');
+    expect(dividerElement.hasAttribute('vertical')).toBeFalse();
   });
 
   it('should handle both vertical and orientation attributes', () => {

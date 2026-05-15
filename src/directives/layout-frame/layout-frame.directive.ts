@@ -75,7 +75,7 @@ export class WaLayoutFrameDirective implements OnChanges {
 
     // Object fit via CSS custom property (consumed by WA styles)
     if (this.objectFit) {
-      this.renderer.setStyle(host, '--object-fit', String(this.objectFit));
+      host.style.setProperty('--object-fit', String(this.objectFit));
     }
   }
 

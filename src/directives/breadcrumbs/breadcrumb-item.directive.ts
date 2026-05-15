@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Renderer2, inject } from '@angular/core';
 
 /**
  * WaBreadcrumbItemDirective
@@ -16,7 +16,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2, inject } from '@angula
   selector: 'wa-breadcrumb-item',
   standalone: true
 })
-export class WaBreadcrumbItemDirective implements OnInit {
+export class WaBreadcrumbItemDirective implements OnInit, OnChanges {
   @Input() href?: string;
   @Input() target?: '_blank' | '_parent' | '_self' | '_top';
   @Input() rel: string = 'noreferrer noopener';
@@ -31,6 +31,14 @@ export class WaBreadcrumbItemDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   ngOnInit() {
+    this.applyInputs();
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
     this.setAttr('href', this.href);
     this.setAttr('target', this.target);
     this.setAttr('rel', this.rel);
@@ -45,6 +53,8 @@ export class WaBreadcrumbItemDirective implements OnInit {
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 }

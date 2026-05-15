@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -32,14 +32,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
+export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueAccessor {
   @Input() type?: 'normal' | 'checkbox' | string;
   @Input() checked?: boolean | string;
   @Input() value?: string;
   @Input() loading?: boolean | string;
   @Input() disabled?: boolean | string;
   @Input() label?: string;
-  @Input() variant?: 'danger' | string;
+  @Input() variant?: 'danger' | 'default' | string;
+  @Input() submenuOpen?: boolean | string;
 
   // Style inputs
   @Input() backgroundColorHover?: string;
@@ -69,26 +70,7 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
 
-    // Set string attributes
-    this.setAttr('type', this.type);
-    this.setAttr('value', this.value);
-    this.setAttr('label', this.label);
-    this.setAttr('variant', this.variant);
-
-    // Set boolean attributes (only if true)
-    this.setBooleanAttr('checked', this.checked);
-    this.setBooleanAttr('loading', this.loading);
-    this.setBooleanAttr('disabled', this.disabled);
-
-    // Set style attributes
-    this.setCssVar('--background-color-hover', this.backgroundColorHover);
-    this.setCssVar('--text-color-hover', this.textColorHover);
-    this.setCssVar('--padding', this.padding);
-    this.setCssVar('--margin', this.margin);
-    this.setCssVar('--font-size', this.fontSize);
-
-    // Dialog attribute
-    this.setAttr('data-dialog', this._dataDialog);
+    this.applyInputs();
 
     // Set up event listeners
     this.renderer.listen(nativeEl, 'blurNative', (event: FocusEvent) => {
@@ -107,12 +89,42 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
     }
   }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.applyInputs();
+  }
+
+  private applyInputs() {
+    // Set string attributes
+    this.setAttr('type', this.type);
+    this.setAttr('value', this.value);
+    this.setAttr('label', this.label);
+    this.setAttr('variant', this.variant);
+
+    // Set boolean attributes (only if true)
+    this.setBooleanAttr('checked', this.checked);
+    this.setBooleanAttr('loading', this.loading);
+    this.setBooleanAttr('disabled', this.disabled);
+    this.setBooleanAttr('submenu-open', this.submenuOpen);
+
+    // Set style attributes
+    this.setCssVar('--background-color-hover', this.backgroundColorHover);
+    this.setCssVar('--text-color-hover', this.textColorHover);
+    this.setCssVar('--padding', this.padding);
+    this.setCssVar('--margin', this.margin);
+    this.setCssVar('--font-size', this.fontSize);
+
+    // Dialog attribute
+    this.setAttr('data-dialog', this._dataDialog);
+  }
+
   /**
    * Sets an attribute on the native element if the value is not null or undefined
    */
   private setAttr(name: string, value: string | null | undefined) {
     if (value != null) {
       this.renderer.setAttribute(this.el.nativeElement, name, value);
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 
@@ -121,7 +133,7 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
    */
   private setCssVar(name: string, value: string | null | undefined) {
     if (value != null) {
-      this.renderer.setStyle(this.el.nativeElement, name, value);
+      this.el.nativeElement.style.setProperty(name, value);
     }
   }
 
@@ -132,6 +144,8 @@ export class WaDropdownItemDirective implements OnInit, ControlValueAccessor {
   private setBooleanAttr(name: string, value: boolean | string | null | undefined) {
     if (value === true || value === 'true' || value === '') {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
+    } else {
+      this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
 

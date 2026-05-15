@@ -20,8 +20,8 @@ import { FormsModule } from '@angular/forms';
       [styleRadius]="styleRadius"
       [styleColor]="styleColor"
       [styleDisplay]="styleDisplay"
-      (focusEvent)="onFocus($event)"
-      (blurEvent)="onBlur($event)"
+      (wa-focus)="onFocus($event)"
+      (wa-blur)="onBlur($event)"
     >
       <div slot="start">{{ prefixContent }}</div>
     </wa-qr-code>
@@ -83,12 +83,14 @@ describe('WaQrCodeDirective', () => {
     expect(qrCodeDirective).toBeTruthy();
   });
 
-  it('should set string attributes correctly', () => {
+  it('should set string attributes correctly', async () => {
     hostComponent.value = 'https://example.org';
     hostComponent.label = 'Scan this QR code';
     hostComponent.fill = '#000000';
     hostComponent.background = '#ffffff';
     hostComponent.errorCorrection = 'H';
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
     hostFixture.detectChanges();
 
     expect(qrCodeElement.getAttribute('value')).toBe('https://example.org');
@@ -142,8 +144,8 @@ describe('WaQrCodeDirective', () => {
     spyOn(hostComponent, 'onBlur');
 
     // Create mock events
-    const focusEvent = new FocusEvent('focusNative');
-    const blurEvent = new FocusEvent('blurNative');
+    const focusEvent = new FocusEvent('wa-focus');
+    const blurEvent = new FocusEvent('wa-blur');
 
     // Dispatch events on the native element
     qrCodeElement.dispatchEvent(focusEvent);

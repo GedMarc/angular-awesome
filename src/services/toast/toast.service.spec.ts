@@ -24,7 +24,7 @@ describe('WaToastService', () => {
     TestBed.configureTestingModule({
       providers: [
         WaToastService,
-        { provide: WA_TOAST_CONFIG, useValue: { position: 'top-right', max: 2, duration: 100, newestOnTop: true } }
+        { provide: WA_TOAST_CONFIG, useValue: { placement: 'top-end', max: 2, duration: 100, newestOnTop: true } }
       ]
     });
     service = TestBed.inject(WaToastService);
@@ -36,6 +36,24 @@ describe('WaToastService', () => {
     const items = getToasts();
     expect(items.length).toBe(1);
     expect(items[0].message).toBe('Hello');
+  });
+
+  it('show should set default variant to undefined when not specified', () => {
+    service.show('No variant');
+    const items = getToasts();
+    expect(items[0].variant).toBeUndefined();
+  });
+
+  it('convenience methods set correct variant', () => {
+    service.clearAll();
+    service.setConfig({ max: 10 });
+    service.success('S');
+    service.warning('W');
+    service.danger('D');
+    service.brand('B');
+    service.neutral('N');
+    const items = getToasts();
+    expect(items.map(t => t.variant)).toEqual(['neutral', 'brand', 'danger', 'warning', 'success']);
   });
 
   it('enforces max visible and queues overflow; closes backfill from queue', () => {
@@ -128,4 +146,29 @@ describe('WaToastService', () => {
     tick(6);
     expect(getToasts().length).toBe(0);
   }));
+
+  it('config reflects merged defaults with placement', () => {
+    const cfg = service.config;
+    expect(cfg.placement).toBe('top-end');
+    expect(cfg.max).toBe(2);
+    expect(cfg.duration).toBe(100);
+    expect(cfg.newestOnTop).toBe(true);
+  });
+
+  it('show passes size option through to toast', () => {
+    service.show('Sized', { size: 'large' });
+    const items = getToasts();
+    expect(items[0].size).toBe('large');
+  });
+
+  it('close removes from queue when toast is queued (not visible)', () => {
+    service.clearAll();
+    service.setConfig({ max: 1 });
+    service.show('Visible');
+    const queuedId = service.show('Queued');
+    service.close(queuedId);
+    // Close visible to let queue backfill
+    service.close(getToasts()[0].id);
+    expect(getToasts().length).toBe(0);
+  });
 });

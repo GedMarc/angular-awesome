@@ -118,15 +118,15 @@ describe('WaTooltipDirective', () => {
   it('should set boolean attributes correctly', () => {
     hostComponent.disabled = true;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('disabled')).toBe('true');
+    expect(tooltipElement.hasAttribute('disabled')).toBeTrue();
 
     hostComponent.disabled = false;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('disabled')).toBe('false');
+    expect(tooltipElement.hasAttribute('disabled')).toBeFalse();
 
     hostComponent.open = true;
     hostFixture.detectChanges();
-    expect(tooltipElement.getAttribute('open')).toBe('true');
+    expect(tooltipElement.hasAttribute('open')).toBeTrue();
   });
 
   it('should set delay attributes correctly', () => {

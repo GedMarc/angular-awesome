@@ -10,6 +10,7 @@ import { WaPageComponent } from './page.component';
       [navOpen]="navOpen"
       [disableSticky]="disableSticky"
       [navigationPlacement]="navigationPlacement"
+      [disableNavigationToggle]="disableNavigationToggle"
       [menuWidth]="menuWidth"
       [mainWidth]="mainWidth"
       [asideWidth]="asideWidth"
@@ -41,6 +42,7 @@ class TestHostComponent {
   navOpen?: boolean;
   disableSticky?: string;
   navigationPlacement?: 'start' | 'end';
+  disableNavigationToggle?: boolean | string;
 
   menuWidth?: string;
   mainWidth?: string;
@@ -119,6 +121,26 @@ describe('WaPageComponent', () => {
     hostComponent.navigationPlacement = 'end';
     hostFixture.detectChanges();
     expect(pageElement.getAttribute('navigation-placement')).toBe('end');
+  });
+
+  it('should set disable-navigation-toggle attribute correctly', () => {
+    hostComponent.disableNavigationToggle = true;
+    hostFixture.detectChanges();
+    expect(pageElement.hasAttribute('disable-navigation-toggle')).toBeTrue();
+
+    hostComponent.disableNavigationToggle = false;
+    hostFixture.detectChanges();
+    expect(pageElement.hasAttribute('disable-navigation-toggle')).toBeFalse();
+  });
+
+  it('should handle string values for disableNavigationToggle', () => {
+    hostComponent.disableNavigationToggle = 'true';
+    hostFixture.detectChanges();
+    expect(pageElement.hasAttribute('disable-navigation-toggle')).toBeTrue();
+
+    hostComponent.disableNavigationToggle = '';
+    hostFixture.detectChanges();
+    expect(pageElement.hasAttribute('disable-navigation-toggle')).toBeTrue();
   });
 
   it('should set style properties correctly', () => {
