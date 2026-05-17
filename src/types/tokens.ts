@@ -3,7 +3,7 @@
 // Core variants supported across components
 export type VariantToken = 'brand' | 'neutral' | 'success' | 'warning' | 'danger' | 'inherit';
 
-// Common control sizes (Web Awesome 3.6.0 added shorthand tokens xs/s/m/l/xl)
+// Common control sizes (Web Awesome 3.7.0 - shorthand tokens xs/s/m/l/xl added in 3.6.0)
 export type SizeToken = 'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large' | 'inherit';
 
 // Visual appearance tokens (Web Awesome 3.0.0)

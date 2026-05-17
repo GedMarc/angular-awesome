@@ -32,6 +32,9 @@ export class WaCopyButtonDirective implements OnInit, OnChanges {
   // Numeric inputs
   @Input() feedbackDuration?: number | string;
 
+  // Tooltip control
+  @Input() tooltip?: 'full' | 'copy' | 'none' | string;
+
   // Placement input
   @Input() tooltipPlacement?: 'top' | 'right' | 'bottom' | 'left' | string;
 
@@ -77,6 +80,7 @@ export class WaCopyButtonDirective implements OnInit, OnChanges {
     this.setAttr('success-label', this.successLabel);
     this.setAttr('error-label', this.errorLabel);
     this.setAttr('tooltip-placement', this.tooltipPlacement);
+    this.setAttr('tooltip', this.tooltip);
 
     // Set numeric attributes
     this.setNumericAttr('feedback-duration', this.feedbackDuration);

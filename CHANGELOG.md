@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.7.0] - 2026-05-17
+### Added
+- **wa-video:** New `WaVideoDirective` wrapping the `<wa-video>` web component with full playback control:
+  - String inputs: `controls` (`'none' | 'standard' | 'full'`), `src`, `poster`, `title`, `thumbnails`, `preload`, `iconLibrary`
+  - Boolean inputs: `playing`, `muted`, `autoplay`, `loop`, `autoplayMuted`, `autoplayOnVisible`
+  - Numeric inputs: `volume`, `duration`, `currentTime`
+  - Event outputs: `waPlay` / `play`, `waPause` / `pause`, `waTimeupdate` / `timeupdate`, `waVolumechange` / `volumechange`, `waError` / `error`, `waEnded` / `ended`, `waLoadedmetadata` / `loadedmetadata`
+  - Methods: `play()`, `pause()`, `togglePlay()`, `toggleMute()`, `seek(time)`, `setVolume(volume)`, `setPlaybackRate(rate)`, `requestFullscreen()`, `exitFullscreen()`, `getVideoElement()`, `getState()`
+- **wa-video-playlist:** New `WaVideoPlaylistDirective` wrapping the `<wa-video-playlist>` web component:
+  - String inputs: `controls` (`'none' | 'standard' | 'full'`), `iconLibrary`
+  - Event output: `waVideoChange` / `wa-video-change` — emitted when the active video changes
+  - Methods: `next()`, `previous()`, `goTo(index)`
+- **wa-copy-button:** New `tooltip` input (`'full' | 'copy' | 'none'`, default `'full'`) — controls built-in tooltip behavior. `full` shows on hover/focus and during feedback; `copy` only shows during feedback; `none` disables tooltip entirely.
+- Both video directives exported from the public API surface.
+- Unit tests for both video directives and updated copy-button tests.
+- Rules and example documentation for both video components.
+
+### Changed
+- **wa-copy-button:** CSS parts updated — removed deprecated `tooltip__base`, `tooltip__base__popup`, `tooltip__base__arrow`, `tooltip__body` parts; replaced with single `feedback` part.
+- Updated `llms.txt` to Web Awesome 3.7.0.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.7.0** component specification.
+- 2 new components added (`wa-video`, `wa-video-playlist`), 1 component updated (`wa-copy-button`). No breaking changes to the Angular API.
+
+
 ## [3.6.0] - 2026-05-01
 ### Changed
 - **SizeToken:** Expanded size type to include shorthand tokens `'xs' | 's' | 'm' | 'l' | 'xl'` alongside the existing `'small' | 'medium' | 'large'`, matching Web Awesome 3.6.0. This affects all components with a `size` property: `wa-button`, `wa-callout`, `wa-checkbox`, `wa-color-picker`, `wa-combobox`, `wa-dropdown`, `wa-file-input`, `wa-input`, `wa-number-input`, `wa-radio`, `wa-radio-group`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-tag`, `wa-textarea`, `wa-toast-item`.
@@ -234,3 +260,5 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 [3.4.0]: https://github.com/GedMarc/angular-awesome/compare/3.3.2...3.4.0
 [3.5.0]: https://github.com/GedMarc/angular-awesome/compare/3.4.0...3.5.0
 [3.5.1]: https://github.com/GedMarc/angular-awesome/compare/3.5.0...3.5.1
+[3.6.0]: https://github.com/GedMarc/angular-awesome/compare/3.5.1...3.6.0
+[3.7.0]: https://github.com/GedMarc/angular-awesome/compare/3.6.0...3.7.0

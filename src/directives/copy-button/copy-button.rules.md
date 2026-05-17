@@ -16,16 +16,17 @@ waCopyButton
 
 ### Inputs
 
-| Input              | Type      | Binding Required | Notes                                                      |          |          |                    |
-| ------------------ | --------- | ---------------- | ---------------------------------------------------------- | -------- | -------- | ------------------ |
-| `value`            | `string`  | Optional         | Text value to copy. Ignored if `from` is set.              |          |          |                    |
-| `from`             | `string`  | Optional         | Target element's ID. Supports `[attr]` and `.prop` syntax. |          |          |                    |
-| `copyLabel`        | `string`  | Optional         | Tooltip label before copy.                                 |          |          |                    |
-| `successLabel`     | `string`  | Optional         | Tooltip label on success.                                  |          |          |                    |
-| `errorLabel`       | `string`  | Optional         | Tooltip label on error.                                    |          |          |                    |
-| `feedbackDuration` | `number`  | Optional         | Tooltip visibility duration in ms.                         |          |          |                    |
-| `tooltipPlacement` | \`'top'   | 'right'          | 'bottom'                                                   | 'left'\` | Optional | Tooltip placement. |
-| `disabled`         | `boolean` | Optional         | Use with `booleanAttribute` binding.                       |          |          |                    |
+| Input              | Type      | Binding Required | Notes                                                       |          |          |                    |
+| ------------------ | --------- | ---------------- |-------------------------------------------------------------| -------- | -------- | ------------------ |
+| `value`            | `string`  | Optional         | Text value to copy. Ignored if `from` is set.               |          |          |                    |
+| `from`             | `string`  | Optional         | Target element's ID. Supports `[attr]` and `.prop` syntax.  |          |          |                    |
+| `copyLabel`        | `string`  | Optional         | Tooltip label before copy.                                  |          |          |                    |
+| `successLabel`     | `string`  | Optional         | Tooltip label on success.                                   |          |          |                    |
+| `errorLabel`       | `string`  | Optional         | Tooltip label on error.                                     |          |          |                    |
+| `feedbackDuration` | `number`  | Optional         | Tooltip visibility duration in ms.                          |          |          |                    |
+| `tooltipPlacement` | \`'top'   | 'right'          | 'bottom'                                                    | 'left'\` | Optional | Tooltip placement. |
+| `tooltip`          | \`'full'  | 'copy'           | 'none'\`                                                    | Optional | Controls the built-in tooltip. `full` shows on hover/focus and during copy feedback. `copy` only shows during feedback. `none` disables. |                    |
+| `disabled`         | `boolean` | Optional         | Use with `booleanAttribute` binding.                        |          |          |                    |
 
 ### Outputs
 

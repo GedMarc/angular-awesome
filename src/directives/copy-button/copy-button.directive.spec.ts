@@ -14,6 +14,7 @@ import { WaCopyButtonDirective } from './copy-button.directive';
       [errorLabel]="errorLabel"
       [feedbackDuration]="feedbackDuration"
       [tooltipPlacement]="tooltipPlacement"
+      [tooltip]="tooltip"
       [disabled]="disabled"
       (wa-copy)="onCopy()"
       (wa-error)="onError($event)"
@@ -34,6 +35,7 @@ class TestHostComponent {
   errorLabel?: string;
   feedbackDuration?: number | string;
   tooltipPlacement?: string;
+  tooltip?: string;
   disabled?: boolean | string;
 
   showCopyIcon = false;
@@ -195,6 +197,16 @@ describe('WaCopyButtonDirective', () => {
       hostComponent.tooltipPlacement = placement;
       hostFixture.detectChanges();
       expect(copyButtonElement.getAttribute('tooltip-placement')).toBe(placement);
+    });
+  });
+
+  it('should set the tooltip property correctly', () => {
+    const modes: string[] = ['full', 'copy', 'none'];
+
+    modes.forEach(mode => {
+      hostComponent.tooltip = mode;
+      hostFixture.detectChanges();
+      expect(copyButtonElement.getAttribute('tooltip')).toBe(mode);
     });
   });
 });
