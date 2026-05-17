@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Switch Component <span class="version-badge">synced with Web Awesome 3.4.x</span></h1>
+                <h1>Switch Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
                 <p class="subtitle"><wa-switch> provides switch functionality for Angular applications.</p>
             </header>
 
@@ -103,7 +103,7 @@
         <h2>Import</h2>
         <p>Import the switch directive from the angular-awesome package:</p>
         <pre>// Import the switch directive
-import {Directive } from 'angular-awesome/switch';</pre>
+import { WaSwitchDirective } from 'angular-awesome/switch';</pre>
       </section>
 
       <section>
@@ -143,7 +143,6 @@ import {Directive } from 'angular-awesome/switch';</pre>
 
 &lt;!-- Combined custom styling --&gt;
 &lt;wa-switch 
-  
   [backgroundColor]=&quot;&#39;#f0f0f0&#39;&quot; 
   [backgroundColorChecked]=&quot;&#39;#673AB7&#39;&quot; 
   [borderColor]=&quot;&#39;#ccc&#39;&quot; 
@@ -161,7 +160,7 @@ import {Directive } from 'angular-awesome/switch';</pre>
 <h2>Using with Angular Forms</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
 import { FormsModule } from &#39;@angular/forms&#39;;
-import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-demo&#39;,
@@ -186,13 +185,12 @@ export class SwitchDemoComponent {
 </code></pre>
 <h2>Event Handling</h2>
 <pre><code class="language-typescript">import { Component } from &#39;@angular/core&#39;;
-import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-events-demo&#39;,
   template: `
     &lt;wa-switch 
-      
       [hint]=&quot;&#39;Notifications&#39;&quot;
       (changeEvent)=&quot;onSwitchChange($event)&quot;
       (inputEvent)=&quot;onSwitchInput($event)&quot;
@@ -236,7 +234,7 @@ export class SwitchEventsDemoComponent {
 <h2>Reactive Forms</h2>
 <pre><code class="language-typescript">import { Component, OnInit } from &#39;@angular/core&#39;;
 import { FormBuilder, FormGroup, ReactiveFormsModule } from &#39;@angular/forms&#39;;
-import {Directive } from &#39;@angular-awesome/directives/switch&#39;;
+import { WaSwitchDirective } from &#39;@angular-awesome/directives/switch&#39;;
 
 @Component({
   selector: &#39;app-switch-reactive-form-demo&#39;,
