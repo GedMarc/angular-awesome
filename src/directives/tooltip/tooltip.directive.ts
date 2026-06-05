@@ -15,12 +15,14 @@ import {
 })
 export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
 
+  @Input() content?: string;
   @Input() for!: string;
   @Input() placement: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string = 'top';
   @Input() disabled?: boolean | string;
   @Input() distance: number | string = 8;
   @Input() skidding: number | string = 0;
   @Input() open?: boolean | string;
+  @Input() hoist?: boolean | string;
   @Input() showDelay: number | string = 150;
   @Input() hideDelay: number | string = 0;
   @Input() trigger: string = 'hover focusNative';
@@ -74,12 +76,16 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private setProperties(): void {
+    if (this.content !== undefined) {
+      this.setProperty('content', this.content);
+    }
     this.setAttr('for', this.for);
     this.setAttr('placement', this.placement);
     this.setBooleanAttr('disabled', this.disabled);
     this.setNumericAttr('distance', this.distance);
     this.setNumericAttr('skidding', this.skidding);
     this.setBooleanAttr('open', this.open);
+    this.setBooleanAttr('hoist', this.hoist);
     this.setNumericAttr('show-delay', this.showDelay);
     this.setNumericAttr('hide-delay', this.hideDelay);
     this.setAttr('trigger', this.trigger);
@@ -91,6 +97,14 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
       this.renderer.setAttribute(this.el, name, String(value));
     } else {
       this.renderer.removeAttribute(this.el, name);
+    }
+  }
+
+  private setProperty(name: string, value: any): void {
+    if (value !== undefined && value !== null) {
+      (this.el as any)[name] = value;
+    } else {
+      (this.el as any)[name] = undefined;
     }
   }
 

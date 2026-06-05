@@ -6,6 +6,7 @@ metadata:
 ---
 
 # Angular Awesome
+
 Angular 20+ standalone directives wrapping Web Awesome 3.7.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
 
 ## Quick Start
@@ -58,7 +59,7 @@ Bind with Angular syntax; never use string `"true"`:
 ```
 
 ### Form Controls (ControlValueAccessor)
-`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio` support `[(ngModel)]` and reactive forms.
+`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio`, `wa-date-input`, `wa-date-picker`, `wa-known-date`, `wa-time-input` support `[(ngModel)]` and reactive forms.
 
 ### Events
 Listen to web component custom events via `(wa-*)` outputs:

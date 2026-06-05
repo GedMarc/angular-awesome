@@ -16,7 +16,7 @@
 - **Template form error-state management** — wrappers participate in Angular validation so template-driven errors and state flags are available without extra plumbing.
 - **No custom schema required** — importing standalone wrappers avoids needing `CUSTOM_ELEMENTS_SCHEMA` just to use Web Awesome tags.
 - **Lazy loading where it matters** — selected components support lazy-loading patterns to reduce initial bundle and render cost.
-- **Full component coverage** — 72+ directives including layout primitives, form controls, navigation, overlays, charts, media, toasts, and more.
+- **Full component coverage** — 78+ directives including layout primitives, form controls, navigation, overlays, charts, media, toasts, and more.
 - **Type safety** — full TypeScript declarations with strict mode support.
 - **Lightweight** — thin wrappers with zero extra runtime dependencies beyond Angular and Web Awesome.
 
@@ -26,7 +26,7 @@
 |--------------|----------|
 | Angular      | `>=20.0` |
 | Node.js      | `20+`    |
-| Web Awesome* | `3.3.x`  |
+| Web Awesome* | `3.8.x`  |
 
 ## Installation
 
@@ -58,20 +58,21 @@ export class MyComponent {
 ## Available Components
 
 <details>
-<summary>Expand full component list (72+)</summary>
+<summary>Expand full component list (78+)</summary>
 
 | Category          | Components                                                                                                                                                                      |
 |-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Layout**        | `wa-layout-align`, `wa-layout-cluster`, `wa-layout-flank`, `wa-layout-frame`, `wa-layout-gap`, `wa-layout-grid`, `wa-layout-split`, `wa-layout-stack`                           |
 | **Navigation**    | `wa-breadcrumbs`, `wa-tab-group`, `wa-tree`                                                                                                                                     |
 | **Buttons**       | `wa-button`, `wa-button-group`, `wa-copy-button`                                                                                                                                |
-| **Form Controls** | `wa-checkbox`, `wa-color-picker`, `wa-combobox`, `wa-file-input`, `wa-input`, `wa-number-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-text-area` |
+| **Form Controls** | `wa-checkbox`, `wa-color-picker`, `wa-combobox`, `wa-date-input`, `wa-date-picker`, `wa-file-input`, `wa-input`, `wa-known-date`, `wa-number-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-text-area`, `wa-time-input` |
 | **Data Display**  | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code`                                 |
 | **Charts**        | `wa-chart`, `wa-bar-chart`, `wa-bubble-chart`, `wa-doughnut-chart`, `wa-line-chart`, `wa-pie-chart`, `wa-polar-area-chart`, `wa-radar-chart`, `wa-scatter-chart`                |
 | **Feedback**      | `wa-callout`, `wa-dialog`, `wa-drawer`, `wa-popover`, `wa-popup`, `wa-toast`, `wa-toast-item`, `wa-tooltip`                                                                     |
 | **Progress**      | `wa-progress-bar`, `wa-progress-ring`, `wa-spinner`                                                                                                                             |
 | **Formatting**    | `wa-format-bytes`, `wa-format-date`, `wa-format-number`, `wa-relative-time`                                                                                                     |
 | **Media**         | `wa-animated-image`, `wa-animation`, `wa-video`, `wa-video-playlist`, `wa-zoomable-frame`                                                                                       |
+| **Disclosure**    | `wa-accordion`, `wa-accordion-item`, `wa-details`                                                                                                                               |
 | **Utilities**     | `wa-divider`, `wa-dropdown`, `wa-include`, `wa-intersection-observer`, `wa-markdown`, `wa-mutation-observer`, `wa-resize-observer`, `wa-scroller`, `wa-split-panel`             |
 
 </details>
