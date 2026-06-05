@@ -14,12 +14,14 @@ Tooltips display contextual information when hovering, focusing, clicking, or pr
 
 | Input          | Type      | Description                                                                                                       |
 | -------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
+| `content`      | `string`  | Sets the tooltip's text content programmatically. Alternative to using the `content` slot.                         |
 | `for`          | `string`  | The `id` of the target element this tooltip is attached to. Required.                                             |
 | `placement`    | `string`  | Preferred placement of the tooltip. Options include 'top', 'top-start', 'top-end', 'right', etc. Default is 'top'.|
 | `disabled`     | `boolean` | If `true`, disables tooltip display.                                                                              |
 | `distance`     | `number`  | Distance in pixels to offset the tooltip. Default is `8`.                                                         |
 | `skidding`     | `number`  | Skidding offset in pixels along the target. Default is `0`.                                                       |
 | `open`         | `boolean` | Programmatically control tooltip visibility. Must be used with `trigger='manual'`.                                |
+| `hoist`        | `boolean` | If `true`, uses a fixed positioning strategy allowing the tooltip to escape overflow containers.                   |
 | `showDelay`    | `number`  | Delay before showing (ms). Default `150`.                                                                         |
 | `hideDelay`    | `number`  | Delay before hiding (ms). Default `0`.                                                                            |
 | `trigger`      | `string`  | Trigger method: `click`, `hover`, `focus`, `manual`, or space-separated combinations. Default is `'hover focus'`. |

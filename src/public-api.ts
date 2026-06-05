@@ -2,6 +2,8 @@
  * Public API Surface of angular-awesome
  */
 
+export * from './directives/accordion/accordion.directive';
+export * from './directives/accordion/accordion-item.directive';
 export * from './directives/badge/badge.component';
 export * from './directives/avatar/avatar.component';
 export * from './directives/animated-image/animated-image.directive';
@@ -21,6 +23,10 @@ export * from './directives/comparison/comparison.directive';
 export * from './directives/copy-button/copy-button.directive';
 export * from './directives/details/details.directive';
 export * from './directives/color-picker/color-picker.directive';
+export * from './directives/date-input/date-input.directive';
+export * from './directives/date-picker/date-picker.directive';
+export * from './directives/known-date/known-date.directive';
+export * from './directives/time-input/time-input.directive';
 export * from './directives/dialog/dialog.directive';
 export * from './directives/dialog/dialog-content.directive';
 export * from './directives/divider/divider.directive';

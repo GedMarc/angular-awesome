@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Video Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Video Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
+                <p class="subtitle"><wa-video> provides video functionality for Angular applications.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the video directive from the angular-awesome package:</p>
+        <pre>// Import the video directive
+import { WaVideoDirective } from 'angular-awesome/video';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Video Examples</h1>
+<h2>Basic Usage (src attribute)</h2>
+<pre><code class="language-html">&lt;wa-video src=&quot;https://example.com/video.mp4&quot; controls=&quot;standard&quot;&gt;&lt;/wa-video&gt;
+</code></pre>
+<h2>With Poster and Title</h2>
+<pre><code class="language-html">&lt;wa-video
+  src=&quot;https://example.com/video.mp4&quot;
+  poster=&quot;https://example.com/poster.jpg&quot;
+  title=&quot;Introduction to Angular Awesome&quot;
+  controls=&quot;full&quot;&gt;
+&lt;/wa-video&gt;
+</code></pre>
+<h2>Multiple Sources with Captions</h2>
+<pre><code class="language-html">&lt;wa-video controls=&quot;full&quot; title=&quot;Demo Video&quot;&gt;
+  &lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;source src=&quot;video.webm&quot; type=&quot;video/webm&quot;&gt;
+  &lt;track kind=&quot;subtitles&quot; src=&quot;captions.vtt&quot; srclang=&quot;en&quot; label=&quot;English&quot;&gt;
+&lt;/wa-video&gt;
+</code></pre>
+<h2>Autoplay (Muted)</h2>
+<pre><code class="language-html">&lt;wa-video src=&quot;hero.mp4&quot; autoplay-muted loop controls=&quot;none&quot;&gt;&lt;/wa-video&gt;
+</code></pre>
+<h2>Autoplay On Visible</h2>
+<pre><code class="language-html">&lt;wa-video
+  src=&quot;demo.mp4&quot;
+  autoplay-on-visible
+  muted
+  controls=&quot;standard&quot;&gt;
+&lt;/wa-video&gt;
+</code></pre>
+<h2>Angular Bindings</h2>
+<pre><code class="language-html">&lt;wa-video
+  [src]=&quot;videoUrl&quot;
+  [poster]=&quot;posterUrl&quot;
+  [title]=&quot;videoTitle&quot;
+  [controls]=&quot;controlsPreset&quot;
+  [muted]=&quot;isMuted&quot;
+  [volume]=&quot;volumeLevel&quot;
+  [autoplay]=&quot;shouldAutoplay&quot;
+  [loop]=&quot;shouldLoop&quot;
+  [preload]=&quot;preloadStrategy&quot;
+  (waPlay)=&quot;onPlay()&quot;
+  (waPause)=&quot;onPause()&quot;
+  (waEnded)=&quot;onEnded()&quot;
+  (waTimeupdate)=&quot;onTimeUpdate($event)&quot;
+  (waError)=&quot;onError($event)&quot;&gt;
+&lt;/wa-video&gt;
+</code></pre>
+<h2>Programmatic Control</h2>
+<pre><code class="language-typescript">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaVideoDirective } from &#39;angular-awesome&#39;;
+
+@Component({
+  selector: &#39;app-video-demo&#39;,
+  standalone: true,
+  imports: [WaVideoDirective],
+  template: `
+    &lt;wa-video #player src=&quot;demo.mp4&quot; controls=&quot;full&quot;&gt;&lt;/wa-video&gt;
+    &lt;div class=&quot;controls&quot;&gt;
+      &lt;button (click)=&quot;player.play()&quot;&gt;Play&lt;/button&gt;
+      &lt;button (click)=&quot;player.pause()&quot;&gt;Pause&lt;/button&gt;
+      &lt;button (click)=&quot;player.seek(30)&quot;&gt;Skip to 30s&lt;/button&gt;
+      &lt;button (click)=&quot;player.setVolume(0.5)&quot;&gt;50% Volume&lt;/button&gt;
+      &lt;button (click)=&quot;player.requestFullscreen()&quot;&gt;Fullscreen&lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class VideoDemoComponent {}
+</code></pre>
+<h2>Video Playlist</h2>
+<pre><code class="language-html">&lt;wa-video-playlist controls=&quot;full&quot; (waVideoChange)=&quot;onVideoChange($event)&quot;&gt;
+  &lt;wa-video
+    src=&quot;episode1.mp4&quot;
+    poster=&quot;ep1-poster.jpg&quot;
+    title=&quot;Episode 1: Getting Started&quot;&gt;
+  &lt;/wa-video&gt;
+  &lt;wa-video
+    src=&quot;episode2.mp4&quot;
+    poster=&quot;ep2-poster.jpg&quot;
+    title=&quot;Episode 2: Core Concepts&quot;&gt;
+  &lt;/wa-video&gt;
+  &lt;wa-video
+    src=&quot;episode3.mp4&quot;
+    poster=&quot;ep3-poster.jpg&quot;
+    title=&quot;Episode 3: Advanced Topics&quot;&gt;
+  &lt;/wa-video&gt;
+&lt;/wa-video-playlist&gt;
+</code></pre>
+<h2>Playlist with Programmatic Navigation</h2>
+<pre><code class="language-typescript">import { Component, ViewChild } from &#39;@angular/core&#39;;
+import { WaVideoPlaylistDirective, WaVideoDirective } from &#39;angular-awesome&#39;;
+
+@Component({
+  selector: &#39;app-playlist-demo&#39;,
+  standalone: true,
+  imports: [WaVideoPlaylistDirective, WaVideoDirective],
+  template: `
+    &lt;wa-video-playlist #playlist controls=&quot;full&quot;&gt;
+      &lt;wa-video src=&quot;ep1.mp4&quot; title=&quot;Episode 1&quot;&gt;&lt;/wa-video&gt;
+      &lt;wa-video src=&quot;ep2.mp4&quot; title=&quot;Episode 2&quot;&gt;&lt;/wa-video&gt;
+      &lt;wa-video src=&quot;ep3.mp4&quot; title=&quot;Episode 3&quot;&gt;&lt;/wa-video&gt;
+    &lt;/wa-video-playlist&gt;
+    &lt;div&gt;
+      &lt;button (click)=&quot;playlist.previous()&quot;&gt;Previous&lt;/button&gt;
+      &lt;button (click)=&quot;playlist.goTo(0)&quot;&gt;First&lt;/button&gt;
+      &lt;button (click)=&quot;playlist.next()&quot;&gt;Next&lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class PlaylistDemoComponent {}
+</code></pre>
+<h2>Custom Controls Preset — No Controls (Background Video)</h2>
+<pre><code class="language-html">&lt;wa-video
+  src=&quot;background.mp4&quot;
+  controls=&quot;none&quot;
+  autoplay-muted
+  loop
+  style=&quot;width: 100%; height: 400px; object-fit: cover;&quot;&gt;
+&lt;/wa-video&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

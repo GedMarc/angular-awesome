@@ -16,6 +16,7 @@ import {
 export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
 
 
+  @Input() content?: string;
   @Input() for!: string;
   @Input() placement: 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end' | string = 'top';
   @Input() disabled?: boolean | string;
@@ -76,6 +77,7 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private setProperties(): void {
+    this.setProperty('content', this.content);
     this.setAttr('for', this.for);
     this.setAttr('placement', this.placement);
     this.setBooleanAttr('disabled', this.disabled);
@@ -93,6 +95,14 @@ export class WaTooltipDirective implements AfterViewInit, OnChanges, OnDestroy {
       this.renderer.setAttribute(this.el, name, String(value));
     } else {
       this.renderer.removeAttribute(this.el, name);
+    }
+  }
+
+  private setProperty(name: string, value: any): void {
+    if (value !== undefined && value !== null) {
+      (this.el as any)[name] = value;
+    } else {
+      (this.el as any)[name] = undefined;
     }
   }
 

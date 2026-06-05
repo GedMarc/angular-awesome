@@ -1,6 +1,6 @@
 # Web Awesome
 
-> A forward-thinking library of web components. Version 3.7.0.
+> A forward-thinking library of web components. Version 3.8.0.
 
 Web Awesome provides a comprehensive set of customizable, accessible web components for building modern
 web applications. All components use shadow DOM and are framework-agnostic, working with vanilla JavaScript
@@ -23,6 +23,8 @@ For comprehensive documentation, visit https://webawesome.com/docs/
 
 ## Components
 
+- [Accordion](https://webawesome.com/docs/components/accordion): Accordions are a vertically stacked set of interactive headings that each contain a title, representing a section of content.
+- [Accordion Item](https://webawesome.com/docs/components/accordion-item): Accordion items are used inside `<wa-accordion>` to create expandable sections with accessible headers.
 - [Animated Image](https://webawesome.com/docs/components/animated-image): Animated images display GIFs and WEBPs with controls to play and pause them on demand. Use them when you want motion but need to give users control over when it plays.
 - [Animation](https://webawesome.com/docs/components/animation): Animate elements declaratively with nearly 100 baked-in presets, or roll your own with custom keyframes. Powered by the Web Animations API.
 - [Avatar](https://webawesome.com/docs/components/avatar): Avatars represent a person or object with an image, initials, or icon. Use them in lists, comments, and profiles to give users visual context at a glance.
@@ -43,6 +45,8 @@ For comprehensive documentation, visit https://webawesome.com/docs/
 - [Combobox](https://webawesome.com/docs/components/combobox): Comboboxes combine a text input with a listbox, allowing users to filter and select from predefined options or enter custom values.
 - [Comparison](https://webawesome.com/docs/components/comparison): Comparisons show the visual differences between two pieces of similar content using a draggable divider. Use them for before/after images, design revisions, or side-by-side previews.
 - [Copy Button](https://webawesome.com/docs/components/copy-button): Copy buttons copy text to the clipboard when the user activates them. They provide built-in success and error feedback so users know the copy worked.
+- [Date Input](https://webawesome.com/docs/components/date-input): Date inputs let users enter a date through a segmented field or select one visually from a popup calendar. They support locale-aware segment order, min and max constraints, and form validation.
+- [Date Picker](https://webawesome.com/docs/components/date-picker): Date pickers display a month grid for selecting a single date or a date range inline. Use them when dates need to remain visible, such as in scheduling interfaces or embedded inside another form control.
 - [Details](https://webawesome.com/docs/components/details): Details display a brief summary and expand to reveal additional content. Use them to progressively disclose information, group related FAQs, or hide advanced options.
 - [Dialog](https://webawesome.com/docs/components/dialog): Dialogs appear above the page and require the user's immediate attention. Use them for confirmations, forms, or focused tasks that interrupt the main flow.
 - [Divider](https://webawesome.com/docs/components/divider): Dividers visually separate or group adjacent elements with a horizontal or vertical line. Use them to establish rhythm and hierarchy within menus, toolbars, and layouts.
@@ -58,6 +62,7 @@ For comprehensive documentation, visit https://webawesome.com/docs/
 - [Include](https://webawesome.com/docs/components/include): Fetches an external HTML file and embeds its contents inline on the page. Useful for reusing shared markup like headers, footers, and partials across multiple pages.
 - [Input](https://webawesome.com/docs/components/input): Inputs collect single-line data from the user, such as text, numbers, email addresses, and passwords. They support labels, hints, validation, and prefix or suffix slots.
 - [Intersection Observer](https://webawesome.com/docs/components/intersection-observer): Tracks immediate child elements and fires events as they move in and out of view. Useful for lazy loading, scroll-triggered animations, and viewport-aware interactions.
+- [Known Date](https://webawesome.com/docs/components/known-date): Known dates let users enter dates they already know — birthdays, expirations, document dates — through three separate day, month, and year fields shown in the locale's natural order.
 - [Line Chart](https://webawesome.com/docs/components/line-chart): Line charts show trends over time by connecting data points with line segments. Use them when the x-axis represents a sequential dimension and you want to emphasize the shape and direction of the data.
 - [Markdown](https://webawesome.com/docs/components/markdown): Markdown elements render markdown content as HTML directly in the browser, making it easy to display user-generated content or documentation without a server-side build step.
 - [Mutation Observer](https://webawesome.com/docs/components/mutation-observer): Mutation observers watch for changes to an element's DOM tree and emit an event when they occur. Provides a thin, declarative interface to the browser's MutationObserver API.
@@ -91,6 +96,7 @@ For comprehensive documentation, visit https://webawesome.com/docs/
 - [Tab Panel](https://webawesome.com/docs/components/tab-panel): Tab panels hold the content shown for a single tab inside a tab group.
 - [Tag](https://webawesome.com/docs/components/tag): Tags label, categorize, or represent selections with a compact visual marker. Use them for status indicators, filters, or removable chips.
 - [Textarea](https://webawesome.com/docs/components/textarea): Textareas collect multi-line text input from the user, with optional resizing and character counting.
+- [Time Input](https://webawesome.com/docs/components/time-input): Time pickers let users enter a time through a segmented field or select one visually from a popup column picker. They support 12- and 24-hour formats, optional seconds, and locale-aware segment order.
 - [Toast](https://webawesome.com/docs/components/toast): Toasts display brief, non-blocking notifications that appear temporarily above the page content.
 - [Toast Item](https://webawesome.com/docs/components/toast-item): Toast items are individual notifications displayed within a toast container.
 - [Tooltip](https://webawesome.com/docs/components/tooltip): Tooltips display brief contextual information when the user hovers, focuses, or taps a target element.
@@ -103,6 +109,82 @@ For comprehensive documentation, visit https://webawesome.com/docs/
 ## Optional
 
 The following is a quick reference describing every component's API. For comprehensive documentation, refer to the component documentation using the URLs provided above.
+
+#### `<wa-accordion>`
+
+**Description:** Accordions are a vertically stacked set of interactive headings that each contain a title, representing a section of content.
+
+**Documentation:** https://webawesome.com/docs/components/accordion
+
+**Slots:**
+
+- `(default)`: One or more `<wa-accordion-item>` elements.
+
+**Properties:**
+
+- `mode`: Controls how items can be expanded. `multiple` (the default) allows any number of items to be open at once. `single` allows only one item to be open at a time; opening a new item collapses the previously open one, and clicking an open item does not collapse it. `single-collapsible` is the same as `single` except that clicking the open item collapses it, so zero open items is a valid state. (Type: `'single' | 'single-collapsible' | 'multiple'`, Default: `'multiple'`)
+- `iconPlacement` (attribute: `icon-placement`): The location of the expand/collapse icon in child items. (Type: `'start' | 'end'`, Default: `'end'`)
+- `headingLevel` (attribute: `heading-level`): The heading level for child item triggers (1–6), or "none" to omit the heading wrapper. Defaults to 3. (Type: `string`, Default: `'3'`)
+- `appearance`: The accordion's visual appearance. (Type: `'filled' | 'outlined' | 'filled-outlined' | 'plain'`, Default: `'outlined'`)
+
+**Methods:**
+
+- `expandAll()`: Expands all accordion items. No-op when `mode` is `single` or `single-collapsible`.
+- `collapseAll()`: Collapses all accordion items.
+
+**Events:**
+
+- `wa-expand`: Emitted before an item expands. Cancelable.
+- `wa-after-expand`: Emitted after an item finishes expanding.
+- `wa-collapse`: Emitted before an item collapses. Cancelable.
+- `wa-after-collapse`: Emitted after an item finishes collapsing.
+
+#### `<wa-accordion-item>`
+
+**Description:** Accordion items are used inside `<wa-accordion>` to create expandable sections with accessible headers.
+
+**Documentation:** https://webawesome.com/docs/components/accordion-item
+
+**Slots:**
+
+- `(default)`: The accordion item's body content.
+- `label`: The accordion item's label. Alternatively, use the `label` attribute.
+- `icon`: Optional expand/collapse icon. Works best with `<wa-icon>`.
+
+**Properties:**
+
+- `label`: The text label shown in the header. If you need HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
+- `expanded`: Expands the accordion item. (Type: `boolean`, Default: `false`)
+- `disabled`: Disables the accordion item so it can't be toggled. (Type: `boolean`, Default: `false`)
+
+**Methods:**
+
+- `expand()`: Expands the accordion item with animation.
+- `collapse()`: Collapses the accordion item with animation.
+- `toggle()`: Toggles the accordion item's expanded state.
+- `focus(options: FocusOptions)`: Focuses the accordion item's trigger button.
+
+**CSS Custom Properties:**
+
+- `--spacing`: The amount of space around and between the item's header and content. (Default: `var(--wa-space-m)`)
+- `--show-duration`: The duration of the expand animation. (Default: `200ms`)
+- `--hide-duration`: The duration of the collapse animation. (Default: `200ms`)
+- `--easing`: The easing of the expand/collapse animation. (Default: `ease`)
+- `--wa-accordion-divider-color`: The color of the divider between accordion items. (Default: `var(--wa-color-surface-border)`)
+
+**CSS Parts:**
+
+- `base`: The component's base wrapper.
+- `heading`: The heading element wrapping the trigger button. Omitted when `heading-level="none"`.
+- `button`: The trigger button that toggles the panel.
+- `label`: The container that wraps the label.
+- `icon`: The container that wraps the expand/collapse icon.
+- `panel`: The panel that contains the item's content.
+- `content`: The content slot inside the panel.
+
+**CSS States:**
+
+- `animating`: Applied while the panel is animating.
 
 #### `<wa-animated-image>`
 
@@ -117,7 +199,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `src`: The path to the image to load. (Type: `string`)
 - `alt`: A description of the image used by assistive devices. (Type: `string`)
 - `play`: Plays the animation. When this attribute is remove, the animation will pause. (Type: `boolean`)
@@ -148,7 +229,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `name`: The name of the built-in animation to use. For custom animations, use the `keyframes` prop. (Type: `string`, Default: `'none'`)
 - `play`: Plays the animation. When omitted, the animation will be paused. This attribute will be automatically removed when the animation finishes or gets canceled. (Type: `boolean`, Default: `false`)
 - `delay`: The number of milliseconds to delay the start of the animation. (Type: `number`, Default: `0`)
@@ -186,7 +266,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `image`: The image source to use for the avatar. (Type: `string`, Default: `''`)
 - `label`: A label to use to describe the avatar to assistive devices. (Type: `string`, Default: `''`)
 - `initials`: Initials to use as a fallback when no image is available (1-2 characters max recommended). (Type: `string`, Default: `''`)
@@ -221,7 +300,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[variantStyles, styles]`)
 - `variant`: The badge's theme variant. Defaults to `brand` if not within another element with a variant. (Type: `'brand' | 'neutral' | 'success' | 'warning' | 'danger'`, Default: `'brand'`)
 - `appearance`: The badge's visual appearance. (Type: `'accent' | 'filled' | 'outlined' | 'filled-outlined'`, Default: `'accent'`)
 - `pill`: Draws a pill-style badge with rounded edges. (Type: `boolean`, Default: `false`)
@@ -250,7 +328,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'bar'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -301,7 +378,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `label`: The label to use for the breadcrumb control. This will not be shown on the screen, but it will be announced by screen readers and other assistive devices to provide more context for users. (Type: `string`, Default: `''`)
 
 **CSS Parts:**
@@ -323,7 +399,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `href`: Optional URL to direct the user to when the breadcrumb item is activated. When set, a link will be rendered internally. When unset, a button will be rendered instead. (Type: `string | undefined`)
 - `target`: Tells the browser where to open the link. Only used when `href` is set. (Type: `'_blank' | '_parent' | '_self' | '_top' | undefined`)
 - `rel`: The `rel` attribute to use on the link. Only used when `href` is set. (Type: `string`, Default: `'noreferrer noopener'`)
@@ -348,7 +423,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'bubble'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -400,7 +474,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, variantStyles, sizeStyles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `variant`: The button's theme variant. Defaults to `neutral` if not within another element with a variant. (Type: `'neutral' | 'brand' | 'success' | 'warning' | 'danger'`, Default: `'neutral'`)
 - `appearance`: The button's visual appearance. (Type: `'accent' | 'filled' | 'outlined' | 'filled-outlined' | 'plain'`, Default: `'accent'`)
@@ -469,7 +542,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label to use for the button group. This won't be displayed on the screen, but it will be announced by assistive devices when interacting with the control and is strongly recommended. (Type: `string`, Default: `''`)
 - `orientation`: The button group's orientation. (Type: `'horizontal' | 'vertical'`, Default: `'horizontal'`)
 
@@ -490,7 +562,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, variantStyles, sizeStyles]`)
 - `variant`: The callout's theme variant. Defaults to `brand` if not within another element with a variant. (Type: `'brand' | 'neutral' | 'success' | 'warning' | 'danger'`, Default: `'brand'`)
 - `appearance`: The callout's visual appearance. (Type: `'accent' | 'filled' | 'outlined' | 'plain' | 'filled-outlined'`)
 - `size`: The callout's size. (Type: `'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`, Default: `'m'`)
@@ -518,11 +589,12 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, styles]`)
 - `appearance`: The card's visual appearance. (Type: `'accent' | 'filled' | 'outlined' | 'filled-outlined' | 'plain'`, Default: `'outlined'`)
 - `withHeader` (attribute: `with-header`): Only required for SSR. Set to `true` if you're slotting in a `header` element so the server-rendered markup includes the header before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `withMedia` (attribute: `with-media`): Only required for SSR. Set to `true` if you're slotting in a `media` element so the server-rendered markup includes the media before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `withFooter` (attribute: `with-footer`): Only required for SSR. Set to `true` if you're slotting in a `footer` element so the server-rendered markup includes the footer before the component hydrates on the client. (Type: `boolean`, Default: `false`)
+- `withHeaderActions` (attribute: `with-header-actions`): Only required for SSR. Set to `true` if you're slotting in a `header-actions` element so the server-rendered markup includes the media before the component hydrates on the client. (Type: `boolean`, Default: `false`)
+- `withFooterActions` (attribute: `with-footer-actions`): Only required for SSR. Set to `true` if you're slotting in a `footer-actions` element so the server-rendered markup includes the media before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `orientation`: Renders the card's orientation * (Type: `'horizontal' | 'vertical'`, Default: `'vertical'`)
 
 **CSS Custom Properties:**
@@ -550,7 +622,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `loop`: When set, allows the user to navigate the carousel in the same direction indefinitely. (Type: `boolean`, Default: `false`)
 - `navigation`: When set, show the carousel's navigation. (Type: `boolean`, Default: `false`)
 - `pagination`: When set, show the carousel's pagination indicators. (Type: `boolean`, Default: `false`)
@@ -599,10 +670,6 @@ The following is a quick reference describing every component's API. For compreh
 
 - `(default)`: The carousel item's content..
 
-**Properties:**
-
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
-
 **CSS Custom Properties:**
 
 - `--aspect-ratio`: The slide's aspect ratio. Inherited from the carousel by default.
@@ -619,7 +686,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'bar'`)
@@ -671,7 +737,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[formControlStyles, sizeStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `name`: The name of the checkbox, submitted as a name/value pair with form data. (Type: `string | null`, Default: `null`)
 - `value`: The value of the checkbox, submitted as a name/value pair with form data. (Type: `string | null`)
@@ -735,7 +800,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[visuallyHidden, sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `validationTarget`: Override this to change where constraint validation popups are anchored. (Type: `undefined | HTMLElement`)
 - `value`: The current value of the color picker. The value's format will vary based the `format` attribute. To get the value in a specific format, use the `getFormattedValue()` method. The value is submitted as a name/value pair with form data.
@@ -837,7 +901,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, formControlStyles, sizeStyles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `validationTarget`: Where to anchor native constraint validation (Type: `undefined | HTMLElement`)
 - `inputValue`: The current text value in the input field. (Type: `string`, Default: `''`)
@@ -895,8 +958,8 @@ The following is a quick reference describing every component's API. For compreh
 
 **CSS Custom Properties:**
 
-- `--show-duration`: The duration of the show animation. (Default: `100ms`)
-- `--hide-duration`: The duration of the hide animation. (Default: `100ms`)
+- `--show-duration`: The duration of the show animation. (Default: `var(--wa-transition-fast)`)
+- `--hide-duration`: The duration of the hide animation. (Default: `var(--wa-transition-fast)`)
 - `--tag-max-size`: When using `multiple`, the max size of tags before their content is truncated. (Default: `10ch`)
 
 **CSS Parts:**
@@ -937,7 +1000,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `position`: The position of the divider as a percentage. (Type: `number`, Default: `50`)
 
 **Events:**
@@ -976,7 +1038,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[hostStyles, visuallyHidden, styles]`)
 - `value`: The text value to copy. (Type: `string`, Default: `''`)
 - `from`: An id that references an element in the same document from which data will be copied. If both this and `value` are present, this value will take precedence. By default, the target element's `textContent` will be copied. To copy an attribute, append the attribute name wrapped in square brackets, e.g. `from="el[value]"`. To copy a property, append a dot and the property name, e.g. `from="el.value"`. (Type: `string`, Default: `''`)
 - `disabled`: Disables the copy button. (Type: `boolean`, Default: `false`)
@@ -1005,6 +1066,226 @@ The following is a quick reference describing every component's API. For compreh
 - `success`: Applied when the copy operation succeeds.
 - `error`: Applied when the copy operation fails.
 
+#### `<wa-date-input>`
+
+**Description:** Date inputs let users enter a date through a segmented field or select one visually from a popup calendar. They support locale-aware segment order, min and max constraints, and form validation.
+
+**Documentation:** https://webawesome.com/docs/components/date-input
+
+**Slots:**
+
+- `label`: The date input's label. Alternatively, use the `label` attribute.
+- `hint`: Text that describes how to use the date input. Alternatively, use the `hint` attribute.
+- `start`: An element placed at the start of the input.
+- `end`: An element placed at the end of the input.
+- `clear-icon`: An icon to use in lieu of the default clear icon.
+- `expand-icon`: The icon to show on the date picker toggle button. Defaults to a calendar icon.
+- `footer`: Content shown below the date picker inside the popup.
+- `previous-icon`: Icon for the date picker's previous-page button. Forwarded to `<wa-date-picker>`.
+- `next-icon`: Icon for the date picker's next-page button. Forwarded to `<wa-date-picker>`.
+- `day-YYYY-MM-DD`: Custom content for a specific day in the popup date picker. Slot name is dynamic (e.g., `day-2026-05-25`). Forwarded to `<wa-date-picker>`.
+
+**Properties:**
+
+- `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
+- `assumeInteractionOn`: Native `input` events do not fire on `role=spinbutton` elements (they aren't real `<input>`s). The component dispatches a composed host `input` event on every segment edit, every step, and on calendar selection, so a single `input` is enough to mark the field as interacted with. (Type: `string[]`, Default: `['input']`)
+- `validationTarget`: Override this to change where constraint validation popups are anchored. (Type: `undefined | HTMLElement`)
+- `name`: The date input's name, submitted as a name/value pair with form data. (Type: `string | null`, Default: `''`)
+- `value`: The date input's value. ISO 8601 `YYYY-MM-DD` for single mode, `YYYY-MM-DD/YYYY-MM-DD` for range mode (with `from <= to`). The setter also accepts a `Date` or a range object with `from` and `to` properties. (Type: `string`)
+- `defaultValue` (attribute: `value`): The default value of the form control. Used for form reset. (Type: `string`)
+- `disabled`: Disables the date input. (Type: `boolean`, Default: `false`)
+- `required`: Makes the date input required for form submission. (Type: `boolean`, Default: `false`)
+- `readonly`: Makes the input non-editable. The popup still opens for browsing. (Type: `boolean`, Default: `false`)
+- `size`: The date input's size. (Type: `WaDateInputSize | 'small' | 'medium' | 'large'`, Default: `'m'`)
+- `appearance`: The date input's visual appearance. (Type: `'filled' | 'outlined' | 'filled-outlined'`, Default: `'outlined'`)
+- `pill`: Draws a pill-style date input with rounded edges. (Type: `boolean`, Default: `false`)
+- `label`: The date input's label. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
+- `hint`: The date input's hint. If you need to display HTML, use the `hint` slot instead. (Type: `string`, Default: `''`)
+- `autocomplete`: Forwarded to the hidden form input (e.g., `'bday'`, `'cc-exp'`) to enable browser autofill. (Type: `string`, Default: `''`)
+- `withClear` (attribute: `with-clear`): Shows a clear button when the date input has a value. (Type: `boolean`, Default: `false`)
+- `withLabel` (attribute: `with-label`): Only required for SSR. Set to `true` if you're slotting in a `label` element. (Type: `boolean`, Default: `false`)
+- `withHint` (attribute: `with-hint`): Only required for SSR. Set to `true` if you're slotting in a `hint` element. (Type: `boolean`, Default: `false`)
+- `mode`: Selection mode. (Type: `WaDateInputMode`, Default: `'single'`)
+- `min`: Earliest selectable date as `YYYY-MM-DD`. Out-of-range dates are disabled in the popup calendar and a committed value before `min` fails constraint validation with `rangeUnderflow`. (Type: `string`, Default: `''`)
+- `max`: Latest selectable date as `YYYY-MM-DD`. Out-of-range dates are disabled in the popup calendar and a committed value after `max` fails constraint validation with `rangeOverflow`. (Type: `string`, Default: `''`)
+- `today`: Override "today" as `YYYY-MM-DD` (defaults to the runtime date). (Type: `string`, Default: `''`)
+- `firstDayOfWeek` (attribute: `first-day-of-week`): The first day of the week in the popup calendar. (Type: `WaDateInputFirstDayOfWeek`, Default: `'auto'`)
+- `disabledDates` (attribute: `disabled-dates`): Dates that cannot be selected. (Type: `string | string[] | Date[]`, Default: `''`)
+- `disabledDaysOfWeek` (attribute: `disabled-days-of-week`): Days of the week that cannot be selected. Accepts a space-separated list of three-letter weekday names. (Type: `string`, Default: `''`)
+- `disablePast` (attribute: `disable-past`): Disable all dates strictly before today. (Type: `boolean`, Default: `false`)
+- `disableFuture` (attribute: `disable-future`): Disable all dates strictly after today. (Type: `boolean`, Default: `false`)
+- `minRange` (attribute: `min-range`): Minimum range length in days (range mode only). `0` disables. (Type: `number`, Default: `0`)
+- `maxRange` (attribute: `max-range`): Maximum range length in days (range mode only). `0` disables. (Type: `number`, Default: `0`)
+- `isDateDisabled`: JS-only callback for custom date disabling. Forwarded to the popup calendar. (Type: `(date: Date) => boolean | undefined`)
+- `dayContent`: JS-only callback for custom day-cell content. Forwarded to the popup calendar. (Type: `WaDateInputDayContent | undefined`)
+- `months`: Number of months rendered in the popup calendar. (Type: `1 | 2`, Default: `1`)
+- `pageBy` (attribute: `page-by`): Whether prev/next pages by the visible range or one month at a time. (Type: `'months' | 'single'`, Default: `'months'`)
+- `withOutsideDays` (attribute: `with-outside-days`): Show leading/trailing days from adjacent months in the popup calendar. (Type: `boolean`, Default: `false`)
+- `withWeekNumbers` (attribute: `with-week-numbers`): Show ISO 8601 week numbers in the popup calendar. (Type: `boolean`, Default: `false`)
+- `weekdayFormat` (attribute: `weekday-format`): Weekday header format in the popup calendar. (Type: `'narrow' | 'short' | 'long'`, Default: `'short'`)
+- `open`: Whether the popup calendar is open. (Type: `boolean`, Default: `false`)
+- `placement`: Preferred popup placement. (Type: `WaDateInputPlacement`, Default: `'bottom-start'`)
+- `distance`: Distance in pixels between the popup and the input. (Type: `number`, Default: `0`)
+- `valueAsDate`: The selected date as a `Date` (single mode only). (Type: `Date | null`)
+- `valueAsRange`: The selected range as an object with `from` and `to` properties (range mode only). (Type: `{ from: Date | null; to: Date | null }`)
+- `form`: By default, form controls are associated with the nearest containing `<form>` element. This attribute allows you to place the form control outside of a form and associate it with the form that has this `id`. The form must be in the same document or shadow root for this to work. (Type: `HTMLFormElement | null`)
+
+**Methods:**
+
+- `focus(options: FocusOptions)`: Sets focus on the first empty (else first) segment.
+- `blur()`: Removes focus from the date input.
+- `show()`: Opens the popup calendar.
+- `hide()`: Closes the popup calendar.
+- `clear()`: Clears the current value and emits `wa-clear`, `input`, and `change`. Mirrors activating the clear button. No-op when already empty or when disabled/readonly.
+- `formStateRestoreCallback(state: string | File | FormData | null)`: Called when the browser is trying to restore element’s state to state in which case reason is "restore", or when the browser is trying to fulfill autofill on behalf of user in which case reason is "autocomplete". In the case of "restore", state is a string, File, or FormData object previously set as the second argument to setFormValue.
+- `setCustomValidity(message: string)`: Do not use this when creating a "Validator". This is intended for end users of components. We track manually defined custom errors so we don't clear them on accident in our validators.
+- `resetValidity()`: Reset validity is a way of removing manual custom errors and native validation.
+
+**Events:**
+
+- `input`: Emitted on every segment edit, step, calendar interaction, and clear, even while the value is incomplete.
+- `change`: Emitted on every committed value transition (each completed date edit, calendar selection, or clear), mirroring native `<input type="date">` rather than the commit-on-blur behavior of `<wa-input>`/`<wa-select>`. This matches the sibling `<wa-time-input>`. It does NOT fire while a value is still incomplete.
+- `focus`: Emitted when the control receives focus.
+- `blur`: Emitted when the control loses focus.
+- `wa-clear`: Emitted when the clear button is activated.
+- `wa-show`: Emitted when the popup is about to open. Cancelable.
+- `wa-after-show`: Emitted after the popup opens and animations complete.
+- `wa-hide`: Emitted when the popup is about to close. Cancelable.
+- `wa-after-hide`: Emitted after the popup closes and animations complete.
+- `wa-invalid`: Emitted when the form control has been checked for validity and its constraints aren't satisfied.
+
+**CSS Custom Properties:**
+
+- `--show-duration`: The duration of the show animation. (Default: `100ms`)
+- `--hide-duration`: The duration of the hide animation. (Default: `100ms`)
+
+**CSS Parts:**
+
+- `form-control`: The form control that wraps the label, input, and hint.
+- `form-control-label`: The label's wrapper.
+- `form-control-input`: The input's wrapper.
+- `hint`: The hint's wrapper.
+- `base`: The component's base wrapper.
+- `input-wrapper`: The container that wraps the start slot, segmented input, clear button, and expand button.
+- `start`: The container that wraps the `start` slot.
+- `end`: The container that wraps the `end` slot.
+- `input`: The segmented input group.
+- `segment`: Each editable segment (month/day/year spinbutton). Use `[part~="segment"]` to style all.
+- `segment-literal`: Inert literal text between segments (separators).
+- `range-separator`: The literal between the two groups in range mode.
+- `clear-button`: The clear button.
+- `expand-button`: The date picker toggle button.
+- `expand-icon`: The expand icon wrapper.
+- `popup`: The popup container.
+- `date-picker`: The popup's `<wa-date-picker>` element.
+
+**CSS States:**
+
+- `blank`: The date input has no committed value.
+- `open`: The popup is open.
+- `range`: The date input is in range mode.
+- `disabled`: The date input is disabled.
+
+#### `<wa-date-picker>`
+
+**Description:** Date pickers display a month grid for selecting a single date or a date range inline. Use them when dates need to remain visible, such as in scheduling interfaces or embedded inside another form control.
+
+**Documentation:** https://webawesome.com/docs/components/date-picker
+
+**Slots:**
+
+- `previous-icon`: Icon shown inside the previous-page button. Defaults to a left chevron.
+- `next-icon`: Icon shown inside the next-page button. Defaults to a right chevron.
+- `header`: Replaces the entire header row including title and navigation buttons. Advanced use only.
+- `footer`: Optional content rendered below the calendar grid. Empty by default.
+
+**Properties:**
+
+- `mode`: The selection mode. (Type: `WaDatePickerMode`, Default: `'single'`)
+- `value`: The selected date(s). For `mode="single"`, an ISO date string (`YYYY-MM-DD`) or empty. For `mode="range"`, two ISO dates separated by `/` (`YYYY-MM-DD/YYYY-MM-DD`). The property setter also accepts `Date` objects and `{ from, to }` objects for ranges. (Type: `string`)
+- `min`: The earliest selectable date as `YYYY-MM-DD`. (Type: `string`, Default: `''`)
+- `max`: The latest selectable date as `YYYY-MM-DD`. (Type: `string`, Default: `''`)
+- `today`: Overrides the date considered "today". (Type: `string`, Default: `''`)
+- `focusedDate` (attribute: `focused-date`): The currently focused date as `YYYY-MM-DD`. Drives roving tabindex and the visible month. (Type: `string`, Default: `''`)
+- `view`: The current view. (Type: `WaDatePickerView`, Default: `'days'`)
+- `months`: Number of months rendered side-by-side. Either `1` or `2`. Set to `2` to see both ends of a range at once. (Type: `1 | 2`, Default: `1`)
+- `pageBy` (attribute: `page-by`): Whether prev/next advances by the visible range (`months`) or one month at a time (`single`). (Type: `WaDatePickerPageBy`, Default: `'months'`)
+- `firstDayOfWeek` (attribute: `first-day-of-week`): The first day of the week. The default `auto` uses the current locale's week info. To set a specific day, pass a three-letter weekday name: `sun`, `mon`, `tue`, `wed`, `thu`, `fri`, or `sat`. (Type: `WaDatePickerFirstDayOfWeek`, Default: `'auto'`)
+- `withOutsideDays` (attribute: `with-outside-days`): Shows leading and trailing days from adjacent months. (Type: `boolean`, Default: `false`)
+- `withWeekNumbers` (attribute: `with-week-numbers`): Shows an ISO week-number column. (Type: `boolean`, Default: `false`)
+- `weekdayFormat` (attribute: `weekday-format`): The weekday header format. (Type: `WaDatePickerWeekdayFormat`, Default: `'short'`)
+- `disabled`: Disables the entire picker. (Type: `boolean`, Default: `false`)
+- `readonly`: Displays the current value without allowing changes. Cells remain focusable. (Type: `boolean`, Default: `false`)
+- `disabledDates` (attribute: `disabled-dates`): A list of whitespace-separated ISO dates that should be disabled. The property accepts an array. (Type: `string | string[] | Date[]`)
+- `disabledDaysOfWeek` (attribute: `disabled-days-of-week`): Weekdays to disable. Accepts a space-separated list of three-letter weekday names: `sun`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat` (Type: `string`, Default: `''`)
+- `disablePast` (attribute: `disable-past`): Disable all dates strictly before `today`. (Type: `boolean`, Default: `false`)
+- `disableFuture` (attribute: `disable-future`): Disable all dates strictly after `today`. (Type: `boolean`, Default: `false`)
+- `minRange` (attribute: `min-range`): Minimum range length in days (`mode="range"` only). `0` disables the check. (Type: `number`, Default: `0`)
+- `maxRange` (attribute: `max-range`): Maximum range length in days (`mode="range"` only). `0` disables the check. (Type: `number`, Default: `0`)
+- `size`: Visual size. (Type: `WaDatePickerSize | 'small' | 'medium' | 'large'`, Default: `'m'`)
+- `locale`: BCP-47 locale override. When empty, the inherited `lang` attribute is used. (Type: `string`, Default: `''`)
+- `isDateDisabled`: Author-supplied predicate that returns `true` when a date should be disabled. Runs in addition to declarative `min` / `max` / `disabled-*` rules. JavaScript-only — set via property, not attribute. (Type: `(date: Date) => boolean | undefined`)
+- `dayContent`: Author-supplied function that returns custom content for a day cell. Receives a `Date` and returns a string of HTML, a Lit `TemplateResult`, or `null` to use the default day number. Runs for every rendered day cell (including outside days). A `day-YYYY-MM-DD` slot, when provided for the same date, wins over this function. Property only. (Type: `WaDatePickerDayContent | undefined`)
+- `valueAsDate`: Read-only convenience getter: returns the selected date in `mode="single"`. (Type: `Date | null`)
+- `valueAsRange`: Read-only convenience getter: returns the selected range in `mode="range"`. (Type: `WaDatePickerRange`)
+
+**Methods:**
+
+- `focus(options: FocusOptions)`: Focuses the calendar at the currently focused day.
+- `goToDate(date: string | Date)`: Scrolls the view to show the given date and sets the focused day.
+- `goToToday()`: Equivalent to `goToDate(today)`.
+- `clear()`: Clears the current selection and emits `input` then `change`.
+
+**Events:**
+
+- `input`: Emitted when the value changes during interaction. In range mode, this fires after the first click of a new range.
+- `change`: Emitted when the user commits a new value. Read the current value from `event.target.value`.
+- `wa-focus-day`: Emitted when the focused day changes via keyboard navigation, paging, or pointer hover. `event.detail` is `{ date: Date }`.
+- `wa-view-change`: Emitted when the date picker switches between day, month, and year views. `event.detail` is `{ view, date }`.
+
+**CSS Parts:**
+
+- `base`: The component's outer wrapper.
+- `header`: The header row containing the title and navigation buttons.
+- `title`: The clickable month/year title button that steps the view up (days → months → years).
+- `nav`: The container around the previous and next buttons.
+- `previous`: The previous-page button.
+- `next`: The next-page button.
+- `months`: The container that holds the rendered month(s).
+- `month`: A single rendered month.
+- `month-label`: The label rendered above each month when `months` is greater than 1.
+- `weekdays`: The row of weekday labels above each month grid.
+- `weekday`: A single weekday label cell.
+- `weeknumbers`: The week-number column header cell.
+- `weeknumber`: A single week-number cell.
+- `grid`: The day grid `<table>` for a month.
+- `day`: A day cell button. State-specific parts are added in addition to `day` so you can target them with `::part(day-...)`.
+- `day-today`: Added to the day cell that represents today.
+- `day-outside`: Added when the day belongs to an adjacent month (requires `with-outside-days`).
+- `day-weekend`: Added when the day falls on a weekend per the locale's week info.
+- `day-disabled`: Added when the day is disabled.
+- `day-selected`: Added when the day is selected (single mode or a range endpoint).
+- `day-range-start`: Added to the first endpoint of a range.
+- `day-range-end`: Added to the second endpoint of a range.
+- `day-range-inner`: Added to days that fall between the two endpoints of a committed range.
+- `day-range-preview`: Added to days inside the hover preview span during an in-progress range.
+- `day-label`: The label text inside a day button.
+- `day-placeholder`: An empty cell rendered in trailing rows when `with-outside-days` is off, so the grid is always 6 rows tall and the calendar's height doesn't shift between months.
+- `view-grid`: The grid used when the picker is in month-select or year-select view.
+- `view-row`: A row of three items inside the view grid. Transparent to layout (`display: contents`).
+- `view-cell`: The gridcell wrapper around a single view item. Transparent to layout (`display: contents`).
+- `view-item`: A single month or year button inside the view grid. State-specific parts are added as siblings.
+- `view-item-today`: Added to the month/year representing today.
+- `view-item-selected`: Added to the month/year that matches the current selection.
+- `view-item-disabled`: Added when every day in the month/year is disabled.
+- `footer`: The container wrapping the `footer` slot.
+
+**CSS States:**
+
+- `disabled`: The date picker is disabled.
+- `readonly`: The date picker is readonly.
+- `range`: The date picker is in range mode.
+
 #### `<wa-details>`
 
 **Description:** Details display a brief summary and expand to reveal additional content. Use them to progressively disclose information, group related FAQs, or hide advanced options.
@@ -1020,7 +1301,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `open`: Indicates whether or not the details is open. You can toggle this attribute to show and hide the details, or you can use the `show()` and `hide()` methods and this attribute will reflect the details' open state. (Type: `boolean`, Default: `false`)
 - `summary`: The summary to show in the header. If you need to display HTML, use the `summary` slot instead. (Type: `string`)
 - `name`: Groups related details elements. When one opens, others with the same name will close. (Type: `string`)
@@ -1043,8 +1323,8 @@ The following is a quick reference describing every component's API. For compreh
 **CSS Custom Properties:**
 
 - `--spacing`: The amount of space around and between the details' content. Expects a single value.
-- `--show-duration`: The show duration to use when applying built-in animation classes. (Default: `200ms`)
-- `--hide-duration`: The hide duration to use when applying built-in animation classes. (Default: `200ms`)
+- `--show-duration`: The show duration to use when applying built-in animation classes. (Default: `var(--wa-transition-normal)`)
+- `--hide-duration`: The hide duration to use when applying built-in animation classes. (Default: `var(--wa-transition-normal)`)
 
 **CSS Parts:**
 
@@ -1073,7 +1353,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `open`: Indicates whether or not the dialog is open. Toggle this attribute to show and hide the dialog. (Type: `boolean`, Default: `false`)
 - `label`: The dialog's label as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
 - `withoutHeader` (attribute: `without-header`): Disables the header. This will also remove the default close button. (Type: `boolean`, Default: `false`)
@@ -1092,8 +1371,8 @@ The following is a quick reference describing every component's API. For compreh
 - `--spacing`: The amount of space around and between the dialog's content.
 - `--width`: The preferred width of the dialog. Note that the dialog will shrink to accommodate smaller screens.
 - `--backdrop-filter`: A filter to apply to the backdrop behind the dialog. (Default: `none`)
-- `--show-duration`: The animation duration when showing the dialog. (Default: `200ms`)
-- `--hide-duration`: The animation duration when hiding the dialog. (Default: `200ms`)
+- `--show-duration`: The animation duration when showing the dialog. (Default: `var(--wa-transition-normal)`)
+- `--hide-duration`: The animation duration when hiding the dialog. (Default: `var(--wa-transition-normal)`)
 
 **CSS Parts:**
 
@@ -1114,7 +1393,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `orientation`: Sets the divider's orientation. (Type: `'horizontal' | 'vertical'`, Default: `'horizontal'`)
 
 **CSS Custom Properties:**
@@ -1136,7 +1414,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'doughnut'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -1189,12 +1466,11 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `open`: Indicates whether or not the drawer is open. Toggle this attribute to show and hide the drawer. (Type: `boolean`, Default: `false`)
 - `label`: The drawer's label as displayed in the header. You should always include a relevant label, as it is required for proper accessibility. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
 - `placement`: The direction from which the drawer will open. (Type: `'top' | 'end' | 'bottom' | 'start'`, Default: `'end'`)
 - `withoutHeader` (attribute: `without-header`): Disables the header. This will also remove the default close button. (Type: `boolean`, Default: `false`)
-- `lightDismiss` (attribute: `light-dismiss`): When enabled, the drawer will be closed when the user clicks outside of it. (Type: `boolean`, Default: `true`)
+- `lightDismiss` (attribute: `light-dismiss`): When enabled, the drawer will be closed when the user clicks outside of it. (Type: `boolean`, Default: `false`)
 - `withFooter` (attribute: `with-footer`): Only required for SSR. Set to `true` if you're slotting in a `footer` element so the server-rendered markup includes the footer before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `modal`: Exposes the internal modal utility that controls focus trapping. To temporarily disable focus trapping and allow third-party modals spawned from an active Shoelace modal, call `modal.activateExternal()` when the third-party modal opens. Upon closing, call `modal.deactivateExternal()` to restore Shoelace's focus trapping.
 
@@ -1210,8 +1486,8 @@ The following is a quick reference describing every component's API. For compreh
 - `--spacing`: The amount of space around and between the drawer's content.
 - `--size`: The preferred size of the drawer. This will be applied to the drawer's width or height depending on its `placement`. Note that the drawer will shrink to accommodate smaller screens.
 - `--backdrop-filter`: A filter to apply to the backdrop behind the drawer. (Default: `none`)
-- `--show-duration`: The animation duration when showing the drawer. (Default: `200ms`)
-- `--hide-duration`: The animation duration when hiding the drawer. (Default: `200ms`)
+- `--show-duration`: The animation duration when showing the drawer. (Default: `var(--wa-transition-normal)`)
+- `--hide-duration`: The animation duration when hiding the drawer. (Default: `var(--wa-transition-normal)`)
 
 **CSS Parts:**
 
@@ -1237,7 +1513,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, styles]`)
 - `open`: Opens or closes the dropdown. (Type: `boolean`, Default: `false`)
 - `size`: The dropdown's size. (Type: `'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`, Default: `'m'`)
 - `placement`: The placement of the dropdown menu in reference to the trigger. The menu will shift to a more optimal location if the preferred placement doesn't have enough room. (Type: `| 'top'     | 'top-start'     | 'top-end'     | 'bottom'     | 'bottom-start'     | 'bottom-end'     | 'right'     | 'right-start'     | 'right-end'     | 'left'     | 'left-start'     | 'left-end'`, Default: `'bottom-start'`)
@@ -1277,7 +1552,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `variant`: The type of menu item to render. (Type: `'danger' | 'default'`, Default: `'default'`)
 - `value`: An optional value for the menu item. This is useful for determining which item was selected when listening to the dropdown's `wa-select` event. (Type: `string`)
 - `type`: Set to `checkbox` to make the item a checkbox. (Type: `'normal' | 'checkbox'`, Default: `'normal'`)
@@ -1318,7 +1592,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `files`: The selected files. (Type: `File[]`, Default: `[]`)
 - `dragging`: Whether files are being dragged over the dropzone. (Type: `boolean`, Default: `false`)
@@ -1328,6 +1601,7 @@ The following is a quick reference describing every component's API. For compreh
 - `multiple`: Allows more than one file to be selected. (Type: `boolean`, Default: `false`)
 - `accept`: A comma-separated list of acceptable file types. Must be a list of [unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers). (Type: `string`, Default: `''`)
 - `required`: Makes the file input a required field. (Type: `boolean`, Default: `false`)
+- `capture`: On mobile devices, specifies which camera or microphone to use for capturing media. Use `user` for the front-facing camera/microphone or `environment` for the rear-facing one. This attribute is only used when `accept` includes an image, video, or audio type and may be ignored on devices that lack the corresponding hardware. (Type: `'user' | 'environment'`)
 - `withLabel` (attribute: `with-label`): Only required for SSR. Set to `true` if you're slotting in a `label` element so the server-rendered markup includes the label before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `withHint` (attribute: `with-hint`): Only required for SSR. Set to `true` if you're slotting in a `hint` element so the server-rendered markup includes the hint before the component hydrates on the client. (Type: `boolean`, Default: `false`)
 - `fileCount`: The number of selected files. Used for validation. (Type: `number`)
@@ -1386,7 +1660,6 @@ The following is a quick reference describing every component's API. For compreh
 - `value`: The number to format in bytes. (Type: `number`, Default: `0`)
 - `unit`: The type of unit to display. (Type: `'byte' | 'bit'`, Default: `'byte'`)
 - `display`: Determines how to display the result, e.g. "100 bytes", "100 b", or "100b". (Type: `'long' | 'short' | 'narrow'`, Default: `'short'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`)
 
 #### `<wa-format-date>`
 
@@ -1408,7 +1681,6 @@ The following is a quick reference describing every component's API. For compreh
 - `timeZoneName` (attribute: `time-zone-name`): The format for displaying the time. (Type: `'short' | 'long'`)
 - `timeZone` (attribute: `time-zone`): The time zone to express the time in. (Type: `string`)
 - `hourFormat` (attribute: `hour-format`): The format for displaying the hour. (Type: `'auto' | '12' | '24'`, Default: `'auto'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`)
 
 #### `<wa-format-number>`
 
@@ -1428,7 +1700,6 @@ The following is a quick reference describing every component's API. For compreh
 - `maximumFractionDigits` (attribute: `maximum-fraction-digits`): The maximum number of fraction digits to use. Possible values are 0-100. (Type: `number`)
 - `minimumSignificantDigits` (attribute: `minimum-significant-digits`): The minimum number of significant digits to use. Possible values are 1-21. (Type: `number`)
 - `maximumSignificantDigits` (attribute: `maximum-significant-digits`): The maximum number of significant digits to use,. Possible values are 1-21. (Type: `number`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`)
 
 #### `<wa-icon>`
 
@@ -1438,7 +1709,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `name`: The name of the icon to draw. Available names depend on the icon library being used. (Type: `string | undefined`)
 - `family`: The family of icons to choose from. For Font Awesome Free, valid options include `classic` and `brands`. For Font Awesome Pro subscribers, valid options include, `classic`, `sharp`, `duotone`, `sharp-duotone`, and `brands`. A valid kit code must be present to show pro icons via CDN. You can set `<html data-fa-kit-code="...">` to provide one. (Type: `string`)
 - `variant`: The name of the icon's variant. For Font Awesome, valid options include `thin`, `light`, `regular`, and `solid` for the `classic` and `sharp` families. Some variants require a Font Awesome Pro subscription. Custom icon libraries may or may not use this property. (Type: `string`)
@@ -1497,7 +1767,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `src`: The location of the HTML file to include. Be sure you trust the content you are including as it will be executed as code and can result in XSS attacks. (Type: `string`)
 - `mode`: The fetch mode to use. (Type: `'cors' | 'no-cors' | 'same-origin'`, Default: `'cors'`)
 - `allowScripts` (attribute: `allow-scripts`): Allows included scripts to be executed. Be sure you trust the content you are including as it will be executed as code and can result in XSS attacks. (Type: `boolean`, Default: `false`)
@@ -1525,7 +1794,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `type`: The type of input. Works the same as a native `<input>` element, but only a subset of types are supported. Defaults to `text`. (Type: `| 'date'     | 'datetime-local'     | 'email'     | 'number'     | 'password'     | 'search'     | 'tel'     | 'text'     | 'time'     | 'url'`, Default: `'text'`)
 - `value`: The current value of the input, submitted as a name/value pair with form data.
@@ -1612,7 +1880,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `root`: Element ID to define the viewport boundaries for tracked targets. (Type: `string | null`, Default: `null`)
 - `rootMargin` (attribute: `root-margin`): Offset space around the root boundary. Accepts values like CSS margin syntax. (Type: `string`, Default: `'0px'`)
 - `threshold`: One or more space-separated values representing visibility percentages that trigger the observer callback. (Type: `string`, Default: `'0'`)
@@ -1623,6 +1890,83 @@ The following is a quick reference describing every component's API. For compreh
 **Events:**
 
 - `wa-intersect`: Fired when a tracked element begins or ceases intersecting.
+
+#### `<wa-known-date>`
+
+**Description:** Known dates let users enter dates they already know — birthdays, expirations, document dates — through three separate day, month, and year fields shown in the locale's natural order.
+
+**Documentation:** https://webawesome.com/docs/components/known-date
+
+**Slots:**
+
+- `label`: The known date's group label. Alternatively, use the `label` attribute.
+- `hint`: Text that describes how to use the known date. Alternatively, use the `hint` attribute.
+
+**Properties:**
+
+- `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
+- `valueInput`: Hidden mirror used for native constraint validation (min/max/required + valid-date roundtrip). (Type: `HTMLInputElement`)
+- `parts`: The three field strings. Stored verbatim so user-typed digits round-trip faithfully. (Type: `DateParts`, Default: `{ ...EMPTY_PARTS }`)
+- `name`: The name submitted with form data. (Type: `string | null`, Default: `''`)
+- `value`: The committed value as an ISO `YYYY-MM-DD` string. The setter also accepts a `Date` or `null`. Reading returns an empty string when the value is blank or any field is only partially filled. (Type: `string`)
+- `defaultValue` (attribute: `value`): The default value used for form reset. (Type: `string`)
+- `disabled`: Disables the known date. (Type: `boolean`, Default: `false`)
+- `required`: Makes the known date required for form submission. (Type: `boolean`, Default: `false`)
+- `readonly`: Makes the fields non-editable. (Type: `boolean`, Default: `false`)
+- `size`: The known date's size. (Type: `WaKnownDateSize | 'small' | 'medium' | 'large'`, Default: `'m'`)
+- `appearance`: The known date's visual appearance. (Type: `WaKnownDateAppearance`, Default: `'outlined'`)
+- `pill`: Draws pill-style fields with rounded edges. (Type: `boolean`, Default: `false`)
+- `label`: The known date's label. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
+- `hint`: The known date's hint. If you need to display HTML, use the `hint` slot instead. (Type: `string`, Default: `''`)
+- `autocomplete`: Browser autofill family. When set to `bday`, the three fields receive `bday-day`, `bday-month`, and `bday-year` respectively. The field-agnostic directives `off` and `on` are applied to all three fields. Any other value is forwarded only to the year field. (Type: `string`, Default: `''`)
+- `min`: Earliest selectable date as `YYYY-MM-DD`. (Type: `string`, Default: `''`)
+- `max`: Latest selectable date as `YYYY-MM-DD`. (Type: `string`, Default: `''`)
+- `locale`: BCP-47 locale override. When empty, the inherited `lang` attribute is used. (Type: `string`, Default: `''`)
+- `withLabel` (attribute: `with-label`): Only required for SSR. Set to `true` if you're slotting in a `label` element. (Type: `boolean`, Default: `false`)
+- `withHint` (attribute: `with-hint`): Only required for SSR. Set to `true` if you're slotting in a `hint` element. (Type: `boolean`, Default: `false`)
+- `valueAsDate`: The committed value as a `Date`, or `null` when the value is empty/invalid. (Type: `Date | null`)
+- `validationTarget`: Anchor native validation popups on a real visible input. The hidden mirror handles form data, but anchoring a popup on `display: none` content would render it at offset (0, 0). (Type: `undefined | HTMLElement`)
+- `form`: By default, form controls are associated with the nearest containing `<form>` element. This attribute allows you to place the form control outside of a form and associate it with the form that has this `id`. The form must be in the same document or shadow root for this to work. (Type: `HTMLFormElement | null`)
+
+**Methods:**
+
+- `focus(options: FocusOptions)`: Focuses the first empty field, or the first field when all are filled.
+- `blur()`: Removes focus from the known date.
+- `formStateRestoreCallback(state: string | File | FormData | null)`: Called when the browser is trying to restore element’s state to state in which case reason is "restore", or when the browser is trying to fulfill autofill on behalf of user in which case reason is "autocomplete". In the case of "restore", state is a string, File, or FormData object previously set as the second argument to setFormValue.
+- `setCustomValidity(message: string)`: Do not use this when creating a "Validator". This is intended for end users of components. We track manually defined custom errors so we don't clear them on accident in our validators.
+- `resetValidity()`: Reset validity is a way of removing manual custom errors and native validation.
+
+**Events:**
+
+- `input`: Emitted as the user types in any field.
+- `change`: Emitted when the committed value transitions to a new ISO date.
+- `blur`: Emitted when the control loses focus.
+- `focus`: Emitted when the control gains focus.
+- `wa-invalid`: Emitted when the form control has been checked for validity and its constraints aren't satisfied.
+
+**CSS Parts:**
+
+- `form-control`: The form control's outer wrapper.
+- `form-control-label`: The wrapper inside the legend that styles the visible label text.
+- `form-control-input`: Alias on the fields row matching other form controls.
+- `hint`: The hint's wrapper.
+- `label`: Alias on the legend's inner label wrapper.
+- `base`: The component's outer wrapper (alias of the fields row).
+- `fieldset`: The `<fieldset>` element grouping the three fields (or a `role="group"` div).
+- `legend`: The `<legend>` element (when a label is present).
+- `fields`: The flex row holding the three field blocks.
+- `field`: Each field block (label + input).
+- `field-day`: Added to the day field block.
+- `field-month`: Added to the month field block.
+- `field-year`: Added to the year field block.
+- `field-label`: The text label above each field's input.
+- `field-input`: The native `<input>` inside a field.
+- `error`: The inline error message region. This is an intentional difference from `<wa-date-input>` and `<wa-time-input>`, which rely on the browser's native validation popup. Because this control is composed of three separate fields, an inline `role="alert"` region gives a single, predictable place to surface the validation message rather than anchoring a native popup on one of the three fields.
+
+**CSS States:**
+
+- `blank`: The known date has no committed value.
+- `disabled`: The known date is disabled.
 
 #### `<wa-line-chart>`
 
@@ -1637,7 +1981,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'line'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -1683,7 +2026,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `tabSize` (attribute: `tab-size`): The tab stop width used when converting leading tabs to spaces during whitespace normalization. (Type: `number`, Default: `4`)
 - `marked`: A reference to the shared Marked instance for convenience. Equivalent to `WaMarkdown.getMarked()`. (Type: `Marked`)
 
@@ -1705,7 +2047,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `attr`: Watches for changes to attributes. To watch only specific attributes, separate them by a space, e.g. `attr="class id title"`. To watch all attributes, use `*`. (Type: `string`)
 - `attrOldValue` (attribute: `attr-old-value`): Indicates whether or not the attribute's previous value should be recorded when monitoring changes. (Type: `boolean`, Default: `false`)
 - `charData` (attribute: `char-data`): Watches for changes to the character data contained within the node. (Type: `boolean`, Default: `false`)
@@ -1734,7 +2075,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `value`: The current value of the input, submitted as a name/value pair with form data.
 - `defaultValue` (attribute: `value`): The default value of the form control. Primarily used for resetting the form control. (Type: `string | null`)
@@ -1813,7 +2153,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `value`: The option's value. When selected, the containing form control will receive this value. The value must be unique from other options in the same group. Values may not contain spaces, as spaces are used as delimiters when listing multiple values. (Type: `string`, Default: `''`)
 - `disabled`: Draws the option in a disabled state, preventing selection. (Type: `boolean`, Default: `false`)
 - `defaultSelected` (attribute: `selected`): Selects an option initially. (Type: `boolean`, Default: `false`)
@@ -1860,7 +2199,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[visuallyHidden, styles]`)
 - `view`: The view is a reflection of the "mobileBreakpoint", when the page is larger than the `mobile-breakpoint` (768px by default), it is considered to be a "desktop" view. The view is merely a way to distinguish when to show/hide the navigation. You can use additional media queries to make other adjustments to content as necessary. The default is "desktop" because the "mobile navigation drawer" isn't accessible via SSR due to drawer requiring JS. (Type: `'mobile' | 'desktop'`, Default: `'desktop'`)
 - `navOpen` (attribute: `nav-open`): Whether or not the navigation drawer is open. Note, the navigation drawer is only "open" on mobile views. (Type: `boolean`, Default: `false`)
 - `mobileBreakpoint` (attribute: `mobile-breakpoint`): At what page width to hide the "navigation" slot and collapse into a hamburger button. Accepts both numbers (interpreted as px) and CSS lengths (e.g. `50em`), which are resolved based on the root element. (Type: `string`, Default: `'768px'`)
@@ -1918,7 +2256,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'pie'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -1969,7 +2306,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'polarArea'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -2019,7 +2355,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `placement`: The preferred placement of the popover. Note that the actual placement may vary as needed to keep the popover inside of the viewport. (Type: `| 'top'     | 'top-start'     | 'top-end'     | 'right'     | 'right-start'     | 'right-end'     | 'bottom'     | 'bottom-start'     | 'bottom-end'     | 'left'     | 'left-start'     | 'left-end'`, Default: `'top'`)
 - `open`: Shows or hides the popover. (Type: `boolean`, Default: `false`)
 - `distance`: The distance in pixels from which to offset the popover away from its target. (Type: `number`, Default: `8`)
@@ -2043,8 +2378,8 @@ The following is a quick reference describing every component's API. For compreh
 
 - `--arrow-size`: The size of the tiny arrow that points to the popover (set to zero to remove). (Default: `0.375rem`)
 - `--max-width`: The maximum width of the popover's body content. (Default: `25rem`)
-- `--show-duration`: The speed of the show animation. (Default: `100ms`)
-- `--hide-duration`: The speed of the hide animation. (Default: `100ms`)
+- `--show-duration`: The speed of the show animation. (Default: `var(--wa-transition-fast)`)
+- `--hide-duration`: The speed of the hide animation. (Default: `var(--wa-transition-fast)`)
 
 **CSS Parts:**
 
@@ -2071,7 +2406,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `popup`: A reference to the internal popup container. Useful for animating and styling the popup with JavaScript. (Type: `HTMLElement`)
 - `anchor`: The element the popup will be anchored to. If the anchor lives outside of the popup, you can provide the anchor element `id`, a DOM element reference, or a `VirtualElement`. If the anchor lives inside the popup, use the `anchor` slot instead. (Type: `Element | string | VirtualElement`)
 - `active`: Activates the positioning logic and shows the popup. When this attribute is removed, the positioning logic is torn down and the popup will be hidden. (Type: `boolean`, Default: `false`)
@@ -2111,8 +2445,8 @@ The following is a quick reference describing every component's API. For compreh
 - `--arrow-color`: The color of the arrow. (Default: `black`)
 - `--auto-size-available-width`: A read-only custom property that determines the amount of width the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using `auto-size`.
 - `--auto-size-available-height`: A read-only custom property that determines the amount of height the popup can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using `auto-size`.
-- `--show-duration`: The show duration to use when applying built-in animation classes. (Default: `100ms`)
-- `--hide-duration`: The hide duration to use when applying built-in animation classes. (Default: `100ms`)
+- `--show-duration`: The show duration to use when applying built-in animation classes. (Default: `var(--wa-transition-fast)`)
+- `--hide-duration`: The hide duration to use when applying built-in animation classes. (Default: `var(--wa-transition-fast)`)
 
 **CSS Parts:**
 
@@ -2132,7 +2466,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `value`: The current progress as a percentage, 0 to 100. (Type: `number`, Default: `0`)
 - `indeterminate`: When true, percentage is ignored, the label is hidden, and the progress bar is drawn in an indeterminate state. (Type: `boolean`, Default: `false`)
 - `label`: A custom label for assistive devices. (Type: `string`, Default: `''`)
@@ -2161,7 +2494,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `value`: The current progress as a percentage, 0 to 100. (Type: `number`, Default: `0`)
 - `label`: A custom label for assistive devices. (Type: `string`, Default: `''`)
 
@@ -2189,7 +2521,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `value`: The QR code's value. (Type: `string`, Default: `''`)
 - `label`: The label for assistive devices to announce. If unspecified, the value will be used instead. (Type: `string`, Default: `''`)
 - `size`: The size of the QR code, in pixels. (Type: `number`, Default: `128`)
@@ -2215,7 +2546,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'radar'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -2265,7 +2595,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[formControlStyles, sizeStyles, styles]`)
 - `value`: The radio's value. When selected, the radio group will receive this value. (Type: `string`)
 - `appearance`: The radio's visual appearance. (Type: `'default' | 'button'`, Default: `'default'`)
 - `size`: The radio's size. When used inside a radio group, the size will be determined by the radio group's size, which will override this attribute. (Type: `'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`)
@@ -2316,7 +2645,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `label`: The radio group's label. Required for proper accessibility. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
 - `hint`: The radio groups's hint. If you need to display HTML, use the `hint` slot instead. (Type: `string`, Default: `''`)
@@ -2361,7 +2689,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `name`: The name of the rating, submitted as a name/value pair with form data. (Type: `string | null`, Default: `null`)
 - `label`: A label that describes the rating to assistive devices. (Type: `string`, Default: `''`)
@@ -2411,7 +2738,6 @@ The following is a quick reference describing every component's API. For compreh
 - `format`: The formatting style to use. (Type: `'long' | 'short' | 'narrow'`, Default: `'long'`)
 - `numeric`: When `auto`, values such as "yesterday" and "tomorrow" will be shown when possible. When `always`, values such as "1 day ago" and "in 1 day" will be shown. (Type: `'always' | 'auto'`, Default: `'auto'`)
 - `sync`: Keep the displayed value up to date as time passes. (Type: `boolean`, Default: `false`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`)
 
 #### `<wa-resize-observer>`
 
@@ -2425,7 +2751,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `disabled`: Disables the observer. (Type: `boolean`, Default: `false`)
 
 **Events:**
@@ -2445,7 +2770,6 @@ The following is a quick reference describing every component's API. For compreh
 **Properties:**
 
 - `type`: The type of chart to render. Valid types include `bar`, `line`, `pie`, `doughnut`, `polarArea`, `radar`, `scatter`, and `bubble`. (Type: `ChartType`, Default: `'scatter'`)
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: A label for the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `description`: A description of the chart, used for accessibility. (Type: `string | null`, Default: `null`)
 - `xLabel`: A label for the x-axis. (Type: `string | null`, Default: `null`)
@@ -2495,7 +2819,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `orientation`: The scroller's orientation. (Type: `'horizontal' | 'vertical'`, Default: `'horizontal'`)
 - `withoutScrollbar` (attribute: `without-scrollbar`): Removes the visible scrollbar. (Type: `boolean`, Default: `false`)
 - `withoutShadow` (attribute: `without-shadow`): Removes the shadows. (Type: `boolean`, Default: `false`)
@@ -2527,7 +2850,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, formControlStyles, sizeStyles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `validationTarget`: Where to anchor native constraint validation (Type: `undefined | HTMLElement`)
 - `name`: The name of the select, submitted as a name/value pair with form data. (Type: `string | null`, Default: `''`)
@@ -2575,8 +2897,8 @@ The following is a quick reference describing every component's API. For compreh
 
 **CSS Custom Properties:**
 
-- `--show-duration`: The duration of the show animation. (Default: `100ms`)
-- `--hide-duration`: The duration of the hide animation. (Default: `100ms`)
+- `--show-duration`: The duration of the show animation. (Default: `var(--wa-transition-fast)`)
+- `--hide-duration`: The duration of the hide animation. (Default: `var(--wa-transition-fast)`)
 - `--tag-max-size`: When using `multiple`, the max size of tags before their content is truncated. (Default: `10ch`)
 
 **CSS Parts:**
@@ -2610,7 +2932,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `effect`: Determines which effect the skeleton will use. (Type: `'pulse' | 'sheen' | 'none'`, Default: `'none'`)
 
 **CSS Custom Properties:**
@@ -2636,7 +2957,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[sizeStyles, formControlStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `validationTarget`: Override validation target to point to the focusable element (Type: `undefined | HTMLElement`)
 - `label`: The slider's label. If you need to provide HTML in the label, use the `label` slot instead. (Type: `string`, Default: `''`)
@@ -2726,7 +3046,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles]`)
 - `label`: An accessible label describing the sparkline for screen readers. (Type: `string`, Default: `''`)
 - `data`: Space-separated numeric values to visualize (e.g., "10 20 40 25 35"). (Type: `string`, Default: `''`)
 - `appearance`: The visual fill style of the sparkline. (Type: `'gradient' | 'line' | 'solid'`, Default: `'solid'`)
@@ -2750,10 +3069,6 @@ The following is a quick reference describing every component's API. For compreh
 **Description:** Spinners indicate that an operation is in progress when the duration is unknown. Use them for loading states where a determinate progress bar isn't practical.
 
 **Documentation:** https://webawesome.com/docs/components/spinner
-
-**Properties:**
-
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 
 **CSS Custom Properties:**
 
@@ -2780,7 +3095,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `position`: The current position of the divider from the primary panel's edge as a percentage 0-100. Defaults to 50% of the container's initial size. (Type: `number`, Default: `50`)
 - `positionInPixels` (attribute: `position-in-pixels`): The current position of the divider from the primary panel's edge in pixels. (Type: `number`)
 - `orientation`: Sets the split panel's orientation. (Type: `'horizontal' | 'vertical'`, Default: `'horizontal'`)
@@ -2820,7 +3134,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[formControlStyles, sizeStyles, styles]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `name`: The name of the switch, submitted as a name/value pair with form data. (Type: `string | null`, Default: `null`)
 - `value`: The value of the switch, submitted as a name/value pair with form data. (Type: `string | null`)
@@ -2877,7 +3190,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `panel`: The name of the tab panel this tab is associated with. The panel must be located in the same tab group. (Type: `string`, Default: `''`)
 - `disabled`: Disables the tab and prevents selection. (Type: `boolean`, Default: `false`)
 
@@ -2898,7 +3210,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `defaultSlot`: Default slot for `<wa-tab-panel>` children (inside the `body` part container). (Type: `HTMLSlotElement`)
 - `active`: Sets the active tab. (Type: `string`, Default: `''`)
 - `placement`: The placement of the tabs. (Type: `'top' | 'bottom' | 'start' | 'end'`, Default: `'top'`)
@@ -2939,7 +3250,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `name`: The tab panel's name. (Type: `string`, Default: `''`)
 - `active`: When true, the tab panel will be shown. (Type: `boolean`, Default: `false`)
 
@@ -2963,7 +3273,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, variantStyles, sizeStyles]`)
 - `variant`: The tag's theme variant. Defaults to `neutral` if not within another element with a variant. (Type: `'brand' | 'neutral' | 'success' | 'warning' | 'danger'`, Default: `'neutral'`)
 - `appearance`: The tag's visual appearance. (Type: `'accent' | 'filled' | 'outlined' | 'filled-outlined'`, Default: `'filled-outlined'`)
 - `size`: The tag's size. (Type: `'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`, Default: `'m'`)
@@ -2994,7 +3303,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, formControlStyles, sizeStyles, visuallyHidden]`)
 - `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
 - `name`: The name of the textarea, submitted as a name/value pair with form data. (Type: `string | null`, Default: `null`)
 - `value`: The current value of the input, submitted as a name/value pair with form data.
@@ -3057,6 +3365,113 @@ The following is a quick reference describing every component's API. For compreh
 
 - `blank`: The textarea is empty.
 
+#### `<wa-time-input>`
+
+**Description:** Time pickers let users enter a time through a segmented field or select one visually from a popup column picker. They support 12- and 24-hour formats, optional seconds, and locale-aware segment order.
+
+**Documentation:** https://webawesome.com/docs/components/time-input
+
+**Slots:**
+
+- `label`: The time picker's label. Alternatively, use the `label` attribute.
+- `hint`: Text that describes how to use the time picker. Alternatively, use the `hint` attribute.
+- `start`: An element placed at the start of the input.
+- `end`: An element placed at the end of the input.
+- `clear-icon`: An icon to use in lieu of the default clear icon.
+- `expand-icon`: The icon to show on the popup toggle button. Defaults to a clock icon.
+- `footer`: Content shown below the column picker in the popup. Replaces the default Now button when present.
+
+**Properties:**
+
+- `validators`: Validators are static because they have `observedAttributes`, essentially attributes to "watch" for changes. Whenever these attributes change, we want to be notified and update the validator. (Type: `Validator[]`, Default: `[]`)
+- `assumeInteractionOn`: Every segment edit dispatches `input`, so a single observed `input` event marks the field as interacted with. (Type: `string[]`, Default: `['input']`)
+- `validationTarget`: Override this to change where constraint validation popups are anchored. (Type: `undefined | HTMLElement`)
+- `name`: The time picker's name, submitted as a name/value pair with form data. (Type: `string | null`, Default: `''`)
+- `value`: The time picker's value as a wire-format string matching HTML `<input type="time">`: `HH:mm`, `HH:mm:ss`, or `HH:mm:ss.sss` (always 24-hour). The setter also accepts a `Date` (extracts local h/m/s) or `null`. (Type: `string`)
+- `defaultValue` (attribute: `value`): The default value of the form control. Used for form reset. (Type: `string`)
+- `disabled`: Disables the time picker. (Type: `boolean`, Default: `false`)
+- `required`: Makes the time picker required for form submission. (Type: `boolean`, Default: `false`)
+- `readonly`: Makes the input non-editable. The popup still opens for browsing. (Type: `boolean`, Default: `false`)
+- `size`: The time picker's size. (Type: `WaTimeInputSize | 'small' | 'medium' | 'large'`, Default: `'m'`)
+- `appearance`: The time picker's visual appearance. (Type: `'filled' | 'outlined' | 'filled-outlined'`, Default: `'outlined'`)
+- `pill`: Draws a pill-style time picker with rounded edges. (Type: `boolean`, Default: `false`)
+- `label`: The time picker's label. If you need to display HTML, use the `label` slot instead. (Type: `string`, Default: `''`)
+- `hint`: The time picker's hint. If you need to display HTML, use the `hint` slot instead. (Type: `string`, Default: `''`)
+- `autocomplete`: Forwarded to the hidden form input to enable browser autofill (`on`/`off`/custom tokens). (Type: `string`, Default: `''`)
+- `withClear` (attribute: `with-clear`): Shows a clear button when the time picker has a value. (Type: `boolean`, Default: `false`)
+- `withNow` (attribute: `with-now`): Renders a "Now" button in the popup footer. (Type: `boolean`, Default: `false`)
+- `withLabel` (attribute: `with-label`): Only required for SSR. Set to `true` if you're slotting in a `label` element. (Type: `boolean`, Default: `false`)
+- `withHint` (attribute: `with-hint`): Only required for SSR. Set to `true` if you're slotting in a `hint` element. (Type: `boolean`, Default: `false`)
+- `min`: The earliest selectable time in wire format. May be later than `max` to represent an overnight range. The picker delegates reversed-range semantics to the mirrored native `<input type="time">`. (Type: `string`, Default: `''`)
+- `max`: The latest selectable time in wire format. (Type: `string`, Default: `''`)
+- `step`: The granularity, in seconds, matching HTML `<input type="time">`. Default `60` hides the seconds segment. Values below 60 reveal the seconds segment. `'any'` disables `stepMismatch` enforcement. (Type: `number | 'any'`, Default: `60`)
+- `hourFormat` (attribute: `hour-format`): Whether the UI uses a 12-hour or 24-hour clock. `auto` follows the resolved locale. (Type: `WaTimeInputHourFormat`, Default: `'auto'`)
+- `open`: Whether the popup is open. (Type: `boolean`, Default: `false`)
+- `placement`: Preferred popup placement. (Type: `WaTimeInputPlacement`, Default: `'bottom-start'`)
+- `distance`: Distance in pixels between the popup and the input. (Type: `number`, Default: `0`)
+- `valueAsDate`: The time as a `Date` (today + wire value), or `null` when empty. (Type: `Date | null`)
+- `valueAsNumber`: Milliseconds since midnight, or `NaN` when empty. (Type: `number`)
+- `form`: By default, form controls are associated with the nearest containing `<form>` element. This attribute allows you to place the form control outside of a form and associate it with the form that has this `id`. The form must be in the same document or shadow root for this to work. (Type: `HTMLFormElement | null`)
+
+**Methods:**
+
+- `focus(options: FocusOptions)`: Sets focus on the first empty (else first) segment.
+- `blur()`: Removes focus from the time picker.
+- `show()`: Opens the popup.
+- `hide()`: Closes the popup.
+- `formStateRestoreCallback(state: string | File | FormData | null)`: Called when the browser is trying to restore element’s state to state in which case reason is "restore", or when the browser is trying to fulfill autofill on behalf of user in which case reason is "autocomplete". In the case of "restore", state is a string, File, or FormData object previously set as the second argument to setFormValue.
+- `setCustomValidity(message: string)`: Do not use this when creating a "Validator". This is intended for end users of components. We track manually defined custom errors so we don't clear them on accident in our validators.
+- `resetValidity()`: Reset validity is a way of removing manual custom errors and native validation.
+
+**Events:**
+
+- `input`: Emitted as the user types into a segment or interacts with the popup columns.
+- `change`: Emitted when the committed value changes.
+- `focus`: Emitted when the control receives focus.
+- `blur`: Emitted when the control loses focus.
+- `wa-clear`: Emitted when the clear button is activated.
+- `wa-show`: Emitted when the popup is about to open. Cancelable.
+- `wa-after-show`: Emitted after the popup opens and animations complete.
+- `wa-hide`: Emitted when the popup is about to close. Cancelable.
+- `wa-after-hide`: Emitted after the popup closes and animations complete.
+- `wa-invalid`: Emitted when the form control has been checked for validity and its constraints aren't satisfied.
+
+**CSS Custom Properties:**
+
+- `--show-duration`: The duration of the show animation. (Default: `100ms`)
+- `--hide-duration`: The duration of the hide animation. (Default: `100ms`)
+- `--column-item-height`: Height of each option inside a popup column. (Default: `2.25em`)
+- `--column-width`: Width of each popup column. (Default: `3em`)
+
+**CSS Parts:**
+
+- `form-control`: The form control that wraps the label, input, and hint.
+- `form-control-label`: The label's wrapper.
+- `form-control-input`: The input's wrapper.
+- `hint`: The hint's wrapper.
+- `base`: The component's base wrapper.
+- `input-wrapper`: The container around the start slot, segmented input, clear button, and expand button.
+- `start`: The container that wraps the `start` slot.
+- `end`: The container that wraps the `end` slot.
+- `input`: The segmented input group.
+- `segment`: Each editable segment (hour/minute/second/AM-PM spinbutton). Use `[part~="segment"]` to style all.
+- `segment-literal`: Inert literal text between segments (separators).
+- `clear-button`: The clear button.
+- `expand-button`: The popup toggle button.
+- `expand-icon`: The expand icon wrapper.
+- `popup`: The popup container.
+- `columns`: The row of column listboxes inside the popup.
+- `column`: Each column listbox.
+- `column-item`: Each option inside a column.
+- `column-item-selected`: The currently selected option inside a column.
+- `now-button`: The default "Now" button rendered in the popup footer when `with-now` is set.
+
+**CSS States:**
+
+- `blank`: The time picker has no committed value.
+- `open`: The popup is open.
+- `disabled`: The time picker is disabled.
+
 #### `<wa-toast>`
 
 **Description:** Toasts display brief, non-blocking notifications that appear temporarily above the page content.
@@ -3069,7 +3484,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `placement`: The placement of the toast stack on the screen. (Type: `| 'top-start'     | 'top-center'     | 'top-end'     | 'bottom-start'     | 'bottom-center'     | 'bottom-end'`, Default: `'top-end'`)
 
 **Methods:**
@@ -3102,7 +3516,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `[styles, variantStyles, sizeStyles]`)
 - `variant`: The toast item's variant. (Type: `'brand' | 'success' | 'warning' | 'danger' | 'neutral'`, Default: `'neutral'`)
 - `size`: The toast item's size. (Type: `'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`, Default: `'m'`)
 - `duration`: The length of time in milliseconds before the toast item is automatically dismissed. Set to 0 to keep the toast item open until the user dismisses it. (Type: `number`, Default: `5000`)
@@ -3122,8 +3535,8 @@ The following is a quick reference describing every component's API. For compreh
 **CSS Custom Properties:**
 
 - `--accent-width`: The width of the accent line. Defaults to 4px.
-- `--show-duration`: The animation duration when showing. Defaults to 200ms.
-- `--hide-duration`: The animation duration when hiding. Defaults to 200ms.
+- `--show-duration`: The animation duration when showing. (Default: `var(--wa-transition-normal)`)
+- `--hide-duration`: The animation duration when hiding. (Default: `var(--wa-transition-normal)`)
 
 **CSS Parts:**
 
@@ -3152,7 +3565,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `placement`: The preferred placement of the tooltip. Note that the actual placement may vary as needed to keep the tooltip inside of the viewport. (Type: `| 'top'     | 'top-start'     | 'top-end'     | 'right'     | 'right-start'     | 'right-end'     | 'bottom'     | 'bottom-start'     | 'bottom-end'     | 'left'     | 'left-start'     | 'left-end'`, Default: `'top'`)
 - `disabled`: Disables the tooltip so it won't show when triggered. (Type: `boolean`, Default: `false`)
 - `distance`: The distance in pixels from which to offset the tooltip away from its target. (Type: `number`, Default: `8`)
@@ -3200,7 +3612,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `selection`: The selection behavior of the tree. Single selection allows only one node to be selected at a time. Multiple displays checkboxes and allows more than one node to be selected. Leaf allows only leaf nodes to be selected. (Type: `'single' | 'multiple' | 'leaf'`, Default: `'single'`)
 
 **Events:**
@@ -3233,7 +3644,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `expanded`: Expands the tree item. (Type: `boolean`, Default: `false`)
 - `selected`: Draws the tree item in a selected state. (Type: `boolean`, Default: `false`)
 - `disabled`: Disables the tree item. (Type: `boolean`, Default: `false`)
@@ -3254,8 +3664,8 @@ The following is a quick reference describing every component's API. For compreh
 
 **CSS Custom Properties:**
 
-- `--show-duration`: The animation duration when expanding tree items. (Default: `200ms`)
-- `--hide-duration`: The animation duration when collapsing tree items. (Default: `200ms`)
+- `--show-duration`: The animation duration when expanding tree items. (Default: `var(--wa-transition-normal)`)
+- `--hide-duration`: The animation duration when collapsing tree items. (Default: `var(--wa-transition-normal)`)
 
 **CSS Parts:**
 
@@ -3302,7 +3712,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `controls`: The video's controls preset. - `none` — no controls are shown. - `standard` — shows the timeline, play/pause, volume, captions, and fullscreen. - `full` — all of the above plus playback speed and picture-in-picture. (Type: `'none' | 'standard' | 'full'`, Default: `'standard'`)
 - `thumbnails`: A URL pointing to a WebVTT file for timeline thumbnail previews. (Type: `string`, Default: `''`)
 - `src`: The URL of the video source. For multiple formats, use `<source>` elements instead. (Type: `string`, Default: `''`)
@@ -3336,9 +3745,9 @@ The following is a quick reference describing every component's API. For compreh
 
 **Events:**
 
+- `timeupdate`: Emitted when the time changes.
 - `play`: Emitted when playback begins.
 - `pause`: Emitted when playback stops.
-- `timeupdate`: Emitted when the time changes.
 - `volumechange`: Emitted when the volume changes.
 - `error`: Emitted when an error occurs while loading/playing.
 - `ended`: Emitted when playback ends.
@@ -3380,7 +3789,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `controls`: The controls preset forwarded to each child `<wa-video>`. (Type: `'none' | 'standard' | 'full'`, Default: `'full'`)
 - `iconLibrary` (attribute: `icon-library`): Icon library used for placeholder icons. (Type: `string`, Default: `'system'`)
 
@@ -3416,7 +3824,6 @@ The following is a quick reference describing every component's API. For compreh
 
 **Properties:**
 
-- `css`: One or more CSSResultGroup to include in the component's shadow root. Host styles are automatically prepended. (Type: `CSSResultGroup | undefined`, Default: `styles`)
 - `src`: The URL of the content to display. (Type: `string`)
 - `srcdoc`: Inline HTML to display. (Type: `string`)
 - `allowfullscreen`: Allows fullscreen mode. (Type: `boolean`, Default: `false`)
