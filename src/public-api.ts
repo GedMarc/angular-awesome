@@ -19,6 +19,7 @@ export * from './directives/carousel/carousel-item.directive';
 export * from './directives/icon/icon.directive';
 export * from './directives/rating/rating.directive';
 export * from './directives/checkbox/checkbox.directive';
+export * from './directives/checkbox-group/checkbox-group.directive';
 export * from './directives/comparison/comparison.directive';
 export * from './directives/copy-button/copy-button.directive';
 export * from './directives/details/details.directive';

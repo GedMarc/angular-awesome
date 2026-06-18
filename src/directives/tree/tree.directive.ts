@@ -26,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaTreeDirective implements OnChanges, ControlValueAccessor {
   // Inputs
-  @Input() selection: 'single' | 'multiple' | 'leaf' | null = null;
+  @Input() selection: 'single' | 'multiple' | 'leaf' | 'leaf-multiple' | null = null;
   /** Name of the tree, used for querySelector targeting */
   @Input() name?: string;
 

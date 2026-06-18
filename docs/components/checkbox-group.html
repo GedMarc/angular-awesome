@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - CheckboxGroup Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>CheckboxGroup Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
+                <p class="subtitle">Checkbox groups give a set of related <wa-checkbox> or <wa-switch> elements a shared label, hint, and</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the checkboxGroup directive from the angular-awesome package:</p>
+        <pre>// Import the checkboxGroup directive
+import { WaCheckboxGroupDirective } from 'angular-awesome/checkbox-group';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>Checkbox Group Examples</h1>
+<h2>Basic Usage</h2>
+<p>Group related checkboxes under a shared label and hint.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Choose your toppings&quot; hint=&quot;Select all that apply&quot;&gt;
+  &lt;wa-checkbox value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Orientation</h2>
+<p>The default orientation is vertical. Set <code>orientation=&quot;horizontal&quot;</code> to lay items out on a single row.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Choose your toppings&quot; orientation=&quot;horizontal&quot;&gt;
+  &lt;wa-checkbox value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Sizing</h2>
+<p>The group&#39;s <code>size</code> is applied to every <code>&lt;wa-checkbox&gt;</code> and <code>&lt;wa-switch&gt;</code> inside it.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Choose your toppings&quot; size=&quot;large&quot;&gt;
+  &lt;wa-checkbox value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Grouping Switches</h2>
+<p>Checkbox groups also work with <code>&lt;wa-switch&gt;</code> elements.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Notifications&quot; hint=&quot;Pick the alerts you want to receive&quot;&gt;
+  &lt;wa-switch value=&quot;email&quot;&gt;Email&lt;/wa-switch&gt;
+  &lt;wa-switch value=&quot;sms&quot;&gt;SMS&lt;/wa-switch&gt;
+  &lt;wa-switch value=&quot;push&quot;&gt;Push&lt;/wa-switch&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Two-Way Binding</h2>
+<p>The group does not own a value — bind <code>[(ngModel)]</code> on the individual checkboxes.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Choose your toppings&quot;&gt;
+  &lt;wa-checkbox [(ngModel)]=&quot;cheese&quot; name=&quot;cheese&quot; value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox [(ngModel)]=&quot;pepperoni&quot; name=&quot;pepperoni&quot; value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox [(ngModel)]=&quot;mushrooms&quot; name=&quot;mushrooms&quot; value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Custom Gap</h2>
+<p>Adjust the space between grouped checkboxes with the <code>styleGap</code> input (maps to the <code>--gap</code> CSS variable).</p>
+<pre><code class="language-html">&lt;wa-checkbox-group label=&quot;Choose your toppings&quot; [styleGap]=&quot;&#39;1rem&#39;&quot;&gt;
+  &lt;wa-checkbox value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+<h2>Label and Hint Slots</h2>
+<p>Use the <code>label</code> and <code>hint</code> slots when you need HTML content.</p>
+<pre><code class="language-html">&lt;wa-checkbox-group [withLabel]=&quot;true&quot; [withHint]=&quot;true&quot;&gt;
+  &lt;span slot=&quot;label&quot;&gt;Choose your &lt;strong&gt;toppings&lt;/strong&gt;&lt;/span&gt;
+  &lt;span slot=&quot;hint&quot;&gt;Select &lt;em&gt;all&lt;/em&gt; that apply&lt;/span&gt;
+  &lt;wa-checkbox value=&quot;cheese&quot;&gt;Cheese&lt;/wa-checkbox&gt;
+  &lt;wa-checkbox value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/wa-checkbox&gt;
+&lt;/wa-checkbox-group&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

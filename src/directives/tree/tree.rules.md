@@ -12,7 +12,7 @@ Trees allow you to display a hierarchical list of selectable tree items. Items w
 
 | Input name  | Type       | Description |
 | ----------- | ---------- | ----------- |
-| `selection` | `'single' | 'multiple' | 'leaf'` | Controls selection mode: single, multiple, or only leaf nodes selectable. |
+| `selection` | `'single' \| 'multiple' \| 'leaf' \| 'leaf-multiple'` | Controls selection mode: `single` (one node), `multiple` (checkboxes, any node), `leaf` (only leaf nodes), or `leaf-multiple` (multiple leaf nodes selectable while parent nodes only expand/collapse). |
 | `name`      | `string` | Sets the tree's name attribute; can be used for querySelector (e.g., document.querySelector(`wa-tree[name="myTree"]`)). |
 | `ngModel`   | any | Two-way binding of selected leaf data objects. In `single` mode it's a single object or null; in `multiple` mode it's an array of objects. |
 
