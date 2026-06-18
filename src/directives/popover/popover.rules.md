@@ -62,8 +62,8 @@ Popover is a low-level utility built specifically for positioning elements. Do n
 | `--arrow-color`                 | The color of the arrow. Default is black.                                                                         |
 | `--auto-size-available-width`   | A read-only custom property that determines the amount of width the popover can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using auto-size. |
 | `--auto-size-available-height`  | A read-only custom property that determines the amount of height the popover can be before overflowing. Useful for positioning child elements that need to overflow. This property is only available when using auto-size. |
-| `--show-duration`               | The show duration to use when applying built-in animation classes. Default is 100ms.                              |
-| `--hide-duration`               | The hide duration to use when applying built-in animation classes. Default is 100ms.                              |
+| `--show-duration`               | The show duration to use when applying built-in animation classes. Default is `var(--wa-transition-fast)`.         |
+| `--hide-duration`               | The hide duration to use when applying built-in animation classes. Default is `var(--wa-transition-fast)`.         |
 
 ---
 

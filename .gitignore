@@ -45,3 +45,4 @@ Thumbs.db
 /examples/
 /scripts/
 /llms.txt
+/llms*.txt

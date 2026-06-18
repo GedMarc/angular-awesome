@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.9.0] - 2026-06-18
+### Added
+- **wa-checkbox-group:** New `WaCheckboxGroupDirective` wrapping the new `<wa-checkbox-group>` web component:
+  - String inputs: `label`, `hint`, `orientation` (`'horizontal' | 'vertical'`), `size` (`'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'`)
+  - Boolean inputs: `required`, `withLabel` (`with-label`), `withHint` (`with-hint`)
+  - Style input: `styleGap` → `--gap`
+  - Slots: `(default)` for `<wa-checkbox>` / `<wa-switch>` items, `label`, and `hint`
+  - Exposes `nativeElement` for direct DOM access
+  - The group is a labeling/grouping container only and does not own a value — bind `[(ngModel)]` / `formControlName` on the individual checkboxes/switches.
+- Exported `WaCheckboxGroupDirective` from the public API surface.
+- Unit tests, rules, and example documentation for `wa-checkbox-group`.
+
+### Changed
+- **wa-tree:** `selection` input now accepts `'leaf-multiple'` in addition to `'single' | 'multiple' | 'leaf'`. `leaf-multiple` allows multiple leaf nodes to be selected while parent nodes only expand and collapse.
+- **wa-accordion-item / wa-popover / wa-popup:** Documented CSS animation defaults updated to match Web Awesome 3.9.0 — `--show-duration` / `--hide-duration` now default to `var(--wa-transition-normal)` (accordion) and `var(--wa-transition-fast)` (popover/popup), and the accordion `--easing` default is `var(--wa-transition-easing)`. These are upstream default value changes only; the Angular inputs are unchanged.
+- Updated `llms.txt` to Web Awesome 3.9.0.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.9.0** component specification.
+- 1 new component added (`wa-checkbox-group`), 1 component updated (`wa-tree`). No breaking changes to the Angular API.
+
+
 ## [3.7.0] - 2026-05-17
 ### Added
 - **wa-video:** New `WaVideoDirective` wrapping the `<wa-video>` web component with full playback control:

@@ -278,6 +278,7 @@ const componentCategories = {
   'combobox': 'input',
   'text-area': 'input',
   'checkbox': 'input',
+  'checkbox-group': 'input',
   'radio': 'input',
   'switch': 'input',
   'slider': 'input',
