@@ -150,3 +150,36 @@ describe('WaProgressBarDirective', () => {
     expect(progressBarElement.hasAttribute('disabled')).toBeFalse();
   });
 });
+
+// Host that binds value as a plain string (standard binding)
+@Component({
+  template: `<wa-progress-bar [value]="value"></wa-progress-bar>`,
+  standalone: true,
+  imports: [WaProgressBarDirective]
+})
+class StringValueHostComponent {
+  value?: number | string;
+}
+
+describe('WaProgressBarDirective numeric attribute coercion', () => {
+  let host: StringValueHostComponent;
+  let fixture: ComponentFixture<StringValueHostComponent>;
+  let el: HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [StringValueHostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(StringValueHostComponent);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+    el = fixture.nativeElement.querySelector('wa-progress-bar');
+  });
+
+  it('should accept a string value and render a numeric attribute', () => {
+    host.value = '40';
+    fixture.detectChanges();
+    expect(el.getAttribute('value')).toBe('40');
+    expect(el.style.getPropertyValue('--percentage')).toBe('40%');
+  });
+});
+
+

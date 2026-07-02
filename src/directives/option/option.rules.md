@@ -16,6 +16,7 @@ Angular directive support for the `wa-option` Web Component. Options define the 
 | `disabled` | `boolean` | `disabled` | Prevents selection |
 | `selected` | `boolean` | `selected` | Initially selects the option |
 | `label` | `string` | `label` | Plain text label override |
+| `currentTextColor` | `string` | `--current-text-color` (CSS var) | The text color of the current (highlighted) option, paired with `--wa-form-control-activated-color`. Added in Web Awesome 3.10. |
 
 ## Slots
 
@@ -24,6 +25,10 @@ Angular directive support for the `wa-option` Web Component. Options define the 
 | `(default)` | The option's label |
 | `start` | Element placed before the label (e.g., `<wa-icon>`) |
 | `end` | Element placed after the label (e.g., `<wa-icon>`) |
+
+## CSS Custom Properties
+
+- `--current-text-color` — The text color of the current (highlighted) option, paired with `--wa-form-control-activated-color`. Bindable via the `currentTextColor` input. Added in Web Awesome 3.10.
 
 ## CSS Parts
 

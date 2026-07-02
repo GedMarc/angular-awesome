@@ -70,6 +70,7 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Animated Image | `wa-animated-image` | src, alt, play |
 | Animation | `wa-animation` | name, duration, delay, iterations, easing, play |
 | Zoomable Frame | `wa-zoomable-frame` | src |
+| Random Content | `wa-random-content` | items, mode, autoplay, autoplayInterval, animation |
 
 ## Formatters
 | Component | Selector | Key Inputs |

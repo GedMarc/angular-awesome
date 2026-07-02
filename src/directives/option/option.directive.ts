@@ -20,6 +20,12 @@ export class WaOptionDirective implements OnInit, OnChanges {
   @Input() disabled?: boolean | string;
   @Input() selected?: boolean | string;
   @Input() label?: string;
+  /**
+   * The text color of the current (highlighted) option, paired with
+   * `--wa-form-control-activated-color`. Maps to the `--current-text-color`
+   * CSS custom property. Added in Web Awesome 3.10.
+   */
+  @Input() currentTextColor?: string;
 
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
@@ -37,6 +43,15 @@ export class WaOptionDirective implements OnInit, OnChanges {
     this.setAttr('label', this.label);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('selected', this.selected);
+    this.setCssVar('--current-text-color', this.currentTextColor);
+  }
+
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null && value !== '') {
+      this.el.nativeElement.style.setProperty(name, value);
+    } else {
+      this.el.nativeElement.style.removeProperty(name);
+    }
   }
 
   private setAttr(name: string, value: string | null | undefined) {

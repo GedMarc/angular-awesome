@@ -26,7 +26,7 @@
 |--------------|----------|
 | Angular      | `>=20.0` |
 | Node.js      | `20+`    |
-| Web Awesome* | `3.9.x`  |
+| Web Awesome* | `3.10.x` |
 
 ## Installation
 

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - RandomContent Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>RandomContent Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
+                <p class="subtitle">Selects one or more child elements at random and displays them, hiding the rest. Use it for rotating banners, testimonials, tips, or featured content where the exact item shown does not matter.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the randomContent directive from the angular-awesome package:</p>
+        <pre>// Import the randomContent directive
+import { WaRandomContentDirective } from 'angular-awesome/random-content';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>WaRandomContentDirective Usage Examples</h1>
+<h2>Basic Usage</h2>
+<p>Shows one randomly selected child at a time and hides the rest.</p>
+<pre><code class="language-html">&lt;wa-random-content&gt;
+  &lt;p&gt;“Design is not just what it looks like and feels like. Design is how it works.”&lt;/p&gt;
+  &lt;p&gt;“Simplicity is the ultimate sophistication.”&lt;/p&gt;
+  &lt;p&gt;“Good design is obvious. Great design is transparent.”&lt;/p&gt;
+&lt;/wa-random-content&gt;
+</code></pre>
+<h2>Showing Multiple Items</h2>
+<p>Use <code>items</code> to display more than one child simultaneously.</p>
+<pre><code class="language-html">&lt;wa-random-content [items]=&quot;2&quot;&gt;
+  &lt;wa-card&gt;Featured A&lt;/wa-card&gt;
+  &lt;wa-card&gt;Featured B&lt;/wa-card&gt;
+  &lt;wa-card&gt;Featured C&lt;/wa-card&gt;
+  &lt;wa-card&gt;Featured D&lt;/wa-card&gt;
+&lt;/wa-random-content&gt;
+</code></pre>
+<h2>Selection Modes</h2>
+<p><code>unique</code> (default) avoids repeats until the pool is exhausted, <code>random</code> allows repeats, and <code>sequence</code> cycles in order.</p>
+<pre><code class="language-html">&lt;wa-random-content mode=&quot;sequence&quot;&gt;
+  &lt;img src=&quot;/assets/slide-1.jpg&quot; alt=&quot;Slide 1&quot; /&gt;
+  &lt;img src=&quot;/assets/slide-2.jpg&quot; alt=&quot;Slide 2&quot; /&gt;
+  &lt;img src=&quot;/assets/slide-3.jpg&quot; alt=&quot;Slide 3&quot; /&gt;
+&lt;/wa-random-content&gt;
+</code></pre>
+<h2>Autoplay with an Entrance Animation</h2>
+<pre><code class="language-html">&lt;wa-random-content autoplay [autoplayInterval]=&quot;5000&quot; animation=&quot;fade-up&quot;&gt;
+  &lt;blockquote&gt;Tip #1&lt;/blockquote&gt;
+  &lt;blockquote&gt;Tip #2&lt;/blockquote&gt;
+  &lt;blockquote&gt;Tip #3&lt;/blockquote&gt;
+&lt;/wa-random-content&gt;
+</code></pre>
+<h2>Reacting to Changes and Randomizing Programmatically</h2>
+<pre><code class="language-html">&lt;wa-random-content #banner (waContentChange)=&quot;onBannerChange($event)&quot;&gt;
+  &lt;div&gt;Promo A&lt;/div&gt;
+  &lt;div&gt;Promo B&lt;/div&gt;
+  &lt;div&gt;Promo C&lt;/div&gt;
+&lt;/wa-random-content&gt;
+
+&lt;wa-button (click)=&quot;banner.randomize()&quot;&gt;Shuffle&lt;/wa-button&gt;
+</code></pre>
+<pre><code class="language-ts">onBannerChange(event: CustomEvent) {
+  console.log(&#39;Now showing&#39;, event.target);
+}
+</code></pre>
+<h2>Styling the Entrance Animation</h2>
+<pre><code class="language-html">&lt;wa-random-content
+  animation=&quot;fade-left&quot;
+  animationDuration=&quot;400ms&quot;
+  animationEasing=&quot;ease-in-out&quot;
+  animationTranslate=&quot;1em&quot;
+&gt;
+  &lt;span&gt;Alpha&lt;/span&gt;
+  &lt;span&gt;Bravo&lt;/span&gt;
+  &lt;span&gt;Charlie&lt;/span&gt;
+&lt;/wa-random-content&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

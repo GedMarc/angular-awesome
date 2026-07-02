@@ -18,6 +18,7 @@ import { WaIconDirective } from './icon.directive';
       [rotate]="rotate"
       [flip]="flip"
       [animation]="animation"
+      [canvas]="canvas"
     >
     </wa-icon>
   `,
@@ -38,6 +39,7 @@ class TestHostComponent {
   rotate?: number | string;
   flip?: 'x' | 'y' | 'both' | string;
   animation?: string;
+  canvas?: 'fixed' | 'auto' | 'square' | 'roomy' | string;
 }
 
 describe('WaIconDirective', () => {
@@ -201,5 +203,25 @@ describe('WaIconDirective', () => {
     hostComponent.animation = 'pulse';
     hostFixture.detectChanges();
     expect(iconElement.getAttribute('animation')).toBe('pulse');
+  });
+
+  it('should set canvas attribute', () => {
+    const canvasValues = ['fixed', 'auto', 'square', 'roomy'];
+
+    canvasValues.forEach(canvas => {
+      hostComponent.canvas = canvas;
+      hostFixture.detectChanges();
+      expect(iconElement.getAttribute('canvas')).toBe(canvas);
+    });
+  });
+
+  it('should remove canvas attribute when unset', () => {
+    hostComponent.canvas = 'square';
+    hostFixture.detectChanges();
+    expect(iconElement.getAttribute('canvas')).toBe('square');
+
+    hostComponent.canvas = undefined;
+    hostFixture.detectChanges();
+    expect(iconElement.hasAttribute('canvas')).toBeFalse();
   });
 });

@@ -128,3 +128,41 @@ describe('WaFormatBytesDirective', () => {
     });
   });
 });
+
+// Host that binds value as a plain string (standard binding)
+@Component({
+  template: `<wa-format-bytes [value]="value"></wa-format-bytes>`,
+  standalone: true,
+  imports: [WaFormatBytesDirective]
+})
+class StringValueHostComponent {
+  value?: number | string;
+}
+
+describe('WaFormatBytesDirective numeric attribute coercion', () => {
+  let host: StringValueHostComponent;
+  let fixture: ComponentFixture<StringValueHostComponent>;
+  let el: HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [StringValueHostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(StringValueHostComponent);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+    el = fixture.nativeElement.querySelector('wa-format-bytes');
+  });
+
+  it('should accept a string value and render a numeric attribute', () => {
+    host.value = '1024';
+    fixture.detectChanges();
+    expect(el.getAttribute('value')).toBe('1024');
+  });
+
+  it('should ignore non-numeric string values', () => {
+    host.value = 'abc';
+    fixture.detectChanges();
+    expect(el.hasAttribute('value')).toBeFalse();
+  });
+});
+
+

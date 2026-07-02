@@ -9,6 +9,7 @@ import { WaOptionDirective } from './option.directive';
       [disabled]="disabled"
       [selected]="selected"
       [label]="label"
+      [currentTextColor]="currentTextColor"
     >{{ content }}</wa-option>
   `,
   standalone: true,
@@ -19,6 +20,7 @@ class TestHostComponent {
   disabled?: boolean | string;
   selected?: boolean | string;
   label?: string;
+  currentTextColor?: string;
   content = 'Option Label';
 }
 
@@ -261,6 +263,25 @@ describe('WaOptionDirective', () => {
     expect(optionElement.hasAttribute('disabled')).toBeFalse();
     expect(optionElement.hasAttribute('selected')).toBeTrue();
     expect(optionElement.hasAttribute('label')).toBeFalse();
+  });
+
+  // --- CSS custom property: --current-text-color (Web Awesome 3.10) ---
+
+  it('should set the --current-text-color CSS custom property', () => {
+    hostComponent.currentTextColor = 'var(--wa-color-brand-on-loud)';
+    hostFixture.detectChanges();
+    expect(optionElement.style.getPropertyValue('--current-text-color'))
+      .toBe('var(--wa-color-brand-on-loud)');
+  });
+
+  it('should remove the --current-text-color CSS custom property when cleared', () => {
+    hostComponent.currentTextColor = '#ffffff';
+    hostFixture.detectChanges();
+    expect(optionElement.style.getPropertyValue('--current-text-color')).toBe('#ffffff');
+
+    hostComponent.currentTextColor = undefined;
+    hostFixture.detectChanges();
+    expect(optionElement.style.getPropertyValue('--current-text-color')).toBe('');
   });
 });
 

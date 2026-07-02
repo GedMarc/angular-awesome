@@ -28,7 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaProgressBarDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Core input attributes
-  @Input() value?: number;
+  @Input() value?: number | string;
   @Input() indeterminate?: boolean | string;
   @Input() label?: string;
 

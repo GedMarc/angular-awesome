@@ -114,6 +114,24 @@ describe('WaSliderDirective', () => {
     expect(sliderElement.getAttribute('value')).toBe('50');
   }));
 
+  it('should accept string values for numeric attributes (standard bindings)', () => {
+    hostComponent.min = '1';
+    hostComponent.max = '50';
+    hostComponent.step = '1';
+    hostFixture.detectChanges();
+
+    expect(sliderElement.getAttribute('min')).toBe('1');
+    expect(sliderElement.getAttribute('max')).toBe('50');
+    expect(sliderElement.getAttribute('step')).toBe('1');
+  });
+
+  it('should ignore non-numeric strings for numeric attributes', () => {
+    hostComponent.min = 'not-a-number';
+    hostFixture.detectChanges();
+
+    expect(sliderElement.hasAttribute('min')).toBeFalse();
+  });
+
   it('should set boolean attributes correctly', () => {
     hostComponent.disabled = true;
     hostComponent.withLabel = true;

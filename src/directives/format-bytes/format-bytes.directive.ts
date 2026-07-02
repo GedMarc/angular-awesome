@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaFormatBytesDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Inputs
-  @Input() value?: number;
+  @Input() value?: number | string;
   @Input() unit?: 'byte' | 'bit';
   @Input() display?: 'long' | 'short' | 'narrow';
   @Input() lang?: string;
@@ -79,9 +79,12 @@ export class WaFormatBytesDirective implements OnInit, OnChanges, ControlValueAc
   /**
    * Sets a numeric attribute on the native element if the value is not null or undefined
    */
-  private setNumericAttr(name: string, value: number | null | undefined) {
+  private setNumericAttr(name: string, value: number | string | null | undefined) {
     if (value != null) {
-      this.renderer.setAttribute(this.el.nativeElement, name, value.toString());
+      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+      if (!isNaN(numericValue)) {
+        this.renderer.setAttribute(this.el.nativeElement, name, numericValue.toString());
+      }
     }
   }
 

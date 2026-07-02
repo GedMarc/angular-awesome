@@ -40,9 +40,9 @@ import { syncFormValidationState } from '../shared/form-validation-state';
 })
 export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
   // Core input attributes
-  @Input() min?: number;
-  @Input() max?: number;
-  @Input() step?: number;
+  @Input() min?: number | string;
+  @Input() max?: number | string;
+  @Input() step?: number | string;
   @Input() disabled?: boolean | string;
   @Input() readonly?: boolean | string;
   @Input() required?: boolean | string;
@@ -55,14 +55,14 @@ export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlVal
 
   // New attributes from the updated specification
   @Input() range?: boolean | string;
-  @Input() minValue?: number;
-  @Input() maxValue?: number;
+  @Input() minValue?: number | string;
+  @Input() maxValue?: number | string;
   @Input() orientation?: 'horizontal' | 'vertical' | string;
   @Input() size?: SizeToken | string;
-  @Input() indicatorOffset?: number;
+  @Input() indicatorOffset?: number | string;
   @Input() withMarkers?: boolean | string;
   @Input() withTooltip?: boolean | string;
-  @Input() tooltipDistance?: number;
+  @Input() tooltipDistance?: number | string;
   @Input() tooltipPlacement?: 'top' | 'right' | 'bottom' | 'left' | string;
   @Input() autofocus?: boolean | string;
 
@@ -374,13 +374,15 @@ export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlVal
     }
 
     // Min validation (for non-range sliders)
-    if (this.min != null && val != null && typeof val === 'number' && val < this.min) {
-      errors['min'] = { min: this.min, actual: val };
+    const minNum = this.min != null ? (typeof this.min === 'string' ? parseFloat(this.min) : this.min) : null;
+    if (minNum != null && !isNaN(minNum) && val != null && typeof val === 'number' && val < minNum) {
+      errors['min'] = { min: minNum, actual: val };
     }
 
     // Max validation (for non-range sliders)
-    if (this.max != null && val != null && typeof val === 'number' && val > this.max) {
-      errors['max'] = { max: this.max, actual: val };
+    const maxNum = this.max != null ? (typeof this.max === 'string' ? parseFloat(this.max) : this.max) : null;
+    if (maxNum != null && !isNaN(maxNum) && val != null && typeof val === 'number' && val > maxNum) {
+      errors['max'] = { max: maxNum, actual: val };
     }
 
     return Object.keys(errors).length > 0 ? errors : null;

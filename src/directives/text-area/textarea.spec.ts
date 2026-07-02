@@ -49,14 +49,14 @@ class TestHostComponent {
   label?: string;
   hint?: string;
   placeholder?: string;
-  rows?: number;
+  rows?: number | string;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both' | 'auto';
   size?: 'small' | 'medium' | 'large' | 'inherit';
   appearance?: 'filled' | 'outlined';
   name?: string;
   required?: boolean;
-  minlength?: number;
-  maxlength?: number;
+  minlength?: number | string;
+  maxlength?: number | string;
   autocapitalize?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
   autocorrect?: string;
   autocomplete?: string;
@@ -143,6 +143,17 @@ describe('WaTextareaComponent', () => {
     expect(textareaElement.getAttribute('hint')).toBe('Test Hint');
     expect(textareaElement.getAttribute('placeholder')).toBe('Test Placeholder');
     expect(textareaElement.getAttribute('rows')).toBe('5');
+  });
+
+  it('should accept string values for numeric attributes (standard bindings)', () => {
+    hostComponent.rows = '5';
+    hostComponent.minlength = '2';
+    hostComponent.maxlength = '100';
+    hostFixture.detectChanges();
+
+    expect(textareaElement.getAttribute('rows')).toBe('5');
+    expect(textareaElement.getAttribute('minlength')).toBe('2');
+    expect(textareaElement.getAttribute('maxlength')).toBe('100');
   });
 
   it('should set appearance and size attributes correctly', () => {

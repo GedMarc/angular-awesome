@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.10.0] - 2026-07-01
+### Added
+- **wa-random-content:** New `WaRandomContentDirective` wrapping the new `<wa-random-content>` web component:
+  - Inputs: `items` (`number`), `mode` (`'random' | 'unique' | 'sequence'`), `autoplay` (`boolean`), `autoplayInterval` (`autoplay-interval`, `number`), `animation` (`'none' | 'fade' | 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right'`)
+  - Style inputs: `animationDuration` → `--animation-duration`, `animationEasing` → `--animation-easing`, `animationTranslate` → `--animation-translate`
+  - Method: `randomize()` — selects a new set of children using the current mode and returns the elements now shown
+  - Event output: `waContentChange` / `wa-content-change` — emitted whenever the displayed selection changes
+  - Slot: `(default)` for the pool of children to choose from
+  - Exposes `nativeElement` for direct DOM access
+- Exported `WaRandomContentDirective` from the public API surface.
+- Unit tests, rules, and example documentation for `wa-random-content`.
+- **wa-icon:** New `canvas` input (`'fixed' | 'auto' | 'square' | 'roomy'`) mapping to the new `canvas` attribute that sets the box the icon is centered within.
+- **wa-option:** New `currentTextColor` input mapping to the new `--current-text-color` CSS custom property (the text color of the current/highlighted option).
+
+### Fixed
+- **wa-number-input:** Fixed handling of string values on the number input. `WaNumberInputDirective` now:
+  - Accepts `value` as `string | number | null` and reflects string-typed values to the `value` attribute correctly (numeric-looking strings are no longer dropped or mangled).
+  - Implements `ControlValueAccessor` and `Validator`, so `[(ngModel)]` / reactive forms round-trip string values and expose `required` / `min` / `max` validation errors.
+  - Emits `waInput` / `waChange` (plus hyphenated `wa-input` / `wa-change` aliases), `waFocus`, `waBlur`, `waInvalid`, and `valueChange`, listening to both native and `wa-`prefixed events.
+  - Handles `step="any"` and removes numeric attributes when cleared, and adds `focus()`, `blur()`, `select()`, `stepUp()`, `stepDown()` methods plus `form` support and `nativeElement` access.
+- Added unit tests covering `wa-number-input` string-value binding, validation, and event forwarding.
+
+### Changed
+- **wa-icon:** Documented the new animation CSS custom properties added in Web Awesome 3.10 (`--flip-anticipation-scale`, `--flip-overshoot`, `--bounce-anticipation`, `--buzz-distance`, `--wag-angle`, `--swing-angle`, `--jello-scale-x/y`, `--float-*`) and the updated `flip`/`flip-360` and `--beat-scale` behavior. These are upstream additions set via style bindings; no new Angular inputs are required.
+- Updated `llms.txt` to Web Awesome 3.10.0.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.10.0** component specification.
+- 1 new component added (`wa-random-content`), 2 components updated (`wa-icon`, `wa-option`), and 1 bug fix (`wa-number-input` string-value handling). No breaking changes to the Angular API.
+
+
 ## [3.9.0] - 2026-06-18
 ### Added
 - **wa-checkbox-group:** New `WaCheckboxGroupDirective` wrapping the new `<wa-checkbox-group>` web component:
