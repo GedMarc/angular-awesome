@@ -36,8 +36,8 @@ class TestHostComponent {
   stacked?: boolean | string;
   indexAxis?: 'x' | 'y' | string;
   grid?: 'x' | 'y' | 'both' | 'none' | string;
-  min?: number | null;
-  max?: number | null;
+  min?: number | string | null;
+  max?: number | string | null;
   withoutAnimation?: boolean | string;
   withoutLegend?: boolean | string;
   withoutTooltip?: boolean | string;
@@ -93,6 +93,13 @@ describe('WaPolarAreaChartDirective', () => {
     hostFixture.detectChanges();
     expect(chartElement.getAttribute('min')).toBe('0');
     expect(chartElement.getAttribute('max')).toBe('100');
+  });
+  it('should accept string values for numeric min/max attributes', () => {
+    hostComponent.min = '5';
+    hostComponent.max = '50';
+    hostFixture.detectChanges();
+    expect(chartElement.getAttribute('min')).toBe('5');
+    expect(chartElement.getAttribute('max')).toBe('50');
   });
   it('should set boolean attributes when true', () => {
     hostComponent.stacked = true;

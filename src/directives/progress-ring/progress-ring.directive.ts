@@ -28,7 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaProgressRingDirective implements OnInit, ControlValueAccessor, OnChanges {
   // Core input attributes
-  @Input() value?: number;
+  @Input() value?: number | string;
   @Input() label?: string;
 
   // Dialog integration: support both kebab-case and camelCase bindings

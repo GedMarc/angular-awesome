@@ -23,14 +23,14 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, 
 })
 export class WaSplitPanelDirective implements OnInit, OnChanges {
   // Core input attributes
-  @Input() position?: number;
-  @Input() positionInPixels?: number;
+  @Input() position?: number | string;
+  @Input() positionInPixels?: number | string;
   @Input() orientation?: 'vertical' | 'horizontal' | string;
   @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
   @Input() disabled?: boolean | string;
   @Input() primary?: 'start' | 'end' | string;
   @Input() snap?: string;
-  @Input() snapThreshold?: number;
+  @Input() snapThreshold?: number | string;
 
   // Style inputs
   @Input() dividerColor?: string;

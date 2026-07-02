@@ -146,3 +146,36 @@ describe('WaProgressRingDirective', () => {
     expect(progressRingElement.hasAttribute('disabled')).toBeFalse();
   });
 });
+
+// Host that binds value as a plain string (standard binding)
+@Component({
+  template: `<wa-progress-ring [value]="value"></wa-progress-ring>`,
+  standalone: true,
+  imports: [WaProgressRingDirective]
+})
+class StringValueHostComponent {
+  value?: number | string;
+}
+
+describe('WaProgressRingDirective numeric attribute coercion', () => {
+  let host: StringValueHostComponent;
+  let fixture: ComponentFixture<StringValueHostComponent>;
+  let el: HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [StringValueHostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(StringValueHostComponent);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+    el = fixture.nativeElement.querySelector('wa-progress-ring');
+  });
+
+  it('should accept a string value and render a numeric attribute', () => {
+    host.value = '65';
+    fixture.detectChanges();
+    expect(el.getAttribute('value')).toBe('65');
+    expect(el.style.getPropertyValue('--percentage')).toBe('65%');
+  });
+});
+
+

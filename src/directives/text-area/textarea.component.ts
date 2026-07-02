@@ -90,14 +90,14 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
   @Input() label?: string;
   @Input() hint?: string;
   @Input() placeholder?: string;
-  @Input() rows?: number;
+  @Input() rows?: number | string;
   @Input() resize?: 'none' | 'vertical' | 'horizontal' | 'both' | 'auto';
   @Input() size?: SizeToken | string;
   @Input() appearance?: Appearance | string;
   @Input() name?: string;
   @Input() required?: boolean;
-  @Input() minlength?: number;
-  @Input() maxlength?: number;
+  @Input() minlength?: number | string;
+  @Input() maxlength?: number | string;
   @Input() autocapitalize?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
   @Input() autocorrect?: boolean | string;
   @Input() autocomplete?: string;

@@ -18,8 +18,8 @@ export class WaScatterChartDirective implements OnInit, OnChanges {
   @Input() stacked?: boolean | string;
   @Input() indexAxis?: 'x' | 'y' | string;
   @Input() grid?: 'x' | 'y' | 'both' | 'none' | string;
-  @Input() min?: number | null;
-  @Input() max?: number | null;
+  @Input() min?: number | string | null;
+  @Input() max?: number | string | null;
   @Input() withoutAnimation?: boolean | string;
   @Input() withoutLegend?: boolean | string;
   @Input() withoutTooltip?: boolean | string;
@@ -72,7 +72,7 @@ export class WaScatterChartDirective implements OnInit, OnChanges {
       this.renderer.removeAttribute(this.el.nativeElement, name);
     }
   }
-  private setNumericAttr(name: string, value: number | null | undefined) {
+  private setNumericAttr(name: string, value: number | string | null | undefined) {
     if (value != null) { this.renderer.setAttribute(this.el.nativeElement, name, String(value));
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);

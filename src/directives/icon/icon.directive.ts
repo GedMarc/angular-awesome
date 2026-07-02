@@ -32,6 +32,13 @@ export class WaIconDirective implements OnInit, OnChanges {
   @Input() rotate?: number | string;
   @Input() flip?: 'x' | 'y' | 'both' | string;
   @Input() animation?: string;
+  /**
+   * Sets the icon canvas — the box the icon is centered within.
+   * Unset renders as `fixed` (1.25em × 1em); `auto` hugs the icon's width;
+   * `square` is 1.25em × 1.25em; `roomy` is 1.5em × 1.5em.
+   * Added in Web Awesome 3.10.
+   */
+  @Input() canvas?: 'fixed' | 'auto' | 'square' | 'roomy' | string;
 
   // Direct styling inputs
   @Input() color?: string;
@@ -84,6 +91,7 @@ export class WaIconDirective implements OnInit, OnChanges {
     }
     this.setAttr('flip', this.flip);
     this.setAttr('animation', this.animation);
+    this.setAttr('canvas', this.canvas);
 
     // Apply styling inputs using CSS custom properties
     this.setCssStyle('text-color', this.color);

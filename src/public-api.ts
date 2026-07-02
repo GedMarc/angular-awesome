@@ -94,6 +94,7 @@ export * from './directives/scatter-chart/scatter-chart.directive';
 export * from './directives/markdown/markdown.directive';
 export * from './directives/video/video.directive';
 export * from './directives/video/video-playlist.directive';
+export * from './directives/random-content/random-content.directive';
 
 // Shared type tokens
 export * from './types/tokens';

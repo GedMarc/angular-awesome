@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class WaFormatNumberDirective implements OnInit, OnChanges, ControlValueAccessor {
   // Value input
-  @Input() value?: number;
+  @Input() value?: number | string;
 
   // Format inputs
   @Input() type?: 'currency' | 'decimal' | 'percent';

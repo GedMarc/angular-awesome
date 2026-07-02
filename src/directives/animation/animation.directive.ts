@@ -22,15 +22,15 @@ export class WaAnimationDirective implements OnInit {
   // Standard animation inputs
   @Input() name?: string;
   @Input() play?: boolean | string | null;
-  @Input() delay?: number;
-  @Input() duration?: number;
+  @Input() delay?: number | string;
+  @Input() duration?: number | string;
   @Input() easing?: string;
   @Input() direction?: string;
-  @Input() iterations?: number;
-  @Input() iterationStart?: number;
-  @Input() endDelay?: number;
+  @Input() iterations?: number | string;
+  @Input() iterationStart?: number | string;
+  @Input() endDelay?: number | string;
   @Input() fill?: string;
-  @Input() playbackRate?: number;
+  @Input() playbackRate?: number | string;
 
   // JavaScript-only properties
   @Input() keyframes?: Keyframe[];

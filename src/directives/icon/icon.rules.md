@@ -28,6 +28,7 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 | `rotate`          | `number`  | No               | Sets the rotation degree of the icon.               |
 | `flip`            | `'x' \| 'y' \| 'both'` | No   | Flips the icon along the specified axis.            |
 | `animation`       | `string`  | No               | Sets the animation (e.g., `spin`, `beat`, `fade`).  |
+| `canvas`          | `'fixed' \| 'auto' \| 'square' \| 'roomy'` | No | Sets the icon canvas (the box the icon is centered within). Unset renders as `fixed` (1.25em × 1em); `auto` hugs the icon's width; `square` is 1.25em × 1.25em; `roomy` is 1.5em × 1.5em. Added in Web Awesome 3.10. |
 | `color`           | `string`  | No               | Sets the icon's text color directly.                |
 | `backgroundColor` | `string`  | No               | Sets the icon's background color.                   |
 | `fontSize`        | `string`  | No               | Adjusts the icon's font size.                       |
@@ -50,6 +51,33 @@ Use the icon component to render visual symbols. These can be semantic (e.g., ac
 --primary-opacity	Sets a duotone icons primary opacity. Default 1
 --secondary-color	: Sets a duotone icons secondary color. Default currentColor
 --secondary-opacity	Sets a duotone iconss secondary opacity. Default 0.4
+```
+
+### Animation CSS Custom Properties (Web Awesome 3.10)
+
+Fine-tune the built-in animations by setting these CSS custom properties on the `<wa-icon>` element (e.g. via a `[style.--flip-angle]` binding or a stylesheet). The `flip` animation now also supports a `flip-360` variant.
+
+```css
+--flip-angle             /* Rotation angle for `flip` / `flip-360`. */
+--flip-x                 /* X-coordinate of the flip rotation axis (0–1). */
+--flip-y                 /* Y-coordinate of the flip rotation axis (0–1). */
+--flip-z                 /* Z-coordinate of the flip rotation axis (0–1). */
+--flip-anticipation-scale /* Scale of the wind-up before a flip rotates. */
+--flip-overshoot         /* How far past the final angle a flip rotates before settling. */
+--beat-scale             /* Scale multiplier for `beat` (multiplies the 1.25× base pulse). */
+--bounce-anticipation    /* Downward squash distance before a `bounce` jumps. */
+--buzz-distance          /* Horizontal travel of a `buzz` animation. */
+--wag-angle              /* Peak rotation of a `wag` animation. */
+--swing-angle            /* Peak rotation of a `swing` animation. */
+--jello-scale-x          /* Horizontal stretch of a `jello` animation. */
+--jello-scale-y          /* Vertical stretch of a `jello` animation. */
+--float-height           /* Rise height of a `float` animation. */
+--float-drift            /* Horizontal drift of a `float` animation. */
+--float-tilt             /* Rotation of a `float` animation. */
+--float-squash-x         /* Horizontal squash of a `float` animation at rest. */
+--float-squash-y         /* Vertical squash of a `float` animation at rest. */
+--float-stretch-x        /* Horizontal stretch of a `float` animation at its peak. */
+--float-stretch-y        /* Vertical stretch of a `float` animation at its peak. */
 ```
 
 ### Accessibility
