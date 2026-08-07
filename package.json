@@ -47,7 +47,7 @@
     "@angular/platform-browser-dynamic": "^20.3.0",
     "@eslint/js": "^9.39.0",
     "@types/jasmine": "~5.1.0",
-    "angular-eslint": "^20.7.0",
+    "angular-eslint": "^21.4.0",
     "cross-env": "^10.1.0",
     "eslint": "^9.0.0",
     "gh-pages": "^6.1.1",
