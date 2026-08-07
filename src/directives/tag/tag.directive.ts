@@ -23,6 +23,7 @@ export class WaTagDirective implements OnChanges {
   @Input() appearance: Appearance = 'filled-outlined';
   @Input() size: SizeToken = 'inherit';
   @Input() pill: boolean | string = false;
+  @Input() removable: boolean | string = false;
   @Input() withRemove: boolean | string = false;
 
   // Outputs
@@ -39,14 +40,18 @@ export class WaTagDirective implements OnChanges {
     tag.setAttribute('appearance', normalizeAppearance(this.appearance) as string);
     tag.setAttribute('size', this.size);
     this.setBooleanAttribute(tag, 'pill', this.pill);
-    this.setBooleanAttribute(tag, 'with-remove', this.withRemove);
+    this.setBooleanAttribute(tag, 'with-remove', this.isBooleanAttributePresent(this.removable) || this.isBooleanAttributePresent(this.withRemove));
   }
 
   private setBooleanAttribute(tag: HTMLElement, name: string, value: boolean | string) {
-    if (value === true || value === 'true' || value === '') {
+    if (this.isBooleanAttributePresent(value)) {
       tag.setAttribute(name, '');
     } else {
       tag.removeAttribute(name);
     }
+  }
+
+  private isBooleanAttributePresent(value: boolean | string) {
+    return value === true || value === 'true' || value === '';
   }
 }

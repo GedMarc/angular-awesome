@@ -26,7 +26,7 @@
 |--------------|----------|
 | Angular      | `>=20.0` |
 | Node.js      | `20+`    |
-| Web Awesome* | `3.10.x` |
+| Web Awesome* | `3.11.x` |
 
 ## Installation
 
@@ -58,15 +58,15 @@ export class MyComponent {
 ## Available Components
 
 <details>
-<summary>Expand full component list (79+)</summary>
+<summary>Expand full component list (82+)</summary>
 
 | Category          | Components                                                                                                                                                                      |
 |-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Layout**        | `wa-layout-align`, `wa-layout-cluster`, `wa-layout-flank`, `wa-layout-frame`, `wa-layout-gap`, `wa-layout-grid`, `wa-layout-split`, `wa-layout-stack`                           |
-| **Navigation**    | `wa-breadcrumbs`, `wa-tab-group`, `wa-tree`                                                                                                                                     |
+| **Navigation**    | `wa-breadcrumbs`, `wa-pagination`, `wa-tab-group`, `wa-tree`                                                                                                                    |
 | **Buttons**       | `wa-button`, `wa-button-group`, `wa-copy-button`                                                                                                                                |
-| **Form Controls** | `wa-checkbox`, `wa-checkbox-group`, `wa-color-picker`, `wa-combobox`, `wa-date-input`, `wa-date-picker`, `wa-file-input`, `wa-input`, `wa-known-date`, `wa-number-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-text-area`, `wa-time-input` |
-| **Data Display**  | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code`                                 |
+| **Form Controls** | `wa-checkbox`, `wa-checkbox-group`, `wa-color-picker`, `wa-combobox`, `wa-date-input`, `wa-date-picker`, `wa-file-input`, `wa-input`, `wa-known-date`, `wa-number-input`, `wa-otp-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-text-area`, `wa-time-input` |
+| **Data Display**  | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-data-grid`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code`                 |
 | **Charts**        | `wa-chart`, `wa-bar-chart`, `wa-bubble-chart`, `wa-doughnut-chart`, `wa-line-chart`, `wa-pie-chart`, `wa-polar-area-chart`, `wa-radar-chart`, `wa-scatter-chart`                |
 | **Feedback**      | `wa-callout`, `wa-dialog`, `wa-drawer`, `wa-popover`, `wa-popup`, `wa-toast`, `wa-toast-item`, `wa-tooltip`                                                                     |
 | **Progress**      | `wa-progress-bar`, `wa-progress-ring`, `wa-spinner`                                                                                                                             |

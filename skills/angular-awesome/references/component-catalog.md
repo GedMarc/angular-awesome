@@ -16,6 +16,7 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Slider | `wa-slider` | min, max, step, value, disabled, label | ✅ |
 | Color Picker | `wa-color-picker` | value, format, disabled, size, label | ✅ |
 | File Input | `wa-file-input` | accept, multiple, disabled | ✅ |
+| OTP Input | `wa-otp-input` | length, format, type, mask, case, size, label, required | ✅ |
 | Option | `wa-option` | value, disabled | — |
 
 ## Feedback & Overlay
@@ -49,10 +50,12 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Carousel | `wa-carousel` | pagination, navigation, loop, autoplay |
 | Carousel Item | `wa-carousel-item` | — |
 | Copy Button | `wa-copy-button` | value, from, disabled, feedbackDuration |
+| Data Grid | `wa-data-grid` | data, columns, rowKey, selectable, paginate, pageSize, withSearch, striped, dataSource, sort, selectedKeys |
 | Details | `wa-details` | summary, open, disabled |
 | Divider | `wa-divider` | vertical |
 | Icon | `wa-icon` | name, src, label, size |
 | Include | `wa-include` | src, mode, allowScripts |
+| Pagination | `wa-pagination` | total, pageSize, page, siblingCount, boundaryCount, format, appearance, withEdges, withSummary |
 | QR Code | `wa-qr-code` | value, size, fill, background, radius, errorCorrection |
 | Rating | `wa-rating` | value, max, precision, disabled, readonly, size |
 | Relative Time | `wa-relative-time` | date, format, numeric, sync |

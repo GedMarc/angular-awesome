@@ -41,6 +41,8 @@ This component wraps any number of `<wa-carousel-item>` components, which can co
 | `next()`       | Scrolls forward by `slidesPerMove`.  |
 | `previous()`   | Scrolls backward by `slidesPerMove`. |
 | `goToSlide(i)` | Jumps to slide at index `i`.         |
+| `addSlide(slide)` | Adds a carousel item as the last real slide (Web Awesome 3.11+). |
+| `removeSlide(index)` | Removes the real slide at the specified index (Web Awesome 3.11+). |
 
 ## Styles / CSS Custom Properties
 

@@ -35,6 +35,9 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
   /** SSR: Set to true if slotting in an icon element. */
   @Input() withIcon?: boolean | string;
 
+  /** The internal spacing of the toast item. Maps to the `--padding` CSS custom property (Web Awesome 3.11+). */
+  @Input() padding?: string;
+
   // Event outputs
   @Output() waShow = new EventEmitter<Event>();
   @Output('wa-show') waShowHyphen = this.waShow;
@@ -64,6 +67,7 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
     this.setAttr('size', this.size);
     this.setAttr('duration', this.duration != null ? String(this.duration) : null);
     this.setBooleanAttr('with-icon', this.withIcon);
+    this.setCssVar('--padding', this.padding);
   }
 
   private setupEventListeners() {
@@ -110,6 +114,14 @@ export class WaToastItemDirective implements OnInit, OnChanges, OnDestroy {
       this.renderer.setAttribute(this.el.nativeElement, name, '');
     } else {
       this.renderer.removeAttribute(this.el.nativeElement, name);
+    }
+  }
+
+  private setCssVar(name: string, value: string | null | undefined) {
+    if (value != null && value !== '') {
+      this.el.nativeElement.style.setProperty(name, value);
+    } else {
+      this.el.nativeElement.style.removeProperty(name);
     }
   }
 

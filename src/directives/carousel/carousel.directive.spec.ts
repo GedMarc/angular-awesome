@@ -197,6 +197,25 @@ describe('WaCarouselDirective', () => {
     expect((carouselElement as any).goToSlide).toHaveBeenCalledWith(2);
   });
 
+  it('should expose addSlide and removeSlide methods (Web Awesome 3.11+)', () => {
+    (carouselElement as any).addSlide = jasmine.createSpy('addSlide');
+    (carouselElement as any).removeSlide = jasmine.createSpy('removeSlide');
+
+    const slide = document.createElement('wa-carousel-item');
+    carouselDirective.addSlide(slide);
+    carouselDirective.removeSlide(1);
+
+    expect((carouselElement as any).addSlide).toHaveBeenCalledWith(slide);
+    expect((carouselElement as any).removeSlide).toHaveBeenCalledWith(1);
+  });
+
+  it('should not throw when addSlide/removeSlide are unavailable', () => {
+    delete (carouselElement as any).addSlide;
+    delete (carouselElement as any).removeSlide;
+    expect(() => carouselDirective.addSlide(document.createElement('div'))).not.toThrow();
+    expect(() => carouselDirective.removeSlide(0)).not.toThrow();
+  });
+
   it('should emit events correctly', () => {
     spyOn(hostComponent, 'onSlideChange');
 
