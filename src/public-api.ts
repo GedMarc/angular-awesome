@@ -95,6 +95,9 @@ export * from './directives/markdown/markdown.directive';
 export * from './directives/video/video.directive';
 export * from './directives/video/video-playlist.directive';
 export * from './directives/random-content/random-content.directive';
+export * from './directives/data-grid/data-grid.directive';
+export * from './directives/otp-input/otp-input.directive';
+export * from './directives/pagination/pagination.directive';
 
 // Shared type tokens
 export * from './types/tokens';

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - Pagination Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Pagination Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
+                <p class="subtitle">Pagination splits long lists of content into pages, letting users navigate between them. Use it to keep large result sets manageable in tables, search results, product listings, and galleries.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+                
+      <section>
+        <h2>Overview</h2>
+        <p></p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the pagination directive from the angular-awesome package:</p>
+        <pre>// Import the pagination directive
+import { WaPaginationDirective } from 'angular-awesome/pagination';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h1>WaPaginationDirective Usage Examples</h1>
+<h2>Basic Usage</h2>
+<p>Derive the page list from the total item count and page size.</p>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;237&quot; [pageSize]=&quot;10&quot;&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<h2>Current Page and Summary</h2>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;237&quot; [pageSize]=&quot;10&quot; [page]=&quot;3&quot; withSummary&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<h2>Compact Layout</h2>
+<p>Collapse the full page list into a short &quot;1 of N&quot; label for tight spaces.</p>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;120&quot; [pageSize]=&quot;20&quot; format=&quot;compact&quot;&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<h2>Edge Buttons and Hidden Nav</h2>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;500&quot; [pageSize]=&quot;25&quot; withEdges&gt;&lt;/wa-pagination&gt;
+&lt;wa-pagination [total]=&quot;500&quot; [pageSize]=&quot;25&quot; withoutNav&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<h2>Link-Based Pagination (SSR / SEO)</h2>
+<p>Render each page item as an <code>&lt;a&gt;</code> element using a string template with <code>{page}</code>.</p>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;200&quot; [pageSize]=&quot;20&quot; hrefTemplate=&quot;/products?page={page}&quot;&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<p>Or supply a function in TypeScript:</p>
+<pre><code class="language-html">&lt;wa-pagination #pager [total]=&quot;200&quot; [pageSize]=&quot;20&quot; [hrefTemplate]=&quot;hrefFn&quot;&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<pre><code class="language-ts">hrefFn = (page: number) =&gt; `/products/${page}`;
+</code></pre>
+<h2>Reacting to Page Changes</h2>
+<pre><code class="language-html">&lt;wa-pagination
+  [total]=&quot;237&quot;
+  [pageSize]=&quot;10&quot;
+  [page]=&quot;page&quot;
+  (waPageChange)=&quot;onPageChange($event)&quot;
+  (waBeforePageChange)=&quot;onBeforePageChange($event)&quot;
+&gt;&lt;/wa-pagination&gt;
+</code></pre>
+<pre><code class="language-ts">page = 1;
+
+onBeforePageChange(event: CustomEvent) {
+  // Cancel navigation if there are unsaved changes
+  if (this.hasUnsavedChanges) {
+    event.preventDefault();
+  }
+}
+
+onPageChange(event: CustomEvent) {
+  this.page = (event.target as any).page;
+  this.loadPage(this.page);
+}
+</code></pre>
+<h2>Custom Navigation Icons</h2>
+<pre><code class="language-html">&lt;wa-pagination [total]=&quot;80&quot; [pageSize]=&quot;10&quot; withEdges&gt;
+  &lt;wa-icon slot=&quot;first-icon&quot; name=&quot;angles-left&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;previous-icon&quot; name=&quot;chevron-left&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;next-icon&quot; name=&quot;chevron-right&quot;&gt;&lt;/wa-icon&gt;
+  &lt;wa-icon slot=&quot;last-icon&quot; name=&quot;angles-right&quot;&gt;&lt;/wa-icon&gt;
+&lt;/wa-pagination&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        
+      </section>
+    
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -4,6 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
 
+## [3.11.0] - 2026-08-07
+### Added
+- **wa-data-grid:** New `WaDataGridDirective` wrapping the new `<wa-data-grid>` web component — data grids with sorting, selection, pagination, filtering, grouping, tree data, column pinning/reordering/resizing, virtualization, and CSV export:
+  - **Property bindings** (assigned as DOM properties so objects/arrays/functions pass through intact): `data`, `columns`, `selectableRows`, `pageSizeOptions`, `page`, `searchTerm`, `rowDetail`, `rowClass`, `childRows`, `groupBy`, `dataSource`, `searchFn`, `total`, `loading`, `sort`, `columnOrder`, `selectedKeys`, `selectedRows`, `expandedKeys`, `filters`.
+  - **Attribute bindings** (reflected configuration): `rowKey` (`row-key`), `selectable`, `paginate`, `pageSize` (`page-size`), `withoutSortRemoval`, `sortDescFirst`, `maxMultiSort`, `withSearch`, `resizable`, `reorderable`, `pinnable`, `withColumnMenu`, `withColumnsMenu`, `striped`, `filterFromLeafRows`, `server`, `filterDebounce`, `label`, `appearance`, `size`.
+  - **Events** (each with a camelCase output plus hyphenated alias): `request`, `waSortChange`, `waRowSelect`, `waPageChange`, `waFilterChange`, `waRowExpand`, `waRowCollapse`, `waDataRequest`, `waDataError`, `waColumnMove`, `waColumnResize`, `waColumnVisibilityChange`, `waColumnPin`, `waCellClick`, `waCellContextmenu`.
+  - **Methods:** `pinColumn`, `getColumnPin`, `focus`, `expandRow`, `collapseRow`, `expandAllRows`, `collapseAllRows`, `getVisibleRows`, `getProcessedRows`, `getColumnFacets`, `reload`, `toggleColumn`, `autoSizeColumn`, `autoSizeColumns`, `sizeColumnsToFit`, `scrollToIndex`, `getDataAsCsv`, `exportDataAsCsv`, `copySelectedRows`, `getState`, `setState`, `resetState`, `resetColumns`, plus `handlePageChange`, `handleSearchTermChange`, `handleColumnsChange`.
+  - **Read-only getters:** `pageCount`, `filteredCount`. Style inputs for all 18 grid CSS custom properties (`--accent-color` … `--indent-size`). Exported the `DataGridColumn`, `DataGridRow`, `DataGridSort`, `SortingState`, `DataGridFilter`, `DataGridRequest`, `DataGridResponse`, and `DataGridState` types.
+- **wa-otp-input:** New `WaOtpInputDirective` wrapping the new `<wa-otp-input>` web component:
+  - Inputs: `value`, `length`, `appearance` (`'outlined' | 'filled' | 'filled-outlined' | 'contained'`), `type` (`'numeric' | 'alpha' | 'alphanumeric'`), `mask`, `case`, `size`, `label`, `hint`, `format`, `autocomplete`, `required`, `readonly`, `autosubmit`, `autofocus`, `withMask` (`with-mask`), `name`, `disabled`, `form`.
+  - Style inputs: `segmentSize` → `--segment-size`, `segmentGap` → `--segment-gap`, `segmentBorderRadius` → `--segment-border-radius`, `maskChar` → `--mask-char`.
+  - Implements `ControlValueAccessor` and `Validator`. A partially-filled field always reports an `incomplete` error (segment count derived from `format` `#` count or `length`), matching the component's behavior.
+  - Events: `waInput`/`input`, `waChange`/`change`, `waFocus`, `waBlur`, `waComplete`/`wa-complete`, `waClear`/`wa-clear`, `waInvalid`/`wa-invalid`, plus `valueChange`. Methods: `clear()`, `focus()`, `blur()`, `select()`, `setCustomValidity()`, `resetValidity()`.
+- **wa-pagination:** New `WaPaginationDirective` wrapping the new `<wa-pagination>` web component:
+  - Inputs: `total`, `pageSize` (`page-size`), `page`, `siblingCount` (`sibling-count`), `boundaryCount` (`boundary-count`), `withoutNav` (`without-nav`), `withEdges` (`with-edges`), `withSummary` (`with-summary`), `format` (`'standard' | 'compact'`), `hrefTemplate` (string template or function), `hideSinglePage` (`hide-single-page`), `label`, `appearance` (`'outlined' | 'filled' | 'plain'`), `disabled`.
+  - Events: `waBeforePageChange`/`wa-before-page-change` (cancelable) and `waPageChange`/`wa-page-change`. Read-only `totalPages` getter.
+- Exported `WaDataGridDirective`, `WaOtpInputDirective`, and `WaPaginationDirective` from the public API surface.
+- Unit tests, rules, and example documentation for all three new components.
+- **wa-carousel:** New `addSlide(slide)` and `removeSlide(index)` methods matching the new Web Awesome 3.11 carousel API.
+- **wa-toast-item:** New `padding` style input mapping to the new `--padding` CSS custom property.
+
+### Changed
+- **Chart components:** Web Awesome 3.11 makes the `x-label` / `y-label` attribute names explicit for `xLabel` / `yLabel`. The Angular chart directives (`wa-bar-chart`, `wa-bubble-chart`, `wa-chart`, `wa-doughnut-chart`, `wa-line-chart`, `wa-pie-chart`, `wa-polar-area-chart`, `wa-radar-chart`, `wa-scatter-chart`) already reflect these to `x-label` / `y-label`, so no API change was needed — documentation only.
+- Updated `llms.txt` to Web Awesome 3.11.0.
+
+### Deprecated
+- **CSS parts (upstream):** Web Awesome 3.11 deprecates the generic `base` CSS part across many components in favor of a named outer-wrapper part (e.g. `accordion-item`, `badge`, `breadcrumb`, `button`, `checkbox`, `carousel`, `color-picker`, `comparison`, `date-input`, `date-picker`, `details`, `file-input`, `input-wrapper`, `known-date`, `number-input`, `page`, `progress-bar`, `progress-ring`, `qr-code`, `rating`, `sparkline`, `spinner`, `switch`, `tab`, `tab-group`, `textarea-wrapper`, `time-input`, `tooltip`, `tree`, `tree-item`, `video-wrapper`, `video-playlist`). For `wa-callout`, `wa-dropdown`, `wa-text`, and `wa-tag`, `base` is deprecated in favor of styling the host element directly. These are shadow-DOM styling hooks accessed via `::part()`; the Angular wrapper inputs are unchanged. Update any `::part(base)` selectors to the new named parts.
+- **wa-page:** The `skip-links` and `skip-link` CSS parts were removed upstream and replaced with a single `skip-to-content` part; new `navigation-desktop`, `drawer`, and `main` parts were added. These are CSS parts only — no Angular input changes.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.11.0** component specification.
+- 3 new components added (`wa-data-grid`, `wa-otp-input`, `wa-pagination`), 2 components updated (`wa-carousel`, `wa-toast-item`). No breaking changes to the Angular API — the CSS-part deprecations are upstream shadow-DOM styling hooks only.
+
+
 ## [3.10.0] - 2026-07-01
 ### Added
 - **wa-random-content:** New `WaRandomContentDirective` wrapping the new `<wa-random-content>` web component:

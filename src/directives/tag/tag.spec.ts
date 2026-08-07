@@ -11,6 +11,7 @@ import { WaTagDirective } from './tag.directive';
       [appearance]="appearance"
       [size]="size"
       [pill]="pill"
+      [removable]="removable"
       [withRemove]="withRemove"
       (wa-remove)="onRemove($event)"
     >
@@ -25,6 +26,7 @@ class TestHostComponent {
   appearance: 'accent' | 'outlined accent' | 'filled' | 'outlined' | 'filled-outlined' = 'filled-outlined';
   size: 'small' | 'medium' | 'large' | 'inherit' = 'inherit';
   pill: boolean | string = false;
+  removable: boolean | string = false;
   withRemove: boolean | string = false;
   content = 'Tag Content';
 
@@ -121,6 +123,15 @@ describe('WaTagDirective', () => {
     expect(tagElement.hasAttribute('with-remove')).toBe(true);
 
     hostComponent.withRemove = false;
+    hostFixture.detectChanges();
+    expect(tagElement.hasAttribute('with-remove')).toBe(false);
+
+    // Test removable alias
+    hostComponent.removable = true;
+    hostFixture.detectChanges();
+    expect(tagElement.hasAttribute('with-remove')).toBe(true);
+
+    hostComponent.removable = false;
     hostFixture.detectChanges();
     expect(tagElement.hasAttribute('with-remove')).toBe(false);
   });

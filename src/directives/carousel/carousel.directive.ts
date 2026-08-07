@@ -106,6 +106,26 @@ export class WaCarouselDirective implements OnInit, OnChanges {
   }
 
   /**
+   * Adds a carousel item as the last real slide (Web Awesome 3.11+)
+   */
+  public addSlide(slide: HTMLElement): void {
+    const el: any = this.el.nativeElement;
+    if (typeof el.addSlide === 'function') {
+      el.addSlide(slide);
+    }
+  }
+
+  /**
+   * Removes the real slide at the specified index (Web Awesome 3.11+)
+   */
+  public removeSlide(index: number): void {
+    const el: any = this.el.nativeElement;
+    if (typeof el.removeSlide === 'function') {
+      el.removeSlide(index);
+    }
+  }
+
+  /**
    * Sets an attribute on the native element if the value is not null or undefined
    */
   private setAttr(name: string, value: string | null | undefined) {
