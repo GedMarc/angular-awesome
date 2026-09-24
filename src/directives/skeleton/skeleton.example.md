@@ -3,6 +3,9 @@
 ## Basic Usage
 
 ```html
+<wa-skeleton effect="sheen"></wa-skeleton>
+
+<!-- The attribute form can style another element as a skeleton. -->
 <div waSkeleton>This content will be styled as a skeleton loader</div>
 ```
 

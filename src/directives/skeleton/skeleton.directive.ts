@@ -13,7 +13,7 @@ import { Directive, ElementRef, Input, OnInit, OnChanges, SimpleChanges, Rendere
  * - Supports custom styling via CSS variables
  */
 @Directive({
-  selector: '[waSkeleton]',
+  selector: 'wa-skeleton, [waSkeleton]',
   standalone: true
 })
 export class WaSkeletonDirective implements OnInit, OnChanges {

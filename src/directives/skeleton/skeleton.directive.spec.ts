@@ -15,7 +15,6 @@ import { WaSkeletonDirective } from './skeleton.directive';
       {{ content }}
     </div>
     <wa-skeleton
-      waSkeleton
       [effect]="waEffect"
       [borderRadius]="waBorderRadius"
       [color]="waColor"
@@ -65,7 +64,7 @@ describe('WaSkeletonDirective', () => {
     // Get the div element with waSkeleton directive
     divElement = hostFixture.nativeElement.querySelector('div');
 
-    // Get the wa-skeleton element
+    // The native element activates the directive without requiring the waSkeleton attribute.
     waSkeletonElement = hostFixture.nativeElement.querySelector('wa-skeleton');
   });
 

@@ -14,6 +14,10 @@ import { WaDropdownItemDirective } from './dropdown-item.directive';
       [label]="label"
       [variant]="variant"
       [submenuOpen]="submenuOpen"
+      [href]="href"
+      [target]="target"
+      [rel]="rel"
+      [download]="download"
       [backgroundColorHover]="backgroundColorHover"
       [textColorHover]="textColorHover"
     >
@@ -32,6 +36,10 @@ class TestHostComponent {
   label?: string;
   variant?: 'danger' | 'default' | string;
   submenuOpen?: boolean | string;
+  href?: string;
+  target?: '_blank' | '_parent' | '_self' | '_top' | string;
+  rel?: string;
+  download?: string;
   backgroundColorHover?: string;
   textColorHover?: string;
 }
@@ -123,8 +131,110 @@ describe('WaDropdownItemDirective', () => {
     expect(itemElement.hasAttribute('submenu-open')).toBeTrue();
   });
 
-  it('should set CSS custom properties', () => {
-    hostComponent.backgroundColorHover = '#f0f0f0';
+  describe('link support (Web Awesome 3.12+)', () => {
+    it('should not set any link attributes by default', () => {
+      expect(itemElement.hasAttribute('href')).toBeFalse();
+      expect(itemElement.hasAttribute('target')).toBeFalse();
+      expect(itemElement.hasAttribute('rel')).toBeFalse();
+      expect(itemElement.hasAttribute('download')).toBeFalse();
+    });
+
+    it('should set the href attribute', () => {
+      hostComponent.href = 'https://example.com/docs';
+      hostFixture.detectChanges();
+
+      expect(itemElement.getAttribute('href')).toBe('https://example.com/docs');
+    });
+
+    it('should set target, rel and download when href is present', () => {
+      hostComponent.href = '/files/report.pdf';
+      hostComponent.target = '_blank';
+      hostComponent.rel = 'noreferrer noopener';
+      hostComponent.download = 'report.pdf';
+      hostFixture.detectChanges();
+
+      expect(itemElement.getAttribute('href')).toBe('/files/report.pdf');
+      expect(itemElement.getAttribute('target')).toBe('_blank');
+      expect(itemElement.getAttribute('rel')).toBe('noreferrer noopener');
+      expect(itemElement.getAttribute('download')).toBe('report.pdf');
+    });
+
+    it('should not set target, rel or download when href is absent', () => {
+      hostComponent.href = undefined;
+      hostComponent.target = '_blank';
+      hostComponent.rel = 'noreferrer noopener';
+      hostComponent.download = 'report.pdf';
+      hostFixture.detectChanges();
+
+      expect(itemElement.hasAttribute('href')).toBeFalse();
+      expect(itemElement.hasAttribute('target')).toBeFalse();
+      expect(itemElement.hasAttribute('rel')).toBeFalse();
+      expect(itemElement.hasAttribute('download')).toBeFalse();
+    });
+
+    it('should remove link attributes when href is cleared', () => {
+      hostComponent.href = 'https://example.com';
+      hostComponent.target = '_blank';
+      hostComponent.rel = 'noreferrer';
+      hostComponent.download = 'file.txt';
+      hostFixture.detectChanges();
+
+      expect(itemElement.getAttribute('href')).toBe('https://example.com');
+      expect(itemElement.getAttribute('target')).toBe('_blank');
+
+      hostComponent.href = undefined;
+      hostFixture.detectChanges();
+
+      expect(itemElement.hasAttribute('href')).toBeFalse();
+      expect(itemElement.hasAttribute('target')).toBeFalse();
+      expect(itemElement.hasAttribute('rel')).toBeFalse();
+      expect(itemElement.hasAttribute('download')).toBeFalse();
+    });
+
+    it('should support an empty download attribute for default filenames', () => {
+      hostComponent.href = '/files/report.pdf';
+      hostComponent.download = '';
+      hostFixture.detectChanges();
+
+      expect(itemElement.hasAttribute('download')).toBeTrue();
+      expect(itemElement.getAttribute('download')).toBe('');
+    });
+
+    it('should support each documented target value', () => {
+      hostComponent.href = 'https://example.com';
+
+      for (const target of ['_blank', '_parent', '_self', '_top']) {
+        hostComponent.target = target;
+        hostFixture.detectChanges();
+        expect(itemElement.getAttribute('target')).toBe(target);
+      }
+    });
+
+    it('should update the href reactively', () => {
+      hostComponent.href = '/one';
+      hostFixture.detectChanges();
+      expect(itemElement.getAttribute('href')).toBe('/one');
+
+      hostComponent.href = '/two';
+      hostFixture.detectChanges();
+      expect(itemElement.getAttribute('href')).toBe('/two');
+    });
+
+    it('should allow link attributes alongside other item attributes', () => {
+      hostComponent.href = 'https://example.com';
+      hostComponent.value = 'docs';
+      hostComponent.variant = 'default';
+      hostComponent.disabled = true;
+      hostFixture.detectChanges();
+
+      expect(itemElement.getAttribute('href')).toBe('https://example.com');
+      expect(itemElement.getAttribute('value')).toBe('docs');
+      expect(itemElement.getAttribute('variant')).toBe('default');
+      expect(itemElement.hasAttribute('disabled')).toBeTrue();
+    });
+  });
+
+  it('should set CSS custom properties', () => {    hostComponent.backgroundColorHover = '#f0f0f0';
     hostComponent.textColorHover = '#333';
     hostFixture.detectChanges();
 

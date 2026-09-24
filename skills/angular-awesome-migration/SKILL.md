@@ -31,7 +31,7 @@ Workflow for migrating wrapper implementations when the upstream Web Awesome com
 
 ## Example: Toast Migration (Custom → Official)
 
-**Before:** Custom `wa-toast-container` rendering `<wa-callout>` elements with manual CSS positioning.
+**Before:** Custom `waa-toast-container` rendering `<wa-callout>` elements with manual CSS positioning.
 
 **After:** Official `<wa-toast>` + `<wa-toast-item>` web components.
 

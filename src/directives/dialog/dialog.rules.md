@@ -1,5 +1,7 @@
 ## Dialog Rules for Angular Wrapper
 
+Web Awesome 3.14 adds `[withLabel]` for server rendering when the `label` slot provides the accessible name. Set it for the first server-rendered frame; keep a `label` attribute when `withoutHeader` is set.
+
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
 ### Selector

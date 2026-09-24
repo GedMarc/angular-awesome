@@ -18,6 +18,8 @@ wa-divider
 | ------------- | ------------------------------ | ---------------------------------------------------------------- |
 | `orientation` | `'vertical' \| 'horizontal'`   | Sets the orientation of the divider. Default is `'horizontal'`.   |
 | `vertical`    | boolean                        | **Deprecated.** Use `orientation="vertical"` instead.             |
+| `withLabel`   | boolean                        | Include the default-slot label in server-rendered markup.         |
+| `labelPlacement` | `'start' \| 'center' \| 'end'` | Position of the default-slot label.                 |
 
 ### Style Inputs
 
@@ -28,6 +30,10 @@ All CSS custom properties from the Web Awesome component are supported as Angula
 | `color`   | `--color`   | The color of the divider.           |
 | `width`   | `--width`   | The thickness/width of the divider. |
 | `spacing` | `--spacing` | Space around the divider.           |
+| `labelSpacing` | `--label-spacing` | Space around the label. |
+| `labelOffset` | `--label-offset` | Edge line length for start/end labels. |
+
+The default slot accepts an optional label. The label container is exposed as the `label` CSS part.
 
 These can be passed as strings, e.g.,
 

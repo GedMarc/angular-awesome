@@ -11,6 +11,7 @@ import { WaPageComponent } from './page.component';
       [disableSticky]="disableSticky"
       [navigationPlacement]="navigationPlacement"
       [disableNavigationToggle]="disableNavigationToggle"
+      [nonce]="nonce"
       [menuWidth]="menuWidth"
       [mainWidth]="mainWidth"
       [asideWidth]="asideWidth"
@@ -43,6 +44,7 @@ class TestHostComponent {
   disableSticky?: string;
   navigationPlacement?: 'start' | 'end';
   disableNavigationToggle?: boolean | string;
+  nonce?: string;
 
   menuWidth?: string;
   mainWidth?: string;
@@ -81,6 +83,18 @@ describe('WaPageComponent', () => {
   it('should create the page component', () => {
     expect(hostComponent).toBeTruthy();
     expect(pageElement).toBeTruthy();
+  });
+
+  it('updates the nonce used by Web Awesome for injected styles', () => {
+    hostComponent.nonce = 'first';
+    hostFixture.detectChanges();
+    expect(pageElement.getAttribute('nonce')).toBe('first');
+    hostComponent.nonce = 'second';
+    hostFixture.detectChanges();
+    expect(pageElement.getAttribute('nonce')).toBe('second');
+    hostComponent.nonce = undefined;
+    hostFixture.detectChanges();
+    expect(pageElement.hasAttribute('nonce')).toBeFalse();
   });
 
   it('should set mobile breakpoint attribute correctly', () => {

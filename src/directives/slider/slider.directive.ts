@@ -136,6 +136,7 @@ export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlVal
       } else {
         val = target.value !== '' ? parseFloat(target.value) : null;
       }
+      this.onChange(val);
       this.valueChange.emit(val);
     };
 
@@ -337,7 +338,14 @@ export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlVal
         }
       } else {
         // Regular slider
-        this.setAttr('value', value?.toString());
+        const numericValue = value == null || value === '' ? null : Number(value);
+        const normalizedValue = Number.isFinite(numericValue) ? numericValue : null;
+        this.renderer.setProperty(this.el.nativeElement, 'value', normalizedValue);
+        if (normalizedValue === null) {
+          this.renderer.removeAttribute(this.el.nativeElement, 'value');
+        } else {
+          this.setAttr('value', String(normalizedValue));
+        }
       }
     }
   }
@@ -351,6 +359,7 @@ export class WaSliderDirective implements OnInit, OnChanges, DoCheck, ControlVal
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', isDisabled);
     if (isDisabled) {
       this.renderer.setAttribute(this.el.nativeElement, 'disabled', '');
     } else {

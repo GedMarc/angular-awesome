@@ -16,7 +16,7 @@ import { WaToastItemDirective } from './toast-item.directive';
  * for each visible toast notification.
  */
 @Component({
-  selector: 'wa-toast-container',
+  selector: 'waa-toast-container',
   standalone: true,
   imports: [CommonModule, WaToastDirective, WaToastItemDirective],
   template: `

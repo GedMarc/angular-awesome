@@ -56,6 +56,77 @@ This component supports template-driven forms using `[(ngModel)]` on the selecte
 * `hide(): void` – Programmatically close the dropdown.
 * `reposition(): void` – Force realignment of the dropdown, typically used if the trigger's layout changes.
 
+---
+
+## Dropdown Item (`wa-dropdown-item`)
+
+Selector: `wa-dropdown-item`
+
+### Inputs
+
+* `type: 'normal' | 'checkbox'` – Set to `checkbox` to make the item a checkbox. Default `'normal'`.
+* `checked: boolean | string` – Checks the item. Only valid when `type` is `checkbox`.
+* `value: string` – Optional value used to identify the item in the dropdown's `wa-select` event.
+* `loading: boolean | string` – Shows a loading indicator on the item.
+* `disabled: boolean | string` – Disables the item.
+* `label: string` – Optional label attribute.
+* `variant: 'default' | 'danger'` – The type of menu item to render. Default `'default'`.
+* `submenuOpen: boolean | string` – Whether the item's submenu is currently open (maps to `submenu-open`).
+
+#### Link Inputs (Web Awesome 3.12+)
+
+A dropdown item can act as a link. When `href` is set the item renders as an anchor internally while
+remaining a menu item for assistive devices.
+
+* `href: string` – When set, selecting the item navigates to this URL. **Ignored when the item has a submenu.**
+* `target: '_blank' | '_parent' | '_self' | '_top'` – Where to open the link. Only used when `href` is present.
+* `rel: string` – Maps to the underlying link's `rel` attribute. Only used when `href` is present.
+* `download: string` – Tells the browser to download the linked file under this filename. Only used when `href` is present.
+
+> ℹ️ The directive only writes `target`, `rel`, and `download` to the DOM while `href` is set. Clearing
+> `href` removes all four attributes, so no orphaned link attributes are left on the element.
+
+> ♿ Because the item stays a menu item for assistive technology, make sure the visible label describes
+> where the link goes (e.g. "Open documentation" rather than "Click here").
+
+### Style Inputs
+
+* `backgroundColorHover: string` → `--background-color-hover`
+* `textColorHover: string` → `--text-color-hover`
+* `padding: string` → `--padding`
+* `margin: string` → `--margin`
+* `fontSize: string` → `--font-size`
+
+### Outputs
+
+* `blurEvent: FocusEvent` – Fires when the item loses focus.
+* `focusEvent: FocusEvent` – Fires when the item gains focus.
+
+### CSS Parts
+
+`checkmark`, `icon`, `label`, `details`, `submenu-icon`, `submenu`.
+
+### CSS States (Web Awesome 3.12+)
+
+Target these with the `:state()` selector:
+
+| State          | Applied when                                  |
+|----------------|-----------------------------------------------|
+| `active`       | The item is the active item in the menu.      |
+| `checked`      | The item is checked.                          |
+| `disabled`     | The item is disabled.                         |
+| `has-submenu`  | The item has a submenu.                       |
+| `link`         | The item is a link (i.e. `href` is set).      |
+| `submenu-open` | The item's submenu is open.                   |
+
+```css
+wa-dropdown-item:state(link) {
+  font-style: italic;
+}
+```
+
+---
+
 ### Features & Behavior
 
 * Slots: `trigger`, default (panel contents).

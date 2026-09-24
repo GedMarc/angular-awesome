@@ -1,5 +1,9 @@
 # Combobox Component Rules
 
+## Web Awesome 3.14 server options
+
+Bind `[dataSource]` to a callback receiving `{ query, signal }` and returning options, HTML, or option elements (possibly asynchronously). `server` turns off client filtering when options are supplied through the `wa-options-request` event instead. Bind `loading` while an event-mode request is pending and `[filterDebounce]` to a delay in milliseconds. Call `reload()` to request the current query again. `waOptionsRequest` and `waOptionsError` expose the corresponding native events; kebab-case output aliases are also available. The `loading`, `no-results`, `empty`, and `error` slots customize status rows. HTML returned by `dataSource` is inserted by Web Awesome without sanitizing it, so the callback must return trusted HTML.
+
 The native `<wa-combobox>` Web Awesome component combines a filterable text input with a listbox so users can search, select, or enter custom values. Use the `wa-combobox` tag directly so the Web Awesome runtime upgrades it.
 
 📌 Follows the base [Web Awesome Angular Rules](../../../RULES.md).

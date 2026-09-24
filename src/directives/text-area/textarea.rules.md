@@ -62,8 +62,15 @@ The `wa-textarea` wraps the `<wa-textarea>` Web Awesome component. Textareas col
 - blank — The textarea is empty. CSS selector: `:state(blank)`
 
 ## CSS parts
-- label — The label
-- form-control-input — The input's wrapper.
+- form-control-label — The label.
+- label — **Deprecated (Web Awesome 3.12).** Use the `form-control-label` part instead.
 - hint — The hint's wrapper.
 - textarea — The internal `<textarea>` control.
-- base — The wrapper around the `<textarea>` control.
+- textarea-wrapper — The component's outer wrapper.
+- base — **Deprecated.** Use the `textarea-wrapper` part instead.
+- textarea-adjuster — The invisible sizer that grows the control to fit its content when `resize` is `auto`.
+- count — The character count element, rendered when the `with-count` attribute is present.
+
+> **Web Awesome 3.12:** the `form-control-input` part was **removed** from `<wa-textarea>`. Style the
+> `textarea-wrapper` part (the outer wrapper) or the `textarea` part (the internal control) instead.
+> This is a shadow-DOM styling hook only — the Angular inputs are unchanged.

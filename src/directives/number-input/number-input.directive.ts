@@ -1,4 +1,4 @@
-import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
+import { Directive, DoCheck, ElementRef, EventEmitter, forwardRef, Injector, Input, OnDestroy, OnInit, OnChanges, SimpleChanges, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, NG_VALIDATORS, AbstractControl, ValidationErrors, NgControl } from '@angular/forms';
 import { SizeToken } from '../../types/tokens';
 import { syncFormValidationState } from '../shared/form-validation-state';
@@ -35,7 +35,7 @@ import { syncFormValidationState } from '../shared/form-validation-state';
     }
   ]
 })
-export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, ControlValueAccessor, Validator {
+export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, OnDestroy, ControlValueAccessor, Validator {
   // Properties (mapped from llms.txt)
   @Input() value?: string | number | null;
   @Input() defaultValue?: string | null;
@@ -83,6 +83,7 @@ export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, Contr
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
   private validatorChange?: () => void;
+  private readonly removeEventListeners: (() => void)[] = [];
 
   ngOnInit(): void {
     const el = this.host.nativeElement;
@@ -92,40 +93,44 @@ export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, Contr
 
     const forwardInput = (event: Event) => {
       this.waInput.emit(event);
-      const val = (event.target as any).value;
+      const val = this.getNumericEventValue(event);
       this.onChange(val);
       this.valueChange.emit(val);
     };
 
     const forwardChange = (event: Event) => {
       this.waChange.emit(event);
-      const val = (event.target as any).value;
+      const val = this.getNumericEventValue(event);
       this.onChange(val);
       this.valueChange.emit(val);
     };
 
-    this.renderer.listen(el, 'input', forwardInput);
-    this.renderer.listen(el, 'wa-input', forwardInput);
+    this.removeEventListeners.push(this.renderer.listen(el, 'input', forwardInput));
+    this.removeEventListeners.push(this.renderer.listen(el, 'wa-input', forwardInput));
 
-    this.renderer.listen(el, 'change', forwardChange);
-    this.renderer.listen(el, 'wa-change', forwardChange);
+    this.removeEventListeners.push(this.renderer.listen(el, 'change', forwardChange));
+    this.removeEventListeners.push(this.renderer.listen(el, 'wa-change', forwardChange));
 
-    this.renderer.listen(el, 'focus', (event: FocusEvent) => this.waFocus.emit(event));
-    this.renderer.listen(el, 'wa-focus', (event: CustomEvent) => this.waFocus.emit(event as unknown as FocusEvent));
+    this.removeEventListeners.push(this.renderer.listen(el, 'focus', (event: FocusEvent) => this.waFocus.emit(event)));
+    this.removeEventListeners.push(this.renderer.listen(el, 'wa-focus', (event: CustomEvent) => this.waFocus.emit(event as unknown as FocusEvent)));
 
-    this.renderer.listen(el, 'blur', (event: FocusEvent) => {
+    this.removeEventListeners.push(this.renderer.listen(el, 'blur', (event: FocusEvent) => {
       this.waBlur.emit(event);
       this.onTouched();
-    });
-    this.renderer.listen(el, 'wa-blur', (event: CustomEvent) => {
+    }));
+    this.removeEventListeners.push(this.renderer.listen(el, 'wa-blur', (event: CustomEvent) => {
       this.waBlur.emit(event as unknown as FocusEvent);
       this.onTouched();
-    });
+    }));
 
-    this.renderer.listen(el, 'wa-invalid', (event: CustomEvent) => {
+    this.removeEventListeners.push(this.renderer.listen(el, 'wa-invalid', (event: CustomEvent) => {
       this.waInvalid.emit(event);
       this.validatorChange?.();
-    });
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.removeEventListeners.splice(0).forEach(remove => remove());
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -152,7 +157,7 @@ export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, Contr
   }
 
   private applyInputs(): void {
-    this.setAttr('value', this.value);
+    this.writeNumberValue(this.value);
     this.setAttr('size', this.size);
     this.setAttr('appearance', this.appearance);
     this.setBooleanAttr('pill', this.pill);
@@ -249,10 +254,7 @@ export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, Contr
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-      this.setAttr('value', value);
-    }
+    this.writeNumberValue(value);
   }
 
   registerOnChange(fn: any): void {
@@ -264,8 +266,36 @@ export class WaNumberInputDirective implements OnInit, OnChanges, DoCheck, Contr
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.host.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
     this.validatorChange?.();
+  }
+
+  private writeNumberValue(value: unknown): void {
+    const normalizedValue = this.normalizeNumberValue(value);
+    const element = this.host.nativeElement as HTMLElement & { value?: number | null };
+
+    this.value = normalizedValue;
+    this.renderer.setProperty(element, 'value', normalizedValue);
+    if (normalizedValue === null) {
+      this.renderer.removeAttribute(element, 'value');
+    } else {
+      this.renderer.setAttribute(element, 'value', String(normalizedValue));
+    }
+  }
+
+  private getNumericEventValue(event: Event): number | null {
+    const source = (event.currentTarget || event.target || this.host.nativeElement) as { value?: unknown };
+    return this.normalizeNumberValue(source.value);
+  }
+
+  private normalizeNumberValue(value: unknown): number | null {
+    if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '')) {
+      return null;
+    }
+
+    const numericValue = typeof value === 'number' ? value : Number(value);
+    return Number.isFinite(numericValue) ? numericValue : null;
   }
 
   // Validator implementation: expose validation errors to Angular forms

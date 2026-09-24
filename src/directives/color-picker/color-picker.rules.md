@@ -78,8 +78,14 @@ CSS custom properties
 - --slider-handle-size: The diameter of the slider's handle.
 
 CSS parts
-- base: The component's base wrapper.
+- base: **Deprecated (Web Awesome 3.12).** Use the `color-picker` part instead.
+- color-picker: The dropdown panel that holds the grid, sliders, and swatches.
 - trigger: The color picker's dropdown trigger.
+- trigger-container: The container that wraps the color picker's trigger.
+- form-control: The form control that wraps the label, input, and hint.
+- form-control-label: The label.
+- form-control-input: The color picker's trigger button.
+- hint: The hint's wrapper.
 - swatches: The container that holds the swatches.
 - swatch: Each individual swatch.
 - grid: The color grid.
@@ -104,6 +110,11 @@ CSS parts
 - format-button__label: The format button's exported label part.
 - format-button__end: The format button's exported end part.
 - format-button__caret: The format button's exported caret part.
+
+> **Web Awesome 3.12 CSS part changes.** These are shadow-DOM styling hooks only — the Angular inputs are
+> unchanged. Migrate any `::part(base)` selectors to `::part(color-picker)`, which now targets the dropdown
+> panel holding the grid, sliders, and swatches. `form-control-input` now targets the color picker's trigger
+> button, and the `form-control` and `hint` parts are newly exposed.
 
 ## Child Dependencies
 

@@ -462,6 +462,32 @@ describe('WaSelectWrapperComponent', () => {
     expect(hostComponent.value).toBe('option2');
   });
 
+  it('reads live selection when the reflected attribute is stale and ignores duplicate events', async () => {
+    selectComponent.writeValue('option1');
+    await hostFixture.whenStable();
+    const changed = jasmine.createSpy('changed');
+    selectComponent.registerOnChange(changed);
+    (selectElement as any).value = 'option2';
+    expect(selectElement.getAttribute('value')).toBe('option1');
+    selectElement.dispatchEvent(new Event('input'));
+    selectElement.dispatchEvent(new CustomEvent('wa-change'));
+    expect(changed).toHaveBeenCalledOnceWith('option2');
+  });
+
+  it('does not feed programmatic writes back into ngModel', async () => {
+    const changed = jasmine.createSpy('changed');
+    selectComponent.registerOnChange(changed);
+    selectComponent.writeValue('option2');
+    await hostFixture.whenStable();
+    selectElement.dispatchEvent(new Event('change'));
+    selectElement.dispatchEvent(new CustomEvent('wa-change'));
+    expect(changed).not.toHaveBeenCalled();
+    selectComponent.writeValue('option1');
+    await hostFixture.whenStable();
+    expect((selectElement as any).value).toBe('option1');
+    expect(changed).not.toHaveBeenCalled();
+  });
+
   it('should update ngModel on change for multiple selection', () => {
     hostComponent.multiple = true;
     hostFixture.detectChanges();

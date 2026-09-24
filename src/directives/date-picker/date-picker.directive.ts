@@ -98,7 +98,9 @@ export class WaDatePickerDirective implements OnInit, OnChanges, DoCheck, Contro
     };
 
     this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
     this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
     this.renderer.listen(nativeEl, 'wa-focus-day', (event: CustomEvent) => this.waFocusDay.emit(event));
     this.renderer.listen(nativeEl, 'wa-view-change', (event: CustomEvent) => this.waViewChange.emit(event));
   }
@@ -125,7 +127,7 @@ export class WaDatePickerDirective implements OnInit, OnChanges, DoCheck, Contro
 
   private applyInputs() {
     this.setAttr('mode', this.mode);
-    this.setAttr('value', this.value);
+    this.writeControlValue(this.value);
     this.setAttr('min', this.min);
     this.setAttr('max', this.max);
     this.setAttr('today', this.today);
@@ -146,6 +148,7 @@ export class WaDatePickerDirective implements OnInit, OnChanges, DoCheck, Contro
     this.setBooleanAttr('with-outside-days', this.withOutsideDays);
     this.setBooleanAttr('with-week-numbers', this.withWeekNumbers);
     this.setBooleanAttr('readonly', this.readonly);
+    this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('disable-past', this.disablePast);
     this.setBooleanAttr('disable-future', this.disableFuture);
   }
@@ -208,10 +211,7 @@ export class WaDatePickerDirective implements OnInit, OnChanges, DoCheck, Contro
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-      this.setAttr('value', value == null ? undefined : String(value));
-    }
+    this.writeControlValue(value);
   }
 
   registerOnChange(fn: any): void {
@@ -223,7 +223,15 @@ export class WaDatePickerDirective implements OnInit, OnChanges, DoCheck, Contro
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
+  }
+
+  private writeControlValue(value: unknown): void {
+    const stringValue = value == null ? '' : String(value);
+    this.value = stringValue || undefined;
+    this.renderer.setProperty(this.el.nativeElement, 'value', stringValue);
+    this.setAttr('value', stringValue || undefined);
   }
 }
 

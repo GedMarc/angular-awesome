@@ -359,6 +359,7 @@ export class WaInputDirective implements OnInit, OnChanges, DoCheck, ControlValu
   writeValue(value: any): void {
     if (value !== undefined) {
       this.value = value;
+      this.renderer.setProperty(this.el.nativeElement, 'value', value ?? '');
       this.setAttr('value', value?.toString());
     }
   }
@@ -372,6 +373,7 @@ export class WaInputDirective implements OnInit, OnChanges, DoCheck, ControlValu
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
     this.validatorChange?.();
   }

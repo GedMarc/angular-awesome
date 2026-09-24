@@ -3,6 +3,85 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
+## [3.14.0] - 2026-09-25
+
+### Added
+- `WaStepDirective` and `WaStepperDirective` for Web Awesome's experimental step navigation, including status and orientation inputs, cancelable change events, `activeChange`, and navigation methods.
+- `wa-page` CSP `nonce` binding for its injected media-query style.
+- `wa-combobox` server options: `dataSource`, `server`, `loading`, `filterDebounce`, `reload()`, and request/error events.
+- `wa-divider` slotted labels, SSR `withLabel`, label placement, and label styling inputs.
+- SSR `withLabel` binding for `wa-dialog` and `wa-drawer`.
+- `wa-zoomable-frame` `allow`, `name`, and accessible `label` bindings.
+
+### Changed
+- Aligned compatibility guidance and generated docs with the 90-component Web Awesome 3.14 API.
+
+
+## [3.13.0] - 2026-09-18
+### Added
+- **wa-tag-input:** New `WaTagInputDirective` wrapping the Web Awesome 3.13 `<wa-tag-input>` component for entering removable lists of tags.
+- Complete bindings for the array-valued `value`, reset `defaultValue`, pending `inputValue`, delimiters, tag limits, duplicate/clear behavior, appearance, browser text-entry hints, form association, custom validators, and validation target.
+- Angular template-driven and reactive forms support through `ControlValueAccessor`, with live `string[]` property writes and no synthetic input/change events during programmatic model updates.
+- Angular validation for `required`, `minTags`, and `maxTags`, including Web Awesome's optional-empty behavior for `minTags`.
+- Outputs for input, change, focus, blur, cancelable `wa-create`, `wa-clear`, and `wa-invalid`, plus `valueChange` for direct two-way binding.
+- Delegates for `focus()`, `blur()`, `setCustomValidity()`, `formStateRestoreCallback()`, and `resetValidity()`.
+- Unit tests, usage rules, examples, generated documentation support, package export, component catalog entry, and form-control listing.
+
+### Changed
+- Aligned package metadata and compatibility documentation with Web Awesome 3.13.x.
+- Updated the Web Awesome API reference from 3.12.0 to 3.13.0. The 3.13 specification adds one component and does not change any existing component API.
+
+### Fixed
+- **wa-skeleton:** The wrapper now matches the native `<wa-skeleton>` element directly while retaining `[waSkeleton]` for applying skeleton behavior to other elements.
+- Corrected the npm package's legacy `main` and `es2022` entry points so they resolve to the bundled `fesm2022/angular-awesome.mjs` file included in the published package.
+
+### Notes
+- This release covers all 88 components in the Web Awesome 3.13.0 specification.
+- No breaking changes to existing Angular APIs.
+
+
+## [3.12.1] - 2026-09-04
+### Fixed
+- **wa-checkbox:** `[checked]` is now a controlled runtime binding. Updating an Angular expression from `true` to `false` updates the live `wa-checkbox.checked` property as well as the reflected attribute, so existing checkboxes visibly clear without being recreated.
+- **wa-checkbox:** Programmatic `[checked]` and Angular forms writes do not emit synthetic `change` or `wa-change` events. Native and Web Awesome change events remain user-interaction events and retain their live `target.checked` / `currentTarget.checked` values.
+- Added regression coverage for a dynamic `@for` list through manual selection, Clear, All, Clear, and a derived missing-station selection. The checks verify that the existing checkbox elements are reused while their live checked state changes.
+
+### Notes
+- This is a patch release with no Angular API changes. Applications may bind `[checked]` directly to derived selection state; re-keying checkbox rows to force a visual refresh is no longer needed.
+
+
+## [3.12.0] - 2026-08-22
+### Added
+- **wa-dropdown-item:** Link support — a dropdown item can now navigate when selected, matching the new Web Awesome 3.12 dropdown item API:
+  - `href` — When set, selecting the item navigates to this URL. The item remains a menu item for assistive devices, so make sure the label describes where the link goes. Ignored when the item has a submenu.
+  - `target` (`'_blank' | '_parent' | '_self' | '_top'`) — Tells the browser where to open the link. Only used when `href` is present.
+  - `rel` — Maps to the underlying link's `rel` attribute. Only used when `href` is present.
+  - `download` — Tells the browser to download the linked file under this filename. Only used when `href` is present. An empty string keeps the server-provided filename.
+  - `target`, `rel`, and `download` are only written to the DOM while `href` is set, and all four attributes are removed when `href` is cleared, so no orphaned link attributes remain on the element.
+- Unit tests covering `wa-dropdown-item` link attributes: default absence, `href` reflection, `target`/`rel`/`download` gating on `href`, attribute removal when `href` is cleared, empty `download`, every documented `target` value, reactive `href` updates, and coexistence with the other item attributes.
+- Rules and example documentation for dropdown item links, including new-tab, download, `*ngFor`-bound, and `:state(link)` styling examples.
+
+### Changed
+- Updated `llms.txt` to Web Awesome 3.12.0. The previous specification is retained as `llms_3.11.0.txt`.
+
+### Deprecated
+- **wa-color-picker (upstream CSS parts):** The `base` part is now deprecated in favor of the new `color-picker` part, which targets the dropdown panel that holds the grid, sliders, and swatches. `form-control-input` now targets the color picker's trigger button, and the `form-control` and `hint` parts are newly exposed. These are shadow-DOM styling hooks accessed via `::part()`; the Angular wrapper inputs are unchanged. Update any `::part(base)` selectors to `::part(color-picker)`.
+
+### Removed
+- **CSS parts (upstream):** The following shadow-DOM styling hooks were removed or renamed in Web Awesome 3.12. No Angular input changes are required — only `::part()` style selectors need updating:
+  - **wa-radio-group:** the `radios` part was replaced by `form-control-input`, which now wraps the grouped radios and is styled as a flex container by default.
+  - **wa-textarea:** the `form-control-input` part was removed. Style the `textarea-wrapper` part (the outer wrapper) or the `textarea` part (the internal control) instead.
+  - **wa-slider:** the `tooltip__content` part was renamed to `tooltip__body`.
+  - **wa-page:** the `dialog-wrapper` part was removed. The Angular `[waPageDialogWrapper]` projection slot is unaffected and continues to work.
+  - **wa-video:** the `progress` part was removed.
+
+### Notes
+- This release aligns Angular Awesome with the **Web Awesome 3.12.0** component specification.
+- 0 new components. 3.12 adds no components to the 87-component spec surface — `wa-data-grid`, `wa-otp-input`, and `wa-pagination` were the new components in **3.11** and already shipped in `angular-awesome@3.11.0`.
+- 7 component specifications changed: `wa-dropdown-item` (the only Angular API change), plus `wa-color-picker`, `wa-page`, `wa-radio-group`, `wa-slider`, `wa-textarea`, and `wa-video` (upstream CSS part renames/removals only).
+- No breaking changes to the Angular API.
+- Web Awesome 3.12 also adds documented CSS custom states to `wa-dropdown-item` (`active`, `checked`, `disabled`, `has-submenu`, `link`, `submenu-open`), targetable via the `:state()` selector.
+
 
 ## [3.11.0] - 2026-08-07
 ### Added

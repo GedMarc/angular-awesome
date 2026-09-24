@@ -14,6 +14,9 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
   @Input() loading: 'eager' | 'lazy' | string = 'eager';
   @Input() referrerpolicy?: string;
   @Input() sandbox?: string;
+  @Input() allow?: string;
+  @Input() name?: string;
+  @Input() label?: string;
   @Input() zoom?: number | string;
   @Input() zoomLevels?: string;
   @Input() withoutControls?: boolean | string;
@@ -24,6 +27,8 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
   @Output() load = new EventEmitter<Event>();
   @Output() error = new EventEmitter<Event>();
 
+  private listening = false;
+
   private setAll() {
     const el = this.host.nativeElement;
     this.setAttr('src', this.src);
@@ -32,6 +37,9 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
     this.setAttr('loading', this.loading);
     this.setAttr('referrerpolicy', this.referrerpolicy);
     this.setAttr('sandbox', this.sandbox);
+    this.setAttr('allow', this.allow);
+    this.setAttr('name', this.name);
+    this.setAttr('label', this.label);
     this.setNumericAttr('zoom', this.zoom);
     this.setAttr('zoom-levels', this.zoomLevels);
     this.setBooleanAttr('without-controls', this.withoutControls);
@@ -39,8 +47,11 @@ export class WaZoomableFrameDirective implements AfterViewInit, OnChanges {
     this.setBooleanAttr('with-theme-sync', this.withThemeSync);
 
     // Events passthrough from internal iframe are re-dispatched by web component
-    this.renderer.listen(el, 'load', (e: Event) => this.load.emit(e));
-    this.renderer.listen(el, 'error', (e: Event) => this.error.emit(e));
+    if (!this.listening) {
+      this.listening = true;
+      this.renderer.listen(el, 'load', (e: Event) => this.load.emit(e));
+      this.renderer.listen(el, 'error', (e: Event) => this.error.emit(e));
+    }
   }
 
   ngAfterViewInit(): void { this.setAll(); }

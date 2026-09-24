@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { WaNumberInputDirective } from './number-input.directive';
 
 // Test host that binds every supported input + event of the directive
@@ -266,7 +266,7 @@ describe('WaNumberInputDirective', () => {
       numberInputElement.dispatchEvent(new Event('input'));
 
       expect(hostComponent.onValueChange).toHaveBeenCalled();
-      expect(received[received.length - 1]).toBe('42');
+      expect(received[received.length - 1]).toBe(42);
     });
   });
 
@@ -280,6 +280,7 @@ describe('WaNumberInputDirective', () => {
       tick();
       hostFixture.detectChanges();
 
+      expect((numberInputElement as any).value).toBe(7);
       expect(numberInputElement.getAttribute('value')).toBe('7');
     }));
 
@@ -307,7 +308,7 @@ describe('WaNumberInputDirective', () => {
       hostFixture.detectChanges();
       tick();
 
-      expect(hostComponent.value).toBe('25');
+      expect(hostComponent.value as string | number | null | undefined).toBe(25);
     }));
 
     it('should update the model from a wa-input event (view -> model)', fakeAsync(() => {
@@ -320,7 +321,7 @@ describe('WaNumberInputDirective', () => {
       hostFixture.detectChanges();
       tick();
 
-      expect(hostComponent.value).toBe('12');
+      expect(hostComponent.value as string | number | null | undefined).toBe(12);
     }));
 
     it('should update the model from a native change event (view -> model)', fakeAsync(() => {
@@ -333,7 +334,7 @@ describe('WaNumberInputDirective', () => {
       hostFixture.detectChanges();
       tick();
 
-      expect(hostComponent.value).toBe('88');
+      expect(hostComponent.value as string | number | null | undefined).toBe(88);
     }));
 
     it('should update the model from a wa-change event (view -> model)', fakeAsync(() => {
@@ -346,7 +347,7 @@ describe('WaNumberInputDirective', () => {
       hostFixture.detectChanges();
       tick();
 
-      expect(hostComponent.value).toBe('33');
+      expect(hostComponent.value as string | number | null | undefined).toBe(33);
     }));
 
     it('should fire ngModelChange exactly once per input event', fakeAsync(() => {
@@ -362,7 +363,7 @@ describe('WaNumberInputDirective', () => {
       tick();
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith('5');
+      expect(spy).toHaveBeenCalledWith(5);
     }));
 
     it('should keep model and view in sync through several edits', fakeAsync(() => {
@@ -376,7 +377,7 @@ describe('WaNumberInputDirective', () => {
         numberInputElement.dispatchEvent(new Event('input'));
         hostFixture.detectChanges();
         tick();
-        expect(hostComponent.value).toBe(v);
+        expect(hostComponent.value as string | number | null | undefined).toBe(Number(v));
       }
 
       // Final model -> view round trip
@@ -391,14 +392,46 @@ describe('WaNumberInputDirective', () => {
       hostFixture.detectChanges();
       tick();
 
-      const form = hostFixture.debugElement.children[0].injector.get(NgForm, null);
-      // NgForm may not be present (no <form>), so guard and use the directive control instead
+      const model = hostFixture.debugElement
+        .query(sel => sel.nativeElement === numberInputElement)
+        .injector.get(NgModel);
       numberInputElement.dispatchEvent(new FocusEvent('blur'));
       hostFixture.detectChanges();
       tick();
 
-      // No throw is the primary assertion here; onTouched wiring is exercised.
-      expect(form === null || form !== undefined).toBeTrue();
+      expect(model.control.touched).toBeTrue();
+    }));
+
+    it('should convert a blank value to null', fakeAsync(() => {
+      hostComponent.value = 12;
+      hostFixture.detectChanges();
+      tick();
+
+      setNativeValue(numberInputElement, '');
+      numberInputElement.dispatchEvent(new Event('input'));
+      hostFixture.detectChanges();
+      tick();
+
+      expect(hostComponent.value).toBeNull();
+    }));
+
+    it('should keep station value 1 as a number', fakeAsync(() => {
+      setNativeValue(numberInputElement, '1');
+      numberInputElement.dispatchEvent(new Event('wa-change'));
+      hostFixture.detectChanges();
+      tick();
+
+      expect(hostComponent.value).toBe(1);
+      expect(typeof hostComponent.value).toBe('number');
+    }));
+
+    it('should convert an invalid numeric value to null', fakeAsync(() => {
+      setNativeValue(numberInputElement, 'not-a-number');
+      numberInputElement.dispatchEvent(new Event('input'));
+      hostFixture.detectChanges();
+      tick();
+
+      expect(hostComponent.value).toBeNull();
     }));
   });
 

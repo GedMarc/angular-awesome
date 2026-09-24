@@ -85,8 +85,8 @@ describe('wa-select-wrapper [(ngModel)] on BrowserStack', () => {
     expect(nativeEl.hasAttribute('value')).toBeFalse();
   });
 
-  it('should update model when native input fires after setting value attribute', () => {
-    nativeEl.setAttribute('value', 'two');
+  it('should update model when native input fires after changing the live selection', () => {
+    (nativeEl as any).value = 'two';
     nativeEl.dispatchEvent(new Event('input', { bubbles: true }));
     fixture.detectChanges();
 
@@ -122,8 +122,8 @@ describe('wa-select-wrapper [(ngModel)] on BrowserStack', () => {
 
     expect(nativeEl.getAttribute('value')).toBe('one three');
 
-    // Simulate WC change to different array via attribute
-    nativeEl.setAttribute('value', 'two three');
+    // Web Awesome changes the live array before emitting its event.
+    (nativeEl as any).value = ['two', 'three'];
     nativeEl.dispatchEvent(new Event('change', { bubbles: true }));
     fixture.detectChanges();
 
@@ -168,14 +168,14 @@ describe('wa-select-wrapper [(ngModel)] on BrowserStack', () => {
     await fixture.whenStable();
 
     // Simulate selecting a value then clearing it via wa-clear
-    nativeEl.setAttribute('value', 'one');
+    (nativeEl as any).value = 'one';
     nativeEl.dispatchEvent(new Event('change', { bubbles: true }));
     fixture.detectChanges();
     expect(component.value).toBe('one');
 
-    nativeEl.dispatchEvent(new CustomEvent('wa-clear'));
-    // In our wrapper, wa-clear triggers output only; ensure value cleared manually
+    (nativeEl as any).value = '';
     nativeEl.removeAttribute('value');
+    nativeEl.dispatchEvent(new CustomEvent('wa-clear'));
     nativeEl.dispatchEvent(new Event('input', { bubbles: true }));
     fixture.detectChanges();
 
