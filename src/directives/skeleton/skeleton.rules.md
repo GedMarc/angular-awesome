@@ -2,7 +2,7 @@
 
 📌 This directive assumes compliance with general [Web Awesome Angular Rules](../../../RULES.md).
 
-The Angular wrapper for `<wa-skeleton>` is a structural directive used to scaffold content placeholders with optional animation effects. It does **not** use `ngModel` or emit output events.
+The Angular wrapper for `<wa-skeleton>` scaffolds content placeholders with optional animation effects. It does **not** use `ngModel` or emit output events. The same directive can also be applied to another element with the `waSkeleton` attribute.
 
 ---
 
@@ -10,13 +10,19 @@ The Angular wrapper for `<wa-skeleton>` is a structural directive used to scaffo
 
 ```ts
 @Directive({
-  selector: '[waSkeleton]'
+  selector: 'wa-skeleton, [waSkeleton]'
 })
 ```
 
 ## Usage
 
-The directive is applied as an attribute to a placeholder element:
+Use the native Web Awesome element directly:
+
+```html
+<wa-skeleton effect="sheen"></wa-skeleton>
+```
+
+Or apply skeleton behavior to another placeholder element:
 
 ```html
 <div waSkeleton effect="sheen"></div>

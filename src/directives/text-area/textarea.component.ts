@@ -155,6 +155,7 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
 
   writeValue(val: any): void {
     this._value = val ?? '';
+    this.renderer.setProperty(this.host.nativeElement, 'value', this._value);
     this.host.nativeElement.setAttribute('value', this._value);
   }
 
@@ -168,6 +169,7 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this.renderer.setProperty(this.host.nativeElement, 'disabled', isDisabled);
     this.host.nativeElement.toggleAttribute('disabled', isDisabled);
     this.validatorChange?.();
   }

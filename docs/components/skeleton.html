@@ -88,7 +88,9 @@
         <div class="main-content">
             <header>
                 <h1>Skeleton Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
-                <p class="subtitle"><wa-skeleton> provides skeleton functionality for Angular applications.</p>
+                <p class="subtitle">html
+<wa-skeleton effect="sheen"></wa-skeleton>
+</p>
             </header>
 
             <main>
@@ -110,7 +112,10 @@ import { WaSkeletonDirective } from 'angular-awesome/skeleton';</pre>
         <h2>Examples</h2>
         <h1>Skeleton Examples</h1>
 <h2>Basic Usage</h2>
-<pre><code class="language-html">&lt;div waSkeleton&gt;This content will be styled as a skeleton loader&lt;/div&gt;
+<pre><code class="language-html">&lt;wa-skeleton effect=&quot;sheen&quot;&gt;&lt;/wa-skeleton&gt;
+
+&lt;!-- The attribute form can style another element as a skeleton. --&gt;
+&lt;div waSkeleton&gt;This content will be styled as a skeleton loader&lt;/div&gt;
 </code></pre>
 <h2>Different Effects</h2>
 <pre><code class="language-html">&lt;!-- Default effect (sheen) --&gt;

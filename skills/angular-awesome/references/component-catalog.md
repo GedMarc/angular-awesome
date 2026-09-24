@@ -17,6 +17,7 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Color Picker | `wa-color-picker` | value, format, disabled, size, label | ✅ |
 | File Input | `wa-file-input` | accept, multiple, disabled | ✅ |
 | OTP Input | `wa-otp-input` | length, format, type, mask, case, size, label, required | ✅ |
+| Tag Input | `wa-tag-input` | value, delimiter, minTags, maxTags, allowDuplicates, withClear, size, label | ✅ |
 | Option | `wa-option` | value, disabled | — |
 
 ## Feedback & Overlay
@@ -28,13 +29,13 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Dialog | `wa-dialog` | open, label, noHeader |
 | Drawer | `wa-drawer` | open, label, placement, contained |
 | Dropdown | `wa-dropdown` | open, placement, distance, skidding |
-| Dropdown Item | `wa-dropdown-item` | type, checked, disabled, loading, value |
+| Dropdown Item | `wa-dropdown-item` | type, checked, disabled, loading, value, href, target, rel, download |
 | Popover | `wa-popover` | active, anchor, placement, distance, arrow, flip, shift |
 | Popup | `wa-popup` | active, anchor, placement, distance, skidding |
 | Tooltip | `wa-tooltip` | placement, disabled, distance, open, showDelay, hideDelay |
 | Toast | `wa-toast` | placement |
 | Toast Item | `wa-toast-item` | variant, size, duration |
-| Toast Container | `wa-toast-container` | placement |
+| Toast Container | `waa-toast-container` | placement |
 | Spinner | `wa-spinner` | size |
 | Progress Bar | `wa-progress-bar` | value, max, label, indeterminate |
 | Progress Ring | `wa-progress-ring` | value, max, label, size |
@@ -53,6 +54,8 @@ Quick reference for all exported directives/components, their selectors, and pri
 | Data Grid | `wa-data-grid` | data, columns, rowKey, selectable, paginate, pageSize, withSearch, striped, dataSource, sort, selectedKeys |
 | Details | `wa-details` | summary, open, disabled |
 | Divider | `wa-divider` | vertical |
+| Step | `wa-step` | name, completed, loading, disabled, variant, attention |
+| Stepper | `wa-stepper` | active, orientation, linear, clickable, label |
 | Icon | `wa-icon` | name, src, label, size |
 | Include | `wa-include` | src, mode, allowScripts |
 | Pagination | `wa-pagination` | total, pageSize, page, siblingCount, boundaryCount, format, appearance, withEdges, withSummary |

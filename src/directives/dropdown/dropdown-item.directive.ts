@@ -9,6 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  *
  * Features:
  * - Binds attributes: type, checked, value, loading, disabled, label, variant
+ * - Binds link attributes: href, target, rel, download (Web Awesome 3.12+)
  * - Emits events: blurNative, focusNative
  * - Enables Angular-style class and style bindings
  * - Allows slot projection for content, icon, details, submenu, etc.
@@ -20,6 +21,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  * - icon: Icon to display at the start of the item (replaces start slot)
  * - details: Additional details like keyboard shortcuts
  * - submenu: Nested dropdown items for creating submenus
+ *
+ * CSS States (Web Awesome 3.12+), targetable with `:state(...)`:
+ * - active, checked, disabled, has-submenu, link, submenu-open
  */
 @Directive({
   selector: 'wa-dropdown-item',
@@ -41,6 +45,18 @@ export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueA
   @Input() label?: string;
   @Input() variant?: 'danger' | 'default' | string;
   @Input() submenuOpen?: boolean | string;
+
+  /**
+   * Link inputs (Web Awesome 3.12+).
+   *
+   * When `href` is set, selecting the item navigates to the URL. The item remains a menu item for
+   * assistive devices, so make sure the label describes where the link goes. `href` is ignored when
+   * the item has a submenu. `target`, `rel`, and `download` are only used when `href` is present.
+   */
+  @Input() href?: string;
+  @Input() target?: '_blank' | '_parent' | '_self' | '_top' | string;
+  @Input() rel?: string;
+  @Input() download?: string;
 
   // Style inputs
   @Input() backgroundColorHover?: string;
@@ -99,6 +115,14 @@ export class WaDropdownItemDirective implements OnInit, OnChanges, ControlValueA
     this.setAttr('value', this.value);
     this.setAttr('label', this.label);
     this.setAttr('variant', this.variant);
+
+    // Set link attributes (Web Awesome 3.12+).
+    // `target`, `rel`, and `download` are only meaningful alongside `href`, so they are removed
+    // when `href` is absent to avoid emitting orphaned attributes onto the element.
+    this.setAttr('href', this.href);
+    this.setAttr('target', this.href != null ? this.target : undefined);
+    this.setAttr('rel', this.href != null ? this.rel : undefined);
+    this.setAttr('download', this.href != null ? this.download : undefined);
 
     // Set boolean attributes (only if true)
     this.setBooleanAttr('checked', this.checked);

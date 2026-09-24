@@ -309,6 +309,7 @@ export class WaOtpInputDirective implements OnInit, OnChanges, OnDestroy, DoChec
   writeValue(value: any): void {
     if (value !== undefined) {
       this.value = value;
+      this.renderer.setProperty(this.host.nativeElement, 'value', value ?? '');
       this.setAttr('value', value);
     }
   }
@@ -322,6 +323,7 @@ export class WaOtpInputDirective implements OnInit, OnChanges, OnDestroy, DoChec
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.host.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
     this.validatorChange?.();
   }

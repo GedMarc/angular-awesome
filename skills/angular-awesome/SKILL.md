@@ -7,7 +7,7 @@ metadata:
 
 # Angular Awesome
 
-Angular 20+ standalone directives wrapping Web Awesome 3.11.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
+Angular 20+ standalone directives wrapping Web Awesome 3.14.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
 
 ## Quick Start
 
@@ -59,7 +59,7 @@ Bind with Angular syntax; never use string `"true"`:
 ```
 
 ### Form Controls (ControlValueAccessor)
-`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio`, `wa-date-input`, `wa-date-picker`, `wa-known-date`, `wa-time-input` support `[(ngModel)]` and reactive forms.
+`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio`, `wa-date-input`, `wa-date-picker`, `wa-known-date`, `wa-time-input`, `wa-otp-input`, `wa-file-input`, and `wa-tag-input` support `[(ngModel)]` and reactive forms.
 
 ### Events
 Listen to web component custom events via `(wa-*)` outputs:
@@ -73,7 +73,7 @@ import { WaToastService, provideWaToasts } from 'angular-awesome';
 // In providers: ...provideWaToasts({ placement: 'top-end', max: 5 })
 // In component: this.toasts.success('Saved!');
 ```
-Container: `<wa-toast-container placement="top-end"></wa-toast-container>` — once in app root.
+Container: `<waa-toast-container placement="top-end"></waa-toast-container>` — once in app root.
 
 ### Layout Utilities
 `wa-layout-gap`, `wa-layout-align`, `wa-layout-cluster`, `wa-layout-stack`, `wa-layout-grid`, `wa-layout-flank`, `wa-layout-frame`, `wa-layout-split` — structural layout directives.

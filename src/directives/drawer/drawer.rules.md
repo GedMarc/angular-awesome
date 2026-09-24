@@ -2,6 +2,8 @@
 
 # Drawer Rules (`<wa-drawer>`) 🔒
 
+Web Awesome 3.14 adds `[withLabel]` for server rendering when the `label` slot provides the accessible name. Set it for the first server-rendered frame; keep a `label` attribute when `withoutHeader` is set.
+
 The `wa-drawer` component is an overlay panel that slides in from the top, bottom, start, or end of a container.
 This Angular wrapper ensures binding compatibility, accessibility preservation, and CSS custom property styling.
 

@@ -250,6 +250,91 @@ export class DropdownExampleComponent {
 </wa-dropdown>
 ```
 
+## Link Items (Web Awesome 3.12+)
+
+Set `href` on a `<wa-dropdown-item>` to make it navigate when selected. The item stays a menu item for
+assistive devices, so write labels that describe where the link goes.
+
+```html
+<wa-dropdown>
+  <wa-button slot="trigger">Resources</wa-button>
+  <wa-dropdown-item href="/docs">Open documentation</wa-dropdown-item>
+  <wa-dropdown-item href="/changelog">View changelog</wa-dropdown-item>
+</wa-dropdown>
+```
+
+### Opening a Link in a New Tab
+
+`target`, `rel`, and `download` are only applied while `href` is present.
+
+```html
+<wa-dropdown>
+  <wa-button slot="trigger">External</wa-button>
+  <wa-dropdown-item
+    href="https://webawesome.com/docs"
+    target="_blank"
+    rel="noreferrer noopener">
+    Web Awesome docs (opens in a new tab)
+  </wa-dropdown-item>
+</wa-dropdown>
+```
+
+### Download Links
+
+```html
+<wa-dropdown>
+  <wa-button slot="trigger">Export</wa-button>
+  <wa-dropdown-item href="/exports/report.pdf" download="annual-report.pdf">
+    Download PDF report
+  </wa-dropdown-item>
+  <!-- An empty download keeps the server-provided filename -->
+  <wa-dropdown-item href="/exports/data.csv" download="">
+    Download CSV data
+  </wa-dropdown-item>
+</wa-dropdown>
+```
+
+### Bound Link Items
+
+```html
+<wa-dropdown>
+  <wa-button slot="trigger">Account</wa-button>
+  <wa-dropdown-item
+    *ngFor="let link of accountLinks"
+    [href]="link.href"
+    [target]="link.external ? '_blank' : undefined"
+    [rel]="link.external ? 'noreferrer noopener' : undefined">
+    <wa-icon [name]="link.icon" slot="icon"></wa-icon>
+    {{ link.label }}
+  </wa-dropdown-item>
+</wa-dropdown>
+```
+
+```typescript
+// In your component
+export class DropdownExampleComponent {
+  accountLinks = [
+    { label: 'Profile', href: '/account/profile', icon: 'user', external: false },
+    { label: 'Billing', href: '/account/billing', icon: 'credit-card', external: false },
+    { label: 'Support', href: 'https://support.example.com', icon: 'life-ring', external: true },
+  ];
+}
+```
+
+> **Note:** `href` is ignored when the item has a submenu — a submenu trigger always opens its submenu
+> instead of navigating.
+
+### Styling Link Items
+
+Web Awesome 3.12 adds a `link` custom state that is applied whenever `href` is set:
+
+```css
+wa-dropdown-item:state(link)::after {
+  content: '↗';
+  margin-inline-start: var(--wa-space-xs);
+}
+```
+
 ## With Custom Containing Element
 
 ```html

@@ -97,7 +97,10 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
    * to the underlying element (prevents feedback loops with MutationObserver/events).
    */
   private isWriting = false;
+  private isApplyingCheckedState = false;
+  private pendingProgrammaticWrites = 0;
   private attrObserver?: MutationObserver;
+  private programmaticEventSuppressors: (() => void)[] = [];
   private validatorChange?: () => void;
 
   /**
@@ -146,14 +149,18 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
     this.applyInputs();
     this.syncValidationState();
 
+    this.installProgrammaticEventSuppressors(nativeEl);
+
     // Set up event listeners
     this.renderer.listen(nativeEl, 'checkedChange', (event: CustomEvent<boolean>) => {
+      if (this.isApplyingCheckedState) { return; }
       this.checkedChange.emit(event.detail);
       this.onChange(event.detail);
     });
 
     // Standard DOM events
     this.renderer.listen(nativeEl, 'input', (event) => {
+      if (this.isApplyingCheckedState) { return; }
       this.waInput.emit(event);
       // Update model on input to reflect current checked state
       const currentChecked = this.getCurrentChecked();
@@ -162,6 +169,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
       this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'change', (event) => {
+      if (this.isApplyingCheckedState) { return; }
       this.waChange.emit(event);
       // Update model on change to reflect current checked state
       const currentChecked = this.getCurrentChecked();
@@ -172,6 +180,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
 
     // WebAwesome custom events (some environments emit wa-input/wa-change)
     this.renderer.listen(nativeEl, 'wa-input', (event: CustomEvent) => {
+      if (this.isApplyingCheckedState) { return; }
       this.waInput.emit(event as unknown as Event);
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
@@ -179,6 +188,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
       this.validatorChange?.();
     });
     this.renderer.listen(nativeEl, 'wa-change', (event: CustomEvent) => {
+      if (this.isApplyingCheckedState) { return; }
       this.waChange.emit(event as unknown as Event);
       const currentChecked = this.getCurrentChecked();
       this.onChange(currentChecked);
@@ -252,7 +262,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('checked', this.checked);
+    this.writeCheckedState(this.checked);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('indeterminate', this.indeterminate);
@@ -278,6 +288,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
     try {
       this.attrObserver?.disconnect();
     } catch {}
+    this.programmaticEventSuppressors.forEach(removeListener => removeListener());
   }
 
   private syncValidationState(): void {
@@ -373,6 +384,39 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
   }
 
   /**
+   * `checked` is a live property on wa-checkbox. Keeping the attribute in sync
+   * alone only changes its default/reset state after the custom element upgrades.
+   */
+  private writeCheckedState(value: boolean | string | null | undefined): void {
+    const isChecked = value === true || value === 'true' || value === '';
+    this.pendingProgrammaticWrites++;
+    this.isWriting = true;
+    this.isApplyingCheckedState = true;
+    try {
+      this.toggleBooleanAttr('checked', isChecked);
+      this.renderer.setProperty(this.el.nativeElement, 'checked', isChecked);
+    } finally {
+      this.isApplyingCheckedState = false;
+      queueMicrotask(() => {
+        this.pendingProgrammaticWrites--;
+        this.isWriting = this.pendingProgrammaticWrites > 0;
+      });
+    }
+  }
+
+  private installProgrammaticEventSuppressors(nativeEl: HTMLElement): void {
+    const suppressProgrammaticEvent = (event: Event) => {
+      if (this.isApplyingCheckedState) {
+        event.stopImmediatePropagation();
+      }
+    };
+    for (const eventName of ['checkedChange', 'input', 'change', 'wa-input', 'wa-change']) {
+      nativeEl.addEventListener(eventName, suppressProgrammaticEvent, true);
+      this.programmaticEventSuppressors.push(() => nativeEl.removeEventListener(eventName, suppressProgrammaticEvent, true));
+    }
+  }
+
+  /**
    * Toggles a boolean attribute based on a boolean value (adds when true, removes when false)
    */
   private toggleBooleanAttr(name: string, isOn: boolean | null | undefined) {
@@ -395,16 +439,7 @@ export class WaCheckboxDirective implements OnInit, OnChanges, OnDestroy, DoChec
   // ControlValueAccessor implementation
   writeValue(value: any): void {
     if (value !== undefined) {
-      const isChecked = !!value;
-      this.isWriting = true;
-      try {
-        this.renderer.setProperty(this.el.nativeElement, 'checked', isChecked);
-        // Ensure attribute reflects current state for Web Components relying on attributes
-        this.toggleBooleanAttr('checked', isChecked);
-      } finally {
-        // Use a microtask to allow MutationObserver to settle without emitting back
-        Promise.resolve().then(() => (this.isWriting = false));
-      }
+      this.writeCheckedState(!!value);
     }
   }
 

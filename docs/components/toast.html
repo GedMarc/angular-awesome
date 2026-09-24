@@ -109,11 +109,11 @@ import { WaToastDirective } from 'angular-awesome/toast';</pre>
       <section>
         <h2>Examples</h2>
         <h1>Toasts Examples</h1>
-<p>This page shows how to use the official <code>&lt;wa-toast&gt;</code> and <code>&lt;wa-toast-item&gt;</code> web components via the <code>WaToastService</code> and the <code>&lt;wa-toast-container&gt;</code> component.</p>
+<p>This page shows how to use the official <code>&lt;wa-toast&gt;</code> and <code>&lt;wa-toast-item&gt;</code> web components via the <code>WaToastService</code> and the <code>&lt;waa-toast-container&gt;</code> component.</p>
 <h2>Basic Setup</h2>
 <p>Add the container once near the application root (e.g., in <code>app.component.html</code>). It renders <code>&lt;wa-toast&gt;</code> with <code>&lt;wa-toast-item&gt;</code> elements for each notification.</p>
 <pre><code class="language-html">&lt;!-- app.component.html --&gt;
-&lt;wa-toast-container placement=&quot;top-end&quot;&gt;&lt;/wa-toast-container&gt;
+&lt;waa-toast-container placement=&quot;top-end&quot;&gt;&lt;/waa-toast-container&gt;
 </code></pre>
 <p>Optionally configure defaults during bootstrap:</p>
 <pre><code class="language-ts">// main.ts (bootstrapApplication)
@@ -153,7 +153,7 @@ export class DemoToastsComponent {
 </code></pre>
 <h2>Placement</h2>
 <p>Change where the toast stack renders on the screen with the <code>placement</code> input, using the official <code>&lt;wa-toast&gt;</code> placement values:</p>
-<pre><code class="language-html">&lt;wa-toast-container placement=&quot;bottom-center&quot;&gt;&lt;/wa-toast-container&gt;
+<pre><code class="language-html">&lt;waa-toast-container placement=&quot;bottom-center&quot;&gt;&lt;/waa-toast-container&gt;
 </code></pre>
 <p>Supported placements: <code>top-start</code>, <code>top-center</code>, <code>top-end</code>, <code>bottom-start</code>, <code>bottom-center</code>, <code>bottom-end</code>.</p>
 <h2>Using the Directive Directly</h2>

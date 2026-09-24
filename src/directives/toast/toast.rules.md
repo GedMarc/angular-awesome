@@ -20,7 +20,7 @@ Toasts are small, contextual notifications that appear on the screen and disappe
 Add a single container once in your app shell (e.g., `app.component.html`). Then inject `WaToastService` to display notifications from anywhere.
 
 ```html
-<wa-toast-container placement="top-end"></wa-toast-container>
+<waa-toast-container placement="top-end"></waa-toast-container>
 ```
 
 Optionally provide defaults during bootstrap:
@@ -76,7 +76,7 @@ Slots
 
 ### WaToastContainerComponent (standalone component)
 
-- selector: `wa-toast-container`
+- selector: `waa-toast-container`
 - purpose: Renders the on-screen stack of toasts using `<wa-toast>` and `<wa-toast-item>` elements. Subscribes to `WaToastService.toasts$`.
 
 Inputs

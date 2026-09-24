@@ -168,6 +168,31 @@ export class CheckboxFormExampleComponent implements OnInit {
 </wa-checkbox>
 ```
 
+## Controlled Dynamic Selection
+
+Bind `[checked]` to the selection owned by the component when checkbox state is derived from a collection. Clearing or replacing that collection updates the existing controls without recreating their rows.
+
+```html
+@for (station of stations; track station.id) {
+  <wa-checkbox
+    [checked]="selectedStationIds.has(station.id)"
+    (change)="toggleStation(station.id, $event)"
+    (wa-change)="toggleStation(station.id, $event)">
+    {{ station.name }}
+  </wa-checkbox>
+}
+```
+
+```typescript
+selectedStationIds = new Set<string>();
+
+clearStations(): void {
+  this.selectedStationIds = new Set();
+}
+```
+
+Changing `[checked]` programmatically does not dispatch `change` or `wa-change`; use those events for operator interaction.
+
 ## Event Handling
 
 ```typescript

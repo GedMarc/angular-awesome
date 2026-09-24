@@ -29,6 +29,7 @@ export class WaDrawerDirective implements OnInit, OnChanges {
 
   // SSR inputs
   @Input() withFooter?: boolean | string;
+  @Input() withLabel?: boolean | string;
 
   // String inputs
   @Input() label?: string;
@@ -97,6 +98,7 @@ export class WaDrawerDirective implements OnInit, OnChanges {
     this.setBooleanAttr('without-header', this.withoutHeader);
     this.setBooleanAttr('light-dismiss', this.lightDismiss);
     this.setBooleanAttr('with-footer', this.withFooter);
+    this.setBooleanAttr('with-label', this.withLabel);
 
     // Set style attributes
     this.setCssVar('--background-color', this.backgroundColor);

@@ -12,7 +12,7 @@ This file documents Angular integration for the <wa-checkbox> web component, ali
 
 | Name           | Type                                          | Binding Required | Notes                                                                                     |
 | -------------- | --------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
-| `checked`      | `boolean \| string`                           | Yes              | Determines if the checkbox is checked.                                                    |
+| `checked`      | `boolean \| string`                           | Yes              | Controlled live state. Angular updates immediately set or clear `checked`, including `true -> false`. |
 | `value`        | `string \| null`                              | No               | Value attribute for the checkbox.                                                         |
 | `name`         | `string`                                      | No               | Used in form submissions.                                                                 |
 | `form`         | `string \| null`                              | No               | Link to external form by ID.                                                              |
@@ -46,6 +46,23 @@ Use `[(ngModel)]` for binding form values in Angular template-driven forms. Do n
 ```
 
 The `name` attribute is required for `ngModel` in forms.
+
+## Controlled Checked State
+
+Use `[checked]` when application state owns the selection. It updates the live Web Awesome control, not only its initial or form-reset value. Model-driven updates do not emit `change` or `wa-change`; those events remain reserved for user interaction.
+
+```html
+@for (station of stations; track station.id) {
+  <wa-checkbox
+    [checked]="selectedStationIds.has(station.id)"
+    (change)="toggleStation(station.id, $event)"
+    (wa-change)="toggleStation(station.id, $event)">
+    {{ station.name }}
+  </wa-checkbox>
+}
+```
+
+Replacing `selectedStationIds` with a new empty `Set` immediately unchecks the existing controls. Do not re-key rows solely to refresh a checkbox after clearing selection.
 
 ## Methods
 

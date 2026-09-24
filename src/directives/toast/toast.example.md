@@ -1,6 +1,6 @@
 # Toasts Examples
 
-This page shows how to use the official `<wa-toast>` and `<wa-toast-item>` web components via the `WaToastService` and the `<wa-toast-container>` component.
+This page shows how to use the official `<wa-toast>` and `<wa-toast-item>` web components via the `WaToastService` and the `<waa-toast-container>` component.
 
 ## Basic Setup
 
@@ -8,7 +8,7 @@ Add the container once near the application root (e.g., in `app.component.html`)
 
 ```html
 <!-- app.component.html -->
-<wa-toast-container placement="top-end"></wa-toast-container>
+<waa-toast-container placement="top-end"></waa-toast-container>
 ```
 
 Optionally configure defaults during bootstrap:
@@ -59,7 +59,7 @@ export class DemoToastsComponent {
 Change where the toast stack renders on the screen with the `placement` input, using the official `<wa-toast>` placement values:
 
 ```html
-<wa-toast-container placement="bottom-center"></wa-toast-container>
+<waa-toast-container placement="bottom-center"></waa-toast-container>
 ```
 
 Supported placements: `top-start`, `top-center`, `top-end`, `bottom-start`, `bottom-center`, `bottom-end`.

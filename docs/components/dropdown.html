@@ -314,6 +314,72 @@ export class DropdownExampleComponent {
   &lt;wa-dropdown-item&gt;Item 3&lt;/wa-dropdown-item&gt;
 &lt;/wa-dropdown&gt;
 </code></pre>
+<h2>Link Items (Web Awesome 3.12+)</h2>
+<p>Set <code>href</code> on a <code>&lt;wa-dropdown-item&gt;</code> to make it navigate when selected. The item stays a menu item for
+assistive devices, so write labels that describe where the link goes.</p>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Resources&lt;/wa-button&gt;
+  &lt;wa-dropdown-item href=&quot;/docs&quot;&gt;Open documentation&lt;/wa-dropdown-item&gt;
+  &lt;wa-dropdown-item href=&quot;/changelog&quot;&gt;View changelog&lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h3>Opening a Link in a New Tab</h3>
+<p><code>target</code>, <code>rel</code>, and <code>download</code> are only applied while <code>href</code> is present.</p>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;External&lt;/wa-button&gt;
+  &lt;wa-dropdown-item
+    href=&quot;https://webawesome.com/docs&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noreferrer noopener&quot;&gt;
+    Web Awesome docs (opens in a new tab)
+  &lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h3>Download Links</h3>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Export&lt;/wa-button&gt;
+  &lt;wa-dropdown-item href=&quot;/exports/report.pdf&quot; download=&quot;annual-report.pdf&quot;&gt;
+    Download PDF report
+  &lt;/wa-dropdown-item&gt;
+  &lt;!-- An empty download keeps the server-provided filename --&gt;
+  &lt;wa-dropdown-item href=&quot;/exports/data.csv&quot; download=&quot;&quot;&gt;
+    Download CSV data
+  &lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<h3>Bound Link Items</h3>
+<pre><code class="language-html">&lt;wa-dropdown&gt;
+  &lt;wa-button slot=&quot;trigger&quot;&gt;Account&lt;/wa-button&gt;
+  &lt;wa-dropdown-item
+    *ngFor=&quot;let link of accountLinks&quot;
+    [href]=&quot;link.href&quot;
+    [target]=&quot;link.external ? &#39;_blank&#39; : undefined&quot;
+    [rel]=&quot;link.external ? &#39;noreferrer noopener&#39; : undefined&quot;&gt;
+    &lt;wa-icon [name]=&quot;link.icon&quot; slot=&quot;icon&quot;&gt;&lt;/wa-icon&gt;
+    {{ link.label }}
+  &lt;/wa-dropdown-item&gt;
+&lt;/wa-dropdown&gt;
+</code></pre>
+<pre><code class="language-typescript">// In your component
+export class DropdownExampleComponent {
+  accountLinks = [
+    { label: &#39;Profile&#39;, href: &#39;/account/profile&#39;, icon: &#39;user&#39;, external: false },
+    { label: &#39;Billing&#39;, href: &#39;/account/billing&#39;, icon: &#39;credit-card&#39;, external: false },
+    { label: &#39;Support&#39;, href: &#39;https://support.example.com&#39;, icon: &#39;life-ring&#39;, external: true },
+  ];
+}
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> <code>href</code> is ignored when the item has a submenu — a submenu trigger always opens its submenu
+instead of navigating.</p>
+</blockquote>
+<h3>Styling Link Items</h3>
+<p>Web Awesome 3.12 adds a <code>link</code> custom state that is applied whenever <code>href</code> is set:</p>
+<pre><code class="language-css">wa-dropdown-item:state(link)::after {
+  content: &#39;↗&#39;;
+  margin-inline-start: var(--wa-space-xs);
+}
+</code></pre>
 <h2>With Custom Containing Element</h2>
 <pre><code class="language-html">&lt;div #container class=&quot;dropdown-container&quot;&gt;
   &lt;wa-dropdown [containingElement]=&quot;container&quot;&gt;

@@ -169,9 +169,18 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, Con
   }
 
   private getKeysFromValue(val: any | any[]): string[] {
-    if (val == null) return [];
+    if (val == null || val === '') return [];
     const toKey = (v: any) => this.getKeyFor(v);
     return Array.isArray(val) ? val.map(toKey) : [toKey(val)];
+  }
+
+  private publishValue(value: any): void {
+    const previous = this.getKeysFromValue(this.value);
+    const next = this.getKeysFromValue(value);
+    if (previous.length === next.length && previous.every((key, index) => key === next[index])) return;
+    this.value = value;
+    this.onChange(value);
+    this.valueChange.emit(value);
   }
 
   ngOnInit() {
@@ -183,11 +192,8 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, Con
     // Set up event listeners
     const handleValueRead = () => {
       const el: any = this.el.nativeElement;
-      // Prefer attribute first; fallback to property
-      let raw: any = el?.getAttribute?.('value');
-      if (raw == null) {
-        raw = el?.value ?? '';
-      }
+      // Web Awesome updates the live property before emitting; the attribute can still hold the model's old value.
+      const raw: any = el?.value ?? el?.getAttribute?.('value') ?? '';
       let newValue: string | string[] = raw;
       if (this.multiple === true || this.multiple === 'true' || this.multiple === '') {
         if (!Array.isArray(newValue)) {
@@ -213,8 +219,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, Con
         }
       }
       const mapped = this.mapFromKeys(newValue);
-      this.onChange(mapped);
-      this.valueChange.emit(mapped);
+      this.publishValue(mapped);
     };
 
     // Listen to both standard and WebAwesome custom events
@@ -300,8 +305,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, Con
               }
             }
             const mapped = this.mapFromKeys(newValue);
-            this.onChange(mapped);
-            this.valueChange.emit(mapped);
+            this.publishValue(mapped);
           }
         }
       });
@@ -377,10 +381,7 @@ export class WaSelectWrapperComponent implements OnInit, OnChanges, DoCheck, Con
       const max = this.parseMaxSelected();
       if (max != null) {
         const el: any = this.el.nativeElement;
-        let raw: any = el?.getAttribute?.('value');
-        if (raw == null) {
-          raw = el?.value ?? '';
-        }
+        const raw: any = el?.value ?? el?.getAttribute?.('value') ?? '';
         const currentKeys: string[] = Array.isArray(raw)
           ? raw
           : String(raw).split(' ').filter(v => v !== '');

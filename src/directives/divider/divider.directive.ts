@@ -20,11 +20,15 @@ export class WaDividerDirective implements OnInit, OnChanges {
   // Boolean inputs
   @Input() orientation?: 'vertical' | 'horizontal';
   @Input() vertical?: boolean | string; // @deprecated Use orientation="vertical" instead
+  @Input() withLabel?: boolean | string;
+  @Input() labelPlacement?: 'start' | 'center' | 'end';
 
   // Style inputs
   @Input() color?: string;
   @Input() width?: string;
   @Input() spacing?: string;
+  @Input() labelSpacing?: string;
+  @Input() labelOffset?: string;
 
   // Injected services
   private readonly el = inject(ElementRef);
@@ -58,9 +62,18 @@ export class WaDividerDirective implements OnInit, OnChanges {
     }
 
     // Set style attributes
+    if (this.withLabel === true || this.withLabel === '' || this.withLabel === 'true') {
+      this.renderer.setAttribute(el, 'with-label', '');
+    } else {
+      this.renderer.removeAttribute(el, 'with-label');
+    }
+    if (this.labelPlacement != null) this.renderer.setAttribute(el, 'label-placement', this.labelPlacement);
+    else this.renderer.removeAttribute(el, 'label-placement');
     this.setCssVar('--color', this.color);
     this.setCssVar('--width', this.width);
     this.setCssVar('--spacing', this.spacing);
+    this.setCssVar('--label-spacing', this.labelSpacing);
+    this.setCssVar('--label-offset', this.labelOffset);
   }
 
   /**

@@ -1,8 +1,8 @@
 {
   "name": "angular-awesome",
-  "version": "3.11.0",
+  "version": "3.14.0",
   "private": false,
-  "description": "Angular 20+ wrappers for the Web Awesome 3.11.x web components framework",
+  "description": "Angular 20+ wrappers for the Web Awesome 3.14.x web components framework",
   "keywords": [
     "angular",
     "web-awesome",
@@ -27,9 +27,9 @@
     "docs:build": "npm run docs:generate && ng build",
     "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add"
   },
-  "main": "dist/angular-awesome/fesm2022/angular-awesome.js",
-  "module": "dist/angular-awesome/fesm2022/angular-awesome.js",
-  "es2022": "dist/angular-awesome/fesm2022/angular-awesome.js",
+  "main": "fesm2022/angular-awesome.mjs",
+  "module": "fesm2022/angular-awesome.mjs",
+  "es2022": "fesm2022/angular-awesome.mjs",
   "typings": "dist/angular-awesome/index.d.ts",
   "peerDependencies": {
     "@angular/common": ">=20.0.0",

@@ -165,7 +165,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
     this.setAttr('size', this.size);
 
     // Set boolean attributes (only if true)
-    this.setBooleanAttr('checked', this.checked);
+    this.writeCheckedState(this.checked);
     this.setBooleanAttr('disabled', this.disabled);
     this.setBooleanAttr('required', this.required);
     this.setBooleanAttr('with-hint', this.withHint);
@@ -231,7 +231,7 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
   // ControlValueAccessor implementation
   writeValue(value: any): void {
     if (value !== undefined) {
-      this.renderer.setProperty(this.el.nativeElement, 'checked', !!value);
+      this.writeCheckedState(value);
     }
   }
 
@@ -244,8 +244,15 @@ export class WaSwitchDirective implements OnInit, OnChanges, DoCheck, ControlVal
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
     this.validatorChange?.();
+  }
+
+  private writeCheckedState(value: boolean | string | null | undefined): void {
+    const isChecked = value === true || value === 'true' || value === '';
+    this.renderer.setProperty(this.el.nativeElement, 'checked', isChecked);
+    this.setBooleanAttr('checked', isChecked);
   }
 
   // Validator implementation: expose required error to Angular forms

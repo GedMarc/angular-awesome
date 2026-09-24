@@ -17,6 +17,7 @@ The `<wa-page>` component is a comprehensive layout container that structures we
 | `view`                | `'mobile' \| 'desktop'` | Read-only view mode based on `mobileBreakpoint`.                   |
 | `disableSticky`       | `string`                | Space-separated list of sticky sections to disable.                |
 | `navigationPlacement` | `'start' \| 'end'`      | Placement of mobile nav drawer.                                    |
+| `nonce`               | `string`                | CSP nonce for the media-query style injected by Web Awesome 3.14. |
 
 ---
 
@@ -87,6 +88,11 @@ These are available via `@ViewChild()` or directly from the native element:
 * Style slots individually using `[slot='name'] { ... }` CSS selectors.
 * The page includes an accessible "Skip to content" link. Customize this via the `skip-to-content` slot using `[waPageSkipToContent]` to support i18n or custom phrasing.
 * The `dialog-wrapper` slot can be used to project modals or floating layers that need to appear above the layout structure.
+
+> **Web Awesome 3.12:** the `dialog-wrapper` **CSS part** was removed upstream. The Angular
+> `[waPageDialogWrapper]` projection slot is unaffected and continues to work — only `::part(dialog-wrapper)`
+> style selectors need to be removed.
+
 
 ---
 

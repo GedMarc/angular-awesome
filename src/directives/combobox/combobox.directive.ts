@@ -66,6 +66,11 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
 
   // Rich behavior inputs
   @Input() filter?: ((option: any, query: string) => boolean) | null;
+  /** Load options for the current query; setting this enables server mode. */
+  @Input() dataSource?: ((request: { query: string; signal: AbortSignal }) => unknown) | null;
+  @Input() server?: boolean | string;
+  @Input() loading?: boolean | string;
+  @Input() filterDebounce?: number | string;
   @Input() getTag?: any;
 
   // Object binding helpers
@@ -106,6 +111,10 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
   @Output() waCreate = new EventEmitter<CustomEvent>();
   @Output('wa-create') waCreateHyphen = this.waCreate;
   @Output() valueChange = new EventEmitter<any>();
+  @Output() waOptionsRequest = new EventEmitter<CustomEvent<{ query: string; signal: AbortSignal }>>();
+  @Output('wa-options-request') waOptionsRequestHyphen = this.waOptionsRequest;
+  @Output() waOptionsError = new EventEmitter<CustomEvent<{ error: unknown; request: { query: string } }>>();
+  @Output('wa-options-error') waOptionsErrorHyphen = this.waOptionsError;
 
   private el = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
@@ -234,6 +243,8 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
     this.renderer.listen(nativeEl, 'wa-create', (event: CustomEvent) => {
       this.waCreate.emit(event);
     });
+    this.renderer.listen(nativeEl, 'wa-options-request', (event: CustomEvent) => this.waOptionsRequest.emit(event));
+    this.renderer.listen(nativeEl, 'wa-options-error', (event: CustomEvent) => this.waOptionsError.emit(event));
 
     try {
       this.attrObserver = new MutationObserver(mutations => {
@@ -298,9 +309,10 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
     this.setAttr('validation-target', this.validationTarget);
     this.setAttr('form', (this.el.nativeElement as any).form ?? undefined);
     this.setNumericAttr('max-options-visible', this.maxOptionsVisible);
+    this.setNumericAttr('filter-debounce', this.filterDebounce);
 
     const host = this.el.nativeElement;
-    ['pill', 'with-clear', 'disabled', 'multiple', 'required', 'allow-custom-value', 'allow-create', 'with-label', 'with-hint', 'open', 'spellcheck'].forEach(attr =>
+    ['pill', 'with-clear', 'disabled', 'multiple', 'required', 'allow-custom-value', 'allow-create', 'with-label', 'with-hint', 'open', 'spellcheck', 'server', 'loading'].forEach(attr =>
       host.removeAttribute(attr)
     );
 
@@ -315,6 +327,8 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
     this.setBooleanAttr('with-label', this.withLabel);
     this.setBooleanAttr('with-hint', this.withHint);
     this.setBooleanAttr('spellcheck', this.spellcheck);
+    this.setBooleanAttr('server', this.server);
+    this.setBooleanAttr('loading', this.loading);
 
     this.setAttr('input-value', this.inputValue);
     this.setAttr('autocapitalize', this.autocapitalize);
@@ -331,9 +345,8 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
     this.setCssVar('--text-color-current', this.textColorCurrent);
     this.setCssVar('--text-color-hover', this.textColorHover);
 
-    if (this.filter) {
-      (this.el.nativeElement as any).filter = this.filter;
-    }
+    if (this.filter !== undefined) (this.el.nativeElement as any).filter = this.filter;
+    if (this.dataSource !== undefined) (this.el.nativeElement as any).dataSource = this.dataSource;
     if (this.getTag) {
       (this.el.nativeElement as any).getTag = this.getTag;
     }
@@ -345,6 +358,10 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
 
   public get nativeElement(): HTMLElement {
     return this.el.nativeElement;
+  }
+
+  reload(): Promise<void> {
+    return (this.el.nativeElement as HTMLElement & { reload?: () => Promise<void> }).reload?.() ?? Promise.resolve();
   }
 
   private setAttr(name: string, value: string | null | undefined): void {

@@ -105,6 +105,24 @@ class ReactiveFormComponent {
   });
 }
 
+@Component({
+  template: `
+    @for (station of stations; track station) {
+      <wa-checkbox [checked]="selectedIds.has(station)">{{ station }}</wa-checkbox>
+    }
+  `,
+  standalone: true,
+  imports: [WaCheckboxDirective]
+})
+class DynamicStationListComponent {
+  stations = ['station-1', 'station-2', 'station-3'];
+  selectedIds = new Set<string>();
+
+  select(ids: string[]): void {
+    this.selectedIds = new Set(ids);
+  }
+}
+
 describe('WaCheckboxDirective', () => {
   let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
@@ -178,6 +196,30 @@ describe('WaCheckboxDirective', () => {
     expect(checkboxElement.hasAttribute('disabled')).toBeFalse();
     expect(checkboxElement.hasAttribute('required')).toBeFalse();
     expect(checkboxElement.hasAttribute('indeterminate')).toBeFalse();
+  });
+
+  it('should update the live checked property when a controlled binding changes', () => {
+    spyOn(hostComponent, 'onChange');
+    let liveChecked = false;
+    Object.defineProperty(checkboxElement, 'checked', {
+      configurable: true,
+      get: () => liveChecked,
+      set: (value: boolean) => {
+        liveChecked = value;
+        checkboxElement.dispatchEvent(new Event('change'));
+        checkboxElement.dispatchEvent(new Event('wa-change'));
+      }
+    });
+
+    hostComponent.checked = true;
+    hostFixture.detectChanges();
+    expect((checkboxElement as any).checked).toBeTrue();
+
+    hostComponent.checked = false;
+    hostFixture.detectChanges();
+    expect((checkboxElement as any).checked).toBeFalse();
+    expect(checkboxElement.hasAttribute('checked')).toBeFalse();
+    expect(hostComponent.onChange).not.toHaveBeenCalled();
   });
 
   it('should handle string values for boolean attributes', () => {
@@ -289,6 +331,44 @@ describe('WaCheckboxDirective', () => {
     expect(checkboxElement.style.getPropertyValue('--box-shadow')).toBe('0 0 5px rgba(0,0,0,0.2)');
     expect(checkboxElement.style.getPropertyValue('--checked-icon-color')).toBe('white');
     expect(checkboxElement.style.getPropertyValue('--toggle-size')).toBe('24px');
+  });
+});
+
+describe('WaCheckboxDirective - Controlled dynamic list', () => {
+  it('keeps existing @for checkbox elements synchronized through selection transitions', async () => {
+    await TestBed.configureTestingModule({
+      imports: [DynamicStationListComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(DynamicStationListComponent);
+    fixture.detectChanges();
+
+    const elements = Array.from(fixture.nativeElement.querySelectorAll('wa-checkbox')) as Array<HTMLElement & { checked: boolean }>;
+    expect(elements.map(element => element.checked)).toEqual([false, false, false]);
+
+    // Manual selection, followed by Clear.
+    fixture.componentInstance.select(['station-1', 'station-2']);
+    fixture.detectChanges();
+    expect(elements.map(element => element.checked)).toEqual([true, true, false]);
+
+    fixture.componentInstance.select([]);
+    fixture.detectChanges();
+    expect(elements.map(element => element.checked)).toEqual([false, false, false]);
+
+    // All, Clear, then an externally-derived missing-station selection.
+    fixture.componentInstance.select(fixture.componentInstance.stations);
+    fixture.detectChanges();
+    expect(elements.map(element => element.checked)).toEqual([true, true, true]);
+
+    fixture.componentInstance.select([]);
+    fixture.detectChanges();
+    expect(elements.map(element => element.checked)).toEqual([false, false, false]);
+
+    fixture.componentInstance.select(['station-3']);
+    fixture.detectChanges();
+    const currentElements = Array.from(fixture.nativeElement.querySelectorAll('wa-checkbox')) as Array<HTMLElement & { checked: boolean }>;
+    currentElements.forEach((element, index) => expect(element).toBe(elements[index]));
+    expect(currentElements.map(element => element.checked)).toEqual([false, false, true]);
   });
 });
 

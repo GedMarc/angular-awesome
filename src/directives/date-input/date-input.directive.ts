@@ -132,11 +132,18 @@ export class WaDateInputDirective implements OnInit, OnChanges, DoCheck, Control
     };
 
     this.renderer.listen(nativeEl, 'input', forwardInput);
+    this.renderer.listen(nativeEl, 'wa-input', forwardInput);
     this.renderer.listen(nativeEl, 'change', forwardChange);
+    this.renderer.listen(nativeEl, 'wa-change', forwardChange);
 
     this.renderer.listen(nativeEl, 'focus', (event: FocusEvent) => this.waFocus.emit(event));
+    this.renderer.listen(nativeEl, 'wa-focus', (event: CustomEvent) => this.waFocus.emit(event as unknown as FocusEvent));
     this.renderer.listen(nativeEl, 'blur', (event: FocusEvent) => {
       this.waBlur.emit(event);
+      this.onTouched();
+    });
+    this.renderer.listen(nativeEl, 'wa-blur', (event: CustomEvent) => {
+      this.waBlur.emit(event as unknown as FocusEvent);
       this.onTouched();
     });
 
@@ -182,7 +189,7 @@ export class WaDateInputDirective implements OnInit, OnChanges, DoCheck, Control
 
   private applyInputs() {
     this.setAttr('name', this.name);
-    this.setAttr('value', this.value);
+    this.writeControlValue(this.value);
     this.setAttr('form', this.form);
     this.setAttr('size', this.size);
     this.setAttr('appearance', normalizeAppearance(this.appearance));
@@ -291,10 +298,7 @@ export class WaDateInputDirective implements OnInit, OnChanges, DoCheck, Control
 
   // ControlValueAccessor implementation
   writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-      this.setAttr('value', value == null ? undefined : String(value));
-    }
+    this.writeControlValue(value);
   }
 
   registerOnChange(fn: any): void {
@@ -306,8 +310,16 @@ export class WaDateInputDirective implements OnInit, OnChanges, DoCheck, Control
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.el.nativeElement, 'disabled', isDisabled);
     this.setBooleanAttr('disabled', isDisabled);
     this.validatorChange?.();
+  }
+
+  private writeControlValue(value: unknown): void {
+    const stringValue = value == null ? '' : String(value);
+    this.value = stringValue || undefined;
+    this.renderer.setProperty(this.el.nativeElement, 'value', stringValue);
+    this.setAttr('value', stringValue || undefined);
   }
 
   // Validator implementation
