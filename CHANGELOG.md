@@ -16,6 +16,10 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 ### Changed
 - Aligned compatibility guidance and generated docs with the 90-component Web Awesome 3.14 API.
 
+### Security
+- Added SHA-384 integrity checks and anonymous CORS loading to the documentation's CDN scripts and stylesheet, including the shared template and all existing component pages.
+- Updated Angular 20 development dependencies and the dependency lockfile to patched versions; added dependency auditing and documentation integrity checks to CI.
+
 
 ## [3.13.0] - 2026-09-18
 ### Added

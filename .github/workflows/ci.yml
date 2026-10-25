@@ -45,6 +45,12 @@ jobs:
       - name: Build library
         run: npm run build
 
+      - name: Audit dependencies
+        run: npm audit --audit-level=low
+
+      - name: Check documentation asset integrity
+        run: npm run test:docs-security
+
   test:
     name: Test
     runs-on: ubuntu-latest
