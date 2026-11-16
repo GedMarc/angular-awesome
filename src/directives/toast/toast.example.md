@@ -54,6 +54,31 @@ export class DemoToastsComponent {
 }
 ```
 
+## Icons and interactive content
+
+Service toasts show a variant icon by default. Pass `icon` to replace it, or `icon: null` to hide it.
+For links, buttons, and other Angular content, pass a `TemplateRef` to `showContent`.
+The template keeps its bindings and click handlers; HTML strings are displayed as text.
+
+```html
+<ng-template #uploadActions>
+  <strong>Upload complete</strong><br />
+  <a href="/files">View file</a> · <button (click)="share()">Share</button>
+</ng-template>
+```
+
+```ts
+import { TemplateRef, ViewChild } from '@angular/core';
+
+@ViewChild('uploadActions') uploadActions!: TemplateRef<unknown>;
+
+uploaded() {
+  this.toasts.showContent(this.uploadActions, { variant: 'success', icon: 'cloud-arrow-up' });
+}
+```
+
+`WaToastDataService.showContent(template, options)` exposes the same call in JWebMP-generated Angular code.
+
 ## Placement
 
 Change where the toast stack renders on the screen with the `placement` input, using the official `<wa-toast>` placement values:

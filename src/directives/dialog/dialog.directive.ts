@@ -103,7 +103,8 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     // Set up event listeners
-    this.renderer.listen(nativeEl, 'wa-show', () => {
+    this.renderer.listen(nativeEl, 'wa-show', (event: Event) => {
+      if (event.target !== nativeEl) return;
       // Restore content as soon as dialog starts to open so internal logic sees correct DOM
       if (this.lazyContent) {
         this.instantiateLazyView();
@@ -112,15 +113,19 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
       }
       this.waShow.emit();
     });
-    this.renderer.listen(nativeEl, 'wa-after-show', () => {
+    this.renderer.listen(nativeEl, 'wa-after-show', (event: Event) => {
+      if (event.target !== nativeEl) return;
       // Content should already be present; just emit events and sync two-way binding
       this.waAfterShow.emit();
       this.openChange.emit(true);
     });
     this.renderer.listen(nativeEl, 'wa-hide', (event: CustomEvent<{ source: HTMLElement | 'overlay' | 'escape' | 'programmatic' }>) => {
+      if (event.target !== nativeEl) return;
       this.waHide.emit(event.detail);
     });
-    this.renderer.listen(nativeEl, 'wa-after-hide', () => {
+    this.renderer.listen(nativeEl, 'wa-after-hide', (event: Event) => {
+      // Nested tooltips and other overlays emit the same bubbling lifecycle events.
+      if (event.target !== nativeEl) return;
       // Remove content only after it fully hides to avoid interfering with open/close sequence
       if (this.lazyContent) {
         this.destroyLazyView();

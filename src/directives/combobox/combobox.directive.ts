@@ -350,6 +350,9 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
     if (this.getTag) {
       (this.el.nativeElement as any).getTag = this.getTag;
     }
+    if (this.value !== undefined) {
+      this.writeValue(this.value);
+    }
   }
 
   private isMultiple(): boolean {
@@ -420,6 +423,7 @@ export class WaComboboxComponent implements OnInit, OnChanges, OnDestroy, DoChec
       } else {
         if (value == null || value === '') {
           this.renderer.setProperty(el, 'value', '');
+          this.renderer.setProperty(el, 'inputValue', '');
           this.el.nativeElement.removeAttribute('value');
         } else {
           const key = this.getKeyFor(value);

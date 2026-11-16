@@ -5,6 +5,7 @@ import { WaToastService } from '../../services/toast/toast.service';
 import { DEFAULT_TOAST_CONFIG, Toast, ToastPlacement } from '../../services/toast/toast.types';
 import { WaToastDirective } from './toast.directive';
 import { WaToastItemDirective } from './toast-item.directive';
+import { WaIconDirective } from '../icon/icon.directive';
 
 /**
  * WaToastContainerComponent
@@ -18,7 +19,7 @@ import { WaToastItemDirective } from './toast-item.directive';
 @Component({
   selector: 'waa-toast-container',
   standalone: true,
-  imports: [CommonModule, WaToastDirective, WaToastItemDirective],
+  imports: [CommonModule, WaToastDirective, WaToastItemDirective, WaIconDirective],
   template: `
     <wa-toast [placement]="placementValue()" role="region" aria-live="polite" aria-label="Notifications">
       <ng-container *ngFor="let t of toasts(); trackBy: trackById">
@@ -29,8 +30,10 @@ import { WaToastItemDirective } from './toast-item.directive';
           [attr.data-toast-id]="t.id"
           (wa-after-hide)="onToastHidden(t)"
         >
+          <wa-icon *ngIf="iconFor(t) as icon" slot="icon" [name]="icon"></wa-icon>
           <strong *ngIf="t.title">{{ t.title }}</strong>
           {{ t.message }}
+          <ng-container *ngIf="t.content" [ngTemplateOutlet]="t.content"></ng-container>
         </wa-toast-item>
       </ng-container>
     </wa-toast>
@@ -74,4 +77,15 @@ export class WaToastContainerComponent implements OnInit, OnDestroy {
   }
 
   trackById = (_: number, t: Toast) => t.id;
+
+  iconFor(toast: Toast): string | null {
+    if (toast.icon !== undefined) return toast.icon;
+    switch (toast.variant) {
+      case 'brand': return 'circle-info';
+      case 'success': return 'check';
+      case 'warning': return 'circle-exclamation';
+      case 'danger': return 'triangle-exclamation';
+      default: return 'gear';
+    }
+  }
 }

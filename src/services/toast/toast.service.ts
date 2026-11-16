@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Provider, inject } from '@angular/core';
+import { Injectable, InjectionToken, Provider, TemplateRef, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DEFAULT_TOAST_CONFIG, Toast, ToastConfig } from './toast.types';
 
@@ -50,6 +50,8 @@ export class WaToastService {
     const toast: Toast = {
       id,
       message,
+      content: options.content,
+      icon: options.icon,
       variant: options.variant,
       size: options.size,
       duration: options.duration ?? this.config.duration,
@@ -58,6 +60,11 @@ export class WaToastService {
     };
     this.enqueue(toast);
     return id;
+  }
+
+  /** Show Angular-authored content with working bindings and event handlers. */
+  showContent(content: TemplateRef<unknown>, options: Partial<Omit<Toast, 'id' | 'message' | 'createdAt'>> = {}): string {
+    return this.show('', { ...options, content });
   }
 
   success(message: string, options: Partial<Omit<Toast, 'id' | 'message' | 'createdAt'>> = {}) {

@@ -29,7 +29,7 @@ import { syncFormValidationState } from '../shared/form-validation-state';
   selector: 'wa-textarea',
   standalone: true,
   encapsulation: ViewEncapsulation.None,
-  template: '',
+  template: '<ng-content></ng-content>',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

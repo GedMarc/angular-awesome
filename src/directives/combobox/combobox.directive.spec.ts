@@ -76,6 +76,56 @@ class ComboboxHostComponent {
   onCreate(_: CustomEvent) {}
 }
 
+@Component({
+  template: `<wa-combobox [value]="value" [multiple]="multiple" (valueChange)="changes.push($event)">
+    <wa-option value="ZA.01">Gauteng</wa-option>
+    <wa-option value="ZA.02">Western Cape</wa-option>
+  </wa-combobox>`,
+  standalone: true,
+  imports: [WaComboboxComponent, WaOptionComponent]
+})
+class BoundComboboxHostComponent {
+  value: string | string[] = 'ZA.01';
+  multiple = false;
+  changes: unknown[] = [];
+}
+
+describe('WaComboboxComponent value binding without ngModel', () => {
+  it('initializes, updates and clears the native selection without echoing a change', async () => {
+    await TestBed.configureTestingModule({ imports: [BoundComboboxHostComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(BoundComboboxHostComponent);
+    const host = fixture.componentInstance;
+    const element = fixture.nativeElement.querySelector('wa-combobox') as HTMLElement & { value: string; inputValue: string };
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.value).toBe('ZA.01');
+    expect(element.getAttribute('value')).toBe('ZA.01');
+    host.value = 'ZA.02';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.value).toBe('ZA.02');
+    element.inputValue = 'Western Cape';
+    host.value = '';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.value).toBe('');
+    expect(element.inputValue).toBe('');
+    expect(element.hasAttribute('value')).toBeFalse();
+    expect(host.changes).toEqual([]);
+  });
+
+  it('forwards a bound array in multiple mode', async () => {
+    await TestBed.configureTestingModule({ imports: [BoundComboboxHostComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(BoundComboboxHostComponent);
+    fixture.componentInstance.multiple = true;
+    fixture.componentInstance.value = ['ZA.01', 'ZA.02'];
+    fixture.detectChanges();
+    const element = fixture.nativeElement.querySelector('wa-combobox');
+    expect(element.value).toEqual(['ZA.01', 'ZA.02']);
+    expect(element.getAttribute('value')).toBe('ZA.01 ZA.02');
+  });
+});
+
 describe('WaComboboxComponent', () => {
   let fixture: ComponentFixture<ComboboxHostComponent>;
   let host: ComboboxHostComponent;

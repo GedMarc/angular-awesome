@@ -108,6 +108,62 @@ describe('WaDialogDirective static attribute handling', () => {
 })
 class LazyHostComponent { open = false; }
 
+@Component({
+  template: `<wa-dialog [(open)]="open" (waShow)="shown = shown + 1" (waAfterShow)="afterShown = afterShown + 1"
+      (waHide)="hiding = hiding + 1" (waAfterHide)="hidden = hidden + 1">
+    <div class="nested-overlay">Dependency description</div>
+  </wa-dialog>`,
+  standalone: true,
+  imports: [WaDialogDirective]
+})
+class LifecycleHostComponent {
+  open = true;
+  shown = 0;
+  afterShown = 0;
+  hiding = 0;
+  hidden = 0;
+}
+
+describe('WaDialogDirective nested overlay lifecycle', () => {
+  it('keeps projected content and ignores descendant lifecycle events while handling its own hide', async () => {
+    await TestBed.configureTestingModule({imports: [LifecycleHostComponent]}).compileComponents();
+    const fixture = TestBed.createComponent(LifecycleHostComponent);
+    fixture.detectChanges();
+    const host = fixture.componentInstance;
+    const dialog: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    const nested = dialog.querySelector('.nested-overlay')!;
+    for (const name of ['wa-show', 'wa-after-show', 'wa-hide', 'wa-after-hide']) {
+      nested.dispatchEvent(new CustomEvent(name, {bubbles: true}));
+    }
+    fixture.detectChanges();
+    expect(host.open).toBeTrue();
+    expect([host.shown, host.afterShown, host.hiding, host.hidden]).toEqual([0, 0, 0, 0]);
+    expect(dialog.querySelector('.nested-overlay')).toBe(nested);
+
+    (dialog as any).open = false;
+    dialog.removeAttribute('open');
+    dialog.dispatchEvent(new CustomEvent('wa-after-hide'));
+    fixture.detectChanges();
+    expect(host.hidden).toBe(1);
+    expect(host.open).toBeFalse();
+    expect(dialog.querySelector('.nested-overlay')).toBeNull();
+  });
+
+  it('does not destroy lazy content when a nested overlay hides', async () => {
+    await TestBed.configureTestingModule({imports: [LazyHostComponent]}).compileComponents();
+    const fixture = TestBed.createComponent(LazyHostComponent);
+    fixture.detectChanges();
+    fixture.componentInstance.open = true;
+    fixture.detectChanges();
+    const dialog: HTMLElement = fixture.nativeElement.querySelector('wa-dialog');
+    const content = dialog.querySelector('.lazy-block')!;
+    content.dispatchEvent(new CustomEvent('wa-after-hide', {bubbles: true}));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open).toBeTrue();
+    expect(dialog.querySelector('.lazy-block')).toBe(content);
+  });
+});
+
 describe('WaDialogDirective with waDialogContent (true lazy)', () => {
   let hostFixture: ComponentFixture<LazyHostComponent>;
   let hostComponent: LazyHostComponent;

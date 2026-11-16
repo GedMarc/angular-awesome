@@ -1,6 +1,16 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { WaToastContainerComponent } from './toast-container.component';
 import { WaToastService, WA_TOAST_CONFIG } from '../../services/toast/toast.service';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+
+@Component({
+  standalone: true,
+  template: '<ng-template #actions><strong>Upload complete</strong><br><a href="/files">View file</a> <button (click)="claimed = true">Claim</button></ng-template>'
+})
+class ToastContentHost {
+  @ViewChild('actions', { static: true }) content!: TemplateRef<unknown>;
+  claimed = false;
+}
 
 function getAttr(el: Element, name: string): string | null {
   return el.getAttribute(name);
@@ -67,6 +77,34 @@ describe('WaToastContainerComponent', () => {
     const host: HTMLElement = fixture.nativeElement as HTMLElement;
     const toastItem = host.querySelector('wa-toast-item') as HTMLElement;
     expect(getAttr(toastItem, 'variant')).toBe('success');
+    expect(getAttr(toastItem.querySelector('wa-icon')!, 'name')).toBe('check');
+  });
+
+  it('uses an explicit icon and can suppress the default icon', () => {
+    fixture.detectChanges();
+    service.success('Uploaded', { icon: 'cloud-arrow-up' });
+    service.danger('Hidden icon', { icon: null });
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('wa-toast-item');
+    expect(getAttr(items[1].querySelector('wa-icon')!, 'name')).toBe('cloud-arrow-up');
+    expect(getAttr(items[1].querySelector('wa-icon')!, 'slot')).toBe('icon');
+    expect(items[0].querySelector('wa-icon')).toBeNull();
+  });
+
+  it('renders template content with working links and actions', () => {
+    const host = TestBed.createComponent(ToastContentHost);
+    host.detectChanges();
+    fixture.detectChanges();
+    service.showContent(host.componentInstance.content, { variant: 'brand', icon: 'gift' });
+    fixture.detectChanges();
+
+    const item = fixture.nativeElement.querySelector('wa-toast-item') as HTMLElement;
+    expect(item.querySelector('strong')?.textContent).toBe('Upload complete');
+    expect(item.querySelector('a')?.getAttribute('href')).toBe('/files');
+    expect(item.querySelector('wa-icon')?.getAttribute('name')).toBe('gift');
+    item.querySelector('button')?.click();
+    expect(host.componentInstance.claimed).toBeTrue();
   });
 
   it('close removes a toast item from the display', () => {

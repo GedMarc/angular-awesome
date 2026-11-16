@@ -18,6 +18,10 @@ export type ToastPlacement =
 export interface Toast {
   id: string;
   message: string;
+  /** Optional projected content. Use an Angular template for links and actions. */
+  content?: TemplateRef<unknown>;
+  /** Icon name. Null suppresses the default icon for the selected variant. */
+  icon?: string | null;
   /** The toast item's variant. */
   variant?: 'brand' | 'success' | 'warning' | 'danger' | 'neutral' | string;
   /** The toast item's size. */
@@ -53,3 +57,4 @@ export const DEFAULT_TOAST_CONFIG: Required<ToastConfig> = {
   duration: 5000,
   newestOnTop: true
 };
+import { TemplateRef } from '@angular/core';
