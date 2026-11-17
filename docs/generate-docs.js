@@ -54,7 +54,7 @@ try {
             <h2>Import</h2>
             <p>Import the {{COMPONENT_NAME}} directive from the angular-awesome package:</p>
             <pre>// Import the {{COMPONENT_NAME}} directive
-import { Wa{{COMPONENT_CLASS_NAME}}Directive } from 'angular-awesome/{{COMPONENT_NAME}}';</pre>
+import { Wa{{COMPONENT_CLASS_NAME}}Directive } from 'angular-awesome';</pre>
         </section>
 
         <section>
@@ -232,7 +232,7 @@ componentDirs.forEach(componentDir => {
         <h2>Import</h2>
         <p>Import the ${componentName} directive from the angular-awesome package:</p>
         <pre>// Import the ${componentName} directive
-import { Wa${componentClassName}Directive } from 'angular-awesome/${componentDir}';</pre>
+import { Wa${componentClassName}Directive } from 'angular-awesome';</pre>
       </section>
 
       <section>
@@ -276,6 +276,7 @@ const componentCategories = {
   'input': 'input',
   'select': 'input',
   'combobox': 'input',
+  'rich-text-editor': 'input',
   'text-area': 'input',
   'checkbox': 'input',
   'checkbox-group': 'input',
@@ -304,10 +305,15 @@ const componentCategories = {
   'table': 'data',
   'list': 'data',
   'avatar': 'data',
+  'counter': 'data',
+  'number-ticker': 'data',
+  'lightbox': 'data',
+  'lightbox-item': 'data',
   'badge': 'data',
   'tag': 'data',
   'tag-input': 'input',
   'icon': 'utility',
+  'code-highlighter': 'utility',
   'dropdown': 'utility',
   'popover': 'utility',
   'date-picker': 'utility',

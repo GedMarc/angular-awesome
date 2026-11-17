@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - NumberTicker Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" integrity="sha384-eFTL69TLRZTkNfYZOLM+G04821K1qZao/4QLJbet1pP4tcF+fdXq/9CdqAbWRl/L" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" integrity="sha384-g4mRvs7AO0/Ol5LxcGyz4Doe21pVhGNnC3EQw5shw+z+aXDN86HqUdwXWO+Gz2zI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js" integrity="sha384-0qNf3gOPByrWMSK2/Xt1NZmLaVJCaP+kGJSe9ZGwFIQ1TsuNVFmt0ZeCmAB742Rz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js" integrity="sha384-y0N5WpxWGm8v4ZDI0gPt9p7sD4yQdzTnUIweOpZfQgNVDBsyweKXIBdfEx+l1/oz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js" integrity="sha384-JbKnO4Cf/XL9vBUo1m+TwxjuLS7FdcYHE3JqNN0sVgMm06Zvw2EemgF5FDJHl/OQ" crossorigin="anonymous"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>NumberTicker Component <span class="version-badge">synced with Web Awesome 3.15.0</span></h1>
+                <p class="subtitle">Import WaNumberTickerDirective from angular-awesome. The ticker starts when visible unless eager is set. Subsequent value changes start from the currently displayed number.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+
+      <section>
+        <h2>Overview</h2>
+        <p>Import `WaNumberTickerDirective` from `angular-awesome`. The ticker starts when visible unless `eager` is set. Subsequent value changes start from the currently displayed number.</p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the numberTicker directive from the angular-awesome package:</p>
+        <pre>// Import the numberTicker directive
+import { WaNumberTickerDirective } from 'angular-awesome';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h3>Animated currency</h3>
+<pre><code class="language-html">&lt;wa-number-ticker [value]=&quot;total&quot; [startValue]=&quot;0&quot; [duration]=&quot;800&quot; type=&quot;currency&quot; currency=&quot;EUR&quot;&gt;
+&lt;/wa-number-ticker&gt;
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        <table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>value</code>, <code>startValue</code></td>
+<td>Target number and first-run or restart value.</td>
+</tr>
+<tr>
+<td><code>duration</code>, <code>delay</code>, <code>easing</code></td>
+<td>Maximum count duration, initial wait in milliseconds, and CSS easing. Set duration to zero for an immediate update.</td>
+</tr>
+<tr>
+<td><code>eager</code></td>
+<td>Start without waiting for visibility.</td>
+</tr>
+<tr>
+<td><code>type</code>, <code>currency</code>, <code>currencyDisplay</code></td>
+<td>Intl number format and currency settings.</td>
+</tr>
+<tr>
+<td><code>withoutGrouping</code></td>
+<td>Hide grouping separators.</td>
+</tr>
+<tr>
+<td><code>minimumIntegerDigits</code>, <code>minimumFractionDigits</code>, <code>maximumFractionDigits</code>, <code>minimumSignificantDigits</code>, <code>maximumSignificantDigits</code></td>
+<td>Intl precision options.</td>
+</tr>
+<tr>
+<td><code>valueFormatter</code></td>
+<td>Optional callback that overrides built-in formatting.</td>
+</tr>
+</tbody></table>
+<p>Call <code>restart()</code> to count from <code>startValue</code> again. Use <code>waFinish</code> or <code>wa-finish</code> to handle completion.</p>
+
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        <p>The ticker exposes the <code>counting</code> custom state during animation.</p>
+<p><a href="https://webawesome.com/docs/components/number-ticker/">Web Awesome number ticker</a></p>
+
+      </section>
+
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

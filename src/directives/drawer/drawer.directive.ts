@@ -19,7 +19,10 @@ import { Directive, ElementRef, EventEmitter, Input, OnInit, OnChanges, SimpleCh
  */
 @Directive({
   selector: 'wa-drawer',
-  standalone: true
+  standalone: true,
+  host: {
+    '[style.--backdrop-color]': 'backdropColor'
+  }
 })
 export class WaDrawerDirective implements OnInit, OnChanges {
   // Boolean inputs
@@ -37,6 +40,7 @@ export class WaDrawerDirective implements OnInit, OnChanges {
 
   // Style inputs
   @Input() backgroundColor?: string;
+  @Input() backdropColor?: string;
   @Input() boxShadow?: string;
   @Input() spacing?: string;
   @Input() size?: string;

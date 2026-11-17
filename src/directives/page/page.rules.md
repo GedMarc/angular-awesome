@@ -15,7 +15,7 @@ The `<wa-page>` component is a comprehensive layout container that structures we
 | `mobileBreakpoint`    | `string \| number`      | Breakpoint for collapsing nav into drawer (e.g., `768px`, `50ch`). |
 | `navOpen`             | `boolean`               | Controls mobile nav drawer state.                                  |
 | `view`                | `'mobile' \| 'desktop'` | Read-only view mode based on `mobileBreakpoint`.                   |
-| `disableSticky`       | `string`                | Space-separated list of sticky sections to disable.                |
+| `disableSticky`       | `string`                | Space-separated list of `banner`, `header`, and `subheader`. Pass null to clear it.                |
 | `navigationPlacement` | `'start' \| 'end'`      | Placement of mobile nav drawer.                                    |
 | `nonce`               | `string`                | CSP nonce for the media-query style injected by Web Awesome 3.14. |
 
@@ -102,7 +102,7 @@ These are available via `@ViewChild()` or directly from the native element:
 <wa-page
   [mobileBreakpoint]="920"
   [navOpen]="navDrawerOpen"
-  [disableSticky]="'aside header'"
+  [disableSticky]="'banner header'"
   [menuWidth]="'15rem'"
   [asideWidth]="'20rem'"
   [bannerHeight]="'40px'"

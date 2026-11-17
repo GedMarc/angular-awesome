@@ -3,7 +3,7 @@ import {
   Input,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  ElementRef, OnChanges, Renderer2
+  ElementRef, OnChanges, Renderer2, SimpleChanges
 } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ export class WaPageComponent implements OnChanges {
 
   @Input() mobileBreakpoint?: string | number;
   @Input() navOpen?: boolean;
-  @Input() disableSticky?: string;
+  @Input() disableSticky?: string | null;
   @Input() navigationPlacement?: 'start' | 'end';
   @Input() disableNavigationToggle?: boolean | string;
   @Input() nonce?: string;
@@ -34,7 +34,7 @@ export class WaPageComponent implements OnChanges {
     return this.el.nativeElement.getAttribute('view') as 'mobile' | 'desktop' | null;
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const el = this.el.nativeElement;
 
     if (this.mobileBreakpoint !== undefined) {
@@ -47,8 +47,9 @@ export class WaPageComponent implements OnChanges {
         el.removeAttribute('nav-open');
       }
     }
-    if (this.disableSticky !== undefined) {
-      el.setAttribute('disable-sticky', this.disableSticky);
+    if (changes['disableSticky']) {
+      if (this.disableSticky == null) this.renderer.removeAttribute(el, 'disable-sticky');
+      else this.renderer.setAttribute(el, 'disable-sticky', this.disableSticky);
     }
     if (this.navigationPlacement !== undefined) {
       el.setAttribute('navigation-placement', this.navigationPlacement);

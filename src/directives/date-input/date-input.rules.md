@@ -102,3 +102,5 @@ hideDuration?: string;  // -> --hide-duration
 * In range mode bind `value` as `YYYY-MM-DD/YYYY-MM-DD`.
 * The component automatically adapts to right-to-left languages.
 
+
+The calendar popup forwards the date picker’s parts under the `date-picker__` prefix, such as `date-picker__grid` and `date-picker__day-selected`. The `date-picker__date-picker` part replaces the deprecated `date-picker__base` part.

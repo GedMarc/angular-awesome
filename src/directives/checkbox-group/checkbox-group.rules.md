@@ -59,13 +59,13 @@ its own `[(ngModel)]`, `formControlName`, or `formControl` binding.
 
 These Angular-style inputs map to the CSS custom properties exposed by the underlying component:
 
-* `styleGap` → `--gap` (the gap between grouped checkboxes, default `0.5em`)
+* `styleGap` → `--gap` (the gap between grouped checkboxes, default `0.75em`)
 
 ### CSS Custom Properties
 
 | Name    | Description                          | Default  |
 | ------- | ------------------------------------ | -------- |
-| `--gap` | The gap between grouped checkboxes.  | `0.5em`  |
+| `--gap` | The gap between grouped checkboxes.  | `0.75em`  |
 
 ### CSS Parts
 

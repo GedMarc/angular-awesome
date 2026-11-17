@@ -38,7 +38,7 @@ import { WaSliderDirective } from './slider.directive';
 | `minValue`        | `number`                            | Min value for range selection                    |
 | `maxValue`        | `number`                            | Max value for range selection                    |
 | `orientation`     | `'horizontal' \| 'vertical'`        | Slider orientation                               |
-| `size`            | `'small' \| 'medium' \| 'large'`    | Slider size                                      |
+| `size`            | `'small' \| 'medium' \| 'large'`    | Slider size. Prefer `xs`, `s`, `m`, `l`, or `xl`. |
 | `indicatorOffset` | `number`                            | Starting value for the filled indicator          |
 | `withMarkers`     | `boolean`                           | Shows markers at each step                       |
 | `withTooltip`     | `boolean`                           | Shows tooltip with current value                 |

@@ -1,4 +1,18 @@
-import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, inject } from '@angular/core';
+
+export interface WaPopoverVirtualAnchor {
+  getBoundingClientRect(): DOMRect;
+  contextElement?: Element;
+}
+
+interface NativePopover extends HTMLElement {
+  anchor: Element | WaPopoverVirtualAnchor | null;
+  updateComplete?: Promise<boolean>;
+  show?(): Promise<void>;
+  hide?(): Promise<void>;
+  reposition?(): void;
+  popup?: { reposition(): void };
+}
 
 /**
  * WaPopoverDirective
@@ -27,8 +41,8 @@ import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
   standalone: true
 })
 export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
-  // String inputs
-  @Input() anchor?: string;
+  // A string is interpreted as a trigger ID. Object anchors are passed through unchanged.
+  @Input() anchor?: string | Element | WaPopoverVirtualAnchor | null;
   // Allow using HTML's label-like API: for/htmlFor. We alias to properties that map to `anchor`.
   @Input('for') forAttr?: string;
   @Input() htmlFor?: string;
@@ -78,6 +92,7 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
   private contentRendered = false;
   private unlistenShow?: () => void;
   private unlistenHide?: () => void;
+  private anchorUpdate?: Promise<boolean>;
 
   ngOnInit() {
     const nativeEl = this.el.nativeElement as HTMLElement;
@@ -87,8 +102,6 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
     this.captureContentIntoFragment();
 
     // Set string attributes
-    const resolvedAnchor = this.anchor ?? this.forAttr ?? this.htmlFor;
-    this.setAttr('anchor', resolvedAnchor);
     this.setAttr('placement', this.placement);
     this.setAttr('boundary', this.boundary);
     this.setAttr('flip-fallback-placements', this.flipFallbackPlacements);
@@ -166,11 +179,8 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
     (this as any)._unlistenHideWa = unlistenHideWa;
   }
 
-  ngOnChanges(changes: any): void {
-    if (changes['anchor'] || changes['forAttr'] || changes['htmlFor']) {
-      const resolvedAnchor = this.anchor ?? this.forAttr ?? this.htmlFor;
-      this.setAttr('anchor', resolvedAnchor);
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['anchor'] || changes['forAttr'] || changes['htmlFor']) this.applyAnchor();
     if (changes['placement']) this.setAttr('placement', this.placement);
     if (changes['boundary']) this.setAttr('boundary', this.boundary);
     if (changes['flipFallbackPlacements']) this.setAttr('flip-fallback-placements', this.flipFallbackPlacements);
@@ -200,6 +210,7 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
     if (this.unlistenHide) this.unlistenHide();
     if ((this as any)._unlistenShowWa) (this as any)._unlistenShowWa();
     if ((this as any)._unlistenHideWa) (this as any)._unlistenHideWa();
+    this.anchorUpdate = undefined;
     // Ensure we don't leak detached nodes
     this.contentFragment = null;
   }
@@ -215,7 +226,46 @@ export class WaPopoverDirective implements OnInit, OnChanges, OnDestroy {
    * Forces the popover to recalculate and reposition itself
    */
   public reposition(): void {
-    (this.el.nativeElement as any).reposition();
+    const element = this.el.nativeElement as NativePopover;
+    if (element.reposition) element.reposition();
+    else element.popup?.reposition();
+  }
+
+  public async show(): Promise<void> {
+    await (this.el.nativeElement as NativePopover).show?.();
+  }
+
+  public async hide(): Promise<void> {
+    await (this.el.nativeElement as NativePopover).hide?.();
+  }
+
+  private applyAnchor(): void {
+    const element = this.el.nativeElement as NativePopover;
+    const anchor = this.anchor ?? this.forAttr ?? this.htmlFor;
+
+    if (typeof anchor === 'string') {
+      this.anchorUpdate = undefined;
+      this.setAttr('anchor', anchor);
+      this.setAttr('for', anchor);
+      return;
+    }
+
+    const hasTrigger = element.hasAttribute('for');
+    this.setAttr('anchor', undefined);
+    this.setAttr('for', undefined);
+    const update = hasTrigger ? element.updateComplete : this.anchorUpdate;
+    this.anchorUpdate = update;
+
+    if (update) {
+      // The native update removes the previous ID trigger and its listeners before replacing the anchor.
+      void update.then(() => {
+        if (this.anchorUpdate !== update) return;
+        this.anchorUpdate = undefined;
+        this.renderer.setProperty(element, 'anchor', this.anchor ?? null);
+      }, () => {});
+    } else {
+      this.renderer.setProperty(element, 'anchor', anchor ?? null);
+    }
   }
 
   /**

@@ -103,6 +103,10 @@ wa-callout {
 }
 ```
 
+### Font Awesome defaults
+
+Set `data-fa-family`, `data-fa-variant`, and, for Pro icons, `data-fa-kit-code` on the page. For programmatic setup, use Web Awesome’s `setDefaultIconFamily(family, variant)` and `setKitCode(code)`. Individual icon bindings can override the global family and variant.
+
 ### Custom Icon Libraries
 
 To register a custom icon library:
