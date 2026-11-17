@@ -68,7 +68,20 @@
     "zone.js": "~0.15.0"
   },
   "overrides": {
-    "glob@^13": "14.0.6",
-    "minimatch@^10": "11.0.9"
+    "@npmcli/package-json": {
+      "glob": "14.0.6"
+    },
+    "cacache": {
+      "glob": "14.0.6"
+    },
+    "@tufjs/models": {
+      "minimatch": "11.0.9"
+    },
+    "ignore-walk": {
+      "minimatch": "11.0.9"
+    },
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.9"
+    }
   }
 }
