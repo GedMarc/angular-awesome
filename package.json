@@ -1,8 +1,8 @@
 {
   "name": "angular-awesome",
-  "version": "3.14.0",
+  "version": "3.15.0",
   "private": false,
-  "description": "Angular 20+ wrappers for the Web Awesome 3.14.x web components framework",
+  "description": "Angular 20+ wrappers for the Web Awesome 3.15.x web components framework",
   "keywords": [
     "angular",
     "web-awesome",
@@ -26,7 +26,8 @@
     "test:docs-security": "node --test docs/security.test.cjs",
     "docs:generate": "node docs/generate-docs.js",
     "docs:build": "npm run docs:generate && ng build",
-    "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add"
+    "docs:deploy": "npm run docs:build && npx gh-pages -d dist/angular-awesome --add",
+    "audit:ci": "node --test .github/scripts/audit.test.cjs && node .github/scripts/audit.cjs"
   },
   "main": "fesm2022/angular-awesome.mjs",
   "module": "fesm2022/angular-awesome.mjs",
@@ -65,5 +66,9 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "8.59.3",
     "zone.js": "~0.15.0"
+  },
+  "overrides": {
+    "glob@^13": "14.0.6",
+    "minimatch@^10": "11.0.9"
   }
 }

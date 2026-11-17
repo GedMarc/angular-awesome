@@ -49,6 +49,8 @@ waDrawer
 
 ## Styling Inputs
 
+Bind `backdropColor` to set the `--backdrop-color` custom property.
+
 Supports these Angular-style inputs for styling, applied to the host via CSS custom properties:
 
 | Name              | CSS Variable         | Description                          |
@@ -74,6 +76,8 @@ Supports these Angular-style inputs for styling, applied to the host via CSS cus
 ---
 
 ## CSS Parts
+
+Use `close-button__button` for the close control. The `close-button__base` part is deprecated.
 
 Exposed shadow DOM parts for theming:
 

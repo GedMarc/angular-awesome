@@ -153,6 +153,13 @@ export class WaTextareaComponent implements ControlValueAccessor, Validator, OnC
     return this.ngControl;
   }
 
+  scrollPosition(position?: { top?: number; left?: number }): { top: number; left: number } | undefined {
+    const element = this.host.nativeElement as HTMLElement & {
+      scrollPosition?(position?: { top?: number; left?: number }): { top: number; left: number } | undefined;
+    };
+    return element.scrollPosition?.(position);
+  }
+
   writeValue(val: any): void {
     this._value = val ?? '';
     this.renderer.setProperty(this.host.nativeElement, 'value', this._value);

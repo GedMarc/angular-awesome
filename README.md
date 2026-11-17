@@ -16,7 +16,7 @@
 - **Template form error-state management** — wrappers participate in Angular validation so template-driven errors and state flags are available without extra plumbing.
 - **No custom schema required** — importing standalone wrappers avoids needing `CUSTOM_ELEMENTS_SCHEMA` just to use Web Awesome tags.
 - **Lazy loading where it matters** — selected components support lazy-loading patterns to reduce initial bundle and render cost.
-- **Full component coverage** — wrappers for all 90 Web Awesome components, plus layout primitives and Angular services.
+- **Full component coverage** — wrappers for all 96 Web Awesome components, plus layout primitives and Angular services.
 - **Type safety** — full TypeScript declarations with strict mode support.
 - **Lightweight** — thin wrappers with zero extra runtime dependencies beyond Angular and Web Awesome.
 
@@ -26,7 +26,7 @@
 |--------------|----------|
 | Angular      | `>=20.0` |
 | Node.js      | `20+`    |
-| Web Awesome* | `3.14.x` |
+| Web Awesome  | `3.15.x` |
 
 ## Installation
 
@@ -34,7 +34,7 @@
 npm install angular-awesome
 ```
 
-Make sure the Web Awesome stylesheet and scripts are loaded in your application (see the [Web Awesome docs](https://www.webawesome.com/docs/) for details).
+Load the Web Awesome 3.15 stylesheet and scripts in your application. Components such as `wa-rich-text-editor` also require Web Awesome Pro. [Web Awesome setup](https://webawesome.com/docs/)
 
 ## Quick Start
 
@@ -65,13 +65,13 @@ export class MyComponent {
 | **Layout**        | `wa-layout-align`, `wa-layout-cluster`, `wa-layout-flank`, `wa-layout-frame`, `wa-layout-gap`, `wa-layout-grid`, `wa-layout-split`, `wa-layout-stack`                           |
 | **Navigation**    | `wa-breadcrumbs`, `wa-pagination`, `wa-step`, `wa-stepper`, `wa-tab-group`, `wa-tree`                                                                                                                    |
 | **Buttons**       | `wa-button`, `wa-button-group`, `wa-copy-button`                                                                                                                                |
-| **Form Controls** | `wa-checkbox`, `wa-checkbox-group`, `wa-color-picker`, `wa-combobox`, `wa-date-input`, `wa-date-picker`, `wa-file-input`, `wa-input`, `wa-known-date`, `wa-number-input`, `wa-otp-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-slider`, `wa-switch`, `wa-tag-input`, `wa-text-area`, `wa-time-input` |
-| **Data Display**  | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-data-grid`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code`                 |
+| **Form Controls** | `wa-checkbox`, `wa-checkbox-group`, `wa-color-picker`, `wa-combobox`, `wa-date-input`, `wa-date-picker`, `wa-file-input`, `wa-input`, `wa-known-date`, `wa-number-input`, `wa-otp-input`, `wa-radio`, `wa-rating`, `wa-select`, `wa-rich-text-editor`, `wa-slider`, `wa-switch`, `wa-tag-input`, `wa-text-area`, `wa-time-input` |
+| **Data Display**  | `wa-avatar`, `wa-badge`, `wa-card`, `wa-carousel`, `wa-comparison`, `wa-data-grid`, `wa-icon`, `wa-skeleton`, `wa-sparkline`, `wa-tag`, `wa-text`, `wa-qr-code`, `wa-counter`, `wa-number-ticker` |
 | **Charts**        | `wa-chart`, `wa-bar-chart`, `wa-bubble-chart`, `wa-doughnut-chart`, `wa-line-chart`, `wa-pie-chart`, `wa-polar-area-chart`, `wa-radar-chart`, `wa-scatter-chart`                |
 | **Feedback**      | `wa-callout`, `wa-dialog`, `wa-drawer`, `wa-popover`, `wa-popup`, `wa-toast`, `wa-toast-item`, `wa-tooltip`                                                                     |
 | **Progress**      | `wa-progress-bar`, `wa-progress-ring`, `wa-spinner`                                                                                                                             |
 | **Formatting**    | `wa-format-bytes`, `wa-format-date`, `wa-format-number`, `wa-relative-time`                                                                                                     |
-| **Media**         | `wa-animated-image`, `wa-animation`, `wa-video`, `wa-video-playlist`, `wa-zoomable-frame`                                                                                       |
+| **Media**         | `wa-animated-image`, `wa-animation`, `wa-code-highlighter`, `wa-lightbox`, `wa-lightbox-item`, `wa-video`, `wa-video-playlist`, `wa-zoomable-frame`                                                                                       |
 | **Disclosure**    | `wa-accordion`, `wa-accordion-item`, `wa-details`                                                                                                                               |
 | **Utilities**     | `wa-divider`, `wa-dropdown`, `wa-include`, `wa-intersection-observer`, `wa-markdown`, `wa-mutation-observer`, `wa-resize-observer`, `wa-scroller`, `wa-split-panel`             |
 
@@ -95,6 +95,15 @@ npm run test:headless
 # Interactive (opens Chrome for debugging)
 npm test
 ```
+
+### Packaging
+
+```bash
+npm run build
+npm pack ./dist/angular-awesome --dry-run
+```
+
+Use `dist/angular-awesome` as the npm publishing directory.
 
 ### Documentation
 

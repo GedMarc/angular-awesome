@@ -34,7 +34,7 @@ import { SizeToken, VariantToken } from '../../types/tokens';
  * - (default): Buttons and controls inside the group
  *
  * CSS Parts:
- * - base: The wrapper of the group
+ * - button-group: The wrapper of the group (formerly base)
  */
 @Directive({
   selector: 'wa-button-group, [waButtonGroup]',
@@ -57,8 +57,9 @@ export class WaButtonGroupDirective implements OnInit, OnChanges {
     this.applyInputs();
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.applyInputs();
+    if (changes['label']) this.setAttr('aria-label', this.label || null);
   }
 
   private applyInputs() {
@@ -70,7 +71,7 @@ export class WaButtonGroupDirective implements OnInit, OnChanges {
 
     // If label is provided, set aria-label for accessibility
     if (this.label) {
-      this.setAttr('aria-label', this.label);
+      this.setAttr('aria-label', this.label || null);
     }
   }
 

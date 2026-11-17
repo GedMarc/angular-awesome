@@ -101,6 +101,12 @@ export * from './directives/random-content/random-content.directive';
 export * from './directives/data-grid/data-grid.directive';
 export * from './directives/otp-input/otp-input.directive';
 export * from './directives/pagination/pagination.directive';
+export * from './directives/code-highlighter/code-highlighter.directive';
+export * from './directives/counter/counter.directive';
+export * from './directives/lightbox/lightbox.directive';
+export * from './directives/lightbox-item/lightbox-item.directive';
+export * from './directives/number-ticker/number-ticker.directive';
+export * from './directives/rich-text-editor/rich-text-editor.directive';
 
 // Shared type tokens
 export * from './types/tokens';

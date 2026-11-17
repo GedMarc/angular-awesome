@@ -52,6 +52,7 @@ Each input should accept string form bindings as well (`[lightDismiss]="true"` o
 Supports these Angular-style inputs for styling, applied to the host:
 
 * `backgroundColor`
+* `backdropColor`
 * `borderRadius`
 * `boxShadow`
 * `spacing`
@@ -63,6 +64,7 @@ These map directly to the following CSS custom properties:
 
 ```css
 --background-color
+--backdrop-color
 --border-radius
 --box-shadow
 --spacing
@@ -70,6 +72,8 @@ These map directly to the following CSS custom properties:
 --show-duration
 --hide-duration
 ```
+
+Use `close-button__button` for the close control. The `close-button__base` part is deprecated.
 
 ### Accessibility Notes
 

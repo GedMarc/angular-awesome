@@ -87,7 +87,7 @@
         <!-- Main Content -->
         <div class="main-content">
             <header>
-                <h1>Popover Component <span class="version-badge">synced with Web Awesome 3.7.0</span></h1>
+                <h1>Popover Component <span class="version-badge">synced with Web Awesome 3.15.0</span></h1>
                 <p class="subtitle"><wa-popover> provides popover functionality for Angular applications.</p>
             </header>
 
@@ -103,7 +103,7 @@
         <h2>Import</h2>
         <p>Import the popover directive from the angular-awesome package:</p>
         <pre>// Import the popover directive
-import { WaPopoverDirective } from 'angular-awesome/popover';</pre>
+import { WaPopoverDirective } from 'angular-awesome';</pre>
       </section>
 
       <section>
@@ -514,6 +514,15 @@ export class PopoverEventsDemoComponent implements AfterViewInit {
     &lt;/div&gt;
   &lt;/wa-popover&gt;
 &lt;/div&gt;
+</code></pre>
+<h3>Virtual anchor in Angular</h3>
+<pre><code class="language-html">&lt;wa-popover [anchor]=&quot;position&quot; [open]=&quot;showMenu&quot;&gt;Menu content&lt;/wa-popover&gt;
+</code></pre>
+<pre><code class="language-ts">import type { WaPopoverVirtualAnchor } from &#39;angular-awesome&#39;;
+
+const position: WaPopoverVirtualAnchor = {
+  getBoundingClientRect: () =&gt; new DOMRect(100, 200, 0, 0)
+};
 </code></pre>
 
       </section>

@@ -22,7 +22,7 @@ Popover is a low-level utility built specifically for positioning elements. Do n
 
 | Input                    | Type      | Description                                                                                                       |
 | ------------------------ | --------- | ----------------------------------------------------------------------------------------------------------------- |
-| `anchor`                 | `string`  | The element the popover will be anchored to. If the anchor lives outside of the popover, you can provide the anchor element id. |
+| `anchor` | `string \| Element \| WaPopoverVirtualAnchor \| null` | Bind a trigger ID, DOM element, or virtual anchor. A virtual anchor provides placement without trigger ARIA or focus return. |
 | `active`                 | `boolean` | Activates the positioning logic and shows the popover. When this attribute is removed, the positioning logic is torn down and the popover will be hidden. |
 | `open`                   | `boolean` | Shows or hides the popover (alias for `active` on `<wa-popover>`).                                               |
 | `withoutArrow`           | `boolean` | Removes the arrow from the popover.                                                                               |
@@ -78,6 +78,8 @@ Popover is a low-level utility built specifically for positioning elements. Do n
 ---
 
 ### Methods
+
+Use `show()` and `hide()` to control the native popover. Use `reposition()` after moving a virtual anchor.
 
 | Method          | Description                                                                                                                |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------- |

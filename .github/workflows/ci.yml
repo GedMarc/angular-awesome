@@ -46,7 +46,7 @@ jobs:
         run: npm run build
 
       - name: Audit dependencies
-        run: npm audit --audit-level=low
+        run: npm run audit:ci
 
       - name: Check documentation asset integrity
         run: npm run test:docs-security

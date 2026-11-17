@@ -462,3 +462,17 @@ export class PopoverEventsDemoComponent implements AfterViewInit {
   </wa-popover>
 </div>
 ```
+
+### Virtual anchor in Angular
+
+```html
+<wa-popover [anchor]="position" [open]="showMenu">Menu content</wa-popover>
+```
+
+```ts
+import type { WaPopoverVirtualAnchor } from 'angular-awesome';
+
+const position: WaPopoverVirtualAnchor = {
+  getBoundingClientRect: () => new DOMRect(100, 200, 0, 0)
+};
+```

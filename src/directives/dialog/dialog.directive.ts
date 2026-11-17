@@ -19,7 +19,10 @@ import { WaDialogContent } from './dialog-content.directive';
  */
 @Directive({
   selector: 'wa-dialog',
-  standalone: true
+  standalone: true,
+  host: {
+    '[style.--backdrop-color]': 'backdropColor'
+  }
 })
 export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
   /**
@@ -51,6 +54,7 @@ export class WaDialogDirective implements OnInit, OnChanges, OnDestroy {
 
   // Style inputs
   @Input() backgroundColor?: string;
+  @Input() backdropColor?: string;
   @Input() borderRadius?: string;
   @Input() boxShadow?: string;
   @Input() spacing?: string;

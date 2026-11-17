@@ -3,6 +3,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
+## [3.15.0]
+
+### Added
+
+- Standalone Angular directives for `wa-code-highlighter`, `wa-counter`, `wa-lightbox`, `wa-lightbox-item`, and `wa-number-ticker`.
+- The Web Awesome Pro `wa-rich-text-editor` wrapper supports reactive forms, template-driven forms, and direct two-way binding for HTML or Markdown.
+- `wa-popover` accepts real and virtual anchor objects alongside the existing trigger ID bindings. It also exposes native `show()` and `hide()` methods.
+- `backdropColor` bindings for `wa-dialog` and `wa-drawer`.
+- The textarea wrapper exposes the native `scrollPosition()` API, including the horizontal offset.
+
+### Changed
+
+- `wa-page` accepts null to clear the `disableSticky` override. The documented sections are `banner`, `header`, and `subheader`.
+- Web Awesome 3.15 uses a default gap of `0.75em` for `wa-checkbox-group`. Override it with `styleGap` or `--gap`.
+- Web Awesome 3.15 adds `data-fa-family` and `data-fa-variant` for global Font Awesome defaults. Set them on the page or use the upstream `setDefaultIconFamily(family, variant)` API.
+
+### Deprecated
+
+- Prefer `s`, `m`, and `l` over `small`, `medium`, and `large` in size bindings. Existing size values remain accepted.
+- Update CSS selectors that target these deprecated shadow parts.
+
+| Component | Deprecated part | Replacement |
+| --- | --- | --- |
+| Button group, tab panel | `base` | `button-group`, `tab-panel`, respectively |
+| Color picker | `eyedropper-button__base`, `format-button__base` | `eyedropper-button__button`, `format-button__button` |
+| Combobox, select, tag input | `tag__remove-button__base` | `tag__remove-button__button` |
+| Date input | `date-picker__base` | `date-picker__date-picker` |
+| Dialog, drawer | `close-button__base` | `close-button__button` |
+| File input, tag | `remove-button__base` | `remove-button__button` |
+| Slider | `tooltip__base` | `tooltip__tooltip` |
+| Tab group | `scroll-button__base` | `scroll-button__button` |
+| Toast item | `progress-ring__base` | `progress-ring__progress-ring` |
+| Tooltip | `base__popup`, `base__arrow` | `tooltip__popup`, `tooltip__arrow` |
+| Tree item | `spinner__base`, `checkbox__base` | `spinner__spinner`, `checkbox__checkbox` |
+
+### Security
+
+- Updated the development lockfile to patched versions of `@hono/node-server`, `hono`, `follow-redirects`, `glob`, and `minimatch`.
+- The CI audit allows [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) on development-only paths while a Picomatch fix is pending. Production findings and all other advisories still fail CI.
+
 ## [3.14.0] - 2026-09-25
 
 ### Added

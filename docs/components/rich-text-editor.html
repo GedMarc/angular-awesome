@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Awesome - RichTextEditor Component</title>
+    <link rel="stylesheet" href="../includes/styles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" integrity="sha384-eFTL69TLRZTkNfYZOLM+G04821K1qZao/4QLJbet1pP4tcF+fdXq/9CdqAbWRl/L" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" integrity="sha384-g4mRvs7AO0/Ol5LxcGyz4Doe21pVhGNnC3EQw5shw+z+aXDN86HqUdwXWO+Gz2zI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js" integrity="sha384-0qNf3gOPByrWMSK2/Xt1NZmLaVJCaP+kGJSe9ZGwFIQ1TsuNVFmt0ZeCmAB742Rz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js" integrity="sha384-y0N5WpxWGm8v4ZDI0gPt9p7sD4yQdzTnUIweOpZfQgNVDBsyweKXIBdfEx+l1/oz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js" integrity="sha384-JbKnO4Cf/XL9vBUo1m+TwxjuLS7FdcYHE3JqNN0sVgMm06Zvw2EemgF5FDJHl/OQ" crossorigin="anonymous"></script>
+    <style>
+        /* Copy button styles */
+        pre {
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+        .copy-button:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        /* Version badge */
+        .version-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Angular Awesome</h3>
+            </div>
+            <button class="sidebar-toggle">Show Navigation</button>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../getting-started.html">Getting Started</a></li>
+                    <li>
+                        <span class="sidebar-section">Components</span>
+                        <ul>
+                            <li><a href="button.html">Button</a></li>
+                            <li><a href="tree.html">Tree</a></li>
+                            <li><a href="textarea.html">Text Area</a></li>
+                            <li><a href="tooltip.html">Tooltip</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../components.html">All Components</a></li>
+                    <li><a href="../rules.html">Rules & Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="https://github.com/GedMarc/angular-awesome" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>RichTextEditor Component <span class="version-badge">synced with Web Awesome 3.15.0</span></h1>
+                <p class="subtitle">Import WaRichTextEditorDirective from angular-awesome and load the Web Awesome Pro 3.15 editor in your application. The wrapper supports formControl, formControlName, ngModel, and direct [(value)] binding.</p>
+            </header>
+
+            <main>
+                <!-- Page content goes here -->
+
+      <section>
+        <h2>Overview</h2>
+        <p>Import `WaRichTextEditorDirective` from `angular-awesome` and load the Web Awesome Pro 3.15 editor in your application. The wrapper supports `formControl`, `formControlName`, `ngModel`, and direct `[(value)]` binding.</p>
+      </section>
+
+      <section>
+        <h2>Import</h2>
+        <p>Import the richTextEditor directive from the angular-awesome package:</p>
+        <pre>// Import the richTextEditor directive
+import { WaRichTextEditorDirective } from 'angular-awesome';</pre>
+      </section>
+
+      <section>
+        <h2>Examples</h2>
+        <h3>Reactive Markdown editor</h3>
+<pre><code class="language-ts">import { Component } from &#39;@angular/core&#39;;
+import { FormControl, ReactiveFormsModule } from &#39;@angular/forms&#39;;
+import { WaRichTextEditorDirective } from &#39;angular-awesome&#39;;
+
+@Component({
+  imports: [ReactiveFormsModule, WaRichTextEditorDirective],
+  template: `
+    &lt;wa-rich-text-editor
+      label=&quot;Release notes&quot;
+      format=&quot;markdown&quot;
+      [formControl]=&quot;notes&quot;
+      [required]=&quot;true&quot;
+      [withCount]=&quot;true&quot;&gt;
+    &lt;/wa-rich-text-editor&gt;
+  `
+})
+export class ReleaseNotesComponent {
+  readonly notes = new FormControl(&#39;&#39;, { nonNullable: true });
+}
+</code></pre>
+
+      </section>
+
+      <section>
+        <h2>API Reference</h2>
+        <table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>value</code>, <code>defaultValue</code>, <code>format</code></td>
+<td>Live content, native form-reset value, and HTML or Markdown serialization.</td>
+</tr>
+<tr>
+<td><code>label</code>, <code>hint</code>, <code>withLabel</code>, <code>withHint</code>, <code>placeholder</code></td>
+<td>Labels, instructions, and SSR flags for the named slots.</td>
+</tr>
+<tr>
+<td><code>name</code>, <code>form</code>, <code>disabled</code>, <code>readonly</code>, <code>required</code>, <code>minLength</code>, <code>maxLength</code>, <code>validationTarget</code></td>
+<td>Native form association and validation.</td>
+</tr>
+<tr>
+<td><code>size</code>, <code>appearance</code>, <code>withCount</code></td>
+<td>Visual appearance and character count.</td>
+</tr>
+<tr>
+<td><code>toolbar</code>, <code>toolbarPlacement</code>, <code>iconLibrary</code>, <code>disabledFeatures</code>, <code>headingLevels</code></td>
+<td>Toolbar and editing features.</td>
+</tr>
+<tr>
+<td><code>textColors</code>, <code>highlightColors</code>, <code>linkTarget</code>, <code>linkRel</code></td>
+<td>Color palettes and link behavior.</td>
+</tr>
+<tr>
+<td><code>withoutSmartPunctuation</code>, <code>withoutMarkdownShortcuts</code>, <code>withoutAutolink</code></td>
+<td>Automatic formatting controls.</td>
+</tr>
+<tr>
+<td><code>autocapitalize</code>, <code>autocorrect</code>, <code>enterkeyhint</code>, <code>spellcheck</code>, <code>inputmode</code></td>
+<td>Browser text entry options.</td>
+</tr>
+<tr>
+<td><code>imageProvider</code>, <code>embedProvider</code>, <code>suggestions</code></td>
+<td>Custom image and embed resolution and typeahead sources.</td>
+</tr>
+</tbody></table>
+<p>The directive emits <code>valueChange</code>, <code>waInput</code>, <code>waChange</code>, <code>waFocus</code>, <code>waBlur</code>, <code>selectionChange</code>, <code>waInvalid</code> / <code>wa-invalid</code>, and <code>waSuggestionsError</code> / <code>wa-suggestions-error</code>. You can also listen to the native <code>input</code>, <code>change</code>, <code>focus</code>, <code>blur</code>, and <code>selectionchange</code> events.</p>
+<p>Use the <code>label</code>, <code>hint</code>, and <code>actions</code> slots for custom label, hint, and toolbar content. The default slot provides initial content when no reset value is specified.</p>
+<p>Use <code>runCommand()</code>, <code>isActive()</code>, <code>insertHtml()</code>, <code>insertText()</code>, <code>deleteSelection()</code>, <code>selectAll()</code>, <code>undo()</code>, <code>redo()</code>, <code>getSelection()</code>, <code>focus()</code>, and <code>blur()</code> for custom toolbar interactions. The directive exposes <code>textValue</code>, <code>selectedText</code>, <code>canUndo</code>, <code>canRedo</code>, <code>dirty</code>, and the native ProseMirror <code>view</code>. Advanced consumers can use the actual ProseMirror type with the Web Awesome Pro package.</p>
+<p>Use <code>minLength</code> and <code>maxLength</code> with Angular forms so the editor can count visible text. Angular’s lowercase <code>minlength</code> and <code>maxlength</code> validators count the serialized value, including markup.</p>
+<p>Use the native component class for static validators. Use the directive&#39;s <code>setCustomValidity()</code>, <code>resetValidity()</code>, or <code>formStateRestoreCallback()</code> to delegate to the live element.</p>
+
+      </section>
+
+      <section>
+        <h2>Styling</h2>
+        <p>Bind <code>contentMinHeight</code>, <code>contentMaxHeight</code>, <code>showDuration</code>, <code>hideDuration</code>, <code>shadowColor</code>, or <code>shadowSize</code> to set the corresponding CSS custom properties. Use the <code>toolbar</code>, <code>content</code>, and <code>count</code> parts to style the editor.</p>
+<p><a href="https://webawesome.com/docs/components/rich-text-editor/">Web Awesome Pro rich text editor</a></p>
+
+      </section>
+
+            </main>
+
+            <footer>
+                <p>2025 GedMarc</p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="includes/scripts.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to all code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+
+                // Add copy button to each code block
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+
+                // Insert the button into the pre element (parent of code)
+                block.parentElement.appendChild(copyButton);
+
+                // Add click event to copy code
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Visual feedback
+                        copyButton.textContent = 'Copied!';
+                        copyButton.classList.add('copied');
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyButton.textContent = 'Error';
+
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

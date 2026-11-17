@@ -7,7 +7,7 @@ metadata:
 
 # Angular Awesome
 
-Angular 20+ standalone directives wrapping Web Awesome 3.14.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
+Angular 20+ standalone directives wrapping Web Awesome 3.15.x web components. Every `<wa-*>` tag has a corresponding `Wa*Directive` or `Wa*Component` that binds attributes as `@Input()` properties, emits custom events as `@Output()`, and exposes `nativeElement` for direct access.
 
 ## Quick Start
 
@@ -38,7 +38,7 @@ type SizeToken    = 'xs' | 's' | 'm' | 'l' | 'xl' | 'small' | 'medium' | 'large'
 type Appearance   = 'accent' | 'filled' | 'outlined' | 'plain' | 'filled-outlined';
 ```
 
-Use `normalizeAppearance()` to convert legacy space-delimited values.
+Use `normalizeAppearance()` to convert legacy space-delimited values. Prefer `s`, `m`, and `l` for control sizes.
 
 ## Key Patterns
 
@@ -59,7 +59,7 @@ Bind with Angular syntax; never use string `"true"`:
 ```
 
 ### Form Controls (ControlValueAccessor)
-`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio`, `wa-date-input`, `wa-date-picker`, `wa-known-date`, `wa-time-input`, `wa-otp-input`, `wa-file-input`, and `wa-tag-input` support `[(ngModel)]` and reactive forms.
+`wa-input`, `wa-select`, `wa-checkbox`, `wa-switch`, `wa-slider`, `wa-textarea`, `wa-combobox`, `wa-color-picker`, `wa-number-input`, `wa-radio`, `wa-date-input`, `wa-date-picker`, `wa-known-date`, `wa-time-input`, `wa-otp-input`, `wa-file-input`, `wa-tag-input`, and `wa-rich-text-editor` support `[(ngModel)]` and reactive forms. Load Web Awesome Pro for the rich text editor.
 
 ### Events
 Listen to web component custom events via `(wa-*)` outputs:

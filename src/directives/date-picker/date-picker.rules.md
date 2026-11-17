@@ -50,6 +50,8 @@ Wraps the `<wa-date-picker>` Web Awesome component. Date pickers display a month
 
 ### Slots
 
+Use a `day-YYYY-MM-DD` slot to replace the label on a particular date, for example `slot="day-2027-01-01"`.
+
 * `previous-icon`, `next-icon`, `header`, `footer`, and dynamic `day-YYYY-MM-DD` slots.
 
 ### Methods
