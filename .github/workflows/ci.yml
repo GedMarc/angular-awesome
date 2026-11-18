@@ -48,6 +48,9 @@ jobs:
       - name: Audit dependencies
         run: npm run audit:ci
 
+      - name: Check documentation asset paths and regeneration
+        run: npm run test:docs-assets
+
       - name: Check documentation asset integrity
         run: npm run test:docs-security
 
