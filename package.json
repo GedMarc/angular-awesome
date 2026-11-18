@@ -23,6 +23,7 @@
     "lint": "ng lint",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:docs-assets": "node --test docs/assets.test.cjs",
     "test:docs-security": "node --test docs/security.test.cjs",
     "docs:generate": "node docs/generate-docs.js",
     "docs:build": "npm run docs:generate && ng build",

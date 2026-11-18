@@ -5,6 +5,10 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 
 ## [3.15.0]
 
+### Fixed
+
+- Component documentation now loads the shared navigation script from the correct relative path, including after regeneration. Added regression coverage for local assets in committed and freshly generated pages.
+
 ### Added
 
 - Standalone Angular directives for `wa-code-highlighter`, `wa-counter`, `wa-lightbox`, `wa-lightbox-item`, and `wa-number-ticker`.

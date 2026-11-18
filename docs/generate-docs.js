@@ -217,6 +217,7 @@ componentDirs.forEach(componentDir => {
     .replace(/PAGE_TITLE/g, `${componentName.charAt(0).toUpperCase() + componentName.slice(1)} Component`)
     .replace(/PAGE_SUBTITLE/g, componentDescription)
     .replace(/href="includes\/styles.css"/g, `href="../includes/styles.css"`)
+    .replace(/src="includes\/scripts.js"/g, `src="../includes/scripts.js"`)
     .replace(/href="index.html"/g, `href="../index.html"`)
     .replace(/href="getting-started.html"/g, `href="../getting-started.html"`)
     .replace(/href="components.html"/g, `href="../components.html"`)
