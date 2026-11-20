@@ -106,7 +106,7 @@ All inputs accept string values in templates for compatibility. Boolean inputs m
 ```
 
 ```css
-wa-button.pink::part(base) {
+wa-button.pink::part(button) {
   background: #ff1493;
   color: white;
   border-radius: 6px;

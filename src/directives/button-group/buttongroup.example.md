@@ -154,7 +154,7 @@ export class MyComponent {
 ```
 
 ```css
-wa-button-group.custom-group::part(base) {
+wa-button-group.custom-group::part(button-group) {
   background-color: var(--wa-color-neutral-50);
   padding: 0.25em; /* Changed from var(--wa-space-xs) to relative em value */
   border-radius: var(--wa-border-radius-m);

@@ -119,14 +119,15 @@
                 <p>Before installing Angular Awesome, make sure you have:</p>
                 <ul>
                     <li>Angular 20.0 or later</li>
-                    <li>Node.js 16 or later</li>
-                    <li>npm 7 or later</li>
+                    <li>Node.js <code>^20.19.0 || ^22.12.0 || ^24.0.0</code> for Angular 20</li>
+                    <li>npm compatible with your chosen Node.js version</li>
                 </ul>
-                <p>Angular Awesome requires the following peer dependencies:</p>
+                <p>This repository builds with Angular 20.3.x. For other Angular versions, check the <a href="https://angular.dev/reference/versions">official Angular version compatibility table</a> for Node.js requirements.</p>
+                <p>Angular Awesome declares the following peer dependencies; keep your Angular packages on matching versions:</p>
                 <ul>
-                    <li><code>@angular/core</code> ^19.2.0</li>
-                    <li><code>@angular/common</code> ^19.2.0</li>
-                    <li><code>@angular/forms</code> ^19.2.0</li>
+                    <li><code>@angular/core</code> &gt;=20.0.0</li>
+                    <li><code>@angular/common</code> &gt;=20.0.0</li>
+                    <li><code>@angular/forms</code> &gt;=20.0.0</li>
                 </ul>
             </div>
 
@@ -160,10 +161,26 @@
 
             <div class="step">
                 <h3>Step 2: Use in Templates</h3>
-                <p>Use the components in your templates with their native tag names. All components support Angular template-driven forms with ngModel binding.</p>
+                <p>Use the components in your templates with their native tag names. Form-control directives that implement Angular's ControlValueAccessor, such as WaInputDirective, support <code>[(ngModel)]</code> when you import <code>FormsModule</code>.</p>
 
+                <pre><code class="language-typescript">import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { WaInputDirective } from 'angular-awesome';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [FormsModule, WaInputDirective],
+  template: `
+    &lt;wa-input label="Name" [(ngModel)]="name"&gt;&lt;/wa-input&gt;
+    &lt;p&gt;Hello, {{ name }}!&lt;/p&gt;
+  `
+})
+export class ExampleComponent {
+  name = '';
+}</code></pre>
                 <div class="note">
-                    <p><strong>Note:</strong> All components support Angular template-driven forms with ngModel binding.</p>
+                    <p><strong>Note:</strong> Load the Web Awesome assets from installation step 3 before using this example. When placing an ngModel control inside a form, give it a <code>name</code> attribute. Display, layout, and action components do not automatically support ngModel; check each directive's forms API.</p>
                 </div>
             </div>
 

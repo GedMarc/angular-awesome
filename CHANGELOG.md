@@ -7,6 +7,8 @@ The format is based on Keep a Changelog and this project adheres to Semantic Ver
 
 ### Fixed
 
+- Corrected Getting Started Angular 20 peer/Node.js requirements and scoped forms guidance with a standalone input example. Updated button, button-group, and details styling examples to their named CSS parts.
+
 - Component documentation now loads the shared navigation script from the correct relative path, including after regeneration. Added regression coverage for local assets in committed and freshly generated pages.
 
 ### Added

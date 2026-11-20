@@ -134,14 +134,14 @@
 ```
 
 ```css
-wa-button.custom-button::part(base) {
+wa-button.custom-button::part(button) {
   background: linear-gradient(45deg, #ff6b6b, #ff8e53);
   color: white;
   border: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-wa-button.custom-button:hover::part(base) {
+wa-button.custom-button:hover::part(button) {
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
