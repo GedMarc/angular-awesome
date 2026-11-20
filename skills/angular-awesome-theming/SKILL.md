@@ -54,7 +54,7 @@ wa-progress-bar { --height: 8px; --indicator-color: var(--wa-color-brand-600); }
 Style shadow DOM internals via exported CSS parts:
 
 ```css
-wa-button::part(base) { border-radius: 9999px; }
+wa-button::part(button) { border-radius: 9999px; }
 wa-toast-item::part(close-button) { opacity: 0.6; }
 wa-input::part(input) { font-family: monospace; }
 ```

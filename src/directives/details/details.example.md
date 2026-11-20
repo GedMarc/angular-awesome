@@ -250,7 +250,7 @@ export class DetailsProgrammaticComponent {
 </wa-details>
 
 <style>
-  wa-details::part(base) {
+  wa-details::part(details) {
     border-color: #2196f3;
   }
   

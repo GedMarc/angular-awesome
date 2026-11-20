@@ -28,8 +28,31 @@ function checkComponentAssets(docsDir) {
   }
 }
 
+function checkNamedParts(docsDir) {
+  for (const name of ['button', 'button-group', 'details']) {
+    const html = fs.readFileSync(path.join(docsDir, 'components', `${name}.html`), 'utf8');
+    assert.ok(html.includes(`::part(${name})`), `${name}: expected named CSS part`);
+    assert.ok(!html.includes('::part(base)'), `${name}: deprecated base part`);
+  }
+}
+
+test('Getting Started matches declared peers and documents Angular 20 forms setup', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'getting-started.html'), 'utf8');
+  const pkg = require('../package.json');
+  for (const name of ['@angular/core', '@angular/common', '@angular/forms']) {
+    const range = pkg.peerDependencies[name].replaceAll('>', '&gt;');
+    assert.ok(html.includes(`<code>${name}</code> ${range}`), `${name}: stale peer range`);
+  }
+  assert.ok(html.includes('^20.19.0 || ^22.12.0 || ^24.0.0'));
+  assert.ok(!html.includes('Node.js 16 or later'));
+  assert.ok(!html.includes('All components support Angular template-driven forms'));
+  assert.ok(html.includes('imports: [FormsModule, WaInputDirective]'));
+  assert.ok(html.includes('[(ngModel)]="name"'));
+});
+
 test('committed component pages resolve local styles and navigation scripts', () => {
   checkComponentAssets(__dirname);
+  checkNamedParts(__dirname);
 });
 
 test('regenerating component pages preserves working local asset paths', () => {
@@ -45,6 +68,7 @@ test('regenerating component pages preserves working local asset paths', () => {
       stdio: 'pipe'
     });
     checkComponentAssets(docsDir);
+    checkNamedParts(docsDir);
   } finally {
     fs.rmSync(temporaryRoot, { recursive: true, force: true });
   }
